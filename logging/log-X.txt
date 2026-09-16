@@ -1,0 +1,162 @@
+###############################################################################
+--- !log.2026.Debian.Linix
+###############################################################################
+
+#   encoding.UTF8:
+    !@€ƒ„…†‡ˆ‰Š‹ŒŽ +‘“”•—™š›œžŸ+¡¢£¤¥¦§¨©«¬®°±²³µ¶·¹º»¼½¾¿ÄÖÜÑ×ØÞßäæçîðñôö÷üýþÿ
+
+### 260914
+
+### !date:<2026-09-13>:So 
+
+>>> xpr ::  Psh2DebianLinux [260913]  
+    
+1.  Install wget if not already present
+    bash$>  sudo apt-get install -y wget
+
+2.  Download the latest stable release (adjust version URL as needed)
+    bash$>  wget https://github.com/PowerShell/PowerShell/releases/download/v7.6.6/powershell-lts_7.6.6-1.deb_amd64.deb
+
+3.  Install the package
+    bash$>  sudo dpkg -i powershell-lts_7.6.6-1.deb_amd64.deb
+
+4.  Resolve any missing dependencies automatically
+    bash$>  sudo apt-get install -f    
+
+5.  Launch PowerShell
+    bash$>  pwsh 
+    
+6.  exit PowerShell
+    pwsh$>  exit
+
+<<< xpr ::  Psh2DebianLinux.
+
+
++   add xrdp to linux
+    https://help.servers.guru/hc/help-center/articles/1786183137-install-gui-for-linux-server
+
+
++   ekiwi
+https://ekiwi-blog.de/
+https://ekiwi-blog.de/23473/
+
+
++	blog
+https://ekiwi-blog.de/23473/
+
+https://www.youtube.com/watch?v=uIf0hEIrF30
+
+
++   Enhanced Session - nur in der VM
+pwsh$>  Set-VM -VMName 'tron3-d13x-381' -EnhancedSessionTransportType 'HvSocket'
+
+### Achtung :   
+    Nicht die Ubuntu SH starten !
+ 
+
++   Hostname
+echo $HOSTNAME
+
++   snapshot erstellen
+
+
+
+### !date:<2026-09-14>:Mo 
+
++   neue VM
+    vmName: tron3-d13x-385H
+    ip:     192.168.178.105
+
++   Windows HyperVm 
+        Generation          :   2
+        Network Adapter     :    Default-Switch besser
+        Network Adapter     :    VS-external
+        Enable Security Boot :  false
+        HDD:    32GB
+        externer user:peter
+        Guest Services : false 
+        
++   inside Linux 
+        keyboard: German        
+        kein root password
+        user: peter pwd:"!tron0"
+        alles in einer partition
+        mirror: Germany - debian.org
+        packages: + webserver + SSH 1397 packages
+        timezone : London
+
++   packages installieren
+    f_ini_xRdp() & testen
+    shortcuts erstellen und sichern
+
++   installer aufrufen innerhalb vom $v_STARTER
+    +   f_ini_ruby()
+    +   f_ini_python()
+    +   f_ini_fireWall()
+    +   f_ini_webGet()
+    +   f_ini_misc() 
+    +   f_ini_utility()
+
++   installer Chrome
+    f_ini_webbrowser_Chrome()
+
+
+### !date:<2026-09-16>:Mi 
+
+
++   vmw:
+    tron3-d13x-495W
+
++   usr:peter pwd:"tron"
+
++   install gui:cinnamon 
+    $>sudo apt-get install cinnamon-desktop-environment
+    
++   $>hostnamectl set-hostname tron3-d13x-495W
+
++   change gui
+    https://www.youtube.com/watch?v=ILaEYof7JLA    
+    $>  sudo apt install cinnamon-desktop-environment -y
+    $>  sudo apt tasksel
+    $>  sudo apt install lightdm -y
+    $>  sudo dpkg-reconfigure lightdm
+    $>  sudo apt update && sudo apt install task-cinnamon-desktop
+    $>  sudo update-alternatives --config x-session-manager
+
++   Font
+    setzen
+    
++   Windows Laufwerk einbinden 
+    $>  su root 
+    $   export $PS1 = "$ "
+    $>  sudo mkdir -p /mnt/hgfs
+    $>  sudo vmhgfs-fuse .host:/ /mnt/hgfs -o allow_other -o uid=$(id -u)
+    
++   VsCode 
+    https://code.visualstudio.com/docs/setup/linux
+    Download and install the VS Code .rpm package manually when repository installation is not available. Auto-update does not work unless the repository is installed.
+    Install the downloaded .rpm package with your package manager, 
+        for example with dnf:
+    Bash:
+    $>  sudo dnf install <file>.rpm
+    --- use alien
+    sudo apt-get install alien
+    sudo alien my_package.rpm
+    sudo dpkg -i my_package.deb
+
++   rm dirTree force
+    $>  rm -rf <dir>
+
++   git repository
+    $>  cd /home/peter/Documents/repository/tux
+    $>  git config --global user.name "Debian Woman Attendant"
+    $>  git config --global user.email "plut64@e-mail.de"
+    $>  git init
+    $>  echo "hello rep" > readme.txt
+    $>  git add readme.txt 
+
++   git clone https://username:password@github.com/username/repository.git
+
++   GitHub logout
+    https://github.com/logout
+
