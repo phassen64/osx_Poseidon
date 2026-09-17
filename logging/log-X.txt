@@ -160,3 +160,9 @@ echo $HOSTNAME
 +   GitHub logout
     https://github.com/logout
 
+
+### !date:<2026-09-17>:Do 
+
++   repository rename tux->osx
+
+
