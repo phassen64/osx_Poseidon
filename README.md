@@ -1,2 +1,2 @@
-# tux_Poseidon
+# osx_Poseidon for TuX
 Debian Linux Test Repository
