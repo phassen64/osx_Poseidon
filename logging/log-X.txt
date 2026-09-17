@@ -132,18 +132,6 @@ echo $HOSTNAME
     $>  sudo mkdir -p /mnt/hgfs
     $>  sudo vmhgfs-fuse .host:/ /mnt/hgfs -o allow_other -o uid=$(id -u)
     
-+   VsCode 
-    https://code.visualstudio.com/docs/setup/linux
-    Download and install the VS Code .rpm package manually when repository installation is not available. Auto-update does not work unless the repository is installed.
-    Install the downloaded .rpm package with your package manager, 
-        for example with dnf:
-    Bash:
-    $>  sudo dnf install <file>.rpm
-    --- use alien
-    sudo apt-get install alien
-    sudo alien my_package.rpm
-    sudo dpkg -i my_package.deb
-
 +   rm dirTree force
     $>  rm -rf <dir>
 
@@ -159,6 +147,47 @@ echo $HOSTNAME
 
 +   GitHub logout
     https://github.com/logout
+
++   Debian linux Pakete grafisch deinstallieren mit Synaptic
+    $>  sudo apt update
+    $>  sudo apt install synaptic
+
+
++   change language input 
+    $>  sudo dpkg-reconfigure locales 
+
++   change language keyboard
+    sudo dpkg-reconfigure keyboard-configuration
+
++   add sudoers
+    As root edit /etc/sudoers and place the following line:
+    peter ALL=(ALL) NOPASSWD:ALL
+
++   Linux Assistant
+    https://www.linux-assistant.org/
+
++   Cinnamon|GTK3/4 Themes   
+    https://www.opendesktop.org/s/Cinnamon/p/1403328/
+    Cinnamon White Zero Light
+    $>  sudo apt update
+    $>  sudo apt install xorg lightdm cinnamon-desktop-environment
+
++   git clone
+    $>  git clone -b branch-name https://github.com
+
+
++   VsCode 
+    https://code.visualstudio.com/docs/setup/linux
+    Download and install the VS Code .rpm package manually when repository installation is not available. Auto-update does not work unless the repository is installed.
+    Install the downloaded .rpm package with your package manager, 
+        for example with dnf:
+    Bash:
+    $>  sudo dnf install <file>.rpm
+    --- use alien
+    sudo apt-get install alien
+    sudo alien my_package.rpm
+    sudo dpkg -i my_package.deb
+
 
 
 ### !date:<2026-09-17>:Do 
