@@ -195,3 +195,22 @@ echo $HOSTNAME
 +   repository rename tux->osx
 +   update 260917-12:45
 
+
+### !date:<2026-09-18>:Fr 
+
++   In Debian, 
+    defining or changing your standard (default) Desktop Environment (DE) 
+    depends on whether you are installing Debian from 
+        a)  scratch or 
+        b)  switching between already installed 
+    environments.
+
++   change DE 
+    Method 2: System-Wide Default via Command Line    
+    $>  sudo update-alternatives --config x-session-manager
+    Method 3:   
+    * install or de-install task manager
+    $>  sudo tasksel    
+
++   shutdown
+    $>  sudo shutdown
