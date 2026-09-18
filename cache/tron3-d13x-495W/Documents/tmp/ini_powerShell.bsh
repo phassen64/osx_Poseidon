@@ -1,0 +1,77 @@
+#   Install PowerShell on Debian Linux using 
+#   Microsoft's official APT repository. 
+#   This method ensures easy updates alongside your standard system packages.
+
+#   Gemini  $>  Install Powershell in Debian Linux
+#   
+
+#   ---------------------------------------------------------------------------    
+#   Method 1: Install via Microsoft Repository (Recommended)
+#   ---------------------------------------------------------------------------    
+
+# Update local packages and install prerequisite tools
+sudo apt-get update
+sudo apt-get install -y wget apt-transport-https software-properties-common
+
+# Detect the Debian version ID
+source /etc/os-release
+
+# Download the Microsoft repository GPG keys
+wget -q https://packages.microsoft.com/config/debian/$VERSION_ID/packages-microsoft-prod.deb
+
+# Register the Microsoft repository keys
+sudo dpkg -i packages-microsoft-prod.deb
+
+# Delete the downloaded repository configuration file
+rm packages-microsoft-prod.deb
+
+# Update package lists and install PowerShell
+sudo apt-get update
+sudo apt-get install -y powershell
+
+#   ---------------------------------------------------------------------------    
+#   Method 2: Manual Direct Download (.deb Package)
+#   ---------------------------------------------------------------------------    
+    
+# Install wget if not already present
+sudo apt-get install -y wget
+
+# Download the latest stable release (adjust version URL as needed)
+#   wget https://github.com/PowerShell/PowerShell/releases/download/v7.4.20/powershell_7.4.20-1.deb_amd64.deb
+wget https://github.com/PowerShell/PowerShell/releases/download/v7.6.6/powershell-lts_7.6.6-1.deb_amd64.deb
+
+# Install the package
+sudo dpkg -i powershell-lts_7.6.6-1.deb_amd64.deb
+
+# Resolve any missing dependencies automatically
+sudo apt-get install -f    
+
+
+#   ---------------------------------------------------------------------------    
+#   Method x: misc
+#   ---------------------------------------------------------------------------    
+
+#   1.  Install Prerequisites
+sudo apt update && sudo apt install -y curl gnupg apt-transport-https lsb-release
+
+#   2.  import the Microsoft GPG Key
+curl -fsSL https://packages.microsoft.com/keys/microsoft.asc | sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/microsoft.gpg
+
+#   3.  Add Microsoft APT Repository
+echo "deb [arch=amd64,arm64,armhf] https://packages.microsoft.com/debian/13/prod trixie main" | sudo tee /etc/apt/sources.list.d/microsoft.list
+ 
+#   4.  Update Package Index
+sudo apt update
+
+#   5.  Verify Package Availability
+apt-cache policy powershell
+
+#   6.  Install PowerShell
+sudo apt update && sudo apt install -y powershell
+    
+#   7.  Launch PowerShell
+pwsh 
+    
+#   8.  exit PowerShell
+exit
+    

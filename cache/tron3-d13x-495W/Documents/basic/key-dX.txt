@@ -1,0 +1,39 @@
+--- rme.key.Debian.Linux
+
+
+&&& key.id.credentials
+
+    •   $:<pwd>
+        <!mate>     :=  "!mATe64.me"
+        <!peace>    :=  "!Peace.Of.Me.2017"    <17z>
+        <!samba>    :=  "!Samba2020"            <10z>
+        <!surf>     :=  "!Silversurfer2022"     <17z>
+
+    •   $:<pin>
+        <#dtm6>     :=  "090764"
+
+    •   $:<eml>.org
+        <@google>       :=  "phassen64@gmail.com"
+        <@msn>          :=  "phassen64@outlook.de"
+        <@1&1>          :=  "phassen64@online.de"
+        <@job2022>      :=  "peter.hassen.n.90489.2022@online.de"
+        <@mate.me>      :=  "peter.hassen@mate64.me"
+        <@pluto>        :=  "pluto64@e-mail.de"
+
+
+### !date:<2026-09-15>:Di
+
+
+
+!   key.GitHb
+    url:    https://github.com/
+    usr:    "phassen64"
+    pwd:    <!samba>
+    eml:    <@pluto>
+
+!   key.Google
+    url:    https://www.google.de/
+    usr:    <@google>  [EML]        * Google
+    pwd:    <!mate>
+    tel:    01702803354
+

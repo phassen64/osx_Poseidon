@@ -1,0 +1,321 @@
+#  	***************************************************************************
+#   Starter Debian13	dtm :[2026-09-13 ] 
+#  	***************************************************************************
+
+#	usage:
+#		first call:		* defined in .bashrc
+#			bash::	source $ $$v_STARTER
+
+#		second call:
+#			bash$> 	+go
+
+
+#   content:
+#		m:	function:F.helper
+#		m:	function:F.env
+#		m:	function:F.installer
+#		m:	function:F.set
+#		m:	body
+
+
+#   ===========================================================================
+#  	m:  function:F.helper
+#   ===========================================================================
+
+#
+#  s:  F.clearSreen
+#
+
+function f_fwk_clearScreen() {
+    clear && echo -en "\e[3J"
+}
+
+#
+#  	s:	F.alias
+#
+
+function f_fwk_aliasGet() {
+    s='GET alias...'; echo "$s"; sleep 1
+	alias| grep +  
+}
+
+
+function f_fwk_aliasSet(){
+    #   echo "f:aliasSet:BEG"
+	#   =:= m:alias
+    alias +ali='f_fwk_aliasGet'
+    alias +aliSet='f_fwk_aliasSet; alias | grep +';
+	#   =:= m:go
+    alias +go='source $v_STARTER'
+    alias +start=+go
+	#   =:= m:cd
+    alias +cdhome='cd $HOME && pwd'
+	#   =:= m:interpreter
+    alias +p='perl'
+    alias +r='ruby'
+    alias +y='python3'
+	#   =:= m:interpreter.python
+    alias python='python3'
+	#   =:= m:clr
+    alias +cls='clear'
+    alias +clr='+cls'
+	#   =:= m:env
+    alias +fct='typeset -F | grep f_'
+    alias +var='f_fwk_variableShow'
+	#   =:= m:ls
+    alias +ls='ls -l'
+    alias +ll='ls -al'
+	#   =:= m:gcc
+    alias +gcc='gcc -std=c89 -Wall -Werror'
+    alias +g++='g++ -Wall -Werror'
+	#   =:= m:remove
+    alias +rm='rm -rf'
+    #   echo "f:aliasSet:END"
+    return 1
+}
+
+function f_fwk_aliasClear() {
+    s='CLEAR alias...'; echo "$s"; sleep 1
+    unalias -a
+    sleep 1
+    alias
+    alias +alias=f_fwk_aliasSet; alias +alias
+}
+
+function f_fwk_aliasReset() {
+    s='RESET alias...'; echo "$s"; sleep 1
+    unalias -a
+    sleep 1
+    f_fwk_aliasSet
+}
+
+
+function f_fwk_interpreter_check() {
+    echo "f:interpreterCheck"
+    g++ --version
+    perl --version
+    python3 --version
+    ruby --version
+}
+
+
+
+#
+#  	s:	F.environment
+#
+
+function f_fwk_envShow(){
+    env | grep "v_" | sort
+}
+
+
+#   ===========================================================================
+#  	m:  function:F.env
+#   ===========================================================================
+
+function f_env_prompt() {
+    
+    local iPrompt=$1
+    
+    export PS1="$ "
+    
+    #   case
+    if [ $iPrompt == 1 ]; then
+        export PS1="\u@\h \$ "    # user & host
+    elif [ $iPrompt == 2 ]; then
+        export PS1="\u@\h:\w \$ "    # User, Hostname, and Current Directory
+    elif [ $iPrompt == 3 ]; then
+        export PS1="\w \$ "    # User, Hostname, and BaseName
+    elif [ $iPrompt == 4 ]; then
+        export PS1="[\t] \w \$ "    # User, Hostname, and BaseName
+    else
+        export PS1="\$ "
+    fi
+
+}
+
+
+function f_env_color_setId() {
+
+    #   standard
+    v_COL_ID_none=-1
+    v_COL_ID_black=0
+    v_COL_ID_gray=8
+
+    #   dark
+    v_COL_ID_red=1
+    v_COL_ID_green=2
+    v_COL_ID_yellow=3   # olive
+    v_COL_ID_blue=4
+    v_COL_ID_magenta=5
+    v_COL_ID_cyan=6
+    v_COL_ID_white=7
+
+    #   light - not for RPi
+    v_COL_ID_Lred=9
+    v_COL_ID_Lgreen=10
+    v_COL_ID_Lyellow=11
+    v_COL_ID_Lblue=12
+    v_COL_ID_Lmagenta=13
+    v_COL_ID_Lcyan=14
+    v_COL_ID_Lwhite=15
+
+}
+
+#   ===========================================================================
+#  	m:  function:F.installer
+#   ===========================================================================
+
+
+function f_ini_xRdp() {
+	sudo apt-get update
+	sudo apt-get upgrade -y
+	sudo apt-get install task-gnome-desktop -y
+	sudo systemctl set-default graphical.target
+	sudo apt-get update
+	sudo apt-get install xrdp -y
+}
+
+function f_ini_ruby() {
+   	sudo apt install ruby
+   	ruby --version
+}
+
+function f_ini_python() {
+	sudo apt-get update
+	sudo apt-get install python3 python3-pip python3-venv -y
+	python3 --version
+	pip3 --version
+}
+
+function f_ini_fireWall() {
+	sudo apt-get install ufw 
+	sudo ufw allow 3389/tcp
+	#   Reload your firewall settings:
+	sudo ufw reload
+}
+
+
+function f_ini_webGet() {
+	sudo apt-get update
+	sudo apt-get install -y wget
+	sudo apt-get update
+}
+
+#	sudo apt-get install g++
+#	sudo apt-get install qemu
+
+function f_ini_misc() {
+ 	sudo apt-get update
+	sudo apt-get install bc
+	sudo apt-get install git
+   	sudo apt-get install net-tools
+}
+
+function f_ini_utility() {
+	sudo apt-get update
+	sudo apt-get install bat		# 	:cat
+	sudo apt-get install curlie		#	:curl
+	sudo apt-get install duf		# 	:df
+    sudo apt-get install eza		#	:ls
+	sudo apt-get install gping		#	graphical :ping		
+	sudo apt-get install htop btop	#	:top
+	sudo apt-get install jq			#	JSon Parser
+	sudo apt-get install micro		#	terminal text editor
+	sudo apt-get install ncdu 		# 	disk usage analyzer
+	sudo apt-get install ripgrep 	# 	:grep
+}
+
+function f_ini_webbrowser_Chrome() {    
+    #   download  is Done!
+    #   sUrl="https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb" 
+    #   wget $sUrl
+    #   install
+    sudo apt-get install ./google-chrome-stable_current_amd64.deb -y
+    sImg='google-chrome-stable_current_amd64.deb'
+    sImg='./google-chrome-stable_current_amd64.deb'
+    sudo apt-get install $sImg -y
+}
+
+
+function f_ini_pwsh() {
+
+    # download
+    #   wget https://github.com/PowerShell/PowerShell/releases/download/v7.6.6/powershell-lts_7.6.6-1.deb_amd64.deb
+
+    # Install the package
+    #   sudo dpkg -i powershell-lts_7.6.6-1.deb_amd64.deb
+
+    # Resolve any missing dependencies automatically
+    sudo apt-get install -f    
+}
+
+
+#   ===========================================================================
+#  	m:  function:F.set
+#   ===========================================================================
+
+function f_set_host() {
+    #   set
+    sudo hostnamectl set-hostname $C_SVR_NAME
+    #   Find the line pointing and set name
+    sudo nano /etc/hosts
+    #   Verify the Change
+    #   Run this command to verify that the hostname updated:
+    hostnamectl    
+}
+    
+
+#   ===========================================================================
+#  	m:  body
+#   ===========================================================================
+
+#   s:  const
+C_SVR_NAME='tron3-d13x-385H'
+
+#   s:  var.Global
+v_SCP=`basename $BASH_SOURCE`
+if [ -z $1 ]; then
+    v_SCP__id=$OSTYPE   # gehtNICHT
+else
+    v_SCP__id=$1
+fi
+
+#   s:  variable
+v_SVR=$HOSTNAME
+v_DTM=`echo $(date '+%Y-%m-%d__%H:%M:%S')`
+
+#   header
+v_DTM=`echo $(date '+%y%m%d|%H%M%S')`
+echo "=== fwk.beg::{$v_DTM}:{$v_SVR}"
+sleep 1
+
+v_DTM_long=`echo $(date '+%Y-%m-%d__%H:%M:%S')`
+echo "+ date: {$v_DTM_long}"
+echo "+ bashName: {$v_SCP}"
+echo "+ scpId: {$v_SCP__id}"
+#   Server & Sser
+v_USR=$USER
+echo "+ svr: {$v_SVR}"
+echo "+ usr: {$v_USR}"
+
+#   s:  var.exitCode
+declare -i i=88
+v_FWK_exitCode=$i
+export v_FWK_exitCode
+
+#   s:  run some
+f_fwk_aliasSet
+
+#   s:  goto scpDir manually
+v_DIR="$HOME/Documents"
+cd $v_DIR
+v_PWD=`pwd`
+echo "+ pwd: {$v_PWD}"
+
+#   s:  set prompt
+f_env_prompt 4
+ 
+#   =*= s:  ready
+v_DTM=`echo $(date '+%y%m%d|%H%M%S')`
+echo "=== fwk.end::{$v_DTM}:{$v_FWK_exitCode}"
