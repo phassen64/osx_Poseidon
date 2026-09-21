@@ -1,5 +1,5 @@
 ###############################################################################
---- !log.2026.Debian.Linix
+--- !log.2026.Debian.Linux.Trixie
 ###############################################################################
 
 #   encoding.UTF8:
@@ -214,3 +214,92 @@ echo $HOSTNAME
 
 +   shutdown
     $>  sudo shutdown
+    
+    
+### !date:<2026-09-20>:So 
+
++   name server
+    You can run a name server on Debian Linux by installing 
+    the standard BIND9 Package via the command line.
+    Installation
+    Open your terminal and update the 
+    package list: 
+    $>  sudo apt update
+    Install BIND9 and utility tools: 
+    $>  sudo apt install bind9 bind9utils dnsutils
+    Start and enable the service: 
+    $>  sudo systemctl start bind9 and 
+    $>  sudo systemctl enable bind9
+
+
++   SSH Key 
+    SSH authentication relies on a matched key pair:
+    Private Key (id_ed25519): 
+        Kept strictly secret on your local computer. 
+        It signs data during authentication. 
+        Never share this file.
+    Public Key (id_ed25519.pub): 
+        Placed on any remote server you want to access (usually stored in ~/.ssh/authorized_keys). 
+        Anyone can see it without compromising your security.
+
++   Windows 
+    ps7$>   ssh-keygen    
+    ssh$>   (C:\Users\peter/.ssh/id_ed25519): kp260920
+        * noPhrase
+    key.Fingerprint 
+        SHA256:i4E4wRRcSXny6DIOplY7+KK0iXPns+QRD4QU29weezc peter@tron3
+        
++   SSH Key Fingerprint 
+    An SSH key fingerprint is a short sequence of char
+    acters created by 
+        hashing a long SSH public key.
+    Because full public keys are hundreds of characters long, 
+        fingerprints serve as a compact, human-readable unique identifier to verify server identities and validate public keys.
+
++   Griechischer Gott Hermes 
+
++   Google Cloud Engine 
+    i-260920-hermes
+    dom: phassen64@i-260920-hermes
+    usr: phassen64
+    
++   SSH key gen 
+
++   ipa = 34.32.83.165    
+
++   FileZilla connection 
+    <   ok    
+    
++   task sel 
+    >   sudo apt-get tasksel
+    curl https://dl.google.com/linux/linux_signing_key.pub | sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/chrome-remote-desktop.gpg
+
++   cURL (short for "Client URL") is a powerful command-line tool 
+    and library used for transferring data with URLs. 
+
+    It allows you to interact with web servers by sending and 
+        receiving data directly from your terminal.
+
+    Key Use Cases
+        Downloading files: 
+            You can download files from the internet using protocols like HTTP, HTTPS, or FTP.
+        Testing APIs: 
+            Developers use it to send requests (GET, POST, PUT, DELETE) to 
+            REST APIs to check responses.
+        Automating tasks: 
+            Because it runs in the terminal, 
+                it is heavily used in shell scripts to automate web interactions.
+
+function f_ini_Chrome Remote Desktop() {
+    curl https://dl.google.com/linux/linux_signing_key.pub | sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/chrome-remote-desktop.gpg
+    echo "deb [arch=amd64] https://dl.google.com/linux/chrome-remote-desktop/deb stable main" | sudo tee /etc/apt/sources.list.d/chrome-remote-desktop.list
+    sudo apt-get update
+    sudo DEBIAN_FRONTEND=noninteractive apt-get install --assume-yes chrome-remote-desktop
+}
+    
+    
+DISPLAY= /opt/google/chrome-remote-desktop/start-host \
+    --code="4/xxxxxxxxxxxxxxxxxxxxxxxx" \
+    --redirect-url="https://remotedesktop.google.com/_/oauthredirect" \
+    --name=$(hostname)
+    
