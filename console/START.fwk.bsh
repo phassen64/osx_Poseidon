@@ -1,0 +1,543 @@
+#!/bin/bash
+# no -F
+
+#  encoding.UTF8:
+#  !@€ƒ„…†‡ˆ‰Š‹ŒŽ +‘“”•—™š›œžŸ+¡¢£¤¥¦§¨©«¬®°±²³µ¶·¹º»¼½¾¿ÄÖÜÑ×ØÞßäæçîðñôö÷üýþÿ
+
+#   Starter.tron3 2024.01.21
+
+#   content:
+#       •   m:  functions
+#           •       f:  clearSreen
+#           •       f:  init
+#           •       f:  variable
+#           •       f:  path
+#           •       f:  interpreter
+#           •       f:  alias
+#           •       f:  update
+#           •       f:  libinit
+#           •       f:  compile
+#           •       f:  upload
+#       •   m:  body
+#           •       s:  init
+#           •       s:  include library
+#           •       s:  environment
+#           •       s:  setAny
+#           •       s:  using library
+#           •       s:  ready library
+
+
+#   ===========================================================================
+#   =:= m:  functions
+#   ===========================================================================
+
+#
+#   =*= f:  clearSreen
+#
+
+function f_starter_clear() {
+    clear && echo -en "\e[3J"
+}
+
+#
+#   =*= f:  starter.init
+#
+
+#   evId:9 = RPi
+
+function f_starter_init() {
+
+    local iEnvId=$1
+
+#   who
+    export v_PWD=`pwd`  ; # echo "PWD:=:<$v_PWD>"
+
+#   mount point && envId
+    export v_MOUNT_POINT=""
+
+#   ostype
+    iRc=1
+    if [ $OSTYPE == 'linux-gnu' ]; then
+        iRc=1
+    elif [ $OSTYPE == 'cygwin'  ]; then
+        iRc=2
+    elif [ $OSTYPE == 'msys'  ]; then
+        iRc=3
+        return 11
+    else
+        echo "unknownOs"
+    fi
+
+#   Name
+    export v_COMPUTER=$NAME
+
+    iEnvId=-1
+    if [ $v_COMPUTER == 'tron99' ]; then
+        iEnvId=9
+    elif [ $v_COMPUTER == 'tron1' ]; then
+        export v_MOUNT_POINT="/mnt"
+        iEnvId=1
+    elif [ $v_COMPUTER == 'tron3' ]; then
+        export v_MOUNT_POINT="/mnt"
+        iEnvId=3
+    elif [ $v_COMPUTER == 'tron7' ]; then
+        export v_MOUNT_POINT="/mnt"
+        iEnvId=7
+    elif [ $v_COMPUTER == 'tron8' ]; then
+        export v_MOUNT_POINT="/mnt"
+        iEnvId=8
+    elif [ $v_COMPUTER == 'rpi' ]; then
+        export v_MOUNT_POINT="/mnt"
+        iEnvId=9
+    else
+        export v_MOUNT_POINT="/mnt"
+        iEnvId=99
+    fi
+
+#   return
+    return $iEnvId
+}
+
+#
+#   =*= f:  variable
+#
+
+function f_starter_variableShow(){
+    env | grep "v_" | sort
+}
+
+function f_starter_variableSet(){
+
+    local iEnvId=$1
+
+#   working Dir
+    export v_DRIVE_d="$v_MOUNT_POINT/d"
+    export v_DRIVE_e="$v_MOUNT_POINT/e"
+    export v_DRIVE_h="$v_MOUNT_POINT/h"
+
+
+#   repository
+    export v_DIR_GIT="$v_DRIVE_d/repository/GIT"
+    export v_REPOSITORY_TUTOR="$v_DIR_GIT/console/tutorial"
+    export v_REPOSITORY_FRAMEWORK="$v_DIR_GIT/framework/pegasus"
+    export v_REPOSITORY_GUI="$v_DIR_GIT/gui"
+
+#   repository.udemy.git
+    export v_GIT_ID="udemy_git"
+    export v_DIR_GIT_UDEMY="$v_DIR_GIT/$v_GIT_ID"
+    export v_REPOSITORY_UDEMY="$v_DIR_GIT_UDEMY"
+
+#   GitHub
+    export v_GIT_URL="https://github.com/phassen64/udemy_git.git"
+    export v_GIT_USR="peter"
+    export v_GIT_EML="pluto64@e-mail.de"
+
+#   DIR.cmd - old
+    #   export v_DIR_cmd=$v_REPOSITORY_TUTOR
+
+#   DIR.tools
+   export v_DIR_tools="$v_DRIVE_d/MY/tools"
+
+#   DIR.tool
+    export v_DIR_TLS_GNU="$v_DIR_tools/MinGW"
+    export v_DIR_TLS_PRL="$v_DIR_tools/Perl"
+    export v_DIR_TLS_PYT="$v_DIR_tools/Python/root"
+    export v_DIR_TLS_RBY="$v_DIR_tools/Ruby"
+    export v_DIR_TLS_JAV="$v_DIR_tools/Java/jre"
+
+#   DIR.cmd
+    export v_DIR_CMD_BSH="$v_REPOSITORY_TUTOR/bsh"
+    export v_DIR_CMD_PRL="$v_REPOSITORY_TUTOR/pl"
+    export v_DIR_CMD_PYT="$v_REPOSITORY_TUTOR/py"
+    export v_DIR_CMD_RBY="$v_REPOSITORY_TUTOR/rb"
+    export v_DIR_CMD_C89="$v_REPOSITORY_TUTOR/c"
+    export v_DIR_CMD_CPP="$v_REPOSITORY_TUTOR/cpp"
+    export v_DIR_CMD_JAV="$v_REPOSITORY_TUTOR/j"
+
+#   DIR.tmp
+    export v_DIR_TMP="$HOME/tmp"
+
+#   DIR.log
+    export v_DIR_LOG="$HOME/log"
+    export v_DIR_WSP="$v_DRIVE_e/public/fwk/memory/TempSpace"
+
+#   DIR.log.extended
+    if [ $iEnvId != 9 ]; then
+        export v_DIR_LOG_EXTENDED="$v_DIR_WSP/log"
+    else
+        export v_DIR_LOG_EXTENDED="/var/tmp"
+    fi
+
+#   Starter
+    v_TMP=$v_SCP
+    export v_FWK_STARTER="$v_DIR_CMD_BSH/$v_TMP"
+
+#   Library
+    v_TMP="LIB.inc.bsh"
+    export v_FWK_LIBRARY="$v_DIR_CMD_BSH/$v_TMP"
+
+#   ExitCode
+    declare -i i=88
+    v_FWK_exitCode=$i
+    export v_FWK_exitCode
+}
+
+function f_starter_makeDir(){
+    # create missing dits
+    #   makeDir
+    sDir="$v_DIR_TMP"
+    if [ ! -d $sDir ]; then
+        mkdir $sDir
+    fi
+    sDir="$v_DIR_LOG"
+    if [ ! -d $sDir ]; then
+        mkdir $sDir
+    fi
+    sDir="$v_DIR_LOG_EXTENDED"
+    if [ ! -d $sDir ]; then
+        mkdir $sDir
+    fi
+    return 1
+}
+
+#
+#   =*= f:  path
+#
+
+function f_starter_pathDefine() {
+#   =:= m:MY
+    local iEnvId=$1
+    export v_PATH_global=$PATH
+    export v_PATH=
+    export v_PATH=$v_PATH:/usr/local/sbin
+    export v_PATH=$v_PATH:/usr/local/bin
+    export v_PATH=$v_PATH:/usr/sbin
+    export v_PATH=$v_PATH:/usr/bin
+    export v_PATH=$v_PATH:/sbin
+    export v_PATH=$v_PATH:/bin
+    export v_PATH=$v_PATH:$v_DIR_TLS_GNU/bin
+    export v_PATH=$v_PATH:$v_DIR_TLS_PRL/bin
+    export v_PATH=$v_PATH:$v_DIR_TLS_RBY/bin
+    export v_PATH=$v_PATH:$v_DIR_TLS_PYT
+    export v_PATH=$v_PATH:$v_DIR_TLS_PYT/Scripts
+    if [ $iEnvId != 1 ]; then
+        export v_PATH=$v_PATH:$v_DIR_TLS_JAV/bin
+    fi
+    return $iEnvId
+}
+
+#
+#   =*= f:  interpreter
+#
+
+function f_starter_interpreterDefine() {
+    echo "f:interpreterDefine"
+    export PERL5LIB="."
+    export CLASSPATH="$v_REPOSITORY_TUTOR/j/pkg_x"
+}
+
+function f_starter_interpreterCheck() {
+    local iEnvId=$1
+    echo "f:interpreterCheck"
+    g++ --version
+    perl --version
+    python --version
+    python3 --version
+    ruby.exe --version
+    if [ $iEnvId != 1 ]; then
+        java.exe -version
+    fi
+}
+
+#
+#   =*= f:  alias
+#
+
+function f_starter_aliasSet(){
+    #   echo "f:aliasSet:BEG"
+#   =:= m:alias
+    alias +alias='f_starter_aliasSet; alias | grep +';
+#   =:= m:go
+    alias +go='source $v_FWK_STARTER'
+    alias +start=+go
+#   =:= m:cd
+    alias +cdhome='cd $HOME && pwd'
+    alias +cdcmd='cd $v_REPOSITORY_TUTOR && pwd'
+    alias +cdb='cd $v_REPOSITORY_TUTOR/bsh && pwd'
+    alias +cdc89='cd $v_REPOSITORY_TUTOR/c && pwd'
+    alias +cdc2cpp='cd $v_REPOSITORY_TUTOR/c2cpp && pwd'
+    alias +cdcpp='cd $v_REPOSITORY_TUTOR/cpp && pwd'
+    alias +cdc='+cdcpp'
+    alias +cdp='cd $v_REPOSITORY_TUTOR/pl && pwd'
+    alias +cdr='cd $v_REPOSITORY_TUTOR/rb && pwd'
+    alias +cdj='cd $v_REPOSITORY_TUTOR/j && pwd'
+    alias +cdlog='cd $v_DIR_LOG && pwd'
+    alias +cdssh='cd ~/.ssh'
+    alias +cdtmp='cd $v_DIR_TMP && pwd'
+    alias +cdy='cd $v_REPOSITORY_TUTOR/py && pwd'
+#   =:= m:cd.git
+    alias +cdgit_fwk='cd $v_REPOSITORY_FRAMEWORK && pwd'
+    alias +cdgit_tut='cd $v_REPOSITORY_TUTOR && pwd'
+    alias +cdgit_gui='cd $v_REPOSITORY_GUI && pwd'
+    alias +cdgit_udm='cd $v_REPOSITORY_UDEMY && pwd'
+    #   =:= m:cfg   use: sudo -i
+    alias +cfg='sudo raspi-config'
+#   =:= m:interpreter
+    alias +p='perl'
+    alias +r='ruby'
+    alias +y='python3'
+    alias +j='java'
+#   =:= m:clr
+    alias +cls='clear'
+#   =:= m:env
+    alias +fct='typeset -F | grep f_'
+    alias +var='f_starter_variableShow'
+#   =:= m:ls
+    alias +ls='ls -l'
+    alias +ll='ls -al'
+#   =:= m:gcc
+    alias +gcc='gcc -std=c89 -Wall -Werror'
+    alias +g++='g++ -Wall -Werror'
+#   =:= m:git
+    alias +git='git status'
+    alias +gitcmm='f_starter_git_commit'
+    alias +gitdif='git diff'
+    alias +gitlog='git log  --abbrev-commit --pretty=oneline -20'
+    alias +gitlogx='git log --abbrev-commit --pretty=oneline --graph -20'
+#   =:= m:compile
+    alias +cc='f_starter_compile c00_dummy.cpp -o $v_RUN && ls -l $v_RUN'
+    alias +cr='$HOME/run.exe'
+    alias +up='f_starter_upload'
+#   =:= m:batch
+    alias +runB='cd $v_REPOSITORY_TUTOR/bsh && run_bshTutor.bsh'
+    alias +runC89='cd $v_REPOSITORY_TUTOR/c && run_c89Tutor.bsh'
+    alias +runCpp='cd $v_REPOSITORY_TUTOR/cpp && run_cppTutor.bsh'
+    alias +runC='+runCpp'
+    alias +runP='cd $v_REPOSITORY_TUTOR/pl && run_plTutor.bsh'
+    alias +runY='cd $v_REPOSITORY_TUTOR/py && run_pyTutor.bsh'
+    alias +runR='cd $v_REPOSITORY_TUTOR/rb && run_rbTutor.bsh'
+    alias +runJ='cd $v_REPOSITORY_TUTOR/j && run_jTutor.bsh'
+#   =:= m:remove
+    alias +rm='rm -rf'
+    #   echo "f:aliasSet:END"
+    return 1
+}
+
+
+function f_starter_aliasClear() {
+    s='CLEAR alias...'; echo "$s"; sleep 1
+    unalias -a
+    sleep 1
+    alias
+    alias +alias=f_starter_aliasSet; alias +alias
+}
+
+function f_starter_aliasReset() {
+    s='RESET alias...'; echo "$s"; sleep 1
+    unalias -a
+    sleep 1
+    f_starter_aliasSet
+}
+
+#
+#   =*= f:  update
+#
+
+function f_starter_update() {
+    local iMode=$1
+    case $iMode in
+        1)
+            sudo apt install net-tools
+            sudo apt install python
+            sudo apt install python3
+            sudo apt install pip
+            sudo apt install ruby
+            sudo apt install default-jdk
+            sudo apt install g++
+            sudo apt install bc
+            sudo apt install git
+            sudo apt install qemu
+            ;;
+        2)
+            echo "*** update"
+            sudo apt update
+            echo "*** upgrade..."
+            sleep 1
+            sudo apt upgrade
+            ;;
+        8)
+            echo "*** clean"
+            sudo apt-get clean
+            ;;
+        9)
+            echo "*** autoremove"
+            sudo apt-get autoremove
+            ;;
+        *)
+            echo "*** default listing"
+            sudo apt list --installed
+        ;;
+    esac
+}
+
+#
+#   =*= f:  libInit
+#
+
+function f_starter_libInit() {
+    iEnvId=1
+    f_lib_colorInit
+    echo "f:libInit:callDTM"
+    f_lib_DTM
+    echo "f:libInit:calcExitCode"
+    f_lib_calcExitCode
+    echo "f:libInit:callAliasSet"
+    f_lib_aliasSet
+    f_lib_variableSet
+    f_lib_prompt 3
+}
+
+#
+#   =*= f:  compile
+#
+
+function f_starter_compile(){
+    #   g++ kann nicht auf einem falschen FileSytem arbeiten
+    local sFile=$1
+    g++ $sFile -o $HOME/run.exe
+}
+
+#
+#   =*= f:  upload
+#
+
+function f_starter_upload(){
+    echo "none"
+}
+
+#
+#   =*= f:  git
+#
+
+function f_starter_git_init(){
+    git config --global user.name "phassen64"
+    git config --global user.email "pluto64@e-mail.de"
+    git config --list
+}
+
+
+function f_starter_git_clone(){
+    pushd $v_DIR_GIT_UDEMY
+    git clone $v_GIT_URL $v_GIT_ID
+    popd
+}
+
+function f_starter_git_prepare(){
+    s='gitPrepare...'; echo "$s"
+#   global .gitconfig at $HOME
+    git config --global user.name $v_GIT_USR
+    git config --global user.email $v_GIT_EML
+    git config --global core.autocrlf false
+#   current config
+    git config --local core.filemode false
+    git config --local remote.origin.url $v_GIT_URL
+	git config --local remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*"
+	git config --local branch.master.remote "origin"
+	git config --local branch.master.merge "refs/heads/master"
+	git config --local core.symlinks "false"
+#   show system-global-local
+    s='### config.system'; echo "$s"
+    git config --list --system
+    s='### config.global'; echo "$s"
+    git config --list --global
+    s='### config.local'; echo "$s"
+    git config --list --local
+}
+
+function f_starter_git_commit(){
+    s='gitCommit ...'; echo "$s"
+    f='repo_fwkPegasus.prj'
+    d="$v_REPOSITORY_FRAMEWORK/single/cfg/IDM/ue2x/_prj/"
+    p="$d$f"
+    git commit -m "update" $p
+}
+
+#
+#   =*= f:  ssh
+#
+
+function f_starter_ssh_init(){
+    eval `ssh-agent -s`
+    ssh-add ~/.ssh/id_ed25519
+}
+
+
+function f_starter_menu_info() {
+    local s=$1
+    printf '    i:%s\n'  "$s"
+}
+
+
+#   ===========================================================================
+#   =:= m:  body
+#   ===========================================================================
+
+#   set globals
+v_SCP=`basename $BASH_SOURCE`
+if [ -z $1 ]; then
+    v_SCP__id=$OSTYPE   # gehtNICHT
+else
+    v_SCP__id=$1
+fi
+
+#   clear
+#   f_starter_clear
+
+#   header
+v_DTM=`echo $(date '+%Y-%m-%d__%H:%M:%S')`
+echo "=== STARTER.START::{$v_DTM}:{$v_SCP__id}"
+sleep 1
+
+#   init
+f_starter_init $v_SCP__id; v_ENV__id=$?
+f_starter_menu_info "starterInit => <$v_ENV__id>"
+
+#   variableSet
+f_starter_variableSet $v_ENV__id; iRc=$?
+f_starter_menu_info "variableSet => <$iRc>"
+f_starter_makeDir iRc=$?
+
+#   setAlias
+f_starter_aliasSet; iRc=$?
+f_starter_menu_info "aliasSet => <$iRc>"
+
+#   definePath
+f_starter_pathDefine 123;   iRc=$?
+f_starter_menu_info "pathDefine => <$iRc>"
+
+#   load Library ?
+if [ $OSTYPE == 'msys' ]; then
+
+    f_starter_menu_info "osType==MSYS:noLib:return"
+
+else
+    f_starter_menu_info "UsingLibrary"
+    PATH=$v_PATH
+
+    #   =*= s:  include library
+    echo ">>> include fwkLib:=<$v_FWK_LIBRARY>"
+    source $v_FWK_LIBRARY
+    echo "<<< endOfInclude fwkLib"
+
+    #   =*= s:  using library
+    f_starter_libInit
+
+    #   =*= s:  set interpreter
+    f_starter_interpreterDefine
+    f_starter_interpreterCheck  $v_ENV__id; iRc=$?
+
+fi
+
+#   =*= s:  ready
+v_DTM=`echo $(date '+%Y-%m-%d__%H:%M:%S')`
+echo "=== STARTER.ENDS!::{$v_DTM}:{$v_SCP__id}:{$v_FWK_exitCode}"

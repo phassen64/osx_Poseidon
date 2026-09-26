@@ -1,0 +1,264 @@
+#!/bin/bash
+
+#   ****************************************************************************
+#   TUTORIAL BASH:strings
+#   ****************************************************************************
+
+#   https://linuxhint.com/bash_scripting_tutorial_beginners/
+
+<<  STRING
+    :01 definion        :   '',""
+    :02 string length   :   n=${#s},expr length,...
+    :03 compare         :   == != empty(-z)
+    :04 concatenate     :   s=$s1$s2
+    :05 split           :   IFS=',', read -ra aVal <<< "$s"
+    :06 cut strings     :   sObj=${sSrc:$iPos}
+    :07 splice          :   sObj=${sSrc:$iPos:$iLen}
+    :08 commands        :   x=$( ls /etc | wc -l )
+STRING
+
+#   =*= :   include and init
+source LIB.inc.bsh
+z_EXE=$BASH_SOURCE; z_SCP=`basename $z_EXE`
+declare -i z_iEc=$1
+declare -i z_iRc
+
+#   =*= :   header
+f_lib_header "$z_SCP" $LINENO $z_iEc; z_iEc=$?; z_iRc=$z_iEc
+echo -e "*** THM:strings"
+
+#   !PHA: alias not working in runTest
+alias +puts="f_lib_puts"
+alias +puts
+#   exit
+
+
+#   =*= :   body
+
+#
+#   =*= :01 definion
+#
+
+f_lib_menu "definition" $LINENO
+
+f_lib_submenu "simple '...' strings" $LINENO
+#   immediately definition with '...' and usage
+x='ABCDEFGHIJ'
+y='peter'
+f_lib_puts 'STRING1:$x:$y'   # "STRING1:$x:$y"
+
+f_lib_submenu 'evaluated-strings:"..." ' $LINENO
+f_lib_puts "STRING2:$x:$y"   # "STRING2:ABCDEFGHIJ:peter"
+
+#
+#   =*= :02 string length
+#
+
+f_lib_menu "string length" $LINENO
+
+f_lib_submenu 'using:${#s}' $LINENO
+s='ABCDEFGHIJ'
+l=${#s}
++puts "length1 of string:<'$s'> is :<'$l'>"   # 10
+
+f_lib_submenu 'using:expr length' $LINENO
+s='ABCDEFGHIJ'
+l=expr length "$s"
+f_lib_puts "length2 of string:<'$s'> is :<'$l'>"   # 10
+
+f_lib_submenu 'using:`expr $str`' $LINENO
+s='ABCDEFGHIJ'
+l=`expr "$s" : '.*'`
+f_lib_puts "length3 of string:<'$s'> is :<'$l'>"   # 10
+
+s="Bash Shell Scripting Tutorial"
+length=`expr "$str" : '.*'`
+f_lib_puts "length4 of string:<'$s'> is :<'$l'>"   # 29
+
+#
+#   =*= :03 string compare
+#
+
+f_lib_menu "string compare" $LINENO
+
+s1="Learn Bash"
+s2="Learn Bash"
+s3="Learn Bash now"
+s4="lEarn basH"
+
+#
+#   =*= : if ==
+#
+
+f_lib_submenu 'operator: ==' $LINENO
+
+t1="compare:\ts1==s2"
+if [ "$s1" == "$s2" ];then echo -e "$t1:TRUE"; else echo -e "$t1:FALSE";fi # true
+
+t1="compare:\ts1==s3"
+if [ "$s1" == "$s3" ];then echo -e "$t1:TRUE";else echo -e "$t1:FALSE";fi  # false
+
+t1="compare:\ts1==s4"
+if [ "$s1" == "$s3" ];then echo -e "$t1:TRUE";else echo -e "$t1:FALSE";fi  # false
+#   => bash compares case sensitive
+
+#
+#   =*= : if !=
+#
+
+f_lib_submenu 'operator: !=' $LINENO
+
+t1="compare:\ts1!=s3"
+if [ "$s1" != "$s3" ]; then echo -e "$t1:TRUE"; else echo -e "$t1:FALSE"; fi # true
+
+#
+#   =*= : if -z str
+#
+
+f_lib_submenu 'check empty if -z <str>' $LINENO
+
+s1='peter'; t1="?empty(s1)\t"
+s2=;    t1="?empty(s2)\t"
+if [ -z "$s1" ]; then echo -e "$t1:true!"; else echo -e "$t1:FALSE"; fi
+if [ -z "$s2" ]; then echo -e "$t1:true!"; else echo -e "$t1:FALSE"; fi
+
+#
+#   =*= :04 concatenate strings
+#
+
+f_lib_menu "concatenate strings" $LINENO
+
+s1="LearnABC"
+s2="123"
+f_lib_text "s1:<$s1>;s2:<$s2>" $LINENO
+
+#   append
+f_lib_submenu "by append: s=s1+s2" $LINENO
+s=$s1
+s+=$s2
+f_lib_text "s=\$s1;s+=\$s2 : <$s>" $LINENO
+
+#   side by side
+f_lib_submenu "by side by side: s=s1s2" $LINENO
+s=$s1$s2
+f_lib_text "s=\$s1\$s2 : <$s>" $LINENO
+
+#   string in another
+f_lib_submenu "string in another" $LINENO
+s="$s1$s2"
+f_lib_text "s=\"\$s1\$s2\" : <$s>" $LINENO
+
+#
+#   =*= :05 split strings
+#
+
+#   ==* :by IFS
+
+f_lib_menu "string splitting using:IFS" $LINENO
+f_lib_submenu "split by using:IFS" $LINENO
+f_lib_info "IFS:=internal field separator"
+
+f_lib_text "split by SPACE" $LINENO
+
+s="Learn to Split a String in Bash Scripting"
+IFS=' '                 # space is set as delimiter
+read -ra aVal <<< "$s"  # str 's' is read into an array as tokens separated by IFS
+declare -p aVal
+
+f_lib_text "split by comma" $LINENO
+
+s="Peter,Paul,Mary,Britney and Kevin"
+IFS=','
+read -ra aVal <<< "$s"
+i=0
+for x in "${aVal[@]}"; do # access each element of array
+    echo "[$i]:$x"; let "i += 1";
+done
+
+#   ==* :by multipleStrings
+
+f_lib_submenu "split by using:multiple string" $LINENO
+
+#   define
+sSrc="LearnABCtoABCSplitABCaABCString"  # source string
+sSep=ABC   # separator or delimiter
+
+#   combine src and separator
+sObj=$sSrc$sDel
+
+#   using Parameter-Expansions
+<< -*-Parameter-Expansions
+    ${parameter%%word}  Remove the longest matching suffix pattern.
+    ${parameter#word}   Remove shortest matching prefix pattern.
+-*-Parameter-Expansions
+
+#   loop for remove sep-patterns
+
+#!PHA:endlos
+: '
+    aRc=()
+    i=0
+    while [[ $sObj ]]; do
+         i+=1
+        aRc+=( "${sObj%%"$sSep"*}" );
+        sObj=${sObj#*"$sSep"};
+    done;
+    declare -p aRc
+'
+
+#
+#   =*= :06 cut strings (cut first part)
+#
+
+f_lib_menu "cut strings" $LINENO
+sSrc="ABCDEFGHIJKLMNOPQRSTUVWXYZ"  # source string
+f_lib_text "SRC:<$sSrc>" $LINENO
+iPos=5
+sObj=${sSrc:$iPos}  # cut first part
+f_lib_puts "*{sSrc:$iPos} => '$sObj'"
+
+
+#
+#   =*= :07 splice strings
+#
+
+f_lib_menu "splice strings" $LINENO
+
+sSrc="ABCDEFGHIJKLMNOPQRSTUVWXYZ"  # source string
+
+f_lib_text "SRC:<$sSrc>" $LINENO
+
+iPos=5;iLen=3
+sObj=${sSrc:$iPos:$iLen}
+f_lib_puts "*{sSrc:$iPos:$iLen} => '$sObj'"
+
+#
+#   =*= :08 commands
+#
+
+f_lib_menu "commands" $LINENO
+x=$( ls /etc | wc -l )
+x=$( typeset -F | grep f_ )
+echo $x
+
+#   is not an array !
+
+: '
+    aFct=$x
+    f_lib_puts "* show fct array"
+    for iFct in "${aFct[@]}"; do
+        echo "*** function[$i]:check:<$iFct>:"
+    done
+    f_lib_puts "*show as array"
+
+    IFS='\n'
+    read -ra aFct <<< "$x"
+    aFct = ($(echo $x | tr "\n"))
+    declare -p aFct
+'
+
+#   exit $LINENO
+
+#   =*= :   footer
+
+f_lib_footer $z_SCP $LINENO $z_iRc $z_iEc

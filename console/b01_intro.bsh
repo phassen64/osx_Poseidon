@@ -1,0 +1,330 @@
+#!/bin/bash
+
+#   !url:
+#   https://www.gnu.org/savannah-checkouts/gnu/bash/manual/bash.html#The-Set-Builtin
+#   -a:
+#   Each variable or function that is created or modified is
+#   given the export attribute and marked for export to the environment of subsequent commands.
+#   -f:     Disable filename expansion (globbing)
+#   -n
+#   Read commands but do not execute them.
+#   This may be used to check a script for syntax errors.
+#   This option is ignored by interactive shells.
+
+
+#   !url:
+#   https://ryanstutorials.net/bash-scripting-tutorial/bash-if-statements.php
+
+#   ****************************************************************************
+#   TUTORIAL BASH:   [1]:introduction
+#   ****************************************************************************
+
+#   runMe with: $> . <ThisScript>.bsh # with ecCode=='1' or '100'
+
+<<  =*=
+    !Content of my Tutorial 2020:
+        b01:    introduction
+        b02:    data types overview
+        b03:    operator
+        b04:    controlFlow if-fi-case, for,while
+        b05:    string
+        b06:    array && hash
+        b07:    function
+        b08:    file
+=*=
+
+<<  overview
+    !Overview:  introduction
+        :01     clear screen
+        :02     comment     :   single,multi-line,hereDoc
+        :03     repeat myself
+        :04     include and run library functions
+        :05     output      :   simple,mutli-line,special echo,printf
+        :06     variable SET+READ
+        :07     show colored texts
+        :08     logging
+        :09     exit or return
+overview
+
+#
+#   =*= :01 clear screen
+#
+
+#   only call sceen, when called without parameters
+if [ "$1" == "" ]; then
+    clear && echo -en "\e[3J"
+fi
+
+#
+#   =*= :02 comment     a:single,b:multiLine
+#
+
+#   a)  single-line with '#'
+
+    #   this is a comment
+
+#   b)  using multi-line comment ::   < ": '" ... "'" >
+
+: '
+        multi-comment-line-1-Comment
+        multi-comment-line-2-Comment
+'
+
+#   c)  multi-line using here doc "<<" <HereVar>....<HereVar>
+<< ---xHereComment1!
+    erste zeile
+    zweite zeile
+    letzte zeile
+---xHereComment1!
+
+
+#   d)  other syntax    ": <" '<HereVar>'....<HereVar>
+: <<'xHereComment2'
+    otto
+    ernst
+xHereComment2
+
+#
+#   =*= :03 repeat myself
+#
+
+#   this script
+z_EXE=$BASH_SOURCE
+z_SCP=`basename $z_EXE`
+
+#   EC/RC
+declare -i z_iEc=$1
+declare -i z_iRc
+
+#
+#   =*= :04 include library
+#
+
+source LIB.inc.bsh
+
+#   header
+sId='TUTOR'
+f_lib_header $z_SCP $LINENO $z_iEc; z_iEc=$?; z_iRc=$z_iEc
+
+#   workinf dir
+f_lib_menu "pwd" $LINENO
+sPwd=`pwd`
+echo "scpPwd($z_SCP):=<$sPwd>"
+
+#   log && tmp Dir
+f_lib_menu "logDir" $LINENO
+echo "Log:=<$v_DIR_LOG>"
+f_lib_trace $z_SCP $LINENO "DIR:= '$v_DIR_LOG' && '$v_DIR_TMP'"
+
+#   env check
+f_lib_menu "envCheck" $LINENO
+f_lib_text "envCheck"
+f_lib_env_check $v_TRUE
+
+#   show version
+f_lib_versionShow
+
+#
+#   =*= :05 output      a:simple,b:multiLine
+#
+
+f_lib_menu "output" $LINENO
+
+#   a)  simple
+f_lib_menuS1 "simple" $LINENO
+
+#   b)  multi-line echo             ::   < ":'" ... ":'" >
+f_lib_menuS1 "multiline" $LINENO
+
+cat << EOF
+=== Content of Tutorial:
+    b01:    Introduction
+    b02:    data types overview
+    b03:    operator
+    b04:    controlFlow if-fi-case, for,while
+    b05:    string
+    b06:    array && hash
+    b07:    function
+    b08:    file
+EOF
+
+<< echo
+echo -<OPTION> <STRING>
+OPTION:={n,e,E}
+-n      Trailing outline is omitted echo -n "Learn Bash"
+-E      Disable interpretation of backslash escaped characters echo -E "Learn\nBash"
+-e      Enable interpretation of backslash escaped characters
+echo
+
+#
+#   =*= :echo
+#
+
+f_lib_menuS1 "echo Test777" $LINENO
+
+#   1)  echo with no line feed
+f_lib_text "echo -n" $LINENO
+#   echo {-b,-e,-n} <STRING>
+echo -n "ABC:"
+echo -n "123:"
+echo "END;"
+f_lib_text "echoTestEnd"
+
+
+#   2)  echo escape sequence interpretation
+f_lib_text "echo -e" $LINENO
+
+echo -e "Dieses ist ein\n"
+echo -e "mehrzeiliger Text mit \tTabulator!"
+
+#   3)  echo escape sequence interpretation
+f_lib_text "echo -E" $LINENO
+echo -E "Dieses ist ein zweiter\n"
+echo -E "Text mit keinem \tTabulator!"
+
+#   4) puts color
+f_lib_puts "Direkter Text" $v_COL_ID_cyan
+
+#
+#   =*= :printf
+#
+
+#   !URL:https://www.computerhope.com/unix/uprintf.htm
+#   usage: $>printf [-v var] [ [<format><argument>]+ | --help  ]
+
+f_lib_menuS1 "printf" $LINENO
+i=12; j=-5;
+declare s;
+declare x;
+
+#   integer : using printd "formatStr" <Variable>
+x=4711; f_lib_text "printf.integer <$x>" $LINENO
+printf "\tX:=<\'%i\'>\n" $x            #   x:=<'4711'>     # %i
+
+#   integer : using printf %04i
+x=815; f_lib_text "printf.integer with leading zero <$x>" $LINENO
+printf  "\tX:=<\'%04i\'>\n" $x         #   x:=<'0815'>    # %i
+
+#   integer : using print -v <Variable> "formatStr" <Variable>
+x=007; f_lib_text "printf+++.integer using:print -v <Variable>" $LINENO
+printf -v s "\tX:=<\'%03d\'>\n" $x
+#  !PHA:   printf -v  ignoriert TAB \t -
+#   daher wird bei f~lib~print der TAB durchgefuehrt
+f_lib_print "\t$s" $v_LIB__PRT_onNLnoPx   #  x:=<'007'>      # %03d
+
+#   integer with %i == %d
+x=12; f_lib_text "printf.integer <$x>" $LINENO
+printf -v s "x:=<\'%03i\'>" $x        #   x:=<'012'>      # %i
+f_lib_print "\t$s" $v_LIB__PRT_onNLnoPx  $v_COL_ID_Dmagenta
+printf -v s "x:=<\'%05d\'>" $x        #   x:=<'00012'>    # %d
+f_lib_print "\t$s" $v_LIB__PRT_onNLnoPx  $v_COL_ID_Dmagenta
+
+#   strings
+x='Otto Walkes'
+f_lib_text "printf.string <$x>" $LINENO
+printf -v s "x:=<\'%s\'>" "$x"            #   x:=<'Otto Walkes'>
+f_lib_print "\t$s" $v_LIB__PRT_onNLnoPx
+
+#   the same with tablator
+printf "\tx:=<\'%s\'>:2\n" "$x"             #   x:=<'Otto Walkes'>:2
+
+x='abcdefgij'
+f_lib_text "printf.string <$x>" $LINENO
+printf -v s "x:=<\'%.*s\'>" 5 $x          #   x:=<'abcde'>
+f_lib_print "\t$s" $v_LIB__PRT_onNLnoPx
+
+#   char
+x='Otto Walkes'
+f_lib_text "printf.char <$x>" $LINENO
+printf -v s "x:=<\'%c\'>" "$x"            #   x:=<'O'>
+f_lib_print "\t$s" $v_LIB__PRT_onNLnoPx
+
+#   float
+x=1.23
+f_lib_text "printf.float <$x>" $LINENO
+printf -v s "f:<%08.3f>" "$x"               #   x:=<'0001.230'>
+f_lib_print "\t$s" $v_LIB__PRT_onNLnoPx
+
+#   output:dec,hex,oct
+#   use $> printf -v <Variable> <'formatStr'> <'inputStr>'+
+x=64
+f_lib_text "printf decimal($x)"    $LINENO
+printf -v s "dec:=<'%d'> hex:<'%x'> oct:<'%o'>" "$x" "$x" "$x"
+f_lib_print "\t$s" $v_LIB__PRT_onNLnoPx $v_COL_ID_magenta
+
+#   input : octcal
+x=0123
+f_lib_text "printf octal(0123)"    $LINENO
+printf -v s "dec:=<'%d'> hex:<'%x'> oct:<'%o'>" "$x" "$x" "$x"
+f_lib_print "\t$s" $v_LIB__PRT_onNLnoPx $v_COL_ID_magenta
+
+#   input : hex
+x=0x1AbC
+f_lib_text "printf hex(0x1AbC)"  $LINENO
+printf -v s "dec:=<'%d'> hex:<'%X'> oct:<'%o'>" "$x" "$x" "$x"
+f_lib_print "\t$s" $v_LIB__PRT_onNLnoPx $v_COL_ID_magenta
+
+
+#
+#   =*= :06 variable SET+READ
+#
+
+f_lib_menu "set+read" $LINENO
+
+#   a)  integer
+i=3
+echo "myInteger:= <$i>"
+
+#   b)  string
+s='peter'
+echo "myString:= <$s>"
+
+#   c)  multi-line defined string
+sm='peterSm1
+Ende'
+echo "mySm1:= <$sm>"   # string contains newline NL char
+
+#   d)  multi-line defined string with removed NL
+sm='peterSm2
+Ende'
+c='\n'
+smx=$(echo $sm | tr -d $c)
+#   chomp(sm)
+echo "mySm2= <$smx>"   # string contains now SP instead of NL
+
+#
+#   =*= :07 show colored text
+#
+
+f_lib_menu "colored text" $LINENO
+
+f_lib_puts "this text is red"  $v_COL_ID_red
+f_lib_puts "this green"        $v_COL_ID_green
+f_lib_puts "and I am blue"     $v_COL_ID_blue
+f_lib_puts "or may be yellow"  $v_COL_ID_yellow
+
+#
+#   =*= :08 logging
+#
+
+f_lib_menu "logging" $LINENO
+
+#   using logfile - the variable is defined in the include file
+#   v_sLogfile="${z_SCP}.log"
+
+d=$(date +%s.%N)
+s="<<< TIME now is:$d"
+echo "I will log the text:'$s' into logfile:<$v_sLogfile>"
+echo "$s" >> $v_sLogfile   #    append into existing logfile
+
+#
+#   =*= :09 exit code and return
+#
+
+#   exit    -   stops script and probably the bash process
+#   return  -   return from a function - not inside a body
+
+f_lib_footer $z_SCP $LINENO $z_iRc
+
+#   use exit code with:
+#   $>b01_intro.bsh; echo $?

@@ -1,5 +1,5 @@
 #  	***************************************************************************
-#   Starter Debian13	dtm :[2026-09-13 ] 
+#   Starter Debian13	dtm :[2026-09-25]
 #  	***************************************************************************
 
 #	usage:
@@ -36,7 +36,7 @@ function f_fwk_clearScreen() {
 
 function f_fwk_aliasGet() {
     s='GET alias...'; echo "$s"; sleep 1
-	alias| grep +  
+	alias| grep +
 }
 
 
@@ -70,6 +70,8 @@ function f_fwk_aliasSet(){
     alias +g++='g++ -Wall -Werror'
 	#   =:= m:remove
     alias +rm='rm -rf'
+	#   =:= m:misc
+    alias +reboot='f_env_reboot'
     #   echo "f:aliasSet:END"
     return 1
 }
@@ -114,11 +116,11 @@ function f_fwk_envShow(){
 #   ===========================================================================
 
 function f_env_prompt() {
-    
+
     local iPrompt=$1
-    
+
     export PS1="$ "
-    
+
     #   case
     if [ $iPrompt == 1 ]; then
         export PS1="\u@\h \$ "    # user & host
@@ -162,48 +164,20 @@ function f_env_color_setId() {
 
 }
 
+function f_env_reboot() {
+    i=3
+    echo "doReboot in [$i]" & sleep $i
+    sudo reboot
+}
+
+function f_env_setPwd_root() {
+    sudo passwd root
+}
+
+
 #   ===========================================================================
 #  	m:  function:F.installer
 #   ===========================================================================
-
-
-function f_ini_xRdp() {
-	sudo apt-get update
-	sudo apt-get upgrade -y
-	sudo apt-get install task-gnome-desktop -y
-	sudo systemctl set-default graphical.target
-	sudo apt-get update
-	sudo apt-get install xrdp -y
-}
-
-function f_ini_ruby() {
-   	sudo apt install ruby
-   	ruby --version
-}
-
-function f_ini_python() {
-	sudo apt-get update
-	sudo apt-get install python3 python3-pip python3-venv -y
-	python3 --version
-	pip3 --version
-}
-
-function f_ini_fireWall() {
-	sudo apt-get install ufw 
-	sudo ufw allow 3389/tcp
-	#   Reload your firewall settings:
-	sudo ufw reload
-}
-
-
-function f_ini_webGet() {
-	sudo apt-get update
-	sudo apt-get install -y wget
-	sudo apt-get update
-}
-
-#	sudo apt-get install g++
-#	sudo apt-get install qemu
 
 function f_ini_misc() {
  	sudo apt-get update
@@ -219,7 +193,7 @@ function f_ini_utility() {
 	sudo apt-get install curlie		#	:curl
 	sudo apt-get install duf		# 	:df
     sudo apt-get install eza		#	:ls
-	sudo apt-get install gping		#	graphical :ping		
+	sudo apt-get install gping		#	graphical :ping
 	sudo apt-get install htop btop	#	:top
 	sudo apt-get install jq			#	JSon Parser
 	sudo apt-get install micro		#	terminal text editor
@@ -227,9 +201,112 @@ function f_ini_utility() {
 	sudo apt-get install ripgrep 	# 	:grep
 }
 
-function f_ini_webbrowser_Chrome() {    
+function f_ini_gui() {
+    sudo apt-get update && sudo apt install tasksel
+    sudo tasksel
+}
+#   anschliessend installieren...
+#   +   Linux Desktop Umgebung
+#   +   xfce installieren
+#   +   SSH WebServer
+
+function f_ini_display() {
+    sudo apt-get install lightdm -y
+    sudo dpkg-reconfigure lightdm
+}
+
+function f_ini_dpkg_restore() {
+    sudo apt-get update
+    sudo apt-get --fix-broken install
+    sudo dpkg --configure -a
+}
+
+function f_ini_upgrade() {
+    sudo apt-get update
+    sudo apt-get list --upgradable
+    sudo apt-get upgrade
+}
+
+function f_ini_fireWall() {
+	sudo apt-get install ufw
+	sudo ufw allow 3389/tcp
+	#   Reload your firewall settings:
+	sudo ufw reload
+}
+
+function f_ini_xRdp() {
+	sudo apt-get update
+	sudo apt-get install xrdp -y
+}
+
+#   https://docs.cloud.google.com/architecture/chrome-desktop-remote-on-compute-engine#objectives
+function f_ini_DesktopEnvironment_xfce() {
+    sudo DEBIAN_FRONTEND=noninteractive \
+        apt install --assume-yes xfce4 desktop-base dbus-x11 xscreensaver
+    sudo bash -c 'echo "exec /etc/X11/Xsession /usr/bin/xfce4-session" > /etc/chrome-remote-desktop-session'
+    sudo systemctl disable lightdm.service
+    sudo apt install --assume-yes task-xfce-desktop
+}
+
+f_ini_hdd_secondaryStorage() {
+
+    local p_iMode=$1
+
+    #   define my secondary storage
+
+    #   hddName
+    d=/dev/disk/by-id/google-d-260922-eros
+
+    #   UUID
+    i=117f965f-9dd8-418e-92a9-2c3f0a1aaf28
+
+    #   case
+    if [ $p_iMode == 1 ]; then
+        #   m:  show
+        ls -l /dev/disk/by-id/google-*
+    elif [ $p_iMode == 2 ]; then
+        #   m:  format
+        sudo mkfs.ext4 -m 0 -E lazy_itable_init=0,lazy_journal_init=0,discard $d
+    elif [ $p_iMode == 3 ]; then
+        #   m:  verify.format
+        sudo blkid $d
+    elif [ $p_iMode == 4 ]; then
+        #   mount
+        sudo mkdir -p /mnt/disks/data
+        sudo mount -o discard,defaults $d /mnt/disks/data
+        sudo chmod a+w /mnt/disks/data
+    elif [ $p_iMode == 5 ]; then
+        #   verify.mount
+        df -h /mnt/disks/data
+    else
+        echo "hello hdd2"
+    fi
+}
+
+function f_ini_ruby() {
+   	sudo apt install ruby
+   	ruby --version
+}
+
+function f_ini_python() {
+	sudo apt-get update
+	sudo apt-get install python3 python3-pip python3-venv -y
+	python3 --version
+	pip3 --version
+}
+
+function f_ini_webGet() {
+	sudo apt-get update
+	sudo apt-get install -y wget
+	sudo apt-get update
+}
+
+#	sudo apt-get install g++
+#	sudo apt-get install qemu
+
+function f_ini_webbrowser_Chrome() {
     #   download  is Done!
-    #   sUrl="https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb" 
+    #   sUrl="https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb"
     #   wget $sUrl
     #   install
     sudo apt-get install ./google-chrome-stable_current_amd64.deb -y
@@ -247,16 +324,39 @@ function f_ini_pwsh() {
     sudo dpkg -i powershell-lts_7.6.6-1.deb_amd64.deb
 
     # Resolve any missing dependencies automatically
-    sudo apt-get install -f    
+    sudo apt-get install -f
 }
 
 function f_ini_VsCode() {
-    n='code-1.138.0-1789458812.el8.x86_64'
-    f=$n.rpm
-    d=$n.deb
-    sudo alien $f
+    d='code_1.138.0-1789458813_amd64.deb'
     sudo dpkg -i $d
 }
+
+function f_ini_nameServer() {
+    sudo apt update
+    sudo apt install bind9 bind9utils dnsutils
+    sudo systemctl start bind9
+    sudo systemctl enable bind9
+}
+
+function f_ini_Chrome_Remote_Desktop() {
+    wget https://dl.google.com/linux/direct/chrome-remote-desktop_current_amd64.deb
+    sudo apt install -y ./chrome-remote-desktop_current_amd64.deb
+}
+
+function f_ini_desktop_environment_cinnamon() {
+    sudo apt-get install cinnamon-desktop-environment -y
+    sudo apt-get tasksel
+    sudo apt-get install lightdm -y
+    sudo dpkg-reconfigure lightdm
+    sudo apt update && sudo apt install task-cinnamon-desktop
+    sudo update-alternatives --config x-session-manager
+}
+
+function f_ini_helper_package() {
+    sudo apt-get install flatpack 
+}
+
 
 #   ===========================================================================
 #  	m:  function:F.set
@@ -269,16 +369,19 @@ function f_set_host() {
     sudo nano /etc/hosts
     #   Verify the Change
     #   Run this command to verify that the hostname updated:
-    hostnamectl    
+    hostnamectl
 }
-    
+
 
 #   ===========================================================================
 #  	m:  body
 #   ===========================================================================
 
+#   clear host
+clear
+
 #   s:  const
-C_SVR_NAME='tron3-d13x-385H'
+C_SVR_NAME='i-260922-eros'
 
 #   s:  var.Global
 v_SCP=`basename $BASH_SOURCE`
@@ -315,14 +418,17 @@ export v_FWK_exitCode
 f_fwk_aliasSet
 
 #   s:  goto scpDir manually
-v_DIR="$HOME/Documents"
-cd $v_DIR
+#   v_DIR="$HOME/Documents"
+#   cd $v_DIR
 v_PWD=`pwd`
 echo "+ pwd: {$v_PWD}"
 
 #   s:  set prompt
 f_env_prompt 4
- 
+
+#   s:  starter
+v_STARTER="START.fwk.bsh"
+
 #   =*= s:  ready
 v_DTM=`echo $(date '+%y%m%d|%H%M%S')`
 echo "=== fwk.end::{$v_DTM}:{$v_FWK_exitCode}"

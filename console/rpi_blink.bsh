@@ -1,0 +1,10 @@
+#!/bin/bash
+gpio -1 mode 12 out
+while true; do
+	gpio -1 write 12 1
+        sleep 1
+	gpio -1 write 12 0
+	sleep 0.5
+done;
+gpio -1 mode 12 in
+
