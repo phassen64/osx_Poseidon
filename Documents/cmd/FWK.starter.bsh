@@ -1,3 +1,5 @@
+#!/bin/bash
+
 #  	***************************************************************************
 #   Starter Debian13	dtm :[2026-09-27].doc
 #  	***************************************************************************
@@ -17,6 +19,21 @@
 #		m:	function:F.set
 #		m:	body
 
+#   variables.input
+#       i:  v_STARTER       * .bashrc
+
+#   variables.output (+var)
+#       o:  v_FWK_starter
+#       o:  v_FWK_commandDir
+#       o:  v_FWK_exitCode
+#       o:  v_FWK_tutorDir
+#       o:  v_FWK_scratchDir
+#       o:  v_FWK_loggingDir
+#       o:  v_PWD
+#       o:  v_RND
+#       o:  v_TMP =: scratch
+#       o:  v_USR_docRoot
+#       o:  v_VCS
 
 #   ===========================================================================
 #  	m:  function:F.helper
@@ -51,7 +68,11 @@ function f_fwk_aliasSet(){
 	#   =:= m:cd
     alias +cdhome='cd $HOME && pwd'
     alias +cdcmd='cd $v_FWK_commandDir && pwd'
+    alias +cdlog='cd $v_FWK_loggingDir && pwd'
     alias +cdtmp='cd $v_FWK_scratchDir && pwd'
+    alias +cdtemp=+cdtmp
+    alias +cdvcs='cd $v_VCS && pwd'
+    alias +cdvcs_TS='cd $v_VCS/testSuite && pwd'
 	#   =:= m:cd.tuutor
     alias +cdtutor='cd $v_FWK_tutorDir && pwd'
     alias +cdb='cd $v_FWK_tutorDir/bsh && pwd'
@@ -435,10 +456,15 @@ v_FWK_library=$v_FWK_commandDir && export v_FWK_library
 v_DIR=$v_USR_docRoot/console
 v_FWK_tutorDir=$v_DIR && export v_FWK_tutorDir
 
-#   scratch
-v_FWK_scratchDir=$HOME/temp && export v_FWK_scratchDir
+#   scratch == tempDir
+v_FWK_scratchDir=$v_USR_docRoot/temp && export v_FWK_scratchDir
+v_TMP=$v_FWK_scratchDir && export v_TMP
+
+#   loging Dir
+v_FWK_loggingDir=$v_USR_docRoot/logging && export v_FWK_loggingDir
 
 #   other dirs
+v_VCS=$v_USR_docRoot/repository && export v_VCS
 
 
 #   =*= s:  ready

@@ -189,11 +189,17 @@ function f_run_compiler() {
 #   =*= :m02:body
 #   ===========================================================================
 
+#   #   input
+v_DIR_TMP=$v_FWK_scratchDir
+v_DIR_LOG=$v_FWK_scratchDir
+v_DIR_LOG_EXTENDED=$v_FWK_loggingDir
+
 #   =*= :   header
 v_SCP=`basename $BASH_SOURCE`
 v_SCP_bdy="${v_SCP%.*}"
 v_SCP_ext="${v_SCP##*.}"
 
+#   =*= :   load library
 source LIB.inc.bsh
 
 #   =*= :   color

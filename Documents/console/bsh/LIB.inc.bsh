@@ -277,14 +277,17 @@ function f__logs() {
             if [ $bCrt != $v_TRUE ]; then
                 return $LINENO
             fi
+
             #   =*= save new logfile name
             sFile=`basename $sFile`
-            echo "--- dir ={$v_FWK_scratchDir} file={$sFile}"
             v_sLogfile=$v_FWK_scratchDir/$sFile
-            echo "--- logfileName ={$v_sLogfile}"
+            echo "--- logFile.new ={$v_sLogfile}"
+
             #   =*= create new logfile
             #   echo "!L: =*= create logfile:$v_sLogfile" - already in header
+
             echo -E "$sStr(*by f~~logs at:[$LINENO]*)" > $v_sLogfile;;
+
         *)  return $LINENO;;
     esac
     return 0
