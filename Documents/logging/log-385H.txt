@@ -1,0 +1,478 @@
+###############################################################################
+--- !log.2026.Debian.Linix
+###############################################################################
+
+#   encoding.UTF8:
+    !@€ƒ„…†‡ˆ‰Š‹ŒŽ +‘“”•—™š›œžŸ+¡¢£¤¥¦§¨©«¬®°±²³µ¶·¹º»¼½¾¿ÄÖÜÑ×ØÞßäæçîðñôö÷üýþÿ
+
+### 260914
+
+### !date:<2026-09-13>:So
+
+>>> xpr ::  Psh2DebianLinux [260913]
+
+1.  Install wget if not already present
+    bash$>  sudo apt-get install -y wget
+
+2.  Download the latest stable release (adjust version URL as needed)
+    bash$>  wget https://github.com/PowerShell/PowerShell/releases/download/v7.6.6/powershell-lts_7.6.6-1.deb_amd64.deb
+
+3.  Install the package
+    bash$>  sudo dpkg -i powershell-lts_7.6.6-1.deb_amd64.deb
+
+4.  Resolve any missing dependencies automatically
+    bash$>  sudo apt-get install -f
+
+5.  Launch PowerShell
+    bash$>  pwsh
+
+6.  exit PowerShell
+    pwsh$>  exit
+
+<<< xpr ::  Psh2DebianLinux.
+
+
++   add xrdp to linux
+    https://help.servers.guru/hc/help-center/articles/1786183137-install-gui-for-linux-server
+
+
++   ekiwi
+https://ekiwi-blog.de/
+https://ekiwi-blog.de/23473/
+
+
+>>> xpr::Ubuntu && HyperVm <2026-09-13>
+
++   Setting up Ubuntu 20.04 with Hyper-V in Windows + XRDP
+    im Chrome auf Deutsch
+    https://www.youtube.com/watch?v=uIf0hEIrF30
+    https://ekiwi-blog.de/23473/
+    <   keinen sicheren Start wählen
+
++   Enhanced Session - nur in der VM
+    adm@psh$>   Get-VM 
+    adm@psh$>   Set-VM -VMName 'tron3-d13x-385H' -EnhancedSessionTransportType 'HvSocket'
+
+### Achtung :
+    Nicht die Ubuntu SH starten !
+
+<<< xpr::Ubuntu && HyperVm
+
++   Hostname
+echo $HOSTNAME
+
+
+
+### !date:<2026-09-14>:Mo
+
++   neue VM
+    vmName: tron3-d13x-385H
+    ip:     192.168.178.105
+
++   Windows HyperVm
+        Generation          :   2
+        Network Adapter     :    Default-Switch besser
+        Network Adapter     :    VS-external
+        Enable Security Boot :  false
+        HDD:    32GB
+        externer user:peter
+        Guest Services : false
+
++   inside Linux
+        keyboard: German
+        kein root password
+        user: peter pwd:"!tron0"
+        alles in einer partition
+        mirror: Germany - debian.org
+        packages: + webserver + SSH 1397 packages
+        timezone : London
+
++   packages installieren
+    f_ini_xRdp() & testen
+    shortcuts erstellen und sichern
+
++   installer aufrufen innerhalb vom $v_STARTER
+    +   f_ini_ruby()
+    +   f_ini_python()
+    +   f_ini_fireWall()
+    +   f_ini_webGet()
+    +   f_ini_misc()
+    +   f_ini_utility()
+
++   installer Chrome
+    f_ini_webbrowser_Chrome()
+
+
+### !date:<2026-09-16>:Mi
+
+
++   vmw:
+    tron3-d13x-495W
+
++   usr:peter pwd:"tron"
+
++   install gui:cinnamon
+    $>sudo apt-get install cinnamon-desktop-environment
+
++   $>hostnamectl set-hostname tron3-d13x-495W
+
++   change gui
+    https://www.youtube.com/watch?v=ILaEYof7JLA
+    $>  sudo apt install cinnamon-desktop-environment -y
+    $>  sudo apt tasksel
+    $>  sudo apt install lightdm -y
+    $>  sudo dpkg-reconfigure lightdm
+    $>  sudo apt update && sudo apt install task-cinnamon-desktop
+    $>  sudo update-alternatives --config x-session-manager
+
++   Font
+    setzen
+
++   Windows Laufwerk einbinden
+    $>  su root
+    $   export $PS1 = "$ "dpkg
+    $>  sudo mkdir -p /mnt/hgfs
+    $>  sudo vmhgfs-fuse .host:/ /mnt/hgfs -o allow_other -o uid=$(id -u)
+
++   rm dirTree force
+    $>  rm -rf <dir>
+
++   git repository
+    $>  cd /home/peter/Documents/repository/tux
+    $>  git config --global user.name "Debian Woman Attendant"
+    $>  git config --global user.email "plut64@e-mail.de"
+    $>  git init
+    $>  echo "hello rep" > readme.txt
+    $>  git add readme.txt
+
++   git clone https://username:password@github.com/username/repository.git
+
++   GitHub logout
+    https://github.com/logout
+
++   Debian linux Pakete grafisch deinstallieren mit Synaptic
+    $>  sudo apt update
+    $>  sudo apt install synaptic
+
+
++   change language input
+    $>  sudo dpkg-reconfigure locales
+
++   change language keyboard
+    sudo dpkg-reconfigure keyboard-configuration
+
++   add sudoers
+    As root edit /etc/sudoers and place the following line:
+    peter ALL=(ALL) NOPASSWD:ALL
+
++   Linux Assistant
+    https://www.linux-assistant.org/
+
++   Cinnamon|GTK3/4 Themes
+    https://www.opendesktop.org/s/Cinnamon/p/1403328/
+    Cinnamon White Zero Light
+    $>  sudo apt update
+    $>  sudo apt install xorg lightdm cinnamon-desktop-environment
+
++   git clone
+    $>  git clone -b branch-name https://github.com
+
++   VsCode
+    https://code.visualstudio.com/docs/setup/linux
+    Download and install the VS Code .rpm package manually when repository installation is not available. Auto-update does not work unless the repository is installed.
+    Install the downloaded .rpm package with your package manager,
+        for example with dnf:
+    Bash:
+    $>  sudo dnf install <file>.rpm
+    --- use alien
+    sudo apt-get install alien
+    sudo alien my_package.rpm
+    sudo dpkg -i my_package.deb
+
+
+
+### !date:<2026-09-17>:Do
+
++   repository rename tux->osx
++   update 260917-12:45
+
+
+### !date:<2026-09-18>:Fr
+
++   In Debian,
+    defining or changing your standard (default) Desktop Environment (DE)
+    depends on whether you are installing Debian from
+        a)  scratch or
+        b)  switching between already installed
+    environments.
+
++   change DE
+    Method 2: System-Wide Default via Command Line
+    $>  sudo update-alternatives --config x-session-manager
+    Method 3:
+    * install or de-install task manager
+    $>  sudo tasksel
+
++   shutdown
+    $>  sudo shutdown
+
+
+### !date:<2026-09-20>:So
+
++   name server
+    You can run a name server on Debian Linux by installing
+    the standard BIND9 Package via the command line.
+    Installation
+    Open your terminal and update the
+    package list:
+    $>  sudo apt update
+    Install BIND9 and utility tools:
+    $>  sudo apt install bind9 bind9utils dnsutils
+    Start and enable the service:
+    $>  sudo systemctl start bind9 and
+    $>  sudo systemctl enable bind9
+
+
++   SSH Key
+    SSH authentication relies on a matched key pair:
+    Private Key (id_ed25519):
+        Kept strictly secret on your local computer.
+        It signs data during authentication.
+        Never share this file.
+    Public Key (id_ed25519.pub):
+        Placed on any remote server you want to access (usually stored in ~/.ssh/authorized_keys).
+        Anyone can see it without compromising your security.
+
++   Windows
+    ps7$>   ssh-keygen
+    ssh$>   (C:\Users\peter/.ssh/id_ed25519): kp260920
+        * noPhrase
+    key.Fingerprint
+        SHA256:i4E4wRRcSXny6DIOplY7+KK0iXPns+QRD4QU29weezc peter@tron3
+
++   SSH Key Fingerprint
+    An SSH key fingerprint is a short sequence of char
+    acters created by
+        hashing a long SSH public key.
+    Because full public keys are hundreds of characters long,
+        fingerprints serve as a compact, human-readable unique identifier to verify server identities and validate public keys.
+
++   Griechischer Gott Hermes
+    https://de.wikipedia.org/wiki/Griechische_Mythologie
+
++   Google Cloud Engine
+    i-260920-hermes
+    dom: phassen64@i-260920-hermes
+    usr: phassen64
+
++   SSH key gen
+
++   ipa = 34.32.83.165
+
++   FileZilla connection
+    <   ok
+
++   task sel
+    >   sudo apt-get tasksel
+    curl https://dl.google.com/linux/linux_signing_key.pub | sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/chrome-remote-desktop.gpg
+
++   cURL (short for "Client URL") is a powerful command-line tool
+    and library used for transferring data with URLs.
+
+    It allows you to interact with web servers by sending and
+        receiving data directly from your terminal.
+
+    Key Use Cases
+        Downloading files:
+            You can download files from the internet using protocols like HTTP, HTTPS, or FTP.
+        Testing APIs:
+            Developers use it to send requests (GET, POST, PUT, DELETE) to
+            REST APIs to check responses.
+        Automating tasks:
+            Because it runs in the terminal,
+                it is heavily used in shell scripts to automate web interactions.
+
+function f_ini_Chrome Remote Desktop() {
+    curl https://dl.google.com/linux/linux_signing_key.pub | sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/chrome-remote-desktop.gpg
+    echo "deb [arch=amd64] https://dl.google.com/linux/chrome-remote-desktop/deb stable main" | sudo tee /etc/apt/sources.list.d/chrome-remote-desktop.list
+    sudo apt-get update
+    sudo DEBIAN_FRONTEND=noninteractive apt-get install --assume-yes chrome-remote-desktop
+}
+
+
+DISPLAY= /opt/google/chrome-remote-desktop/start-host \
+    --code="4/xxxxxxxxxxxxxxxxxxxxxxxx" \
+    --redirect-url="https://remotedesktop.google.com/_/oauthredirect" \
+    --name=$(hostname)
+
+
+
+### !date:<2026-09-21>:Mo
+
+
++   google vm
+    i-260920-herme
+
++   ping 34.32.101.160
+
+
+wget https://dl.google.com/linux/direct/chrome-remote-desktop_current_amd64.deb
+sudo apt install -y ./chrome-remote-desktop_current_amd64.deb
+rm chrome-remote-desktop_current_amd64.deb
+
++   Connnect via FileZilla
+
+To connect FileZilla to a Google Cloud Compute Engine VM,
+you must use SFTP (SSH File Transfer Protocol) with an SSH key pair.
+
+
++   install Xfce    - aktivate
+    $>  sudo tasksel
+
+
+$>  Check the Active Desktop Environment
+    To find out which Desktop Environment (DE) is currently
+        set as default or running on your Debian Linux system,
+        you can check using the terminal commands below.
+
+    $>  echo $XDG_CURRENT_DESKTOP
+    $<  (empty)
+
+    $>  echo $DESKTOP_SESSION
+    $<  (empty)
+
+
+$>  systemctl get-default
+$<  graphical.target
+
+
+
++   check free RAM
+    $>  free -h
+    $>  sudo dmidecode -t memory
+
++   disk usage
+    $> duf
+
++   enter RDP password
+    $>  sudo passwd YOUR_USERNAME
+    $<  pwd="!tron0"
+    $>  sudo adduser xrdp ssl-cert
+    $>  sudo adduser xrdp shadow
+    $>  groups xrdp
+    $<  xrdp shadow ssl-cert
+    $>  sudo systemctl restart xrdp
+    *   besser - der Benutzer wird erkannt
+
++   Debian Linux RAM recommended
+    Installation Profile	Minimum RAM	Recommended RAM	Typical Use Case
+    Headless / Server (No GUI)
+        256 MB – 512 MB	    1 GB – 2 GB	Home servers, Docker containers, DNS, micro-VMs
+    Lightweight Desktop (Xfce, LXDE, LXQt)
+            512 MB – 1 GB	2 GB – 4 GB	Older PCs, basic web browsing,
+                lightweight office work
+        2 GB	4 GB – 8 GB
+
++   Google Cloud
+    increase RamSize 2GB
+    model small
+
++   check xrdp log
+    $>  sudo tail -f /var/log/xrdp.log /var/log/xrdp-sesman.log
+
++   enable Desktop
+    $>  sudo tasksel
+
++   configure Desktop Environment
+    $>  sudo apt update && sudo apt install task-xfce-desktop
+
++   switch Desktop Environment
+    $>  sudo update-alternatives --config x-session-manager
+    $<  * es kann eine Nummer gewählt werden
+
++   configure display mananger
+    $>  sudo dpkg-reconfigure gdm3
+    $>  sudo dpkg-reconfigure lightdm
+
+
+### !date:<2026-09-22>:Di
+
++   neue VM
+    i-260922-eros
+
++   ipa = 8.228.36.74
+
+### !date:<2026-09-23>:Mi
+
+>>> xpr:prepare xRDP:<2026-09-23>
+
+<   using <gce> :  "i-260922-eros"
+    <usr>       :   "phassen64"
+    <pwd>       :   "!tron0"
+
++   set root password
+    $>  sudo passwd root
+        <pwd>
+
++   add me to sudoers group
+    user$>  su -    * short for su root
+    root$>  usermod -aG sudo <usr>
+
++   check me
+    root$>  groups <usr>
+
++   leave me
+    root$>  exit
+
++   set my password
+    user$>  sudo passwd $USER
+
+<<< xpr:prepare xRDP.
+
+
+>>> xpr:use second disc:<2026-09-23>
+
+    <hdd>       :   "Ramazotti"
+
+*   Identify the new disk
+    $>  ls -l /dev/disk/by-id/google-*
+    $>  d=/dev/disk/by-id/google-d-260922-eros
+    $>  sudo mkfs.ext4 -m 0 -E lazy_itable_init=0,lazy_journal_init=0,discard $d
+
+*   Verify
+    $>  sudo blkid $d
+    $<  It should display a TYPE="ext4" and an assigned UUID.
+
+*   Create a mount directory and mount the disk
+
+    $>  n=Ramazotti * hddName
+    $>  sudo mkdir -p /mnt/disks/data
+    $>  sudo mount -o discard,defaults $d /mnt/disks/$n
+    $>  sudo chmod a+w /mnt/disks/$n
+
+*   Get UUID
+    $>  sudo blkid $d
+    $<  /dev/disk/by-id/google-d-260922-eros:
+        UUID="117f965f-9dd8-418e-92a9-2c3f0a1aaf28"
+            BLOCK_SIZE="4096" TYPE="ext4"
+    $>  i=117f965f-9dd8-418e-92a9-2c3f0a1aaf28  * save UUID
+
+*   add my access rights to hdd
+    $>  sudo chown -R <usr>:<usr> /mnt/disks/$n
+
+<<< xpr:use second disc.
+
+
+### !date:<2026-09-27>:So 
+
++   run lampp     
+    $   /opt/lampp/xampp
+
++   switch between desktops(Workspaces)
+    <CTRL> + <ALT> + <ArrowLeft> | <ArrowRight>
+    
++   manage workspace open (add/delete)
+    <CTRL> + <ALT> + <ArrowUp>
+
++   show instances in 1 workspace
+    <CTRL> + <ALT> + <ArrowDown>
