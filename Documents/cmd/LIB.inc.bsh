@@ -278,10 +278,7 @@ function f__logs() {
                 return $LINENO
             fi
             #   =*= save new logfile name
-            sFile=`basename $sFile`
-            echo "--- dir ={$v_FWK_scratchDir} file={$sFile}"
-            v_sLogfile=$v_FWK_scratchDir/$sFile
-            echo "--- logfileName ={$v_sLogfile}"
+            v_sLogfile=$sFile
             #   =*= create new logfile
             #   echo "!L: =*= create logfile:$v_sLogfile" - already in header
             echo -E "$sStr(*by f~~logs at:[$LINENO]*)" > $v_sLogfile;;
@@ -1233,9 +1230,7 @@ v_LIB__DTM_FORMAT_now="+%y%m%d%H%M%S"
 v_LIB__DTM_FORMAT_obj="+%y%m%d::%H%M%S"
 v_LIB__DTM_FORMAT_src="+%Y-%m-%d.%H:%M:%S"
 v_LIB__DTM_FORMAT_hdr="+%Y.%m.%d__%H:%M:%S"
-
-#  baseName
-v_FWK_LIBRARY=`basename $BASH_SOURCE`
+v_LIB__EXE=`basename $v_FWK_LIBRARY`
 v_LIB__TIME=$(date -r $v_FWK_LIBRARY $v_LIB__DTM_FORMAT_obj)
 
 #   =*= s:  printVarff

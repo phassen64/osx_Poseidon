@@ -1,5 +1,5 @@
 #  	***************************************************************************
-#   Starter Debian13	dtm :[2026-09-27]
+#   Starter Debian13	dtm :[2026-09-27].doc
 #  	***************************************************************************
 
 #	usage:
@@ -50,6 +50,18 @@ function f_fwk_aliasSet(){
     alias +start=+go
 	#   =:= m:cd
     alias +cdhome='cd $HOME && pwd'
+    alias +cdcmd='cd $v_FWK_commandDir && pwd'
+    alias +cdtmp='cd $v_FWK_scratchDir && pwd'
+	#   =:= m:cd.tuutor
+    alias +cdtutor='cd $v_FWK_tutorDir && pwd'
+    alias +cdb='cd $v_FWK_tutorDir/bsh && pwd'
+    alias +cdc89='cd $v_FWK_tutorDir/c && pwd'
+    alias +cdp='cd $v_FWK_tutorDir/pl && pwd'
+    alias +cdr='cd $v_FWK_tutorDir/rb && pwd'
+    alias +cdy='cd $v_FWK_tutorDir/py && pwd'
+    alias +cdcpp='cd $v_FWK_tutorDir/cpp && pwd'
+    alias +cdw='cd $v_FWK_tutorDir/wps && pwd'
+    alias +cdwps=+cdw
 	#   =:= m:interpreter
     alias +p='perl'
     alias +r='ruby'
@@ -100,14 +112,9 @@ function f_fwk_interpreter_check() {
     ruby --version
 }
 
-
-
-#
-#  	s:	F.environment
-#
-
-function f_fwk_envShow(){
-    env | grep "v_" | sort
+function f_fwk_variableShow() {
+    #   echo "f:varShow"
+    printenv | grep "^v_"  | sort
 }
 
 
@@ -382,7 +389,7 @@ sleep 1
 
 #   s:  var.exitCode
 declare -i i=88
-v_FWK_exitCode=$i
+v_FWK_exitCode=$i 
 export v_FWK_exitCode
 
 #   s:  run some
@@ -391,6 +398,7 @@ f_fwk_aliasSet
 #   s:  show.PWD
 v_PWD=`pwd`
 echo "+ pwd: {$v_PWD}"
+export v_PWD
 
 #   show starter
 echo "+ str: {$v_STARTER}"
@@ -404,9 +412,34 @@ then
 else
     echo "+ rnd: {$v_RND} -> noInfoMore."
 fi
+export v_RND
 
 #   s:  set prompt - only short dirName
 f_env_prompt 5
+
+
+#   DocRoot
+v_USR_docRoot=$HOME/Documents && export v_USR_docRoot
+
+#   FWK starter
+v_FWK_starter=$v_STARTER && export v_FWK_starter
+
+#   dir
+v_DIR=$v_USR_docRoot/cmd
+v_FWK_commandDir=$v_DIR && export v_FWK_commandDir
+
+#   FWK library needed for libary
+v_FWK_library=$v_FWK_commandDir && export v_FWK_library
+
+#   tutor
+v_DIR=$v_USR_docRoot/console
+v_FWK_tutorDir=$v_DIR && export v_FWK_tutorDir
+
+#   scratch
+v_FWK_scratchDir=$HOME/temp && export v_FWK_scratchDir
+
+#   other dirs
+
 
 #   =*= s:  ready
 v_DTM=`echo $(date '+%y%m%d|%H%M%S')`

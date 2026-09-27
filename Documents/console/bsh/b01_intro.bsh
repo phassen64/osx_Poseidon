@@ -105,6 +105,8 @@ source LIB.inc.bsh
 #   header
 sId='TUTOR'
 f_lib_header $z_SCP $LINENO $z_iEc; z_iEc=$?; z_iRc=$z_iEc
+exit
+
 
 #   workinf dir
 f_lib_menu "pwd" $LINENO
@@ -155,6 +157,8 @@ OPTION:={n,e,E}
 -E      Disable interpretation of backslash escaped characters echo -E "Learn\nBash"
 -e      Enable interpretation of backslash escaped characters
 echo
+
+exit 
 
 #
 #   =*= :echo
