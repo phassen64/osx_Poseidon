@@ -1,0 +1,62 @@
+#!/bin/bash
+
+#   =*= x:  Tutorial-PRL  2024
+
+#   include:    LIB.inc.bsh
+#               TUT.cNN.inc.bsh
+
+#   ============================================================================
+#   =*= m:  helper
+#   ============================================================================
+
+#   =*= p:  script-language-dependend function
+function f_scl_clean() {
+    local bTrc=$v_TRUE
+    f_lib_trace ${FUNCNAME[0]} $LINENO "clean.SCL" $bTrc
+    pushd "$v_DIR_TMP" > /dev/null
+    f_do_remove '\.tmp\.txt$'
+    popd > /dev/null
+    return -1
+}
+
+#   ============================================================================
+#   =*= m:  body
+#   ============================================================================
+
+#   =*= p:  script
+z_SCP=`basename $BASH_SOURCE`
+z_ARG_cmd=$1
+z_ARG_opt=$2
+
+#   =*= p:  include.library : defines TRUE && FALSE
+source "../bsh/LIB.inc.bsh"; f_lib_colorInit
+
+#   =*= p:  batch
+v_MODE_BATCH=$v_TRUE; export v_MODE_BATCH
+
+#   =*= p:  script-language-dependend data read only
+declare -r z_SCL_COMPILER='?CPL'
+declare -r z_SCL_INTERPRETER='perl'
+declare -r z_SCL_id='p'             #   id of fileNames
+declare -r z_SCL_name='TutorPRL'    #   nameOfThisScript
+declare -r z_SCL_extSrc='pl'        #   extention
+declare -r z_SCL_extObj='?bin'      #   output extension
+declare -r z_SCL_extLog='log'
+declare -r z_SCL_logObj_prefix="PRL"
+declare -r z_SCL_logSrc_prefix=$z_SCL_logObj_prefix
+
+#   =*= p:  language action
+declare -r  z_bDoCompile=$v_FALSE
+declare -r  z_bDoInterPreter=$v_TRUE
+
+#   =*= p:  script control
+declare -r  z_bTrc=$v_FALSE
+declare -r  z_bDbg=$v_FALSE
+declare -r  z_bVbs=$v_FALSE     # verbose logging
+
+#   =*= p:  logging
+declare -r  z_bLog=$v_TRUE
+
+#   =*= p:  include body
+z_INCLUDE="../bsh/TUT.COMMON.inc.bsh"
+source $z_INCLUDE

@@ -1,0 +1,73 @@
+[Desktop Entry]
+Version=1.0
+# Encoding=UTF-8
+
+Name=KShutdown
+Name[sr]=К-Гашење
+Name[sr@latin]=K-Gašenje
+Name[sr@ijekavian]=К-Гашење
+Name[sr@ijekavianlatin]=K-Gašenje
+
+Comment=A graphical shutdown utility
+Comment[pl]=Graficzne narzędzie do zamykania systemu
+Comment[sr]=Напредна алатка за гашење рачунара
+Comment[sr@latin]=Napredna alatka za gašenje računara
+Comment[sr@ijekavian]=Напредна алатка за гашење рачунара
+Comment[sr@ijekavianlatin]=Napredna alatka za gašenje računara
+
+# visible in the menu instead of "KShutdown"
+GenericName=System Shut Down Utility
+GenericName[pl]=Narzędzie do zamykania systemu
+GenericName[sr]=Алатка за гашење система
+GenericName[sr@latin]=Alatka za gašenje sistema
+GenericName[sr@ijekavian]=Алатка за гашење система
+GenericName[sr@ijekavianlatin]=Alatka za gašenje sistema
+
+Keywords=Shutdown;Halt;Reboot;Hibernate;Suspend;Lock;Logout;
+Keywords[pl]=Wyłącz;Zamknij;Uruchom;Hibernuj;Wstrzymaj;Zablokuj;Wyloguj;
+
+Exec=kshutdown
+Icon=kshutdown
+Type=Application
+
+# DOC: http://api.kde.org/4.x-api/kdelibs-apidocs/kdecore/html/classKAboutData.html
+X-DBUS-ServiceName=net.sf.kshutdown
+# DOC: http://standards.freedesktop.org/menu-spec/latest/apa.html
+Categories=Utility;KDE;Qt;X-SuSE-DesktopUtility;
+StartupNotify=true
+# TODO: StartupWMClass
+
+Actions=Halt;Reboot;Hibernate;Suspend;Lock;Logout;
+
+# NOTE: The localized action names should match translations in ./po directory
+#       and in ./src/plugins.cpp file (Action::getDisplayName)
+
+[Desktop Action Halt]
+Name=Shut Down
+Icon=system-shutdown
+Exec=kshutdown --halt --confirm-auto
+
+[Desktop Action Reboot]
+Name=Restart
+Icon=system-reboot
+Exec=kshutdown --reboot --confirm-auto
+
+[Desktop Action Hibernate]
+Name=Hibernate
+Icon=system-suspend-hibernate
+Exec=kshutdown --hibernate --confirm-auto
+
+[Desktop Action Suspend]
+Name=Sleep
+Icon=system-suspend
+Exec=kshutdown --suspend --confirm-auto
+
+[Desktop Action Lock]
+Name=Lock
+Icon=system-lock-screen
+Exec=kshutdown --lock
+
+[Desktop Action Logout]
+Name=Logout
+Icon=system-log-out
+Exec=kshutdown --logout --confirm-auto

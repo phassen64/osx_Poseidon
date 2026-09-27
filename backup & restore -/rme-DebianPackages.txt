@@ -1,7 +1,0 @@
-=== readme.DebianPackages
-
-Inhalt:
-    VsCode          code_1.138.0-1789458813_amd64.deb
-    GoogleChrome    google-chrome-stable_current_amd64.deb
-    LinuxAssistant  linux-assistant.deb
-    PowerShell      powershell-lts_7.6.6-1.deb_amd64.deb

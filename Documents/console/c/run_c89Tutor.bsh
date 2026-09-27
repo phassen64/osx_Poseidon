@@ -1,0 +1,73 @@
+#!/bin/bash
+
+#   =*= x:  Tutorial-C89 2024
+
+#   include:    LIB.inc.bsh
+#               TUT.c89.inc.bsh
+
+#   ============================================================================
+#   =*= m:  helper
+#   ============================================================================
+
+#   =*= p:  script-language-dependend function
+function f_scl_clean() {
+    local bTrc=$v_TRUE
+    f_lib_trace ${FUNCNAME[0]} $LINENO "clean.SCL" $bTrc
+    #   rm:at TMP
+    pushd "$v_DIR_TMP" > /dev/null
+    f__remove '\.tmp\.txt$'
+    popd > /dev/null
+    #   rm:at local
+    f__remove '^TUTOR_FILE_SYS\.[0-9]{3}\.txt$'
+    return -1
+}
+
+function f_scl_command() {
+    local   fSrc=$1
+    local   fBdy="${fSrc%.*}"
+    local   fObj=${fBdy}.${z_SCL_extObj}
+    z_SCL_sCmd="$z_SCL_COMPILER $fSrc -o $fObj"
+}
+
+#   ============================================================================
+#   =*= m:  body
+#   ============================================================================
+
+#   =*= p:  script
+z_SCP=`basename $BASH_SOURCE`
+z_ARG_cmd=$1
+z_ARG_opt=$2
+
+#   =*= p:  include.library : defines TRUE && FALSE
+source "../bsh/LIB.inc.bsh"; f_lib_colorInit
+
+#   =*= p:  batch
+v_MODE_BATCH=$v_TRUE; export v_MODE_BATCH
+
+#   =*= p:  script-language-dependend data read only
+declare -r z_SCL_COMPILER='gcc -std=c89'
+declare -r z_SCL_INTERPRETER='?IPR'
+declare -r z_SCL_id='c'             #   id of fileNames
+declare -r z_SCL_name='TutorC89'    #   nameOfThisScript
+declare -r z_SCL_extSrc='c'         #   extention
+declare -r z_SCL_extObj='bin'       #   output extension
+declare -r z_SCL_extLog='log'           #   script file identifier
+declare -r z_SCL_logObj_prefix="c89"
+declare -r z_SCL_logSrc_prefix=$z_SCL_logObj_prefix
+declare z_SCL_sCmd="?"
+
+#   =*= p:  language action
+declare -r  z_bDoCompile=$v_TRUE
+declare -r  z_bDoInterPreter=$v_FALSE
+
+#   =*= p:  script control
+declare -r  z_bTrc=$v_FALSE
+declare -r  z_bDbg=$v_FALSE
+declare -r  z_bVbs=$v_FALSE     # verbose logging
+
+#   =*= p:  logging
+declare -r  z_bLog=$v_TRUE
+
+#   =*= p:  include body
+z_INCLUDE="../bsh/TUT.COMMON.inc.bsh"
+source $z_INCLUDE

@@ -1,0 +1,246 @@
+#!/bin/bash
+
+#   ****************************************************************************
+#   TUTORIAL BASH:  [3]:operator
+#   ****************************************************************************
+
+#       !PHA: use: normal comment BSH has problems with backtick
+
+#   <<< operators
+#       :01 arithmetics     : +,-,*,/: ** : /,%,%=: +=,-=,*=,/=
+#       :02 compare         : -eq,-ne,-gt,-lt,-ge,-le
+#       :03 logical         : && , ||
+#       :04 wildcard        : *
+#       :09 backtick        : '`',expr
+#   >>>
+
+
+#   =*= :   include
+source LIB.inc.bsh
+declare -i z_iEc=$1
+declare -i z_iRc
+
+z_EXE=$BASH_SOURCE; z_SCP=`basename $z_EXE`
+
+#   =*= :   clear screen, if not called by runTest
+f_lib_screen_clear "$1"
+
+#   =*= :   header
+f_lib_header "$z_SCP" $LINENO $z_iEc; z_iEc=$?; z_iRc=$z_iEc
+
+declare -i i=0
+declare -i j=0
+declare -i k=0
+declare -i l=0
+declare -i n=10
+
+#   =*= :   body
+
+#
+#   =*= :01 arithmetics
+#
+
+f_lib_menu 'arithmetics' $LINENO
+
+f_lib_menuS1 'basic' $LINENO
+a=1;b=8;x=$(($a+$b));   f_lib_text "a:<$a> + b:<$b> =: <$x>"
+a=2;b=7;x=$(($a-$b));   f_lib_text "a:<$a> - b:<$b> =: <$x>"
+a=6;b=5;x=$(($a*$b));   f_lib_text "a:<$a> * b:<$b> =: <$x>"
+a=9;b=2;x=$(($a/$b));   f_lib_text "a:<$a> / b:<$b> =: <$x>"        #   4
+a=3;b=7;x=$(($a/$b));   f_lib_text "a:<$a> / b:<$b> =: <$x>"        #   0
+
+f_lib_menuS1 'potential' $LINENO
+a=2;b=4;x=$(($a**$b));  f_lib_text "a:<$a> ** b:<$b> =: <$x>"       #   16
+
+f_lib_menuS1 'divisor,modulo,reminder(using:let)' $LINENO
+a=13;b=5;x=$(($a/$b));   f_lib_text "a:<$a> / b:<$b> =: <$x>"        #   3
+a=13;b=5;x=$(($a%$b));   f_lib_text "a:<$a> % b:<$b> =: <$x>"        #   2
+#   special usage of let()
+a=13;b=5;x=$a;let "x %= $b";    f_lib_text "let a:<$a>=:x %= b:<$b> =: <$x>"    #   2
+
+f_lib_menuS1 'modulo vs reminder' $LINENO
+i=18;b=-5;x=$(($a%$b));         f_lib_text "<$a>   %  <$b>  =: <$x>"
+i=18;b=-5;x=$a;let "x %= $b";   f_lib_text "<$a>  %=  <$b>  =: <$x>"
+
+#   x=$(($a%=$b))
+#   f_lib_puts "a:<$a> %= b:<$b> =: <?>"   #   ? notOK
+
+f_lib_menuS1 'inc,dec' $LINENO
+f_lib_text 'using: let command' $LINENO
+#   REM: NOT WORKING:    x=$a; x+=$b
+
+a=5;b=2;x=$a; let "x += $b" ;   f_lib_text "x=<$a> += <$b> => <$x>"
+a=5;b=2;x=$a; let "x -= $b" ;   f_lib_text "x=<$a> -= <$b> => <$x>"
+a=5;b=2;x=$a; let "x *= $b" ;   f_lib_text "x=<$a> *= <$b> => <$x>"
+a=5;b=2;x=$a; let "x /= $b" ;   f_lib_text "x=<$a> /= <$b> => <$x>"
+
+#
+#   =*= :02 comparing numbers
+#
+
+f_lib_menu 'compare operators' $LINENO
+
+f_lib_random $n; i=$?
+f_lib_random $n; j=$?
+f_lib_puts "i:$i;j:$j" $v_COL_ID_cyan
+
+s='eq:'; if [ $i -eq $j ]; then s+='TRUE!'; else s+='false'; fi
+f_lib_print "$s" $v_LIB__PRT_onNLonPx
+
+s='ne:'; if [ $i -ne $j ]; then s+='TRUE!'; else s+='false'; fi
+f_lib_print "$s" $v_LIB__PRT_onNLonPx
+
+s='gt:'; if [ $i -gt $j ]; then s+='TRUE!'; else s+='false'; fi
+f_lib_print "$s" $v_LIB__PRT_onNLonPx
+
+s='lt:'; if [ $i -lt $j ]; then s+='TRUE!'; else s+='false'; fi
+f_lib_print "$s" $v_LIB__PRT_onNLonPx
+
+s='ge:'; if [ $i -ge $j ]; then s+='TRUE!'; else s+='false'; fi
+f_lib_print "$s" $v_LIB__PRT_onNLonPx
+
+s='le:'; if [ $i -le $j ]; then s+='TRUE!'; else s+='false'; fi
+f_lib_print "$s" $v_LIB__PRT_onNLonPx
+
+s='op:{==}:'; if [ $i == $j ]; then s+='TRUE!'; else s+='false'; fi
+f_lib_print "$s" $v_LIB__PRT_onNLonPx
+s='op:{!=}:'; if [ $i != $j ]; then s+='TRUE!'; else s+='false'; fi
+f_lib_print "$s" $v_LIB__PRT_onNLonPx
+
+i=1; j=1
+f_lib_puts "i:$i;j:$j" $v_COL_ID_cyan
+s='op:{==}:'; if [ $i == $j ]; then s+='TRUE!'; else s+='false'; fi
+f_lib_print "$s" $v_LIB__PRT_onNLonPx
+echo "&&& END"
+
+#
+#   =*= :03 logical operators
+#
+
+f_lib_menu 'logical operators' $LINENO
+
+f_lib_random $n; i=$?
+f_lib_random $n; j=$?
+f_lib_random $n; k=$?
+f_lib_random $n; l=$?
+
+f_lib_puts "i:$i;j:$j;k:$k;l:$l" $v_COL_ID_cyan
+
+s='{ i<=j && k>=l } \t=:'
+if [ $i -le $j ] && [ $k -ge $l ]
+    then s+='TRUE!'
+    else s+='false'
+fi
+f_lib_print "$s" $v_LIB__PRT_onNLonPx
+
+s='{ i<=j || k>=l } \t=:'
+if [ $i -le $j ] || [ $k -ge $l ]
+    then s+='TRUE!'
+    else s+='false'
+fi
+f_lib_print "$s" $v_LIB__PRT_onNLonPx
+
+s='{ i<j && k>l } \t=:'
+if [ $i -gt $j ] && [ $k -lt $l ]
+    then s+='TRUE!'
+    else s+='false'
+fi
+f_lib_print "$s" $v_LIB__PRT_onNLonPx
+
+s='{ i<j || k>l } \t=:'
+if [ $i -gt $j ] || [ $k -lt $l ]
+    then s+='TRUE!'
+    else s+='false'
+fi
+f_lib_print "$s" $v_LIB__PRT_onNLonPx
+
+printf "\t"
+f_lib_info "using '()' in: ( [ <boolStatement> op <boolStatement> ] )" $LINENO
+
+s='{ (i!=j && k!=l) || (k>8)) } \t=:'
+if ( ( [ $i -ne $j ] && [ $k -ne $l ] ) || [ $k -gt 8 ] )
+    then s+='TRUE!'
+    else s+='false'
+fi
+f_lib_print "$s" $v_LIB__PRT_onNLonPx
+
+s="{ (i=j || k==l)  && (k<8)) } \t=:"
+if ( ( [ $i -eq $j ] || [ $k -eq $l ] ) && [ $k -lt 8 ] )
+    then s+='TRUE!'
+    else s+='false'
+fi
+f_lib_print "$s" $v_LIB__PRT_onNLonPx
+
+s="{ ! i == j } \t=:"
+f_lib_info "i:$i j:$j"
+if [ ! $i -eq $j ]
+    then s+='is !='
+    else s+='is =='
+fi
+f_lib_print "$s" $v_LIB__PRT_onNLonPx
+
+
+f_lib_menuS1 'internal logic' $LINENO
+
+x=$v_TRUE
+
+s="{ x == TRUE } \t=:"
+[ $x == $v_TRUE ] && s+='YES' ||  s+='NEPP'     # yes
+f_lib_debug "$s" $LINENO
+
+s="{ x != TRUE } \t=:"
+[ $x != $v_TRUE ] && s+='YES' ||  s+='NEPP'     # nepp
+f_lib_debug "$s" $LINENO
+
+s="{ x -eq TRUE } \t=:"
+[ $x -eq $v_TRUE ] && s+='YES' ||  s+='NEPP'    # yes
+f_lib_debug "$s" $LINENO
+
+x=$v_FALSE
+
+s="{ x -eq FALSE } \t=:"
+[ $x -eq $v_FALSE ] && s+='YES' ||  s+='NEPP'   # yes
+f_lib_debug "$s" $LINENO
+
+#
+#   =*= :04 wilcard
+#
+
+#   URL:https://stackoverflow.com/questions/102049/how-do-i-escape-the-wildcard-asterisk-character-in-bash
+#   how i get "BAR * BAR" ?
+
+f_lib_menu 'escape wildcard' $LINENO
+
+f_lib_text 'area is:' $LINENO
+x='width'; y='length'
+s=
+s+="'$x'"
+s+="*"      # add with "*"
+s+="'$y'"
+f_lib_puts "Area:= < $s >"     # already an array
+
+#
+#   how avoid the eval ???
+#
+f_lib_menuS1 'using wildcard as pattern' $LINENO
+x='b??'; y='bsh'; s="$x*.$y"
+
+#   avoid eval - use: "$x"
+f_lib_puts  "pattern : <$s>"   # >echo $s    #   evaluates
+
+#
+#   =*= :09 backtick
+#
+
+f_lib_menu 'backticks and expr' $LINENO
+
+#   only view operations like {+} and {-} but not:{*}
+
+a=5;b=2
+x=`expr $a + $b`
+f_lib_puts "\`expr <$a> + <$b> \`  =: <$x>"
+
+a=8;b=3; x=`expr $a - $b`; f_lib_puts "\`expr <$a> - <$b> \`  =: <$x>"
+
+#   =*= :   footer
+f_lib_footer $z_SCP $LINENO $z_iRc $z_iEc
