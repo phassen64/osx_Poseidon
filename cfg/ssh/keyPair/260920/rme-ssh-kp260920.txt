@@ -1,0 +1,5 @@
+    ps7$>   ssh-keygen    
+    ssh$>   (C:\Users\peter/.ssh/id_ed25519): kp260920
+        * noPhrase
+    key.Fingerprint 
+        SHA256:i4E4wRRcSXny6DIOplY7+KK0iXPns+QRD4QU29weezc peter@tron3

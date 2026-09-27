@@ -113,12 +113,20 @@ if ! shopt -oq posix; then
 fi
 
 #   added FWK bash
-v_STARTER="START.fwk.bsh"
+v_NAM="START.fwk.bsh"
+v_DIR=$HOME/Documents/cmd
+v_STARTER=$v_DIR/$v_NAM
+
 if [ -f $v_STARTER ]; then
-    echo "--- import local !"
+   echo "--- import.global!"
+   v_STARTER=$v_DIR/$v_NAM
 else
-    echo "--- import global"
-    v_STARTER="$HOME/Documents/cmd/$v_STARTER"
+   v_DIR=`pwd`
+   v_STARTER=$v_DIR/$v_NAM
+   echo "--- import.local"
 fi
-source "$v_STARTER"
+
+if [ -f $v_STARTER ]; then
+   source "$v_STARTER"
+fi 
 

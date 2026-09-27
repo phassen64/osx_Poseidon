@@ -353,10 +353,6 @@ function f_ini_desktop_environment_cinnamon() {
     sudo update-alternatives --config x-session-manager
 }
 
-function f_ini_helper_package() {
-    sudo apt-get install flatpack 
-}
-
 
 #   ===========================================================================
 #  	m:  function:F.set
@@ -400,6 +396,8 @@ v_DTM=`echo $(date '+%y%m%d|%H%M%S')`
 echo "=== fwk.beg::{$v_DTM}:{$v_SVR}"
 sleep 1
 
+echo "+ starter: {$v_STARTER}"
+
 v_DTM_long=`echo $(date '+%Y-%m-%d__%H:%M:%S')`
 echo "+ date: {$v_DTM_long}"
 echo "+ bashName: {$v_SCP}"
@@ -427,7 +425,7 @@ echo "+ pwd: {$v_PWD}"
 f_env_prompt 4
 
 #   s:  starter
-v_STARTER="START.fwk.bsh"
+### v_STARTER="START.fwk.bsh"
 
 #   =*= s:  ready
 v_DTM=`echo $(date '+%y%m%d|%H%M%S')`
