@@ -8,3 +8,5 @@
 ### !date:<2026-09-28>:Mo
 
 +   addMe
+
++   $git clone https://github.com/phassen64/testSuite_Rhea.gt
