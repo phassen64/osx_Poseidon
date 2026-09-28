@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #  	***************************************************************************
-#   Starter Debian13	dtm :[2026-09-27].doc
+#   Starter Debian13	dtm :[2026-09-28].cmd
 #  	***************************************************************************
 
 #   encoding.UTF8:
@@ -330,8 +330,8 @@ function f_fwk_aliasSet(){
     alias +cls='clear'
     alias +clr='+cls'
 	#   =:= m:env
-    alias +fct='f_fwk_function_show'
-    alias +var='f_fwk_variable_show'
+    alias +fct='typeset -F | grep f_'
+    alias +var='f_fwk_variableShow'
 	#   =:= m:ls
     alias +ls='ls -l'
     alias +ll='ls -al'
@@ -371,7 +371,7 @@ function f_fwk_interpreter_check() {
     pwsh --version
 }
 
-function f_fwk_variable_show() {
+function f_fwk_variableShow() {
     #   echo "f:varShow"
     printenv | grep "^v_"  | sort
 }
@@ -404,61 +404,8 @@ function f_fwk_info() {
     echo "+ usr: {$v_USR}"
 }
 
-function f_fwk_function_show() {
-    declare -F | grep '^declare -f f_'
+function f_fwk_isDirectory() {
 }
-
-function f_fwk_variable_initialize () {
-
-    #   FWK starter
-    v_FWK_starter=$v_STARTER && export v_FWK_starter
-
-    #   dir.DocRoot
-    v_USR_docRoot=$HOME/Documents && export v_USR_docRoot
-
-    #   dir.VCS
-    v_VCS=$HOME/VCS  && export v_VCS
-
-    #   dir.repo.FWK
-    v_VCS_fwk=$v_VCS/fwk && export v_VCS_fwk
-
-    #   dir.fwk.cmd
-    v_DIR=$v_VCS_fwk/cmd
-    v_FWK_commandDir=$v_DIR && export v_FWK_commandDir
-
-    #   FWK library needed for libary
-    v_FWK_library="$v_FWK_commandDir/LIB.inc.bsh" && export v_FWK_library
-
-    #   tutor
-    v_DIR=$v_VCS_fwk/console
-    v_FWK_tutorDir=$v_DIR && export v_FWK_tutorDir
-
-    #   scratch == tempDir
-    v_DIR=$v_VCS_fwk/temp
-    v_FWK_scratchDir=$v_DIR && export v_FWK_scratchDir
-    v_TMP=$v_FWK_scratchDir && export v_TMP
-
-    #   loging Dir
-    v_DIR=$v_VCS_fwk/logging
-    v_FWK_loggingDir=$v_DIR && export v_FWK_loggingDir
-
-    #   exitCode
-    declare -i i=99
-    v_FWK_exitCode=$i && export v_FWK_exitCode
-
-}
-
-function f_fwk_isFile {
-    local bRc=$v_FALSE
-    if [ -f $1 ]; then bRc=$v_TRUE; fi    
-    return $bRc
-}
-function f_fwk_isDirectory {
-    local bRc=$v_FALSE
-    if [ -d $1 ]; then bRc=$v_TRUE; fi
-    return $bRc
-}
-
 
 
 #   ===========================================================================
@@ -476,6 +423,14 @@ v_DTM=`echo $(date '+%y%m%d|%H%M%S')`
 echo "=== fwk.beg::{$v_DTM}:{$HOSTNAME}"
 sleep 1
 
+#   s:  var.exitCode
+declare -i i=88
+v_FWK_exitCode=$i
+export v_FWK_exitCode
+
+#   s:  run some
+f_fwk_aliasSet
+
 #   s:  show.PWD
 v_PWD=`pwd`
 echo "+ pwd: {$v_PWD}"
@@ -484,30 +439,54 @@ export v_PWD
 #   show starter
 echo "+ str: {$v_STARTER}"
 
-#   s:  run some
-f_fwk_aliasSet
-
-#   s:  run variable
-#   echo "init.var"
-f_fwk_variable_initialize
-
-#   s:  boolean - no export
-declare -i v_TRUE=0
-declare -i v_FALSE=99
+#   show more
+declare -i v_RND
+v_RND=$RANDOM
+if [ $v_RND -lt 1000 ]
+then
+    f_fwk_info
+else
+    echo "+ rnd: {$v_RND} -> noInfoMore."
+fi
+export v_RND
 
 #   s:  set prompt - only short dirName
 f_env_prompt 5
 
-#   s:  show more if random
-declare -i r=$RANDOM
-v_FWK_iRandom=$r && export v_FWK_iRandom
-if [ $v_FWK_iRandom -lt 1000 ]
-then
-    f_fwk_info
-else
-    echo "+ rnd: {$v_FWK_iRandom} -> noInfoMore."
-fi
+#   FWK starter
+v_FWK_starter=$v_STARTER && export v_FWK_starter
 
-#   s:  footer
+#   dir.DocRoot
+v_USR_docRoot=$HOME/Documents && export v_USR_docRoot
+
+#   dir.VCS
+v_VCS=$HOME/VCS 
+f_
+export v_VCS
+
+#   dir.repo.FWK
+v_VCS_fwk=$v_VCS/fwk && export v_VCS_fwk
+
+#   dir.fwk.cmd
+v_DIR=$v_VCS_fwk/cmd
+v_FWK_commandDir=$v_DIR && export v_FWK_commandDir
+
+#   FWK library needed for libary
+v_FWK_library="$v_FWK_commandDir/LIB.inc.bsh" && export v_FWK_library
+
+#   tutor
+v_DIR=$v_VCS_fwk/console
+v_FWK_tutorDir=$v_DIR && export v_FWK_tutorDir
+
+#   scratch == tempDir
+v_DIR=$v_VCS_fwk/temp
+v_FWK_scratchDir=$v_DIR && export v_FWK_scratchDir
+v_TMP=$v_FWK_scratchDir && export v_TMP
+
+#   loging Dir
+v_DIR=$v_VCS_fwk/logging
+v_FWK_loggingDir=$v_DIR && export v_FWK_loggingDir
+
+#   =*= s:  ready
 v_DTM=`echo $(date '+%y%m%d|%H%M%S')`
 echo "=== fwk.end::{$v_DTM}:{$v_FWK_exitCode}"
