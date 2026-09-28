@@ -13,7 +13,7 @@
 
 
 #   content:
-#		m:	function:F.helper
+#		m:  F.initialize
 #		m:	function:F.env
 #		m:	function:F.installer
 #		m:	function:F.set
@@ -35,150 +35,9 @@
 #       o:  v_USR_docRoot
 #       o:  v_VCS
 
-#   ===========================================================================
-#  	m:  function:F.helper
-#   ===========================================================================
-
-#
-#  s:  F.clearSreen
-#
-
-function f_fwk_clearScreen() {
-    clear && echo -en "\e[3J"
-}
-
-#
-#  	s:	F.alias
-#
-
-function f_fwk_aliasGet() {
-    s='GET alias...'; echo "$s"; sleep 1
-	alias| grep +
-}
-
-
-function f_fwk_aliasSet(){
-    #   echo "f:aliasSet:BEG"
-	#   =:= m:alias
-    alias +ali='f_fwk_aliasGet'
-    alias +aliSet='f_fwk_aliasSet; alias | grep +';
-	#   =:= m:go
-    alias +go='source $v_STARTER'
-    alias +start=+go
-	#   =:= m:cd
-    alias +cdhome='cd $HOME && pwd'
-    alias +cdcmd='cd $v_FWK_commandDir && pwd'
-    alias +cdlog='cd $v_FWK_loggingDir && pwd'
-    alias +cdtmp='cd $v_FWK_scratchDir && pwd'
-    alias +cdtemp=+cdtmp
-    alias +cdvcs='cd $v_VCS && pwd'
-    alias +cdvcs_TS='cd $v_VCS/testSuite && pwd'
-	#   =:= m:cd.tuutor
-    alias +cdtutor='cd $v_FWK_tutorDir && pwd'
-    alias +cdb='cd $v_FWK_tutorDir/bsh && pwd'
-    alias +cdc89='cd $v_FWK_tutorDir/c && pwd'
-    alias +cdp='cd $v_FWK_tutorDir/pl && pwd'
-    alias +cdr='cd $v_FWK_tutorDir/rb && pwd'
-    alias +cdy='cd $v_FWK_tutorDir/py && pwd'
-    alias +cdcpp='cd $v_FWK_tutorDir/cpp && pwd'
-    alias +cdw='cd $v_FWK_tutorDir/wps && pwd'
-    alias +cdwps=+cdw
-	#   =:= m:interpreter
-    alias +p='perl'
-    alias +r='ruby'
-    alias +y='python3'
-	#   =:= m:interpreter.python
-    alias python='python3'
-	#   =:= m:clr
-    alias +cls='clear'
-    alias +clr='+cls'
-	#   =:= m:env
-    alias +fct='typeset -F | grep f_'
-    alias +var='f_fwk_variableShow'
-	#   =:= m:ls
-    alias +ls='ls -l'
-    alias +ll='ls -al'
-	#   =:= m:gcc
-    alias +gcc='gcc -std=c89 -Wall -Werror'
-    alias +g++='g++ -Wall -Werror'
-	#   =:= m:remove
-    alias +rm='rm -rf'
-	#   =:= m:misc
-    alias +reboot='f_env_reboot'
-    #   echo "f:aliasSet:END"
-    return 1
-}
-
-function f_fwk_aliasClear() {
-    s='CLEAR alias...'; echo "$s"; sleep 1
-    unalias -a
-    sleep 1
-    alias
-    alias +alias=f_fwk_aliasSet; alias +alias
-}
-
-function f_fwk_aliasReset() {
-    s='RESET alias...'; echo "$s"; sleep 1
-    unalias -a
-    sleep 1
-    f_fwk_aliasSet
-}
-
-
-function f_fwk_interpreter_check() {
-    echo "f:interpreterCheck"
-    g++ --version
-    perl --version
-    python3 --version
-    ruby --version
-}
-
-function f_fwk_variableShow() {
-    #   echo "f:varShow"
-    printenv | grep "^v_"  | sort
-}
-
 
 #   ===========================================================================
-#  	m:  function:F.env
-#   ===========================================================================
-
-function f_env_prompt() {
-
-    local iPrompt=$1
-
-    export PS1="$ "
-
-    #   case
-    if [ $iPrompt == 1 ]; then
-        export PS1="\u@\h \$ "          # user & host
-    elif [ $iPrompt == 2 ]; then
-        export PS1="\u@\h:\w \$ "       # user & host &dirPath
-    elif [ $iPrompt == 3 ]; then
-        export PS1="\w \$ "             # dirPath
-    elif [ $iPrompt == 4 ]; then
-        export PS1="[\t] \w \$ "        # time & dirPath
-    elif [ $iPrompt == 5 ]; then
-        export PS1="[\t] ~/\W \$ "     # time & short dirPath
-    else
-        export PS1="\$ "
-    fi
-
-}
-
-function f_env_reboot() {
-    i=3
-    echo "doReboot in [$i]" & sleep $i
-    sudo reboot
-}
-
-function f_env_setPwd_root() {
-    sudo passwd root
-}
-
-
-#   ===========================================================================
-#  	m:  function:F.installer
+#  	m:  F.initialize
 #   ===========================================================================
 
 function f_ini_helper() {
@@ -352,11 +211,153 @@ function f_ini_desktop_environment_cinnamon() {
     sudo update-alternatives --config x-session-manager
 }
 
+
+#   ===========================================================================
+#  	m:  function:F.helper
+#   ===========================================================================
+
+#
+#  s:  F.clearSreen
+#
+
+function f_fwk_clearScreen() {
+    clear && echo -en "\e[3J"
+}
+
+#
+#  	s:	F.alias
+#
+
+function f_fwk_aliasGet() {
+    s='GET alias...'; echo "$s"; sleep 1
+	alias| grep +
+}
+
+
+function f_fwk_aliasSet(){
+    #   echo "f:aliasSet:BEG"
+	#   =:= m:alias
+    alias +ali='f_fwk_aliasGet'
+    alias +aliSet='f_fwk_aliasSet; alias | grep +';
+	#   =:= m:go
+    alias +go='source $v_STARTER'
+    alias +start=+go
+	#   =:= m:cd
+    alias +cdhome='cd $HOME && pwd'
+    alias +cdcmd='cd $v_FWK_commandDir && pwd'
+    alias +cdlog='cd $v_FWK_loggingDir && pwd'
+    alias +cdtmp='cd $v_FWK_scratchDir && pwd'
+    alias +cdtemp=+cdtmp
+    alias +cdvcs='cd $v_VCS && pwd'
+    alias +cdvcs_TS='cd $v_VCS/testSuite && pwd'
+	#   =:= m:cd.tutor
+    alias +cdtutor='cd $v_FWK_tutorDir && pwd'
+    alias +cdb='cd $v_FWK_tutorDir/bsh && pwd'
+    alias +cdc='cd $v_FWK_tutorDir/c && pwd'
+    alias +cdc89=+cdc
+    alias +cdp='cd $v_FWK_tutorDir/pl && pwd'
+    alias +cdr='cd $v_FWK_tutorDir/rb && pwd'
+    alias +cdy='cd $v_FWK_tutorDir/py && pwd'
+    alias +cdcpp='cd $v_FWK_tutorDir/cpp && pwd'
+    alias +cdw='cd $v_FWK_tutorDir/wps && pwd'
+    alias +cdwps=+cdw
+	#   =:= m:interpreter
+    alias +p='perl'
+    alias +r='ruby'
+    alias +y='python3'
+	#   =:= m:interpreter.python
+    alias python='python3'
+	#   =:= m:clr
+    alias +cls='clear'
+    alias +clr='+cls'
+	#   =:= m:env
+    alias +fct='typeset -F | grep f_'
+    alias +var='f_fwk_variableShow'
+	#   =:= m:ls
+    alias +ls='ls -l'
+    alias +ll='ls -al'
+	#   =:= m:gcc
+    alias +gcc='gcc -std=c89 -Wall -Werror'
+    alias +g++='g++ -Wall -Werror'
+	#   =:= m:remove
+    alias +rm='rm -rf'
+	#   =:= m:misc
+    alias +reboot='f_env_reboot'
+    #   echo "f:aliasSet:END"
+    return 1
+}
+
+function f_fwk_aliasClear() {
+    s='CLEAR alias...'; echo "$s"; sleep 1
+    unalias -a
+    sleep 1
+    alias
+    alias +alias=f_fwk_aliasSet; alias +alias
+}
+
+function f_fwk_aliasReset() {
+    s='RESET alias...'; echo "$s"; sleep 1
+    unalias -a
+    sleep 1
+    f_fwk_aliasSet
+}
+
+
+function f_fwk_interpreter_check() {
+    echo "f:interpreterCheck"
+    g++ --version
+    perl --version
+    python3 --version
+    ruby --version
+}
+
+function f_fwk_variableShow() {
+    #   echo "f:varShow"
+    printenv | grep "^v_"  | sort
+}
+
+#   ===========================================================================
+#  	m:  function:F.env
+#   ===========================================================================
+
+function f_env_prompt() {
+
+    local iPrompt=$1
+
+    export PS1="$ "
+
+    #   case
+    if [ $iPrompt == 1 ]; then
+        export PS1="\u@\h \$ "          # user & host
+    elif [ $iPrompt == 2 ]; then
+        export PS1="\u@\h:\w \$ "       # user & host &dirPath
+    elif [ $iPrompt == 3 ]; then
+        export PS1="\w \$ "             # dirPath
+    elif [ $iPrompt == 4 ]; then
+        export PS1="[\t] \w \$ "        # time & dirPath
+    elif [ $iPrompt == 5 ]; then
+        export PS1="[\t] ~/\W \$ "     # time & short dirPath
+    else
+        export PS1="\$ "
+    fi
+
+}
+
+function f_env_reboot() {
+    i=3
+    echo "doReboot in [$i]" & sleep $i
+    sudo reboot
+}
+
+function f_env_setPwd_root() {
+    sudo passwd root
+}
+
 #   ===========================================================================
 #  	m:  function:F.set
 #   ===========================================================================
 
-function f_set_host() {
+function f_fwk_set_host() {
     #   parameter
     local p_sHostName=$1
     #   set
@@ -410,7 +411,7 @@ sleep 1
 
 #   s:  var.exitCode
 declare -i i=88
-v_FWK_exitCode=$i 
+v_FWK_exitCode=$i
 export v_FWK_exitCode
 
 #   s:  run some
@@ -465,7 +466,6 @@ v_FWK_loggingDir=$v_USR_docRoot/logging && export v_FWK_loggingDir
 
 #   other dirs
 v_VCS=$v_USR_docRoot/repository && export v_VCS
-
 
 #   =*= s:  ready
 v_DTM=`echo $(date '+%y%m%d|%H%M%S')`
