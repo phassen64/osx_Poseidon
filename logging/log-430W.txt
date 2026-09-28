@@ -9,4 +9,4 @@
 
 +   addMe
 
-+   $git clone https://github.com/phassen64/testSuite_Rhea.gt
++   $git clone https://github.com/phassen64/testSuite_Rhea.git
