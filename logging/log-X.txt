@@ -139,8 +139,8 @@ echo $HOSTNAME
 
 +   git repository
     $>  cd /home/peter/Documents/repository/tux
-    $>  git config --global user.name "Debian Woman Attendant"
-    $>  git config --global user.email "plut64@e-mail.de"
+    $>  git config --global user.name "phassen64"
+    $>  git config --global user.email "pluto64@e-mail.de"
     $>  git init
     $>  echo "hello rep" > readme.txt
     $>  git add readme.txt
