@@ -50,7 +50,7 @@ https://ekiwi-blog.de/23473/
     <   keinen sicheren Start wählen
 
 +   Enhanced Session - nur in der VM
-    adm@psh$>   Get-VM 
+    adm@psh$>   Get-VM
     adm@psh$>   Set-VM -VMName 'tron3-d13x-385H' -EnhancedSessionTransportType 'HvSocket'
 
 ### Achtung :
@@ -463,31 +463,76 @@ $<  graphical.target
 <<< xpr:use second disc.
 
 
+ ### !date:<2026-09-27>:So
 
- ### !date:<2026-09-27>:So 
-
-+   run lampp     
++   run lampp
     $   /opt/lampp/xampp
 
 +   switch between desktops(Workspaces)
     <CTRL> + <ALT> + <ArrowLeft> | <ArrowRight>
-    
+
 +   manage workspace open (add/delete)
     <CTRL> + <ALT> + <ArrowUp>-
 
 +   show instances in 1 workspace
     <CTRL> + <ALT> + <ArrowDown>
 
-+   cloning 
++   cloning
     git clone https://github.com/phassen64/testSuite_Rhea.git $v_USR_docRoot/repository/testSuite
 
-+   console.bash 
-    Ziel ist es ein gutes 
-        LIB.inc.bsh 
++   console.bash
+    Ziel ist es ein gutes
+        LIB.inc.bsh
     zu erstellen,
     welches vom FWK verwendet werden kann.
-    
+
 +   offene Punkte
     +   LIB.inc.bsh auf cmd
     +   logging ohne ESC sequences
-    
+
+ ### !date:<2026-09-28>:Mo
+
+
+>>> xpr::google.cloud:<2026-09-28>:Mo
+
++   url
+    https://cloud.google.com
+
++   GoogleCloud|ComputeEngine|VM-Instanzen
+
++   GCE Spot VM
+    VM-Instanzen, die überschüssige Compute Engine-Kapazität darstellen.
+    Für Spot-VMs gibt es erhebliche Rabatte.
+    Compute Engine kann jedoch Spot-VMs jederzeit vorzeitig
+        beenden oder löschen (preempt),
+        um die Kapazität zurückzugewinnen.
+    Spot-VMs sind VMs,
+        die das Spot-Bereitstellungsmodell verwenden.
+    Mit diesem Bereitstellungsmodell können
+        Sie Ressourcen zu wesentlich niedrigeren Preisen
+
++   Instanz i-260920-hermes bearbeiten
+    Zeitpunkt der Erstellung
+    Sept. 20, 2026, 3:28:54 PM UTC+02:00
+    Zone:   europe-west10-b
+    Computertyp:    e2-small (2 vCPUs, 2 GB Speicherplatz)
+    HDD 10 GB
+    Image: debian-13-trixie-v20260908
+    <<< deleted
+
++   Instanz i-260922-eros
+    Zeitpunkt der Erstellung
+        Sept. 22, 2026, 5:03:30 PM UTC+02:00
+    e2-small (2 vCPUs, 2 GB Speicherplatz)
+    hdd:    d-260922-eros	32GB
+            i-260922-eros   24GB boot
+    Schlüssel: kpTrixie
+    Maximale Dauer
+        1 Stunden
+
+<<< xpr::google.cloud
+
+
+>>> xpr::osx.Framework  <2026-09-28>:Mo
+
+<<< xpr::osx.Framework.
