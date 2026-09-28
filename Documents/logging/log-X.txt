@@ -530,9 +530,32 @@ $<  graphical.target
     Maximale Dauer
         1 Stunden
 
++   aktuelle IP 
+    35.246.100.13
+    34.89.49.77
+    
+
++   Voraussetzung für RDP 
+    set password root && usr 
+        usr|pwd:="phassen64"|"!tron0"
+        usr|pwd:="root"|"!tron0"
+
++   Snapshot erstellt
+
 <<< xpr::google.cloud
 
 
+
 >>> xpr::osx.Framework  <2026-09-28>:Mo
+
++   toDo:
+    f_fwk_isDir 
+    f_fwk_isFile 
+    f_env_prompt für Root special 
+    snapshot erstellen 
+    Apache nicht start - Lampp
+
++   .bashrc
+    mit local test
 
 <<< xpr::osx.Framework.
