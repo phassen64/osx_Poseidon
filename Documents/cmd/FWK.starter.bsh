@@ -4,20 +4,14 @@
 #   Starter Debian13	dtm :[2026-09-27].doc
 #  	***************************************************************************
 
+#   encoding.UTF8:
+#   !@€ƒ„…†‡ˆ‰Š‹ŒŽ +‘“”•—™š›œžŸ+¡¢£¤¥¦§¨©«¬®°±²³µ¶·¹º»¼½¾¿ÄÖÜÑ×ØÞßäæçîðñôö÷üýþÿ
+
 #	usage:
 #		first call:		* defined in .bashrc
-#			bash::	source $ $$v_STARTER
-
+#		    bash$>  source $v_STARTER
 #		second call:
-#			bash$> 	+go
-
-
-#   content:
-#		m:  F.initialize
-#		m:	function:F.env
-#		m:	function:F.installer
-#		m:	function:F.set
-#		m:	body
+#		    bash$> 	+go
 
 #   variables.input
 #       i:  v_STARTER       * .bashrc
@@ -35,6 +29,16 @@
 #       o:  v_USR_docRoot
 #       o:  v_VCS
 
+#   content:
+#       b:  B.function
+#		    •   m:  F.initialize
+#		    •   m:	F.env
+#		    •   m:	F.helper
+#		    •   m:	F.library
+#       b:  B.body
+
+
+#   === b:  B.function
 
 #   ===========================================================================
 #  	m:  F.initialize
@@ -211,9 +215,55 @@ function f_ini_desktop_environment_cinnamon() {
     sudo update-alternatives --config x-session-manager
 }
 
+#   ===========================================================================
+#  	m:  F.env
+#   ===========================================================================
+
+function f_env_reboot() {
+    i=3
+    echo "doReboot in [$i]" & sleep $i
+    sudo reboot
+}
+
+function f_env_set_root() {
+    sudo passwd root
+}
+
+function f_env_set_host() {
+    #   parameter
+    local p_sHostName=$1
+    #   set
+    sudo hostnamectl set-hostname $p_sHostName
+    #   Find the line pointing and set name
+    sudo nano /etc/hosts
+    #   Verify the Change
+    #   Run this command to verify that the hostname updated:
+    hostnamectl
+}
+
+function f_env_prompt() {
+    #   fetch parameter
+    local iPrompt=$1
+    #   init
+    export PS1="$ "
+    #   case
+    if [ $iPrompt == 1 ]; then
+        export PS1="\u@\h \$ "          # user & host
+    elif [ $iPrompt == 2 ]; then
+        export PS1="\u@\h:\w \$ "       # user & host &dirPath
+    elif [ $iPrompt == 3 ]; then
+        export PS1="\w \$ "             # dirPath
+    elif [ $iPrompt == 4 ]; then
+        export PS1="[\t] \w \$ "        # time & dirPath
+    elif [ $iPrompt == 5 ]; then
+        export PS1="[\t] ~/\W \$ "     # time & short dirPath
+    else
+        export PS1="\$ "
+    fi
+}
 
 #   ===========================================================================
-#  	m:  function:F.helper
+#  	m:  F.helper
 #   ===========================================================================
 
 #
@@ -317,57 +367,8 @@ function f_fwk_variableShow() {
 }
 
 #   ===========================================================================
-#  	m:  function:F.env
+#  	m:  F.library
 #   ===========================================================================
-
-function f_env_prompt() {
-
-    local iPrompt=$1
-
-    export PS1="$ "
-
-    #   case
-    if [ $iPrompt == 1 ]; then
-        export PS1="\u@\h \$ "          # user & host
-    elif [ $iPrompt == 2 ]; then
-        export PS1="\u@\h:\w \$ "       # user & host &dirPath
-    elif [ $iPrompt == 3 ]; then
-        export PS1="\w \$ "             # dirPath
-    elif [ $iPrompt == 4 ]; then
-        export PS1="[\t] \w \$ "        # time & dirPath
-    elif [ $iPrompt == 5 ]; then
-        export PS1="[\t] ~/\W \$ "     # time & short dirPath
-    else
-        export PS1="\$ "
-    fi
-
-}
-
-function f_env_reboot() {
-    i=3
-    echo "doReboot in [$i]" & sleep $i
-    sudo reboot
-}
-
-function f_env_setPwd_root() {
-    sudo passwd root
-}
-
-#   ===========================================================================
-#  	m:  function:F.set
-#   ===========================================================================
-
-function f_fwk_set_host() {
-    #   parameter
-    local p_sHostName=$1
-    #   set
-    sudo hostnamectl set-hostname $p_sHostName
-    #   Find the line pointing and set name
-    sudo nano /etc/hosts
-    #   Verify the Change
-    #   Run this command to verify that the hostname updated:
-    hostnamectl
-}
 
 function f_fwk_info() {
 
@@ -395,7 +396,7 @@ function f_fwk_info() {
 
 
 #   ===========================================================================
-#  	m:  body
+#  	b:  B.body
 #   ===========================================================================
 
 #   s:  clear host
