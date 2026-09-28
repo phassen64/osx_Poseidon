@@ -255,6 +255,7 @@ function f_env_prompt() {
     local iPrompt=$1
     #   init
     export PS1="$ "
+
     #   case
     if [ $iPrompt == 1 ]; then
         export PS1="\u@\h \$ "          # user & host
@@ -264,8 +265,13 @@ function f_env_prompt() {
         export PS1="\w \$ "             # dirPath
     elif [ $iPrompt == 4 ]; then
         export PS1="[\t] \w \$ "        # time & dirPath
-    elif [ $iPrompt == 5 ]; then
-        export PS1="[\t] ~/\W \$ "     # time & short dirPath
+    elif [ $iPrompt == 5 ]; then        # time & short dirPath
+        export PS1="[\t]::[\W] \$ " 
+    elif [ $iPrompt == 6 ]; then        # not working
+        if [ `pwd` == $HOME ]
+            then export PS1="[\t] ~ \$ "
+            else export PS1="[\t] ~/\W \$ " 
+        fi     
     else
         export PS1="\$ "
     fi
@@ -488,6 +494,7 @@ echo "+ str: {$v_STARTER}"
 f_fwk_aliasSet
 
 #   s:  run variable
+
 #   echo "init.var"
 f_fwk_variable_initialize
 
