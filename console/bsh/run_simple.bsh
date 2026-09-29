@@ -1,8 +1,2 @@
 #!/bin/bash
-
-#   usage;
-#   $   bash run_simple.bsh
-
-echo + run01
-bash b01_intro.bsh
-bash b02_dataType.bsh
+bash b00_dummy.sh
