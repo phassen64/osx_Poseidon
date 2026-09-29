@@ -1,0 +1,26 @@
+>>> RUN:TutorC89:{run_c89Tutor.bsh}:{260929:222941}:EC={58}
+=L= log.HDR:automatically created at:{260929222941} by:f_run_appendLogFiles
+=L= log.SHW:[1/11]:'/home/peter/VCS/fwk/temp/c89_c01_001.log'
+../bsh/TUT.COMMON.inc.bsh: line 349: c01_intro.bin: command not found
+=L= log.SHW:[2/11]:'/home/peter/VCS/fwk/temp/c89_c02_001.log'
+../bsh/TUT.COMMON.inc.bsh: line 349: c02_dataType.bin: command not found
+=L= log.SHW:[3/11]:'/home/peter/VCS/fwk/temp/c89_c03_001.log'
+../bsh/TUT.COMMON.inc.bsh: line 349: c03_operator.bin: command not found
+=L= log.SHW:[4/11]:'/home/peter/VCS/fwk/temp/c89_c04_001.log'
+../bsh/TUT.COMMON.inc.bsh: line 349: c04_struct.bin: command not found
+=L= log.SHW:[5/11]:'/home/peter/VCS/fwk/temp/c89_c05_001.log'
+../bsh/TUT.COMMON.inc.bsh: line 349: c05_control.bin: command not found
+=L= log.SHW:[6/11]:'/home/peter/VCS/fwk/temp/c89_c06_001.log'
+../bsh/TUT.COMMON.inc.bsh: line 349: c06_macro.bin: command not found
+=L= log.SHW:[7/11]:'/home/peter/VCS/fwk/temp/c89_c07_001.log'
+../bsh/TUT.COMMON.inc.bsh: line 349: c07_function.bin: command not found
+=L= log.SHW:[8/11]:'/home/peter/VCS/fwk/temp/c89_c08_001.log'
+../bsh/TUT.COMMON.inc.bsh: line 349: c08_io.bin: command not found
+=L= log.SHW:[9/11]:'/home/peter/VCS/fwk/temp/c89_c09_001.log'
+../bsh/TUT.COMMON.inc.bsh: line 349: c09_system.bin: command not found
+=L= log.SHW:[10/11]:'/home/peter/VCS/fwk/temp/c89_c10_001.log'
+../bsh/TUT.COMMON.inc.bsh: line 349: c10_module.bin: command not found
+=L= log.SHW:[11/11]:'/home/peter/VCS/fwk/temp/c89_c11_001.log'
+../bsh/TUT.COMMON.inc.bsh: line 349: c11_misc.bin: command not found
+=L= log.EOF
+<<< STP:TutorC89:{run_c89Tutor.bsh}:{260929:222943}:time.elapsed:{2.55}

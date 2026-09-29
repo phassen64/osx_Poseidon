@@ -36,8 +36,6 @@ f_lib_logging_getFilePath $BASH_SOURCE 2; iRc=$?
 echo "$< g_Lib.sRc   =:  [$g_LIB__sRc]"
 echo "$< reply.iRc   =:  [$iRc]"
 
-exit
-
 #   check lib.GetFileName
 echo "+ test: f_lib_file_getName"
 f_lib_file_getName $p; iRc=$?
@@ -62,10 +60,10 @@ f_lib_file_getPath $p; iRc=$?
 echo "$< g_Lib.sRc   =:  [$g_LIB__sRc]"
 echo "$< reply.iRc   =:  [$iRc]"
 
-exit
-
 #   m:  show.header.reply
 echo "reply.iEc[$z_iEc]" 
+
+exit
 
 #   m:  content
 f_lib_puts "this text is red"  $v_COL_ID_red

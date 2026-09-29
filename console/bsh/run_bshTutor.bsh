@@ -190,9 +190,9 @@ function f_run_compiler() {
 #   ===========================================================================
 
 #   #   input
-v_DIR_TMP=$v_FWK_scratchDir
-v_DIR_LOG=$v_FWK_scratchDir
-v_DIR_LOG_EXTENDED=$v_FWK_loggingDir
+v_DIR_TMP=$v_FWK_dirScratch
+v_DIR_LOG=$v_FWK_dirScratch
+v_DIR_LOG_EXTENDED=$v_FWK_dirLogging
 
 #   =*= :   header
 v_SCP=`basename $BASH_SOURCE`

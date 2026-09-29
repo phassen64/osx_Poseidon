@@ -1,0 +1,62 @@
+>>> RUN:TUTOR:{run_bshTutor.bsh}:{260929:215901}:EC={143}
+=L= log.SHW:[1/1]:'/home/peter/VCS/fwk/temp/BSH_b01_001.log'
+b01_intro.bsh: line 203: printf: \tprintf.integer: invalid number
+b01_intro.bsh: line 203: printf: <4711>: invalid number
+b01_intro.bsh: line 203: printf: [202]: invalid number
+b01_intro.bsh: line 207: printf: \tprintf.integer: invalid number
+b01_intro.bsh: line 207: printf: with: invalid number
+b01_intro.bsh: line 207: printf: leading: invalid number
+b01_intro.bsh: line 207: printf: zero: invalid number
+b01_intro.bsh: line 207: printf: <815>: invalid number
+b01_intro.bsh: line 207: printf: [206]: invalid number
+b01_intro.bsh: line 211: printf: \tprintf+++.integer: invalid number
+b01_intro.bsh: line 211: printf: using:print: invalid number
+b01_intro.bsh: line 211: printf: -v: invalid number
+b01_intro.bsh: line 211: printf: <Variable>: invalid number
+b01_intro.bsh: line 211: printf: [210]: invalid number
+b01_intro.bsh: line 218: printf: \tprintf.integer: invalid number
+b01_intro.bsh: line 218: printf: <12>: invalid number
+b01_intro.bsh: line 218: printf: [217]: invalid number
+b01_intro.bsh: line 220: printf: \tx:=<'000'>x:=<'000'>x:=<'000'>: invalid number
+b01_intro.bsh: line 234: printf: <abcdefgij>: invalid number
+b01_intro.bsh: line 246: printf: \tprintf.float <1.23> [245]: invalid number
+b01_intro.bsh: line 253: printf: \tprintf decimal(64) [252]: invalid number
+b01_intro.bsh: line 253: printf: \tprintf decimal(64) [252]: invalid number
+b01_intro.bsh: line 253: printf: \tprintf decimal(64) [252]: invalid number
+b01_intro.bsh: line 259: printf: \tprintf octal(0123) [258]: invalid number
+b01_intro.bsh: line 259: printf: \tprintf octal(0123) [258]: invalid number
+b01_intro.bsh: line 259: printf: \tprintf octal(0123) [258]: invalid number
+b01_intro.bsh: line 265: printf: \tprintf hex(0x1AbC) [264]: invalid number
+b01_intro.bsh: line 265: printf: \tprintf hex(0x1AbC) [264]: invalid number
+b01_intro.bsh: line 265: printf: \tprintf hex(0x1AbC) [264]: invalid number
+es> [225]'> [0m
+	x:=<'\tx:=<'\tprintf.string <Otto Walkes> [225]'>'>:2
+	printf.string <abcdefgij> [233] [0m
+	x:=<'	pri'>x:=<''> [0m
+	printf.char <Otto Walkes> [239] [0m
+	x:=<'\'> [0m
+	printf.float <1.23> [245] [0m
+	f:<0000.000> [0m
+	printf decimal(64) [252] [0m
+[95m	dec:=<'0'> hex:<'0'> oct:<'0'> [0m
+	printf octal(0123) [258] [0m
+[95m	dec:=<'0'> hex:<'0'> oct:<'0'> [0m
+	printf hex(0x1AbC) [264] [0m
+[95m	dec:=<'0'> hex:<'0'> oct:<'0'> [0m
+[92m=== m[05] : set+read at:[273] [0m
+myInteger:= <3>
+myString:= <peter>
+mySm1:= <peterSm1
+Ende>
+mySm2= <peterSm2 Ende>
+[92m=== m[06] : colored text at:[300] [0m
+[91mthis text is red [0m
+[92mthis green [0m
+[94mand I am blue [0m
+[93mor may be yellow [0m
+[92m=== m[07] : logging at:[311] [0m
+I will log the text:'<<< TIME now is:1790711942.263607947' into logfile:</home/peter/VCS/fwk/temp/b01_intro.log>
+[94m... logFile.ftr<'/home/peter/VCS/fwk/temp/b01_intro.log'> by LIB created and written. [0m
+[92m<<< b01_intro.bsh<2026.09.29__21:59:03>:{260929215903}:[328]:{143};elapsed:<1> seconds. [0m
+=L= log.EOF
+<<< STP:TUTOR:{run_bshTutor.bsh}:{Tue 29 Sep 21:59:03 CEST 2026}:time.elapsed:{2.27}

@@ -196,22 +196,23 @@ f_lib_puts "Direkter Text" $v_COL_ID_cyan
 f_lib_menuS1 "printf" $LINENO
 i=12; j=-5;
 declare s;
-declare x;
+declare -i x;
 
 #   integer : using printd "formatStr" <Variable>
-x=4711; f_lib_text "printf.integer <$x>" $LINENO
-printf "\tX:=<\'%i\'>\n" $x            #   x:=<'4711'>     # %i
+x=4711
+f_lib_text "printf.integer <$x>" $LINENO
+printf "\t\t X:['%i'] \n" $x            #   x:=<'4711'>     # %i
 
 #   integer : using printf %04i
-x=815; f_lib_text "printf.integer with leading zero <$x>" $LINENO
-printf  "\tX:=<\'%04i\'>\n" $x         #   x:=<'0815'>    # %i
+x=815; f_lib_text "printf.integer with leading zero <$i>" $LINENO
+printf  "\t\tX:=<\'%04i\'>\n" $x         #   x:=<'0815'>    # %i
 
 #   integer : using print -v <Variable> "formatStr" <Variable>
 x=007; f_lib_text "printf+++.integer using:print -v <Variable>" $LINENO
-printf -v s "\tX:=<\'%03d\'>\n" $x
+printf -v s "\t\t X:=<\'%03d\'>\n" $x
 #  !PHA:   printf -v  ignoriert TAB \t -
 #   daher wird bei f~lib~print der TAB durchgefuehrt
-f_lib_print "\t$s" $v_LIB__PRT_onNLnoPx   #  x:=<'007'>      # %03d
+f_lib_print "\t\t $s" $v_LIB__PRT_onNLnoPx   #  x:=<'007'>      # %03d
 
 #   integer with %i == %d
 x=12; f_lib_text "printf.integer <$x>" $LINENO

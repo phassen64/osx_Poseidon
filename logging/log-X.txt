@@ -591,4 +591,15 @@ $<  graphical.target
     $>  source b00_dummy.bsh  
 
 
++   logging no control chars
+    https://en.wikibooks.org/wiki/Regular_Expressions/POSIX_Basic_Regular_Expressions
+# Remove all digits
+echo "User1234 Pass567" | tr -d '0-9'
+# Output: User Pass
+# Remove spaces, tabs, and newlines
+echo "a b c d" | tr -d '[:space:]'
+# Output: abcd
+# Strip non-alphanumeric characters
+echo "Hello, World! #2026" | tr -cd '[:alnum:]'
+# Output: HelloWorld2026
 
