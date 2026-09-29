@@ -298,7 +298,6 @@ function f_fwk_aliasGet() {
 	alias| grep +
 }
 
-
 function f_fwk_aliasSet(){
     #   echo "f:aliasSet:BEG"
 	#   =:= m:alias
@@ -366,7 +365,6 @@ function f_fwk_aliasReset() {
     sleep 1
     f_fwk_aliasSet
 }
-
 
 function f_fwk_interpreter_check() {
     echo "f:interpreterCheck"
@@ -459,13 +457,12 @@ function f_fwk_isFile {
     if [ -f $1 ]; then bRc=$v_TRUE; fi    
     return $bRc
 }
+
 function f_fwk_isDirectory {
     local bRc=$v_FALSE
     if [ -d $1 ]; then bRc=$v_TRUE; fi
     return $bRc
 }
-
-
 
 #   ===========================================================================
 #  	b:  B.body

@@ -898,18 +898,23 @@ function f_lib_sleep() {
 #
 
 function f_lib_header() {
+    
     local sScp=$1
     local iLine=$2
     local iLibRc=$3
+    
     local   sFileName=`basename $sScp`
     local   sName=$(echo "$sFileName" | sed -e 's/\.[^.]*$//')  # cut FileExtension
-#   local sLogfileId=${sScp:0:3}
+#   
+    local sLogfileId=${sScp:0:3}
     local   sLogfileId=$sName
     if [ "$iLibRc" == "" ]; then
         iLibRc=0  # undefined or OK
     fi
+    
     #   init
     f_lib_colorInit
+    
     #   globals
     v_TIMER_start=$(date +%s.%N)
     v_TIME_NOW=$(date $v_LIB__DTM_FORMAT_now)
@@ -917,15 +922,19 @@ function f_lib_header() {
     v_TIME_HDR=$(date $v_LIB__DTM_FORMAT_hdr)
     local sLogFilePath="${v_DIR_LOG}/${sLogfileId}_${v_TIME_NOW}.log"
     local sFct=${FUNCNAME[0]}
+
     #   logging
     f__logs "*** created at:{$v_TIME_NOW} by:'${sFct}'" $sLogFilePath $v_TRUE
+
     #   sScp=$(caller 0)
     export v_CALLER=$sScp
+
     #   fileTime
 #   s=">>> =h= "
     s=">>> "
     s+="$sScp<$v_TIME_HDR>:{$v_TIME_NOW}:[$iLine]:{$iLibRc}";
     f__output "$s" $v_COL_ID_green
+    
     return $iLibRc
 }
 
@@ -1221,41 +1230,54 @@ function f_lib_variableSet(){
 #   *** m:  body
 #   ===========================================================================
 
-#   =*= s:  constant
+echo "===   LIB.body.begin"
+
+#   s:  constant
 declare -i v_TRUE=8
 declare -i v_FALSE=229
 
-#   =*= s:  add into environment vars
+#   s:  add into environment vars
 declare -i v_LIB__iEc=0
 declare -i v_LIB__iEc_min=10            # offset to Ec range
 declare -i v_LIB__iEc_max=210           # => iEc:={min,...,max} <= 255
 declare -i v_LIB__iEc_std=100
 
-#   =*= s:  formatVar
+#   s:  formatVar
 v_LIB__DTM_FORMAT_now="+%y%m%d%H%M%S"
 v_LIB__DTM_FORMAT_obj="+%y%m%d::%H%M%S"
 v_LIB__DTM_FORMAT_src="+%Y-%m-%d.%H:%M:%S"
 v_LIB__DTM_FORMAT_hdr="+%Y.%m.%d__%H:%M:%S"
 
-#  baseName
+#  s:   baseName
 v_FWK_LIBRARY=`basename $BASH_SOURCE`
+
+#  s:   time
 v_LIB__TIME=$(date -r $v_FWK_LIBRARY $v_LIB__DTM_FORMAT_obj)
 
-#   =*= s:  printVarff
+#   s:  printVarff
 v_LIB__PRT_noNLnoPx=51
 v_LIB__PRT_onNLnoPx=52
 v_LIB__PRT_noNLonPx=53
 v_LIB__PRT_onNLonPx=54
 
-#   =:= s:  libConfig
-f_lib_configuration $v_FALSE
-# echo "*** libloaded"
+#   s:  random
+declare -i v_LIB_iRandom
 
-#   =*= s:  globals inside Lib
+v_LIB_iRandom=$RANDOM 
+export v_LIB_iRandom
+
+echo "*** inside LIB.random =: {$v_LIB_iRandom}"
+
+#   s:  libConfig
+f_lib_configuration $v_FALSE    #   && echo "*** libloaded"
+
+#   s:  globals inside Lib
 declare -i g_iMenu=0
 declare -i g_iSmen=0
 
-#   =*= s:  set tabSize
+#   s:  set tabSize
 tabs 4
 
-#   sleep 1
+echo "===   LIB.body.end"
+
+
