@@ -6,7 +6,7 @@ if [ "$1" == "" ]; then
     clear && echo -en "\e[3J"
 fi
 
-#   this script
+#   m:  this script
 z_EXE=$BASH_SOURCE
 z_SCP=`basename $z_EXE`
 
