@@ -1,28 +1,70 @@
 #!/bin/bash
 
 
-#   m:  clear screen
-if [ "$1" == "" ]; then
-    clear && echo -en "\e[3J"
-fi
-
-#   m:  this script
-z_EXE=$BASH_SOURCE
-z_SCP=`basename $z_EXE`
-
 #   m:  replyCpde
-declare -i z_iEc=$1
-declare -i z_iRc
+declare -i z_iRc=$1
+echo "+ b00.dummy.ReplyCode[$z_iRc]" 
 
 #   m:  include
 source LIB.inc.bsh
 
 #   m:  run.header
-sId='TUTOR'
-f_lib_header $z_SCP $LINENO $z_iEc; z_iEc=$?; z_iRc=$z_iEc
+g_sId='TUTOR'   # auch ohne Parameter
+g_bLogModeDate=$v_TRUE
+f_lib_header $BASH_SOURCE $LINENO $z_iRc; z_iEc=$?
+
+#   test fileName
+n='hello.txt'
+echo "input FileName =:$n"
+
+s="${n##*.}"
+echo "reply =: $s"
+
+#   test path
+p='/home/peter/VCS/testSuite_Rhea/hello.txt'
+echo "input FilePath =:$p"
+
+#   check lib.dtmString
+echo "+ test: f_lib_time_getDtmString"
+f_lib_time_getDateTimeString $v_LIB__DTM_FORMAT_now; iRc=$?
+echo "$< g_Lib.sRc   =:  [$g_LIB__sRc]"
+echo "$< reply.iRc   =:  [$iRc]"
+
+#   check lib.logFile
+echo "+ test: f_lib_logfile"
+f_lib_logging_getFilePath $BASH_SOURCE 2; iRc=$?
+echo "$< g_Lib.sRc   =:  [$g_LIB__sRc]"
+echo "$< reply.iRc   =:  [$iRc]"
+
+exit
+
+#   check lib.GetFileName
+echo "+ test: f_lib_file_getName"
+f_lib_file_getName $p; iRc=$?
+echo "$< g_Lib.sRc   =:  [$g_LIB__sRc]"
+echo "$< reply.iRc   =:  [$iRc]"
+
+#   check lib.GetFileBody
+echo "+ test: f_lib_file_getBody"
+f_lib_file_getBody $p; iRc=$?
+echo "$< g_Lib.sRc   =:  [$g_LIB__sRc]"
+echo "$< reply.iRc   =:  [$iRc]"
+
+#   check lib.GetFileExtension
+echo "+ test: f_lib_file_getExtension"
+f_lib_file_getExtension $p; iRc=$?
+echo "$< g_Lib.sRc   =:  [$g_LIB__sRc]"
+echo "$< reply.iRc   =:  [$iRc]"
+
+#   check lib.GetFilePath
+echo "+ test: f_lib_file_getPath"
+f_lib_file_getPath $p; iRc=$?
+echo "$< g_Lib.sRc   =:  [$g_LIB__sRc]"
+echo "$< reply.iRc   =:  [$iRc]"
+
+exit
 
 #   m:  show.header.reply
-echo "reply.iRc[$z_iRc]" 
 echo "reply.iEc[$z_iEc]" 
 
 #   m:  content

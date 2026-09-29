@@ -544,8 +544,6 @@ $<  graphical.target
 
 <<< xpr::google.cloud
 
-
-
 >>> xpr::osx.Framework  <2026-09-28>:Mo
 
 +   toDo:
@@ -559,3 +557,38 @@ $<  graphical.target
     mit local test
 
 <<< xpr::osx.Framework.
+
+
+ ### !date:<2026-09-29>:Di 
+
++   VsCode - show my available ShortCuts 
+    Access these via 
+        Ctrl+Shift+P (Windows/Linux) or 
+        Cmd+Shift+P (macOS):
+    $<  Ctrl+Shift+P
+
+ +  bookmarks How I jump ?
+    https://marketplace.visualstudio.com/items?itemName=alefragnani.Bookmarks
+    https://code.visualstudio.com/docs/configure/extensions/extension-marketplace
+    $<  zu finden durch VsCode    
+
++   bookmark Handling - only in current file
+    List All Bookmarks	Ctrl + Alt + P	* ?
+    Toggle Bookmark	    Ctrl + Alt + K	
+    Next Bookmark	    Ctrl + Alt + L	
+    Previous Bookmark	Ctrl + Alt + J	
+    
++   The -c option in bash -c tells Bash to read and 
+    execute commands from a string argument rather than 
+        reading from a file script or waiting for interactive user input.
+    Bash
+    $>  bash -c "string_of_commands"
+
++   export variables
+    The most obvious one, which you've already mentioned, is to use 
+        source or . 
+    to execute the script in the context of the calling shell.
+    $>  source b00_dummy.bsh  
+
+
+

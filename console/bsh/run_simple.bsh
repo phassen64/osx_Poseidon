@@ -1,2 +1,13 @@
 #!/bin/bash
-bash b00_dummy.sh
+
+#   usage:
+#   $   bash [script.sh] 
+
+
+#   declare my reply
+declare -i iReply=$RANDOM 
+clear 
+echo "+ simple.Reply:[$iReply]"
+
+#   s:  call
+bash b00_dummy.sh $iReply

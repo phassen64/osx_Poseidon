@@ -17,12 +17,12 @@
 #       i:  v_STARTER       * .bashrc
 
 #   variables.output (+var)
-#       o:  v_FWK_starter
-#       o:  v_FWK_commandDir
-#       o:  v_FWK_exitCode
-#       o:  v_FWK_tutorDir
+#       o:  v_FWK_pthStarter
+#       o:  v_FWK_dirCommand
+#       o:  v_FWK_iExit
+#       o:  v_FWK_dirTutor
 #       o:  v_FWK_scratchDir
-#       o:  v_FWK_loggingDir
+#       o:  v_FWK_dirLogging
 #       o:  v_PWD
 #       o:  v_RND
 #       o:  v_TMP =: scratch
@@ -308,22 +308,22 @@ function f_fwk_aliasSet(){
     alias +start=+go
 	#   =:= m:cd
     alias +cdhome='cd $HOME && pwd'
-    alias +cdcmd='cd $v_FWK_commandDir && pwd'
-    alias +cdlog='cd $v_FWK_loggingDir && pwd'
+    alias +cdcmd='cd $v_FWK_dirCommand && pwd'
+    alias +cdlog='cd $v_FWK_dirLogging && pwd'
     alias +cdtmp='cd $v_FWK_scratchDir && pwd'
     alias +cdtemp=+cdtmp
     alias +cdvcs='cd $v_VCS && pwd'
     alias +cdvcs_TS='cd $v_VCS/testSuite && pwd'
 	#   =:= m:cd.tutor
-    alias +cdtutor='cd $v_FWK_tutorDir && pwd'
-    alias +cdb='cd $v_FWK_tutorDir/bsh && pwd'
-    alias +cdc='cd $v_FWK_tutorDir/c && pwd'
+    alias +cdtutor='cd $v_FWK_dirTutor && pwd'
+    alias +cdb='cd $v_FWK_dirTutor/bsh && pwd'
+    alias +cdc='cd $v_FWK_dirTutor/c && pwd'
     alias +cdc89=+cdc
-    alias +cdp='cd $v_FWK_tutorDir/pl && pwd'
-    alias +cdr='cd $v_FWK_tutorDir/rb && pwd'
-    alias +cdy='cd $v_FWK_tutorDir/py && pwd'
-    alias +cdcpp='cd $v_FWK_tutorDir/cpp && pwd'
-    alias +cdw='cd $v_FWK_tutorDir/wps && pwd'
+    alias +cdp='cd $v_FWK_dirTutor/pl && pwd'
+    alias +cdr='cd $v_FWK_dirTutor/rb && pwd'
+    alias +cdy='cd $v_FWK_dirTutor/py && pwd'
+    alias +cdcpp='cd $v_FWK_dirTutor/cpp && pwd'
+    alias +cdw='cd $v_FWK_dirTutor/wps && pwd'
     alias +cdwps=+cdw
 	#   =:= m:interpreter
     alias +p='perl'
@@ -415,7 +415,7 @@ function f_fwk_function_show() {
 function f_fwk_variable_initialize () {
 
     #   FWK starter
-    v_FWK_starter=$v_STARTER && export v_FWK_starter
+    v_FWK_pthStarter=$v_STARTER && export v_FWK_pthStarter
 
     #   dir.DocRoot
     v_USR_docRoot=$HOME/Documents && export v_USR_docRoot
@@ -428,27 +428,27 @@ function f_fwk_variable_initialize () {
 
     #   dir.fwk.cmd
     v_DIR=$v_VCS_fwk/cmd
-    v_FWK_commandDir=$v_DIR && export v_FWK_commandDir
+    v_FWK_dirCommand=$v_DIR && export v_FWK_dirCommand
 
     #   FWK library needed for libary
-    v_FWK_library="$v_FWK_commandDir/LIB.inc.bsh" && export v_FWK_library
+    v_FWK_pthLibrary="$v_FWK_dirCommand/LIB.inc.bsh" && export v_FWK_pthLibrary
 
     #   tutor
     v_DIR=$v_VCS_fwk/console
-    v_FWK_tutorDir=$v_DIR && export v_FWK_tutorDir
+    v_FWK_dirTutor=$v_DIR && export v_FWK_dirTutor
 
     #   scratch == tempDir
     v_DIR=$v_VCS_fwk/temp
-    v_FWK_scratchDir=$v_DIR && export v_FWK_scratchDir
-    v_TMP=$v_FWK_scratchDir && export v_TMP
+    v_FWK_dirScratch=$v_DIR && export v_FWK_dirScratch
+    v_TMP=$v_FWK_dirScratch && export v_TMP
 
     #   loging Dir
     v_DIR=$v_VCS_fwk/logging
-    v_FWK_loggingDir=$v_DIR && export v_FWK_loggingDir
+    v_FWK_dirLogging=$v_DIR && export v_FWK_dirLogging
 
     #   exitCode
     declare -i i=99
-    v_FWK_exitCode=$i && export v_FWK_exitCode
+    v_FWK_iExit=$i && export v_FWK_iExit
 
 }
 
@@ -514,4 +514,4 @@ fi
 
 #   s:  footer
 v_DTM=`echo $(date '+%y%m%d|%H%M%S')`
-echo "=== fwk.end::{$v_DTM}:{$v_FWK_exitCode}"
+echo "=== fwk.end::{$v_DTM}:{$v_FWK_iExit}"

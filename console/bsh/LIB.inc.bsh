@@ -280,7 +280,7 @@ function f__logs() {
 
             #   =*= save new logfile name
             sFile=`basename $sFile`
-            v_sLogfile=$v_FWK_scratchDir/$sFile
+            v_sLogfile=$v_FWK_dirScratch/$sFile
             echo "--- logFile.new ={$v_sLogfile}"
 
             #   =*= create new logfile
@@ -860,6 +860,93 @@ function f_lib_error()   {
 }
 
 #   ===========================================================================
+#   m:  F.DTM
+#   ===========================================================================
+
+function f_lib_time_getDateTimeString()   {    
+    local p_sDtmFmt=$1
+    s=$(date $p_sDtmFmt)
+    g_LIB__sRc=$s
+    return ${#s}    # reply strlen
+}
+
+#   ===========================================================================
+#   m:  F.file
+#   ===========================================================================
+
+#   in: filePath  
+
+function f_lib_file_getName()   {
+    local p=$1
+    #   echo "::filePath($p)"    
+    s=$(basename ${p})      # extract filePath
+    g_LIB__sRc=$s    
+    return ${#s}    # reply strlen
+}
+
+function f_lib_file_getBody()   {
+    local p=$1
+    #   echo "::filePath($p)"    
+    s=$(basename ${p})  # baseName
+    s=$(echo "$s" | sed -e 's/\.[^.]*$//')  # fileBody
+    g_LIB__sRc=$s
+    return ${#s}    # reply strlen
+}
+
+function f_lib_file_getExtension()   {
+    local p=$1
+    #   echo "::filePath($p)"    
+    # Source - https://stackoverflow.com/a/965072
+    s=$(basename ${p})  # baseName
+    s="${s##*.}"
+    s=.$s
+    g_LIB__sRc=$s
+    return ${#s}    # reply strlen
+}
+
+function f_lib_file_getPath()   {
+    local p=$1
+    s=$(dirname ${p}) 
+    g_LIB__sRc=$s
+    return ${#s}    # reply strlen
+}
+
+
+#   ===========================================================================
+#   m:  F.logging
+#   ===========================================================================
+
+#   in: filePath  out:filePath
+
+#   in: p_iMod:1 - std p_iMod:2 with dtm
+function f_lib_logging_getFilePath()   {    
+    #   parameter
+    local p_sFilePath=$1  # input caller path
+    local p_iMode=$2
+    #   fileParameter
+    sDir=$v_FWK_dirScratch    
+    sFnm=$(basename ${p_sFilePath})  # file.ext
+    sBdy=$(echo "$sFnm" | sed -e 's/\.[^.]*$//')
+    sExt=".log"    
+    #   prepare name
+        s=$sBdy
+    #   mode:2 => insert dateTimeString
+    if [ $p_iMode == 2 ]
+    then
+        sDtm=$(date $v_LIB__DTM_FORMAT_now)
+        s+='_'
+        s+=$sDtm
+    fi
+    #   add file extension
+    s+=$sExt
+    #   filePath
+    sRc="$sDir/$s"
+    #   return.code    
+    g_LIB__sRc=$sRc
+    return ${#sRc}    # reply strlen
+}
+
+#   ===========================================================================
 #   *** m:  misc
 #   ===========================================================================
 
@@ -899,17 +986,26 @@ function f_lib_sleep() {
 
 function f_lib_header() {
     
-    local sScp=$1
-    local iLine=$2
-    local iLibRc=$3
+    local p_sScp=$1
+    local p_iLine=$2
+    local p_iReply=$3
     
-    local   sFileName=`basename $sScp`
+    #   show my parameter
+    echo "+ libHeader.p1=$p_sScp"
+    echo "+ libHeader.p2=$p_iLine"
+    echo "+ libHeader.p3=$p_iReply"
+
+    #   show my globals
+    echo "+ libHeader.g_sId=$g_sId"
+    echo "+ libHeader.g_bLogMode=$g_bLogModeDate"
+    
+    local   sFileName=`basename $p_sScp`
     local   sName=$(echo "$sFileName" | sed -e 's/\.[^.]*$//')  # cut FileExtension
 #   
-    local sLogfileId=${sScp:0:3}
+    local sLogfileId=${p_sScp:0:3}
     local   sLogfileId=$sName
-    if [ "$iLibRc" == "" ]; then
-        iLibRc=0  # undefined or OK
+    if [ "$p_iReply" == "" ]; then
+        p_iReply=0  # undefined or OK
     fi
     
     #   init
@@ -918,7 +1014,7 @@ function f_lib_header() {
     #   globals
     v_TIMER_start=$(date +%s.%N)
     v_TIME_NOW=$(date $v_LIB__DTM_FORMAT_now)
-    v_TIME_SRC=$(date -r $sScp $v_LIB__DTM_FORMAT_src)
+    v_TIME_SRC=$(date -r $p_sScp $v_LIB__DTM_FORMAT_src)
     v_TIME_HDR=$(date $v_LIB__DTM_FORMAT_hdr)
     local sLogFilePath="${v_DIR_LOG}/${sLogfileId}_${v_TIME_NOW}.log"
     local sFct=${FUNCNAME[0]}
@@ -926,16 +1022,16 @@ function f_lib_header() {
     #   logging
     f__logs "*** created at:{$v_TIME_NOW} by:'${sFct}'" $sLogFilePath $v_TRUE
 
-    #   sScp=$(caller 0)
-    export v_CALLER=$sScp
+    #   p_sScp=$(caller 0)
+    export v_CALLER=$p_sScp
 
     #   fileTime
 #   s=">>> =h= "
     s=">>> "
-    s+="$sScp<$v_TIME_HDR>:{$v_TIME_NOW}:[$iLine]:{$iLibRc}";
+    s+="$p_sScp<$v_TIME_HDR>:{$v_TIME_NOW}:[$p_iLine]:{$p_iReply}";
     f__output "$s" $v_COL_ID_green
     
-    return $iLibRc
+    return $p_iReply
 }
 
 #
@@ -944,7 +1040,7 @@ function f_lib_header() {
 
 function f_lib_footer() {
     local sScp=$1
-    local iLine=$2
+    local p_iLine=$2
     local iRc=$3    #   current
     #   echo "&&&& iRc:=$iRc; iEc:=$v_LIB__iEc"
     local sTimer;
@@ -960,7 +1056,7 @@ function f_lib_footer() {
     f__output "$s" $v_COL_ID_blue
     s="<<< "
 #   s="<<< =h= "
-    s+="$sScp<$v_TIME_HDR>:{$v_TIME_NOW}:[$iLine]"
+    s+="$sScp<$v_TIME_HDR>:{$v_TIME_NOW}:[$p_iLine]"
     s+=":{$iRc}"
     s+=";elapsed:<$sSec> seconds."
     f__output "$s" $v_COL_ID_green
@@ -1233,8 +1329,8 @@ function f_lib_variableSet(){
 echo "===   LIB.body.begin"
 
 #   s:  constant
-declare -i v_TRUE=8
-declare -i v_FALSE=229
+declare -i v_TRUE=100
+declare -i v_FALSE=255
 
 #   s:  add into environment vars
 declare -i v_LIB__iEc=0
@@ -1250,6 +1346,7 @@ v_LIB__DTM_FORMAT_hdr="+%Y.%m.%d__%H:%M:%S"
 
 #  s:   baseName
 v_FWK_LIBRARY=`basename $BASH_SOURCE`
+echo "+     FWK.library =[$v_FWK_LIBRARY]"
 
 #  s:   time
 v_LIB__TIME=$(date -r $v_FWK_LIBRARY $v_LIB__DTM_FORMAT_obj)
@@ -1260,20 +1357,16 @@ v_LIB__PRT_onNLnoPx=52
 v_LIB__PRT_noNLonPx=53
 v_LIB__PRT_onNLonPx=54
 
-#   s:  random
-declare -i v_LIB_iRandom
-
-v_LIB_iRandom=$RANDOM 
-export v_LIB_iRandom
-
-echo "*** inside LIB.random =: {$v_LIB_iRandom}"
-
 #   s:  libConfig
 f_lib_configuration $v_FALSE    #   && echo "*** libloaded"
 
 #   s:  globals inside Lib
 declare -i g_iMenu=0
 declare -i g_iSmen=0
+
+#   s:  globals for caller
+declare -i g_LIB__iRc=0
+declare -x g_LIB__sRc='?Any'
 
 #   s:  set tabSize
 tabs 4
