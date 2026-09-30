@@ -26,7 +26,8 @@
 #       o:  v_PWD
 #       o:  v_RND
 #       o:  v_TMP =: scratch
-#       o:  v_USR_docRoot
+#       o:  v_USR_dirDocRoot
+#       o:  v_USR_dirWorkshop
 #       o:  v_VCS
 
 #   content:
@@ -314,6 +315,14 @@ function f_fwk_aliasSet(){
     alias +cdtemp=+cdtmp
     alias +cdvcs='cd $v_VCS && pwd'
     alias +cdvcs_TS='cd $v_VCS/testSuite && pwd'
+	#   =:= m:cd.user
+    alias +cdusr='cd $v_USR_dirDocRoot && pwd'
+    alias +cdwrk='cd $v_USR_dirWorkshop && pwd'
+    alias +cdwrkSrc='cd $v_USR_dirWorkshop/source && pwd'
+    alias +cdwrkObj='cd $v_USR_dirWorkshop/object && pwd'
+    alias +cdwrkTmp='cd $v_USR_dirWorkshop/temp && pwd'
+    alias +cdwrkLog='cd $v_USR_dirWorkshop/logg && pwd'
+    alias +cdprj=+cdwrkObj
 	#   =:= m:cd.tutor
     alias +cdtutor='cd $v_FWK_dirTutor && pwd'
     alias +cdb='cd $v_FWK_dirTutor/bsh && pwd'
@@ -418,7 +427,10 @@ function f_fwk_variable_initialize () {
     v_FWK_pthStarter=$v_STARTER && export v_FWK_pthStarter
 
     #   dir.DocRoot
-    v_USR_docRoot=$HOME/Documents && export v_USR_docRoot
+    v_USR_dirDocRoot=$HOME/Documents && export v_USR_dirDocRoot
+    #   workshop     
+    v_DIR=$v_USR_dirDocRoot/workshop
+    v_USR_dirWorkshop=$v_DIR && export v_USR_dirWorkshop
 
     #   dir.VCS
     v_VCS=$HOME/VCS  && export v_VCS
