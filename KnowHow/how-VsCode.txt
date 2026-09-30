@@ -1,0 +1,7 @@
+--- rme.vsCode
+
++   bookmark Handling - only in current file
+
+    Toggle Bookmark	    Ctrl + Alt + K	
+    Next Bookmark	    Ctrl + Alt + L	
+    Previous Bookmark	Ctrl + Alt + J	

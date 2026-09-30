@@ -1,65 +1,152 @@
 #!/bin/bash
 
-#
-#   =*= :01 clear screen
-#
+#   usage   :   $   bash t01_intro.bsh
 
-#   only call sceen, when called without parameters
-if [ "$1" == "" ]; then
-    clear && echo -en "\e[3J"
-fi
+#   content:
+#       m:  header
+#       m:  F.helper
+#       m:  F.printing
+#       m:  F.file
+#       m:  footer
 
-#   this script
-z_EXE=$BASH_SOURCE
-z_SCP=`basename $z_EXE`
+#   ===========================================================================
+#   m:  header
+#   ===========================================================================
 
-#   EC/RC
-declare -i z_iEc=$1
-declare -i z_iRc
+clear
+echo "=== header runMe($BASH_SOURCE) [`date`]"
 
-#
-#   =*= :04 include library
-#
+#   s:  declare my variables
+declare -x s
+declare -i i
+declare -i iRc
+declare -x sRc
 
+#   s:  include
+echo ""
+echo "* include library 'LIB'"
 source LIB.inc.bsh
 
-#   header
-sId='TUTOR'
-f_lib_header $z_SCP $LINENO $z_iEc; z_iEc=$?; z_iRc=$z_iEc
+#   s:  lib.configuration
+echo ""
+echo "$ call LIB.config"
+i=$v_LIB_bTrue
+f_lib_configuration $i
 
-#   log && tmp Dir
-f_lib_menu "logDir" $LINENO
-echo "dirLog:=<$v_DIR_LOG>"
+#   s:  info
+echo ""
+echo "$ call LIB.info"
+f_lib_info
 
-f_lib_trace $z_SCP $LINENO "DIR:= '$v_DIR_LOG' && '$v_DIR_TMP'"
+#   ===========================================================================
+#   m:  F.helper
+#   ===========================================================================
 
-#   show version
-f_lib_versionShow
+#   s:  who
+echo ""
+echo "$ call LIB.who"
+f_lib_who
 
-f_lib_menuS1 "echo Test777" $LINENO
+#   s:  where
+echo ""
+echo "$ call LIB.where"
+f_lib_where  $BASH_SOURCE $LINENO $RANDOM
 
-#   1)  echo with no line feed
-f_lib_text "peter" $LINENO
+#   s:  caller
+echo ""
+echo "$ call LIB.caller"
+f_lib_caller  $BASH_SOURCE
 
-#
-#   =*= :08 logging
-#
+#   s:  show.DateTime
+echo ""
+echo "$ call LIB.DateTime"
+f_lib_dateTime
 
-f_lib_menu "logging" $LINENO
+#   s:  sleep
+echo ""
+echo "$ call LIB.sleep [1]"
+f_lib_sleep 1
 
-#   using logfile - the variable is defined in the include file
-#   v_sLogfile="${z_SCP}.log"
+#   ===========================================================================
+#   m:  F.printing
+#   ===========================================================================
 
-d=$(date +%s.%N)
-s="<<< TIME now is:$d"
-echo "I will log the text:'$s' into logfile:<$v_sLogfile>"
-echo "$s" >> $v_sLogfile   #    append into existing logfile
+#   s:  echo
+echo -e "\n$ call LIB.echo"
+f_lib_echo "Hello Peter !"
 
-#
-#   =*= :09 exit code and return
-#
+#   s:  print (foreground & background)
+echo ""
 
-#   exit    -   stops script and probably the bash process
-#   return  -   return from a function - not inside a body
+#   u:  print.easy
+echo "$ call LIB.print any"
+f_lib_print "A normal text printed" $v_LIB_bTrue
 
-f_lib_footer $z_SCP $LINENO $z_iRc
+#   u:  print.multiple in 1 line and colored
+f_lib_print "1:red."        $v_LIB_bFalse   $v_LIB_COLOR_VID_red
+f_lib_print "2:yellow."     $v_LIB_bFalse   $v_LIB_COLOR_VID_yellow
+f_lib_print "3:green."      $v_LIB_bFalse   $v_LIB_COLOR_VID_green
+f_lib_print "4:blue."       $v_LIB_bFalse   $v_LIB_COLOR_VID_blue
+f_lib_print "5:magenta."    $v_LIB_bFalse   $v_LIB_COLOR_VID_magenta
+f_lib_print "6:cyan."       $v_LIB_bTrue    $v_LIB_COLOR_VID_cyan
+
+#   s:  puts (implicitely NL)
+echo -e "\n$ call LIB.puts"
+f_lib_puts "1:red!"         $v_LIB_COLOR_VID_red
+f_lib_puts "2:yellow!"      $v_LIB_COLOR_VID_yellow
+f_lib_puts "3:green!"       $v_LIB_COLOR_VID_green
+
+
+#   ===========================================================================
+#   m:  F.file
+#   ===========================================================================
+
+echo ""
+echo "* LIB.file"
+
+#   s:  L.filePath
+echo ""
+echo "$ call LIB.file.getPath"
+f_lib_file_getPath $BASH_SOURCE
+
+#   save return code
+iRc=$?
+
+#   fetch global lib reply code
+sRc=$v_LIB_reply_sRc
+
+#   show main variables
+echo "< m.sRc =: [$sRc]"
+echo "< m.iRc =: [$iRc]"
+
+#   s:  L.fileName
+echo ""
+echo "$ call LIB.file.name"
+f_lib_file_getName $BASH_SOURCE
+iRc=$?
+sRc=$v_LIB_reply_sRc
+echo "< m.sRc =: [$sRc]"
+echo "< m.iRc =: [$iRc]"
+
+#   s:  L.fileBody
+echo ""
+echo "$ call LIB.file.body"
+f_lib_file_getBody $BASH_SOURCE
+iRc=$?
+sRc=$v_LIB_reply_sRc
+echo "< m.sRc =: [$sRc]"
+echo "< m.iRc =: [$iRc]"
+
+#   s:  L.fileExtension
+echo ""
+echo "$ call LIB.file.extension"
+f_lib_file_getExtension $BASH_SOURCE
+iRc=$?
+sRc=$v_LIB_reply_sRc
+echo "< m.sRc =: [$sRc]"
+echo "< m.iRc =: [$iRc]"
+
+
+
+#   === m:  footer
+echo -e "\n=== footer [`date`]."
