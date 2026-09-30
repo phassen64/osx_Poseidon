@@ -267,12 +267,12 @@ function f_env_prompt() {
     elif [ $iPrompt == 4 ]; then
         export PS1="[\t] \w \$ "        # time & dirPath
     elif [ $iPrompt == 5 ]; then        # time & short dirPath
-        export PS1="[\t]::[\W] \$ " 
+        export PS1="[\t]::[\W] \$ "
     elif [ $iPrompt == 6 ]; then        # not working
         if [ `pwd` == $HOME ]
             then export PS1="[\t] ~ \$ "
-            else export PS1="[\t] ~/\W \$ " 
-        fi     
+            else export PS1="[\t] ~/\W \$ "
+        fi
     else
         export PS1="\$ "
     fi
@@ -311,7 +311,7 @@ function f_fwk_aliasSet(){
     alias +cdhome='cd $HOME && pwd'
     alias +cdcmd='cd $v_FWK_dirCommand && pwd'
     alias +cdlog='cd $v_FWK_dirLogging && pwd'
-    alias +cdtmp='cd $v_FWK_scratchDir && pwd'
+    alias +cdtmp='cd $v_FWK_dirScratch && pwd'
     alias +cdtemp=+cdtmp
     alias +cdvcs='cd $v_VCS && pwd'
     alias +cdvcs_TS='cd $v_VCS/testSuite && pwd'
@@ -428,7 +428,7 @@ function f_fwk_variable_initialize () {
 
     #   dir.DocRoot
     v_USR_dirDocRoot=$HOME/Documents && export v_USR_dirDocRoot
-    #   workshop     
+    #   workshop
     v_DIR=$v_USR_dirDocRoot/workshop
     v_USR_dirWorkshop=$v_DIR && export v_USR_dirWorkshop
 
@@ -451,6 +451,7 @@ function f_fwk_variable_initialize () {
 
     #   scratch == tempDir
     v_DIR=$v_VCS_fwk/temp
+    v_DIR=$v_USR_dirDocRoot/temp    # better
     v_FWK_dirScratch=$v_DIR && export v_FWK_dirScratch
     v_TMP=$v_FWK_dirScratch && export v_TMP
 
@@ -466,7 +467,7 @@ function f_fwk_variable_initialize () {
 
 function f_fwk_isFile {
     local bRc=$v_FALSE
-    if [ -f $1 ]; then bRc=$v_TRUE; fi    
+    if [ -f $1 ]; then bRc=$v_TRUE; fi
     return $bRc
 }
 
