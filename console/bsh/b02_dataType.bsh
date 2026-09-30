@@ -1,0 +1,317 @@
+#!/bin/bash
+
+#   ****************************************************************************
+#   TUTORIAL BASH:  [2]:data type
+#   ****************************************************************************
+
+<<  overview
+    !Overview:  data types introduction
+        :00 declare command
+        :01 constant
+        :02 variable : integer,string,float,array
+        :03 predefined variables
+        :04 check data types
+overview
+
+#   =*= :   include
+source LIB.inc.bsh
+declare -i z_iEc=$1
+declare -i z_iRc
+
+#   =*= :   my vars
+z_EXE=$BASH_SOURCE; z_SCP=`basename $z_EXE`
+z_iEc=$1
+
+#   =*= :   clear screen, if not called by runTest
+f_lib_scp_screen_clear "$1"
+
+#   =*= :   header
+f_lib_header "$z_SCP" $LINENO $z_iEc; z_iEc=$?; z_iRc=$z_iEc
+
+#
+#   =*= :00 declare
+#
+
+<<  declare
+    -a  Variable is an array.
+    -f  Use function names only.
+    -i  The variable is to be treated as an integer;
+        arithmetic evaluation is performed when the variable is assigned a value (see Section 3.4.6).
+    -p  Display the attributes and values of each variable.
+        When -p is used, additional options are ignored.
+    -r  Make variables read-only.
+        These variables cannot then be assigned values by subsequent assignment statements,
+        nor can they be unset.
+    -t  Give each variable the trace attribute.
+    -x  Mark each variable for export to subsequent commands via the environment.
+declare
+
+
+#
+#   =*= :01 constant
+#
+
+f_lib_menu "constants" $LINENO
+
+#   the constant may define only 1x per bash-session
+declare -r v_C_TMP=123
+f_lib_puts "C_CONSTANT_TEST:<$v_C_TMP>"
+
+#
+#   =*= :02 variables
+#
+
+f_lib_menu "variables" $LINENO
+
+#
+#   ==* :integer
+#
+
+f_lib_menuS1 "integer" $LINENO
+
+#   create an integer variable
+declare -i iVal=45
+f_lib_puts "i[$LINENO]:<$iVal>"     # => i=45
+
+#   add it
+iVal=$iVal+3
+f_lib_puts "i[$LINENO]:<$iVal>"     # => i=48
+
+#   increment it
+iVal+=1
+f_lib_puts "i[$LINENO]:<$iVal>"     # => i=49
+
+#   write wrong type => produce an error
+iVal='peter'
+f_lib_puts "i[$LINENO]:<$iVal>"     # => i=0
+
+#   decrement to minus
+#   iVal-=1 error
+iVal=0
+iVal=$iVal-9
+f_lib_puts "i[$LINENO]:<$iVal>"     # => i=-9
+
+#   using floats
+#   iVal=3.14 hard syntax error
+
+#
+#   ==* :strings
+#
+
+f_lib_menuS1 "strings" $LINENO
+
+declare sVal='ABC'
+f_lib_puts "s[$LINENO]:<$sVal>"     #   s:ABC
+
+sVal='theodor'
+f_lib_puts "s[$LINENO]:<$sVal>"     #   s:theodor
+
+#   write wrong type : no error
+sVal=3
+f_lib_puts "s[$LINENO]:<$sVal>"     #   s:3
+
+#   increment   : OK
+sVal+=1
+f_lib_puts "s[$LINENO]:<$sVal>"     #   s:31
+
+#   write wrong type inc
+sVal='theodor'
+sVal+=1
+f_lib_puts "s[$LINENO]:<$sVal>"     #   s:theodor1
+
+#
+#   ==* :float
+#
+
+f_lib_menuS1 "float" $LINENO
+
+fVal=3/5
+f_lib_puts "f[$LINENO]:<$fVal>"     # 3/5
+
+#   not correct multiplication
+fVal=$fVal*2
+f_lib_puts "f[$LINENO]:<$fVal>"     # 3/5*2
+
+#
+#   ==* :array
+#
+
+f_lib_menu "array" $LINENO
+
+#
+#   ==* :decalare array
+#
+
+f_lib_menuS1 "declare" $LINENO
+declare -a aVal
+
+#
+#   ==* :array.init
+#
+
+f_lib_menuS1 "init" $LINENO
+x='!'
+aVal=('peter' 4711 $x -4.5)
+
+#
+#   ==* :array.print
+#
+
+f_lib_menuS1 "print" $LINENO
+
+#   print all
+f_lib_text "all" $LINENO
+declare -p aVal
+#   => declare -a aVal=([0]="peter" [1]="4711" [2]="/mnt/d/MY/cmd/rb" [3]="-4.5")
+
+#   print single - single access
+f_lib_text "single access" $LINENO
+x=${aVal[0]};   echo "aVal[0]:<$x>"         #   =>  <peter>
+x=${aVal[3]};   echo "aVal[3]:<$x>"         #   =>  <-4.5>
+
+#   show arrray length with : 'aVal[@]'
+f_lib_text "array.length" $LINENO
+x=${#aVal[@]};   echo "aVal.length:<$x>"    #   =>  <4>
+
+#
+#   ==* :array.append
+#
+
+f_lib_menuS1 "append" $LINENO
+f_lib_text "show array" $LINENO
+aVal=('Merkur' 'Venus' 'Erde' 'Mars')
+declare -p aVal
+x='Jupiter'
+f_lib_text "append:'$x'" $LINENO
+#   append now  a+=($x) NOT a+=$x
+aVal+=($x)
+declare -p aVal
+
+#
+#   ==* :array.slice
+#
+
+f_lib_menuS1 "slice" $LINENO
+
+aVal1=('peter' 'mike' 'Donald' 'britney')
+iFrom=1; iTo=2; aVal2=("${aVal1[@]:$iFrom:$iTo}")
+f_lib_text "slice(FROM:$iFrom;TO:$iTo)" $LINENO
+declare -p aVal1
+declare -p aVal2
+
+#
+#   =*= :03 predefined variables
+#
+
+f_lib_menu "predefined variables" $LINENO
+
+#   echo -e <STR> uses
+echo -e "+\tBASH_VERSION:<$BASH_VERSION>"
+echo -e "+\tHOME:<$HOME>"
+echo -e "+\tHOSTNAME:<$HOSTNAME>"
+echo -e "+\tLANG:<$LANG>"
+echo -e "+\tPATH:<$PATH>"
+echo -e "+\tLD_LIBRARY_PATH:<$LD_LIBRARY_PATH>"
+echo -e "+\tPS1:<$PS1>"
+echo -e "+\tUSER:<$USER>"
+echo -e "+\tLOGNAME:<$LOGNAME>"
+
+#
+#   =*= :04 check data types
+#
+
+f_lib_menu "check data types" $LINENO
+f_lib_menuS1 "by own functions" $LINENO
+
+f_isNumeric1() {
+    local sTrue="!!! TRUE1('$1'):isNumeric"
+    local sFalse="??? FALSE1('$1'):isNotNum"
+    if [ "$x" -eq "$x" 2>/dev/null ]; then echo $sTrue; else echo $sFalse; fi
+}
+f_isNumeric2() {
+    local sTrue="!!! TRUE2('$1'):isNumeric"
+    local sFalse="??? FALSE2('$1'):isNotNum"
+    if [[ "$1" =~ ^[0-9]+$ ]]; then echo $sTrue; else echo $sFalse; fi
+}
+
+x=1;    f_isNumeric1 $x
+x=2;    f_isNumeric2 $x
+x='s';  f_isNumeric1 $x
+
+#   =*= using library functions
+
+f_lib_menuS1 "by special lib functions" $LINENO
+
+#   integer check
+x=-123; s="?isInteger('$x'):"
+if ( f_lib_isInteger $x ); then
+    s+="TRUE"
+else
+    s+="FALSE"
+fi
+f_lib_puts $s
+
+#   define echo mode for lib echo
+f_lib_menuS1 "by lib functions" $LINENO
+
+iEcho=2
+
+#   numeric,alpha
+x=4711;     f_lib_isNumeric $x $iEcho
+x='x';      f_lib_isNumeric $x $iEcho
+x='123';    f_lib_isNumeric $x $iEcho
+x='pa1Ab';  f_lib_isAlpha   $x $iEcho
+x='paAbc';  f_lib_isAlpha   $x $iEcho
+x='1a3';    f_lib_isAlnum   $x $iEcho
+x='-1a3';   f_lib_isAlnum   $x $iEcho
+x='1a3+';   f_lib_isAlnum   $x $iEcho
+x='1a356a'; f_lib_isAlnum   $x $iEcho
+
+#   lower,uper
+x='abc';    f_lib_isLower   $x $iEcho
+x='aBc';    f_lib_isLower   $x $iEcho
+x='ZUA';    f_lib_isUpper   $x $iEcho
+
+#   hexNum
+x='abc';    f_lib_isHexnum  $x $iEcho
+x='abc2';   f_lib_isHexnum  $x $iEcho
+x='ab,c2';  f_lib_isHexnum  $x $iEcho
+x='3abc2';  f_lib_isHexnum  $x $iEcho
+x='ab(c2';  f_lib_isHexnum  $x $iEcho
+x='A0cF';   f_lib_isHexnum  $x $iEcho
+
+#   punct
+x='.;';     f_lib_isPunct   $x $iEcho
+
+f_lib_menuS1 "if and else" $LINENO
+#   use: if [ rc == TRUE ]
+f_lib_text "if [ \$tRc == \$v_TRUE]" $LINENO
+x='127'; f_lib_isNumeric    $x $iEcho; bRc=$?
+echo "bRc1($x):<$bRc>"
+if [ $bRc == $v_TRUE ] ; then
+    echo "!!! x:'$x' is numeric"
+else
+    echo "??? x:'$x' is NOT numeric"
+fi
+
+#   use: if [ rc ]
+f_lib_text "if [ \$tRc ]" $LINENO
+x='abc'; f_lib_isLower $x $iEcho; bRc=$?
+echo "bRc:<$bRc>"
+if [ $bRc ] ; then
+    echo "!!! x=<'$x'>:is lower"
+else
+    echo "??? x=<'$x'>:is NOT lower"
+fi
+
+#   using file
+f_lib_info "try isFile" $LINENO
+x=$z_SCP; f_lib_isFile  $x $iEcho; bRc=$?
+if [ $bRc ] ; then
+    echo "!!! x=<'$x'>:isFILE"
+else
+    echo "??? x=<'$x'>:is NOT FILE"
+fi
+
+#   =*= :   footer
+f_lib_footer $z_SCP $LINENO $z_iRc $z_iEc
