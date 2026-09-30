@@ -7,6 +7,7 @@
 #       m:  F.helper
 #       m:  F.printing
 #       m:  F.file
+#       m:  F.logging
 #       m:  footer
 
 #   ===========================================================================
@@ -15,6 +16,7 @@
 
 clear
 echo "=== header runMe($BASH_SOURCE) [`date`]"
+
 
 #   s:  declare my variables
 declare -x s
@@ -146,7 +148,28 @@ sRc=$v_LIB_reply_sRc
 echo "< m.sRc =: [$sRc]"
 echo "< m.iRc =: [$iRc]"
 
+#   ===========================================================================
+#   m:  F.logging
+#   ===========================================================================
 
+echo ""
+echo "* LIB.logging"
+
+#   fetch random value[1,2]
+echo ""
+declare -i iMax=2
+declare -i iMin=1
+echo "$ call LIB.random ($iMax,$iMin)"
+f_lib_random $iMax $iMin; iRnd=$?
+echo "< m.iRnd =: [$iRnd]"
+
+#   show logFilePath
+echo ""
+echo "$ call LIB.logging.GetPath"
+iMod=$iRnd  # dateTime
+f_lib_logging_getPath $BASH_SOURCE $iMod; iRc=$?; sRc=$v_LIB_reply_sRc
+echo "< m.sRc =: [$sRc]"
+echo "< m.iRc =: [$iRc]"
 
 #   === m:  footer
 echo -e "\n=== footer [`date`]."

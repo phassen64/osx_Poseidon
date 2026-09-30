@@ -13,6 +13,9 @@
 #           •   m:  F.echo & F.print & F.puts
 #       b:  B.body
 
+#   input:
+#           •   v_FWK_dirScratch
+
 #   remark:
 #       The lib configuration should be set to verbose
 
@@ -108,6 +111,34 @@ function f_lib_sleep() {
     fi
     sleep $i
 }
+
+#   in: iMax [iMin]
+function f_lib_random() {
+
+    declare -i p_iMax=$1     #   iRnd = [iMax...iMin]
+    declare -i p_iMin=$2
+    declare -i n
+    declare -i i
+
+    n=$RANDOM
+    i=$n%$p_iMax
+
+    #   show
+    if [ $v_LIB_bTrue == $v_LIB_bVerbose ]; then
+        echo "< L.iMax      :: [$p_iMax]"
+        echo "< L.random    :: [$n]"
+        echo "< L.iRnd      :: [$i]"
+    fi
+
+    #   add min to lower boundary
+    i=$i+$p_iMin
+    if [ $v_LIB_bTrue == $v_LIB_bVerbose ]; then
+        echo "< L.iRnd2      :: [$i]"
+    fi
+
+    return $i
+}
+
 
 
 #   ===========================================================================
@@ -330,6 +361,46 @@ function f_lib_file_getExtension()   {
 }
 
 
+#   ===========================================================================
+#   m:  F.logging
+#   ===========================================================================
+
+function f_lib_logging_getPath() {
+    local p_sScp=$1
+    local p_iMod=$2     #   2==dtm
+    local l_sPwd=`pwd`
+    local l_sFmt="+%y%m%d%H%M%S"
+    local l_sDtm=$(date $l_sFmt)
+
+    local s
+
+    if [ $v_LIB_bTrue == $v_LIB_bVerbose ]; then
+        echo "< L.pScp :: [$p_sScp]"
+        echo "< L.iMod :: [$p_iMod]"
+        echo "< L.sPwd :: [$l_sPwd]"
+        echo "< L.sDtm :: [$l_sDtm]"
+    fi
+
+    #   getFileName and getFileBody
+    s=$(basename ${p_sScp})
+    s=$(echo "$s" | sed -e 's/\.[^.]*$//')  # body
+
+    #   logging with dateTime?
+    if [ 2 == $p_iMod ]; then
+        s+='_'
+        s+=$l_sDtm
+        echo "< L.sDtm :: [$s]"
+    fi
+
+    #   concat
+    s="$v_FWK_dirScratch/$s"
+    s+=$v_LIB_logging_sFileExtension
+
+    v_LIB_reply_sRc=$s
+    return ${#s}        # reply strlen
+}
+
+
 #   &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
 #   b:  B.body
 #   &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
@@ -344,4 +415,8 @@ declare -i v_LIB_bVerbose=0
 #   s:  LIB.replyCodes
 declare -i v_LIB_reply_iRc=99
 declare -x v_LIB_reply_sRc='?None'
+
+#   s:  LIB.logging
+declare -i v_LIB_logging_bEnabled=$v_LIB_bFalse
+declare -x v_LIB_logging_sFileExtension='.log'
 
