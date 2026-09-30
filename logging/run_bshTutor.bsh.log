@@ -1,62 +1,172 @@
->>> RUN:TUTOR:{run_bshTutor.bsh}:{260929:215901}:EC={143}
-=L= log.SHW:[1/1]:'/home/peter/VCS/fwk/temp/BSH_b01_001.log'
-b01_intro.bsh: line 203: printf: \tprintf.integer: invalid number
-b01_intro.bsh: line 203: printf: <4711>: invalid number
-b01_intro.bsh: line 203: printf: [202]: invalid number
-b01_intro.bsh: line 207: printf: \tprintf.integer: invalid number
-b01_intro.bsh: line 207: printf: with: invalid number
-b01_intro.bsh: line 207: printf: leading: invalid number
-b01_intro.bsh: line 207: printf: zero: invalid number
-b01_intro.bsh: line 207: printf: <815>: invalid number
-b01_intro.bsh: line 207: printf: [206]: invalid number
-b01_intro.bsh: line 211: printf: \tprintf+++.integer: invalid number
-b01_intro.bsh: line 211: printf: using:print: invalid number
-b01_intro.bsh: line 211: printf: -v: invalid number
-b01_intro.bsh: line 211: printf: <Variable>: invalid number
-b01_intro.bsh: line 211: printf: [210]: invalid number
-b01_intro.bsh: line 218: printf: \tprintf.integer: invalid number
-b01_intro.bsh: line 218: printf: <12>: invalid number
-b01_intro.bsh: line 218: printf: [217]: invalid number
-b01_intro.bsh: line 220: printf: \tx:=<'000'>x:=<'000'>x:=<'000'>: invalid number
-b01_intro.bsh: line 234: printf: <abcdefgij>: invalid number
-b01_intro.bsh: line 246: printf: \tprintf.float <1.23> [245]: invalid number
-b01_intro.bsh: line 253: printf: \tprintf decimal(64) [252]: invalid number
-b01_intro.bsh: line 253: printf: \tprintf decimal(64) [252]: invalid number
-b01_intro.bsh: line 253: printf: \tprintf decimal(64) [252]: invalid number
-b01_intro.bsh: line 259: printf: \tprintf octal(0123) [258]: invalid number
-b01_intro.bsh: line 259: printf: \tprintf octal(0123) [258]: invalid number
-b01_intro.bsh: line 259: printf: \tprintf octal(0123) [258]: invalid number
-b01_intro.bsh: line 265: printf: \tprintf hex(0x1AbC) [264]: invalid number
-b01_intro.bsh: line 265: printf: \tprintf hex(0x1AbC) [264]: invalid number
-b01_intro.bsh: line 265: printf: \tprintf hex(0x1AbC) [264]: invalid number
-es> [225]'> [0m
-	x:=<'\tx:=<'\tprintf.string <Otto Walkes> [225]'>'>:2
-	printf.string <abcdefgij> [233] [0m
-	x:=<'	pri'>x:=<''> [0m
-	printf.char <Otto Walkes> [239] [0m
-	x:=<'\'> [0m
-	printf.float <1.23> [245] [0m
+>>> RUN:TUTOR:{run_bshTutor.bsh}:{261001:003848}:EC={37}
+=L= log.SHW:[1/2]:'/home/peter/Documents/temp/BSH_b01_001.log'
+b01_intro.bsh: line 225: Otto Walkes: syntax error in expression (error token is "Walkes")
+b01_intro.bsh: line 239: Otto Walkes: syntax error in expression (error token is "Walkes")
+b01_intro.bsh: line 245: 1.23: syntax error: invalid arithmetic operator (error token is ".23")
+LIB.inc.bsh: line 1182: printf: [05]: syntax error: operand expected (error token is "[05]")
+LIB.inc.bsh: line 1182: printf: [06]: syntax error: operand expected (error token is "[06]")
+LIB.inc.bsh: line 1182: printf: [07]: syntax error: operand expected (error token is "[07]")
+r/Documents/temp'' [0m
+[92m=== m[03] : envCheck at:[120] [0m
+	envCheck [0m
+declare -a aDir=()
+*** libVersion
+[96m=v= Library:<> Version:<'260929::222004'> BASH:<'5.2.37(1)-release'> [0m
+[92m=== m[04] : output at:[132] [0m
+[92m--- s[01] : simple at:[135] [0m
+[92m--- s[02] : multiline at:[138] [0m
+=== Content of Tutorial:
+    b01:    Introduction
+    b02:    data types overview
+    b03:    operator
+    b04:    controlFlow if-fi-case, for,while
+    b05:    string
+    b06:    array && hash
+    b07:    function
+    b08:    file
+[92m--- s[03] : echo Test777 at:[164] [0m
+	echo -n [167] [0m
+ABC:123:END;
+	echoTestEnd [0m
+	echo -e [176] [0m
+Dieses ist ein
+
+mehrzeiliger Text mit 	Tabulator!
+	echo -E [182] [0m
+Dieses ist ein zweiter\n
+Text mit keinem \tTabulator!
+[96mDirekter Text [0m
+[92m--- s[04] : printf at:[196] [0m
+	printf.integer <4711> [203] [0m
+		 X:['4711'] 
+	printf.integer with leading zero <12> [207] [0m
+		X:=<'0815'>
+	printf+++.integer using:print -v <Variable> [211] [0m
+		 X:=<'007'> [0m
+	printf.integer <12> [218] [0m
+	x:=<'012'> [0m
+	x:=<'00012'> [0m
+	printf.string <12> [226] [0m
+	x:=<'12'> [0m
+	x:=<'12'>:2
+	printf.string <0> [234] [0m
+	x:=<'0'> [0m
+	printf.char <0> [240] [0m
+	x:=<'0'> [0m
+	printf.float <0> [246] [0m
 	f:<0000.000> [0m
-	printf decimal(64) [252] [0m
-[95m	dec:=<'0'> hex:<'0'> oct:<'0'> [0m
-	printf octal(0123) [258] [0m
-[95m	dec:=<'0'> hex:<'0'> oct:<'0'> [0m
-	printf hex(0x1AbC) [264] [0m
-[95m	dec:=<'0'> hex:<'0'> oct:<'0'> [0m
-[92m=== m[05] : set+read at:[273] [0m
+	printf decimal(64) [253] [0m
+[95m	dec:=<'64'> hex:<'40'> oct:<'100'> [0m
+	printf octal(0123) [259] [0m
+[95m	dec:=<'83'> hex:<'53'> oct:<'123'> [0m
+	printf hex(0x1AbC) [265] [0m
+[95m	dec:=<'6844'> hex:<'1ABC'> oct:<'15274'> [0m
 myInteger:= <3>
 myString:= <peter>
 mySm1:= <peterSm1
 Ende>
 mySm2= <peterSm2 Ende>
-[92m=== m[06] : colored text at:[300] [0m
 [91mthis text is red [0m
 [92mthis green [0m
 [94mand I am blue [0m
 [93mor may be yellow [0m
-[92m=== m[07] : logging at:[311] [0m
-I will log the text:'<<< TIME now is:1790711942.263607947' into logfile:</home/peter/VCS/fwk/temp/b01_intro.log>
-[94m... logFile.ftr<'/home/peter/VCS/fwk/temp/b01_intro.log'> by LIB created and written. [0m
-[92m<<< b01_intro.bsh<2026.09.29__21:59:03>:{260929215903}:[328]:{143};elapsed:<1> seconds. [0m
+I will log the text:'<<< TIME now is:1790807929.561046712' into logfile:</home/peter/Documents/temp/b01_intro.log>
+[94m... logFile.ftr<'/home/peter/Documents/temp/b01_intro.log'> by LIB created and written. [0m
+[92m<<< b01_intro.bsh<2026.10.01__00:38:50>:{261001003850}:[329]:{37};elapsed:<1> seconds. [0m
+=L= log.SHW:[2/2]:'/home/peter/Documents/temp/BSH_b05_001.log'
+b05_string.bsh: line 44: f_lib_submenu: command not found
+b05_string.bsh: line 50: f_lib_submenu: command not found
+b05_string.bsh: line 59: f_lib_submenu: command not found
+b05_string.bsh: line 62: +puts: command not found
+b05_string.bsh: line 64: f_lib_submenu: command not found
+b05_string.bsh: line 66: length: command not found
+b05_string.bsh: line 69: f_lib_submenu: command not found
+b05_string.bsh: line 93: f_lib_submenu: command not found
+b05_string.bsh: line 109: f_lib_submenu: command not found
+b05_string.bsh: line 118: f_lib_submenu: command not found
+b05_string.bsh: line 136: f_lib_submenu: command not found
+b05_string.bsh: line 142: f_lib_submenu: command not found
+b05_string.bsh: line 147: f_lib_submenu: command not found
+b05_string.bsh: line 158: f_lib_submenu: command not found
+b05_string.bsh: line 180: f_lib_submenu: command not found
+29] [0m
+	s1:<LearnABC>;s2:<123> [133] [0m
+	s=$s1;s+=$s2 : <LearnABC123> [139] [0m
+	s=$s1$s2 : <LearnABC123> [144] [0m
+	s="$s1$s2" : <LearnABC123> [149] [0m
+[92m=== m[05] : string splitting using:IFS at:[157] [0m
+[93m--- i:IFS:=internal field separator [0m
+	split by SPACE [161] [0m
+declare -a aVal=([0]="Learn" [1]="to" [2]="Split" [3]="a" [4]="String" [5]="in" [6]="Bash" [7]="Scripting")
+	split by comma [168] [0m
+[0]:Peter
+[1]:Paul
+[2]:Mary
+[3]:Britney and Kevin
+[92m=== m[06] : cut strings at:[213] [0m
+	SRC:<ABCDEFGHIJKLMNOPQRSTUVWXYZ> [215] [0m
+*{sSrc:5} => 'FGHIJKLMNOPQRSTUVWXYZ' [0m
+[92m=== m[07] : splice strings at:[225] [0m
+	SRC:<ABCDEFGHIJKLMNOPQRSTUVWXYZ> [229] [0m
+*{sSrc:5:3} => 'FGH' [0m
+[92m=== m[08] : commands at:[239] [0m
+declare -f f__color_setCode
+declare -f f__color_setId
+declare -f f__echoExpr
+declare -f f__logs
+declare -f f__output
+declare -f f__print
+declare -f f__puts
+declare -f f__trace
+declare -f f_lib_DTM
+declare -f f_lib_aliasSet
+declare -f f_lib_calcExitCode
+declare -f f_lib_colorInit
+declare -f f_lib_colorTest
+declare -f f_lib_configuration
+declare -f f_lib_debug
+declare -f f_lib_declare
+declare -f f_lib_env_check
+declare -f f_lib_error
+declare -f f_lib_exit
+declare -f f_lib_file_getBody
+declare -f f_lib_file_getExtension
+declare -f f_lib_file_getName
+declare -f f_lib_file_getPath
+declare -f f_lib_footer
+declare -f f_lib_header
+declare -f f_lib_info
+declare -f f_lib_isAlnum
+declare -f f_lib_isAlpha
+declare -f f_lib_isCntrl
+declare -f f_lib_isDir
+declare -f f_lib_isFile
+declare -f f_lib_isHexnum
+declare -f f_lib_isInteger
+declare -f f_lib_isLower
+declare -f f_lib_isNumeric
+declare -f f_lib_isPunct
+declare -f f_lib_isSpace
+declare -f f_lib_isUpper
+declare -f f_lib_isWord
+declare -f f_lib_logging_getFilePath
+declare -f f_lib_menu
+declare -f f_lib_menuS1
+declare -f f_lib_pathSet
+declare -f f_lib_print
+declare -f f_lib_prompt
+declare -f f_lib_puts
+declare -f f_lib_random
+declare -f f_lib_screen_clear
+declare -f f_lib_show
+declare -f f_lib_sleep
+declare -f f_lib_term
+declare -f f_lib_text
+declare -f f_lib_time_getDateTimeString
+declare -f f_lib_trace
+declare -f f_lib_variableSet
+declare -f f_lib_versionShow
+[94m... logFile.ftr<'/home/peter/Documents/temp/b05_string.log'> by LIB created and written. [0m
+[92m<<< b05_string.bsh<2026.10.01__00:38:51>:{261001003851}:[264]:{37};elapsed:<1> seconds. [0m
 =L= log.EOF
-<<< STP:TUTOR:{run_bshTutor.bsh}:{Tue 29 Sep 21:59:03 CEST 2026}:time.elapsed:{2.27}
+<<< STP:TUTOR:{run_bshTutor.bsh}:{Thu  1 Oct 00:38:51 CEST 2026}:time.elapsed:{3.54}
