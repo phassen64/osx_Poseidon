@@ -369,6 +369,14 @@ function f_lib_file_getExtension()   {
 }
 
 function f_lib_file_getModificationTime()   {
+    #   $  stat --help | grep "time of"
+    #   %w   time of file birth, human-readable; - if unknown
+    #   %x   time of last access, human-readabl
+    #   %X   time of last access, seconds since Epoch
+    #   %y   time of last data modification, human-readable
+    #   %Y   time of last data modification, seconds since Epoch
+    #   %z   time of last status change, human-readable
+    #   %Z   time of last status change, seconds since Epoch
     local p=$1
     local s
     s=$(stat -c %y% $p)
@@ -377,14 +385,29 @@ function f_lib_file_getModificationTime()   {
 }
 
 
-#   $  stat --help | grep "time of"
-#     %w   time of file birth, human-readable; - if unknown
-# %x   time of last access, human-readabl
-#  %X   time of last access, seconds since Epoch
-# %y   time of last data modification, human-readable
-# %Y   time of last data modification, seconds since Epoch
-# %z   time of last status change, human-readable
-#  %Z   time of last status change, seconds since Epoch
+function f_lib_file_write()   {
+
+    local p_sFilePath=$1
+    local p_sText=$2
+    local p_iMod=$3
+    local s=$p_sText
+
+    if [ $v_LIB_bTrue == $v_LIB_bVerbose ]; then
+        echo "< L.sFpt :: [$p_sFilePath]"
+        echo "< L.sTxt :: [$p_sText]"
+        echo "< L.iMod :: [$p_iMod]"
+    fi
+
+    if [ 2 == $p_iMod ]; then
+        echo "append file"
+        echo $sTxt >> $p_sFilePath
+    else
+        echo "create & write file"
+        echo $sTxt > $p_sFilePath
+    fi
+
+    return ${#s}    # reply strlen
+}
 
 
 #   ===========================================================================
@@ -392,6 +415,7 @@ function f_lib_file_getModificationTime()   {
 #   ===========================================================================
 
 function f_lib_logging_getPath() {
+
     local p_sScp=$1
     local p_iMod=$2     #   2==dtm
     local l_sPwd=`pwd`

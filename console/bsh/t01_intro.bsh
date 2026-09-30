@@ -182,6 +182,18 @@ iMod=$iRnd  # dateTime
 f_lib_logging_getPath $BASH_SOURCE $iMod; iRc=$?; sRc=$v_LIB_reply_sRc
 echo "< m.sRc =: [$sRc]"
 echo "< m.iRc =: [$iRc]"
+declare -x sTestFile=$v_LIB_reply_sRc
+
+
+#   write/append file
+echo ""
+echo "$ call LIB.writeFile"
+sTxt="peter"
+iMod=1
+$v_LIB_reply_sRc
+f_lib_file_write $sTestFile $sTxt $iMod; iRc=$?
+echo "< m.iRc =: [$iRc]"
+
 
 #   === m:  F.footer
 echo -e "\n=== footer [`date`]."
