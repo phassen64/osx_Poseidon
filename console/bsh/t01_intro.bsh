@@ -29,7 +29,7 @@ declare -x sRc
 #   s:  include
 echo ""
 echo "* include library 'LIB'"
-source LIB.inc.bsh
+source LIB.wsp.inc.bsh
 
 #   s:  lib.configuration
 echo ""
