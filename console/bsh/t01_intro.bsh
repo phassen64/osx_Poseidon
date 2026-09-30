@@ -1,17 +1,19 @@
 #!/bin/bash
 
+#   description:    tester for my new BashLibrary
+
 #   usage   :   $   bash t01_intro.bsh
 
 #   content:
-#       m:  header
+#       m:  F.header
 #       m:  F.helper
 #       m:  F.printing
 #       m:  F.file
 #       m:  F.logging
-#       m:  footer
+#       m:  F.footer
 
 #   ===========================================================================
-#   m:  header
+#   m:  F.header
 #   ===========================================================================
 
 clear
@@ -148,6 +150,16 @@ sRc=$v_LIB_reply_sRc
 echo "< m.sRc =: [$sRc]"
 echo "< m.iRc =: [$iRc]"
 
+#   s:  L.fileModificationTime
+echo ""
+echo "$ call LIB.file.ModificationTime"
+f_lib_file_getModificationTime $BASH_SOURCE
+iRc=$?
+sRc=$v_LIB_reply_sRc
+echo "< m.sRc =: [$sRc]"
+echo "< m.iRc =: [$iRc]"
+
+
 #   ===========================================================================
 #   m:  F.logging
 #   ===========================================================================
@@ -171,5 +183,5 @@ f_lib_logging_getPath $BASH_SOURCE $iMod; iRc=$?; sRc=$v_LIB_reply_sRc
 echo "< m.sRc =: [$sRc]"
 echo "< m.iRc =: [$iRc]"
 
-#   === m:  footer
+#   === m:  F.footer
 echo -e "\n=== footer [`date`]."

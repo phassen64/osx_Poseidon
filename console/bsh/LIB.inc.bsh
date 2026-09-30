@@ -52,10 +52,12 @@ function f_lib_configuration() {
 }
 
 function f_lib_info() {
-    local i=$v_LIB_COLOR_ESC_NONE
-    if [ $v_LIB_bTrue == $v_LIB_bVerbose ]; then
-        echo "< L.info.color :: ['$i']"
-    fi
+    local p=$BASH_SOURCE
+    local s
+    s=$(stat -c %y% $p)
+    echo "<  L.sLib.DTM :: [$s]"
+    v_LIB_reply_sRc=$s
+    return ${#s}    # reply strlen
 }
 
 #   ===========================================================================
@@ -120,20 +122,26 @@ function f_lib_random() {
     declare -i n
     declare -i i
 
+    #   return if wrong input
+    if [ $p_iMax -le 0 ]; then
+        return 0
+    fi
+
+    #   calc random
     n=$RANDOM
-    i=$n%$p_iMax
+
+    #   modulo
+    i=$(( $n % $iMax ))         #  RANDOM() => 0...nMax-1
+
+    #   add lower boundary
+    let "i += $p_iMin"          #  MIN..MAX
 
     #   show
     if [ $v_LIB_bTrue == $v_LIB_bVerbose ]; then
         echo "< L.iMax      :: [$p_iMax]"
+        echo "< L.iMin      :: [$p_iMin]"
         echo "< L.random    :: [$n]"
         echo "< L.iRnd      :: [$i]"
-    fi
-
-    #   add min to lower boundary
-    i=$i+$p_iMin
-    if [ $v_LIB_bTrue == $v_LIB_bVerbose ]; then
-        echo "< L.iRnd2      :: [$i]"
     fi
 
     return $i
@@ -359,6 +367,24 @@ function f_lib_file_getExtension()   {
     v_LIB_reply_sRc=$s
     return ${#s}    # reply strlen
 }
+
+function f_lib_file_getModificationTime()   {
+    local p=$1
+    local s
+    s=$(stat -c %y% $p)
+    v_LIB_reply_sRc=$s
+    return ${#s}    # reply strlen
+}
+
+
+#   $  stat --help | grep "time of"
+#     %w   time of file birth, human-readable; - if unknown
+# %x   time of last access, human-readabl
+#  %X   time of last access, seconds since Epoch
+# %y   time of last data modification, human-readable
+# %Y   time of last data modification, seconds since Epoch
+# %z   time of last status change, human-readable
+#  %Z   time of last status change, seconds since Epoch
 
 
 #   ===========================================================================
