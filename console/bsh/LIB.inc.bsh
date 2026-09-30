@@ -99,11 +99,15 @@ function f_lib_caller() {
 }
 
 function f_lib_dateTime() {
-    local l_sFmt="+%Y-%m-%d_%H%M%S"
+    local l_sFmt="+%y%m%d_%H%M%S"
     local l_sDtm=$(date $l_sFmt)
+    local s
     if [ $v_LIB_bTrue == $v_LIB_bVerbose ]; then
         echo "< L.dateTime :: [$l_sDtm]"
     fi
+    s=$l_sDtm
+    v_LIB_reply_sRc=$s
+    return ${#s}    # reply strlen
 }
 
 function f_lib_sleep() {
