@@ -305,7 +305,7 @@ function f_lib_print() {
     if [ $# == 0 ]; then
         return 0
     fi
-    echo "L.print {$pStr}  {$pNL} {$pFgd} {$pBgd} "
+    #   echo "L.print {$pStr}  {$pNL} {$pFgd} {$pBgd} "
     #   set colors
     if [ ! -z $pFgd ] && [ $pFgd -ne $v_LIB_COLOR_VID_none ]; then
         tput setaf $pFgd
