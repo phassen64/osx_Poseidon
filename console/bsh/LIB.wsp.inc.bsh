@@ -53,7 +53,8 @@ function f_lib_configuration() {
     fi
     #   set my internals
     f_lib_color_defineEscapeCode
-    f_lib_color_setValue
+    f_lib_color_defineValue
+    f_lib_color_configure
 }
 
 function f_lib_info() {
@@ -234,7 +235,30 @@ function f_lib_color_defineEscapeCode() {
 
 #   s:  f.define.colorValue
 
-function f_lib_color_setValue() {
+function f_lib_color_defineValue() {
+    #   standard
+    v_LIB_COLOR_VID_none=-1
+    v_LIB_COLOR_VID_black=0
+    v_LIB_COLOR_VID_gray=8
+    #   dark
+    v_LIB_COLOR_VID_DK_red=1
+    v_LIB_COLOR_VID_DK_green=2
+    v_LIB_COLOR_VID_DK_yellow=3   # olive
+    v_LIB_COLOR_VID_DK_blue=4
+    v_LIB_COLOR_VID_DK_magenta=5
+    v_LIB_COLOR_VID_DK_cyan=6
+    v_LIB_COLOR_VID_DK_white=7
+    #   light - not for RPi?
+    v_LIB_COLOR_VID_LH_red=9
+    v_LIB_COLOR_VID_LH_green=10
+    v_LIB_COLOR_VID_LH_yellow=11
+    v_LIB_COLOR_VID_LH_blue=12
+    v_LIB_COLOR_VID_LH_magenta=13
+    v_LIB_COLOR_VID_LH_cyan=14
+    v_LIB_COLOR_VID_LH_white=15
+}
+
+function f_lib_color_configure() {
 
 #   handle color
     local iEnvId=$v_ENV__id
@@ -272,13 +296,13 @@ function f_lib_color_setValue() {
     fi
 
     if [ $bColor ] ; then
-        v_LIB_COLOR_VID_red=$v_LIB_COLOR_VID_DK_red
-        v_LIB_COLOR_VID_green=$v_LIB_COLOR_VID_DK_green
-        v_LIB_COLOR_VID_yellow=$v_LIB_COLOR_VID_LH_yellow
-        v_LIB_COLOR_VID_blue=$v_LIB_COLOR_VID_LH_blue
-        v_LIB_COLOR_VID_magenta=$v_LIB_COLOR_VID_LH_magenta
-        v_LIB_COLOR_VID_cyan=$v_LIB_COLOR_VID_LH_cyan
-        v_LIB_COLOR_VID_white=$v_LIB_COLOR_VID_LH_white
+        v_LIB_COLOR__red=$v_LIB_COLOR_VID_DK_red
+        v_LIB_COLOR__green=$v_LIB_COLOR_VID_DK_green
+        v_LIB_COLOR__yellow=$v_LIB_COLOR_VID_LH_yellow
+        v_LIB_COLOR__blue=$v_LIB_COLOR_VID_LH_blue
+        v_LIB_COLOR__magenta=$v_LIB_COLOR_VID_LH_magenta
+        v_LIB_COLOR__cyan=$v_LIB_COLOR_VID_LH_cyan
+        v_LIB_COLOR__white=$v_LIB_COLOR_VID_LH_white
     fi
 
 }
@@ -295,7 +319,7 @@ function f_lib_echo() {
 
 #   *   complete control but ESC inside the string
 
-function f_lib_print() {
+function f__print() {
     #   par1:   string to print
     #   par2:   bNewLine standard is FALSE
     #   par3:   foregroundColor_ID <integer>
@@ -321,15 +345,15 @@ function f_lib_print() {
     fi
 }
 
+#   wrapper
+function f_lib_print() {
+    f__print "$1" "$2" "$3" "$4"
+}
 function f_lib_puts() {
-    #   par1:   string to print
-    #   par2:   foregroundColor_ID <integer>
-    local s=$1; local c=$2;
-    #   empty input?
-    if [ $# == 0 ]; then
-        return 0
-    fi
-    f_lib_print "$s" "$v_LIB_bTrue" "$c"
+    f__print "$1" "$v_LIB_bTrue" "$2"
+}
+function f__puts() {
+    f__print "$1" "$v_LIB_bTrue" "$2"
 }
 
 #   ===========================================================================
@@ -432,9 +456,15 @@ function f_lib_file_write()   {
 #   ===========================================================================
 
 #   logFile append
-function f__log_puts() {
+function f__logs() {
     local s=$1
-    echo "$s" >>  $v_LIB_log_sFileName
+    local bCreate=$2
+    #   create or append
+    if [ ! -z $bCreate ] && [ $v_LIB_bTrue -eq $bCreate ]; then
+        echo "$s" >  $v_LIB_log_sFileName
+    else
+        echo "$s" >>  $v_LIB_log_sFileName
+    fi
     return ${#s}
 }
 
@@ -524,12 +554,11 @@ function f_lib_header() {
     local -x s
 
     #   save replyCode
-    v_LIB_iEc=$p_HLRc
+    v_LIB_iEc=$p_HRc
 
     #   show header
-    #   s="=== hdr.Created [ $l_sFct;$p_sScp;$p_iPos]:[$l_sNow]"
     s="=== hdr:[$p_sScp;$p_iPos]:[$l_sNow]"
-    f_lib_puts "$s" $v_LIB_COLOR_VID_green
+    f__puts "$s" $v_LIB_COLOR_VID_green
 
     #   s=">>> =h= "
     #   s=">>> "
@@ -566,15 +595,16 @@ function f_lib_header() {
 
     #   create+write into myLogFile
     s="--- automaticall created by '$p_sScp'"
-    echo "$s" >  $v_LIB_log_sFileName
+    f__logs "$s" $v_LIB_bTrue
 
     #   create+write into myLogFile
-    s=">>> hdr:[$p_sScp;$p_iPos]:[$l_sNow]:$p_iLRc"
-    f__log_puts "$s"
+    s=">>> hdr:[$p_sScp;$p_iPos]:[$l_sNow]:$p_iHRc"
+    f__logs "$s"
 
     #   return
     return $v_LIB_iEc
 }
+
 
 function f_lib_footer() {
 
@@ -602,7 +632,7 @@ function f_lib_footer() {
 
     #   create+write into myLogFile
     s="<<< ftr:[$p_sScp;$p_iPos]:$p_iFRc:{$sSec}"
-    f__log_puts "$s"
+    f__logs "$s"
 
     #   return
     return $v_LIB_iEc

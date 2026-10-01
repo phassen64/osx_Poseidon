@@ -97,18 +97,18 @@ echo "$ call LIB.print any"
 f_lib_print "A normal text printed" $v_LIB_bTrue
 
 #   u:  print.multiple in 1 line and colored
-f_lib_print "1:red."        $v_LIB_bFalse   $v_LIB_COLOR_VID_red
-f_lib_print "2:yellow."     $v_LIB_bFalse   $v_LIB_COLOR_VID_yellow
-f_lib_print "3:green."      $v_LIB_bFalse   $v_LIB_COLOR_VID_green
-f_lib_print "4:blue."       $v_LIB_bFalse   $v_LIB_COLOR_VID_blue
-f_lib_print "5:magenta."    $v_LIB_bFalse   $v_LIB_COLOR_VID_magenta
-f_lib_print "6:cyan."       $v_LIB_bTrue    $v_LIB_COLOR_VID_cyan
+f_lib_print "1:red."        $v_LIB_bFalse   $v_LIB_COLOR__red
+f_lib_print "2:yellow."     $v_LIB_bFalse   $v_LIB_COLOR__yellow
+f_lib_print "3:green."      $v_LIB_bFalse   $v_LIB_COLOR__green
+f_lib_print "4:blue."       $v_LIB_bFalse   $v_LIB_COLOR__blue
+f_lib_print "5:magenta."    $v_LIB_bFalse   $v_LIB_COLOR__magenta
+f_lib_print "6:cyan."       $v_LIB_bTrue    $v_LIB_COLOR__cyan
 
 #   s:  puts (implicitely NL)
 echo -e "\n$ call LIB.puts"
-f_lib_puts "1:red!"         $v_LIB_COLOR_VID_red
-f_lib_puts "2:yellow!"      $v_LIB_COLOR_VID_yellow
-f_lib_puts "3:green!"       $v_LIB_COLOR_VID_green
+f_lib_puts "1:red!"         $v_LIB_COLOR__red
+f_lib_puts "2:yellow!"      $v_LIB_COLOR__yellow
+f_lib_puts "3:green!"       $v_LIB_COLOR__green
 
 #   s:  puts (NoColor)
 f_lib_puts "9:noColor"
