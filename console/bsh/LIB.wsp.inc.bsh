@@ -3,16 +3,6 @@
 #   Library.bsh 2026        ©[mATe64]           [2026-09-30]
 #   ***************************************************************************
 
-#   content:
-#       b:  B.function
-#           •   m:  F.config
-#           •   m:  F.helper
-#           •   m:  F.color
-#               •   s:  f.define.colorEscape
-#               •   s:  f.define.colorValue
-#           •   m:  F.echo & F.print & F.puts
-#       b:  B.body
-
 #   input:
 #           •   v_FWK_dirScratch
 
@@ -32,6 +22,21 @@
 #               example:    $   echo -E "Line1\nLine2"
 
 
+
+
+#   content:
+#       b:  B.function
+#           •   m:  F.config
+#           •   m:  F.helper
+#           •   m:  F.color
+#               •   s:  f.define.colorEscape
+#               •   s:  f.define.colorValue
+#           •   m:  F.echo & F.print & F.puts
+#           •   m:  F.logging
+#           •   m:  F.menu
+#       b:  B.body
+
+
 #   &&& b:  b.function  &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
 
 
@@ -40,9 +45,9 @@
 #   ===========================================================================
 
 function f_lib_configuration() {
-    v_LIB_bVerbose=$1
-    if [ $v_LIB_bTrue == $v_LIB_bVerbose ]; then
-        echo "< L.configuration :: [$v_LIB_bVerbose] !"
+    v_LIB_mode_bVerbose=$1
+    if [ $v_LIB_bTrue == $v_LIB_mode_bVerbose ]; then
+        echo "< L.configuration :: [$v_LIB_mode_bVerbose] !"
         echo "< L.iRc :: [$v_LIB_reply_iRc]"
         echo "< L.sRc :: [$v_LIB_reply_sRc]"
     fi
@@ -64,11 +69,12 @@ function f_lib_info() {
 #   m:  F.helper
 #   ===========================================================================
 
+
 function f_lib_who() {
     local l_sPwd=`pwd`
     local l_sScp=$BASH_SOURCE
     local l_sPth=$l_sPwd/$l_sScp
-    if [ $v_LIB_bTrue == $v_LIB_bVerbose ]; then
+    if [ $v_LIB_bTrue == $v_LIB_mode_bVerbose ]; then
         echo "< L.who :: I am file:[$l_sPth]"
     fi
 }
@@ -80,7 +86,7 @@ function f_lib_where() {
     #   my Name
     local l_sFct=${FUNCNAME[0]}
     #   show
-    if [ $v_LIB_bTrue == $v_LIB_bVerbose ]; then
+    if [ $v_LIB_bTrue == $v_LIB_mode_bVerbose ]; then
         echo "< L.where :: Hello I am:[$l_sFct] !"
         echo "< L.where :: I was called by:[$p_sCaller] atLine:[$p_iLine]"
         echo "< L.where :: I got the value:[$p_iValue]"
@@ -93,16 +99,15 @@ function f_lib_caller() {
     local l_sPth
     #   show
     l_sPth=$l_sPwd/$p_sCaller
-    if [ $v_LIB_bTrue == $v_LIB_bVerbose ]; then
+    if [ $v_LIB_bTrue == $v_LIB_mode_bVerbose ]; then
         echo "< L.caller :: [$l_sPth] !"
     fi
 }
 
 function f_lib_dateTime() {
-    local l_sFmt="+%y%m%d_%H%M%S"
-    local l_sDtm=$(date $l_sFmt)
+    local l_sDtm=$(date $v_LIB_dtmFormatString_now)
     local s
-    if [ $v_LIB_bTrue == $v_LIB_bVerbose ]; then
+    if [ $v_LIB_bTrue == $v_LIB_mode_bVerbose ]; then
         echo "< L.dateTime :: [$l_sDtm]"
     fi
     s=$l_sDtm
@@ -112,7 +117,7 @@ function f_lib_dateTime() {
 
 function f_lib_sleep() {
     local i=$1
-    if [ $v_LIB_bTrue == $v_LIB_bVerbose ]; then
+    if [ $v_LIB_bTrue == $v_LIB_mode_bVerbose ]; then
         echo "< L.sleep :: [$i]"
     fi
     sleep $i
@@ -141,7 +146,7 @@ function f_lib_random() {
     let "i += $p_iMin"          #  MIN..MAX
 
     #   show
-    if [ $v_LIB_bTrue == $v_LIB_bVerbose ]; then
+    if [ $v_LIB_bTrue == $v_LIB_mode_bVerbose ]; then
         echo "< L.iMax      :: [$p_iMax]"
         echo "< L.iMin      :: [$p_iMin]"
         echo "< L.random    :: [$n]"
@@ -296,6 +301,11 @@ function f_lib_print() {
     #   par3:   foregroundColor_ID <integer>
     #   par4:   backgroundColor_ID <integer>
     local pStr=$1; local pNL=$2; local pFgd=$3; local pBgd=$4;
+    #   number of parameters >= 1
+    if [ $# == 0 ]; then
+        return 0
+    fi
+    echo "L.print {$pStr}  {$pNL} {$pFgd} {$pBgd} "
     #   set colors
     if [ ! -z $pFgd ] && [ $pFgd -ne $v_LIB_COLOR_VID_none ]; then
         tput setaf $pFgd
@@ -315,7 +325,11 @@ function f_lib_puts() {
     #   par1:   string to print
     #   par2:   foregroundColor_ID <integer>
     local s=$1; local c=$2;
-    f_lib_print $s $v_LIB_bTrue $c
+    #   empty input?
+    if [ $# == 0 ]; then
+        return 0
+    fi
+    f_lib_print "$s" "$v_LIB_bTrue" "$c"
 }
 
 #   ===========================================================================
@@ -329,7 +343,7 @@ function f_lib_file_getPath() {
     local p_sScp=$1
     local l_sPwd=`pwd`
     local s
-    if [ $v_LIB_bTrue == $v_LIB_bVerbose ]; then
+    if [ $v_LIB_bTrue == $v_LIB_mode_bVerbose ]; then
         echo "< L.pScp :: [$p_sScp]"
         echo "< L.sPwd :: [$l_sPwd]"
     fi
@@ -342,8 +356,7 @@ function f_lib_file_getName()   {
     local p=$1
     local s
     s=$(basename ${p})      #   extract filePath
-    if [ $v_LIB_bTrue == $v_LIB_bVerbose ]; then
-        echo "< L.fileGetName :: [$p]"
+    if [ $v_LIB_bTrue == $v_LIB_mode_bVerbose ]; then
         echo "< L.fileGetName =: [$s]"
     fi
     v_LIB_reply_sRc=$s
@@ -396,7 +409,7 @@ function f_lib_file_write()   {
     local p_iMod=$3
     local s=$p_sText
 
-    if [ $v_LIB_bTrue == $v_LIB_bVerbose ]; then
+    if [ $v_LIB_bTrue == $v_LIB_mode_bVerbose ]; then
         echo "< L.sFpt :: [$p_sFilePath]"
         echo "< L.sTxt :: [$p_sText]"
         echo "< L.iMod :: [$p_iMod]"
@@ -418,41 +431,153 @@ function f_lib_file_write()   {
 #   m:  F.logging
 #   ===========================================================================
 
-function f_lib_logging_getPath() {
 
-    local p_sScp=$1
-    local p_iMod=$2     #   2==dtm
-    local l_sPwd=`pwd`
-    local l_sFmt="+%y%m%d%H%M%S"
-    local l_sDtm=$(date $l_sFmt)
+function f__log_determineFilePath() {
 
-    local s
+    #   filePath
+    local p_pSrc=$1         #   source  sFilePath
+    local p_dObj=$2         #   object  sDir
+    local p_bDtm=$3         #   appendix bDateTimeString
 
-    if [ $v_LIB_bTrue == $v_LIB_bVerbose ]; then
-        echo "< L.pScp :: [$p_sScp]"
-        echo "< L.iMod :: [$p_iMod]"
-        echo "< L.sPwd :: [$l_sPwd]"
-        echo "< L.sDtm :: [$l_sDtm]"
+    #   me
+    local sFct=${FUNCNAME[0]}
+
+    #   check.srcPth
+    if [ ! -f $p_pSrc ]; then
+        echo "? p1:[$p_pSrc] at:[$sFct;$LINENO]"
+        exit
+    fi
+    #   check.objDir
+    if [ ! -d $p_dObj ]; then
+        echo "? p2:[$p_dObj] at:[$sFct;$LINENO]"
+        exit
     fi
 
     #   getFileName and getFileBody
-    s=$(basename ${p_sScp})
+    s=$(basename ${p_pSrc})
     s=$(echo "$s" | sed -e 's/\.[^.]*$//')  # body
 
     #   logging with dateTime?
-    if [ 2 == $p_iMod ]; then
+    if [ $v_LIB_bTrue  == $p_bDtm ]; then
+        local l_sFmt=$v_LIB_dtmFormatString_now
+        local l_sDtm=$(date $l_sFmt)
         s+='_'
         s+=$l_sDtm
         echo "< L.sDtm :: [$s]"
     fi
 
     #   concat
-    s="$v_FWK_dirScratch/$s"
-    s+=$v_LIB_logging_sFileExtension
+    s="$p_dObj/$s"
+    s+=$v_LIB_log_sFileExtension
 
+    #   reply
     v_LIB_reply_sRc=$s
     return ${#s}        # reply strlen
 }
+
+
+function f_lib_logging_getPath() {
+
+    #   parameter
+    local p_pSrc=$1
+    local p_dObj=$2
+    local p_bMod=$3     #   extended->DateTimeString
+
+    #   local
+    local s
+
+    if [ $v_LIB_bTrue == $v_LIB_mode_bVerbose ]; then
+        echo "< L.p_pSrc :: [$p_pSrc]"
+        echo "< L.p_dObj :: [$p_dObj]"
+        echo "< L.p_bMod :: [$p_bMod]"
+    fi
+
+    #   run internal
+    f__log_determineFilePath $p_pSrc $p_dObj $p_bMod; iRc=$?
+
+    if [ $v_LIB_bTrue == $v_LIB_mode_bVerbose ]; then
+        echo "< L.sReply :: [$v_LIB_reply_sRc]"
+    fi
+
+    #   return
+    s=$v_LIB_reply_sRc
+    return ${#s}        # reply strlen
+}
+
+#   ===========================================================================
+#   m:  F.logging
+#   ===========================================================================
+
+function f_lib_header() {
+
+    local p_sScp=$1     #   callerScp
+    local p_iPos=$2     #   line
+    local p_iLRc=$3     #   lib replyCode
+    local l_sFct=${FUNCNAME[0]}
+    local l_sNow=$(date $v_LIB_dtmFormatString_now)
+
+    #   save replyCode
+    v_LIB_iEc=$p_iLRc
+
+    #   logging
+    s="*** hdr.created pos:[$l_sFct;$p_sScp;$p_iPos] dtm:[$l_sNow]"
+    f_lib_puts "$s"
+    exit
+
+    #   time.Start
+    v_LIB_timer_tStart=$(date +%s.%N)
+
+    #   show
+    if [ $v_LIB_bTrue == $v_LIB_mode_bVerbose ]; then
+        echo "< L.lFct :: [$l_sFct]"
+        echo "< L.pScp :: [$p_sScp]"
+        echo "< L.iPos :: [$p_iPos]"
+        echo "< L.iEc  :: [$v_LIB_iEc]"
+        echo "< L.tDtm.start :: [$v_LIB_timer_tStart]"
+    fi
+
+    #   get logFileName
+    local bMod=$v_LIB_log_bUseDtmName      # dtmString?
+    local sFpt=$p_sScp
+    local sDir=$v_FWK_dirScratch
+    f__log_determineFilePath $sFpt $sDir $bMod; iRc=$?
+
+    #   save reply
+    v_LIB_log_bEnabled=$v_LIB_bTrue
+    v_LIB_log_sFileName=$v_LIB_reply_sRc
+
+    #   show
+    if [ $v_LIB_bTrue == $v_LIB_mode_bVerbose ]; then
+        echo "< L.sLogFile  :: [$v_LIB_log_sFileName]"
+        echo "< L.iRc       :: [$iRc]"
+    fi
+
+    #   return
+    return $v_LIB_iEc
+}
+
+function f_lib_footer() {
+
+    local p_sScp=$1     #   callerScp
+    local p_iPos=$2     #   line
+    local l_sFct=${FUNCNAME[0]}
+
+    #   time.Stop
+    v_LIB_timer_tStopp=$(date +%s.%N)
+
+    #   show
+    if [ $v_LIB_bTrue == $v_LIB_mode_bVerbose ]; then
+        echo "< L.lFct :: [$l_sFct]"
+        echo "< L.pScp :: [$p_sScp]"
+        echo "< L.iPos :: [$p_iPos]"
+        echo "< L.iEc  :: [$v_LIB_iEc]"
+        echo "< L.tDtm.stopp :: [$v_LIB_timer_tStopp]"
+    fi
+
+    #   return
+    return $v_LIB_iEc
+}
+
 
 
 #   &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
@@ -464,13 +589,26 @@ declare -i v_LIB_bTrue=100
 declare -i v_LIB_bFalse=255
 
 #   s:  LIB.config.setting.verbose : 1
-declare -i v_LIB_bVerbose=0
+declare -i v_LIB_mode_bVerbose=$v_LIB_bFalse
+declare -i v_LIB_mode_bExtended=$v_LIB_bFalse
 
 #   s:  LIB.replyCodes
 declare -i v_LIB_reply_iRc=99
 declare -x v_LIB_reply_sRc='?None'
 
+#   s:  LIB.exitCode
+declare -i v_LIB_iEc=61
+
+#   s:  LIB.timer
+declare -x v_LIB_timer_tStart
+declare -x v_LIB_timer_tStopp
+
+#   s:  LIB.timer
+declare -x v_LIB_dtmFormatString_now="+%y%m%d%H%M%S"
+
 #   s:  LIB.logging
-declare -i v_LIB_logging_bEnabled=$v_LIB_bFalse
-declare -x v_LIB_logging_sFileExtension='.log'
+declare -i v_LIB_log_bEnabled=$v_LIB_bFalse
+declare -i v_LIB_log_bUseDtmName=$v_LIB_bFalse  # short Name
+declare -x v_LIB_log_sFileExtension='.log'
+declare -x v_LIB_log_sFileName
 

@@ -19,7 +19,6 @@
 clear
 echo "=== header runMe($BASH_SOURCE) [`date`]"
 
-
 #   s:  declare my variables
 declare -x s
 declare -i i
@@ -36,6 +35,13 @@ echo ""
 echo "$ call LIB.config"
 i=$v_LIB_bTrue
 f_lib_configuration $i
+
+#   s:  lib.header - take out exitCode
+echo ""
+echo "$ call LIB.header"
+f_lib_header $BASH_SOURCE $LINENO $v_FWK_iEc
+
+exit
 
 #   s:  info
 echo ""
@@ -182,12 +188,23 @@ echo "< m.iRnd =: [$iRnd]"
 #   show logFilePath
 echo ""
 echo "$ call LIB.logging.GetPath"
-iMod=$iRnd  # dateTime
-f_lib_logging_getPath $BASH_SOURCE $iMod; iRc=$?; sRc=$v_LIB_reply_sRc
+
+#   bMod : logging with dateTimeString?
+bMod=$v_LIB_bFalse
+i=$iRnd%2
+if [ $i == 0 ]; then
+    bMod=$v_LIB_bTrue
+fi
+
+#   run
+pSrc=$BASH_SOURCE
+dObj=$HOME
+f_lib_logging_getPath $pSrc $dObj $bMod iRc=$?; sRc=$v_LIB_reply_sRc
+
+#   reply
 echo "< m.sRc =: [$sRc]"
 echo "< m.iRc =: [$iRc]"
 declare -x pTestFilePath=$v_LIB_reply_sRc
-
 
 #   write/append file
 echo ""
@@ -198,5 +215,13 @@ f_lib_file_write $pTestFilePath $sTxt $iMod; iRc=$?
 echo "< m.iRc =: [$iRc]"
 
 
-#   === m:  F.footer
+#   ===========================================================================
+#   m:  F.footer
+#   ===========================================================================
+
+echo ""
+echo "$ call LIB.footer"
+f_lib_footer $BASH_SOURCE $LINENO ; iRc=$?
+echo "< m.iRc =: [$iRc]"
+
 echo -e "\n=== footer [`date`]."

@@ -261,10 +261,10 @@ function f__logs() {
     declare -x s
 
     #   echo "f.doLogging of [$#]"
-    
+
     case $# in
-        
-        1)  
+
+        1)
             #   echo "logMode ==1"
             if [ "$v_sLogfile" == "" ]; then
                 f__puts "?logfile 'v_sLogfile' undefined.:[$LINENO]" $v_COL_ID_red
@@ -275,22 +275,22 @@ function f__logs() {
             #   !CRQ-260930:remove else chars
             s=$(echo $sStr | tr -cd [:print:])
             echo "$s" >> $v_sLogfile
-        
+
             bCrt=$v_FALSE;;
-        2)  
+        2)
             #   echo "logMode ==2"
             return $LINENO;;
-        
-        3)  
+
+        3)
             #   echo "logMode ==3"
             #   =*= check fileName length
             i=${#sFile}
-            
+
             if [ $i -lt $iLen ]; then
                 echo "??? : too small logFileNname"
                 return $LINENO
             fi
-            
+
             #   =*= creation flag
             if [ $bCrt != $v_TRUE ]; then
                 return $LINENO
@@ -302,12 +302,12 @@ function f__logs() {
             echo "--- logFile.new ={$v_sLogfile}"
 
             #   =*= create new logfile
-            echo "!L: =*= create logfile:$v_sLogfile" 
+            echo "!L: =*= create logfile:$v_sLogfile"
 
-            #   perform create  
+            #   perform create
             echo -E "$sStr" > $v_sLogfile;;
 
-        *)  
+        *)
             echo "logMode ==default"
             return $LINENO;;
     esac
@@ -884,7 +884,7 @@ function f_lib_error()   {
 #   m:  F.DTM
 #   ===========================================================================
 
-function f_lib_time_getDateTimeString()   {    
+function f_lib_time_getDateTimeString()   {
     local p_sDtmFmt=$1
     s=$(date $p_sDtmFmt)
     g_LIB__sRc=$s
@@ -895,19 +895,19 @@ function f_lib_time_getDateTimeString()   {
 #   m:  F.file
 #   ===========================================================================
 
-#   in: filePath  
+#   in: filePath
 
 function f_lib_file_getName()   {
     local p=$1
-    #   echo "::filePath($p)"    
+    #   echo "::filePath($p)"
     s=$(basename ${p})      # extract filePath
-    g_LIB__sRc=$s    
+    g_LIB__sRc=$s
     return ${#s}    # reply strlen
 }
 
 function f_lib_file_getBody()   {
     local p=$1
-    #   echo "::filePath($p)"    
+    #   echo "::filePath($p)"
     s=$(basename ${p})  # baseName
     s=$(echo "$s" | sed -e 's/\.[^.]*$//')  # fileBody
     g_LIB__sRc=$s
@@ -916,7 +916,7 @@ function f_lib_file_getBody()   {
 
 function f_lib_file_getExtension()   {
     local p=$1
-    #   echo "::filePath($p)"    
+    #   echo "::filePath($p)"
     # Source - https://stackoverflow.com/a/965072
     s=$(basename ${p})  # baseName
     s="${s##*.}"
@@ -927,7 +927,7 @@ function f_lib_file_getExtension()   {
 
 function f_lib_file_getPath()   {
     local p=$1
-    s=$(dirname ${p}) 
+    s=$(dirname ${p})
     g_LIB__sRc=$s
     return ${#s}    # reply strlen
 }
@@ -940,15 +940,15 @@ function f_lib_file_getPath()   {
 #   in: filePath  out:filePath
 
 #   in: p_iMod:1 - std p_iMod:2 with dtm
-function f_lib_logging_getFilePath()   {    
+function f_lib_logging_getFilePath()   {
     #   parameter
     local p_sFilePath=$1  # input caller path
     local p_iMode=$2
     #   fileParameter
-    sDir=$v_FWK_dirScratch    
+    sDir=$v_FWK_dirScratch
     sFnm=$(basename ${p_sFilePath})  # file.ext
     sBdy=$(echo "$sFnm" | sed -e 's/\.[^.]*$//')
-    sExt=".log"    
+    sExt=".log"
     #   prepare name
         s=$sBdy
     #   mode:2 => insert dateTimeString
@@ -962,7 +962,7 @@ function f_lib_logging_getFilePath()   {
     s+=$sExt
     #   filePath
     sRc="$sDir/$s"
-    #   return.code    
+    #   return.code
     g_LIB__sRc=$sRc
     return ${#sRc}    # reply strlen
 }
@@ -1006,11 +1006,11 @@ function f_lib_sleep() {
 #
 
 function f_lib_header() {
-    
+
     local p_sScp=$1
     local p_iLine=$2
     local p_iReply=$3
-    
+
     #   show my parameter
     #   echo "+ libHeader.p1=[$p_sScp]"
     #   echo "+ libHeader.p2=$p_iLine"
@@ -1018,7 +1018,7 @@ function f_lib_header() {
     #   show my globals
     #   echo "+ libHeader.g_sId=$g_sId"
     #   echo "+ libHeader.g_bLogMode=$g_bLogModeDate"
-    
+
     local   sFileName=`basename $p_sScp`
     local   sName=$(echo "$sFileName" | sed -e 's/\.[^.]*$//')  # cut FileExtension
 
@@ -1034,21 +1034,21 @@ function f_lib_header() {
     if [ "$p_iReply" == "" ]; then
         p_iReply=0  # undefined or OK
     fi
-        
+
     local pLog='?'
     if [ $g_LIB__logMode == 2 ]        # !CRQ-260929
     then
         pLog="${v_DIR_LOG}/${sLogfileId}_${v_TIME_NOW}.log"
-    else 
+    else
         pLog="${v_DIR_LOG}/${sLogfileId}.log"
-    fi    
+    fi
     #   echo "+ libHeader.pLog=[$pLog] "
 
     #   current funcname
     local sFct=${FUNCNAME[0]}
 
     #   logging
-    s="*** hdr.created pos:[$p_sScp;$sFct;$p_iLine] tms:[$v_TIME_NOW]" 
+    s="*** hdr.created pos:[$p_sScp;$sFct;$p_iLine] tms:[$v_TIME_NOW]"
     #   echo "+ libHeader.LogPa=[$s]"
     f__logs "$s" "$pLog" $v_TRUE
 
@@ -1063,7 +1063,7 @@ function f_lib_header() {
     s=">>> "
     s+="$p_sScp<$v_TIME_HDR>:[$p_iLine]:{$p_iReply}";
     f__output "$s" $v_COL_ID_green
-        
+
     return $p_iReply
 }
 

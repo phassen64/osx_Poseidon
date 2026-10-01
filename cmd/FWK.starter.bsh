@@ -418,7 +418,7 @@ function f_fwk_info() {
 }
 
 function f_fwk_function_show() {
-    declare -F | grep '^declare -f f_'
+    declare -F | grep '^declare -f f_[[:lower:]]'
 }
 
 function f_fwk_variable_initialize () {
@@ -459,21 +459,17 @@ function f_fwk_variable_initialize () {
     v_DIR=$v_VCS_fwk/logging
     v_FWK_dirLogging=$v_DIR && export v_FWK_dirLogging
 
-    #   exitCode
-    declare -i i=99
-    v_FWK_iExit=$i && export v_FWK_iExit
-
 }
 
 function f_fwk_isFile {
-    local bRc=$v_FALSE
-    if [ -f $1 ]; then bRc=$v_TRUE; fi
+    local bRc=$v_FWK_bfalse
+    if [ -f $1 ]; then bRc=$v_FWK_bTrue; fi
     return $bRc
 }
 
 function f_fwk_isDirectory {
-    local bRc=$v_FALSE
-    if [ -d $1 ]; then bRc=$v_TRUE; fi
+    local bRc=$v_FWK_bfalse
+    if [ -d $1 ]; then bRc=$v_FWK_bTrue; fi
     return $bRc
 }
 
@@ -509,22 +505,22 @@ f_fwk_aliasSet
 f_fwk_variable_initialize
 
 #   s:  boolean - no export
-declare -i v_TRUE=0
-declare -i v_FALSE=99
+declare -i v_FWK_bTrue=0
+declare -i v_FWK_bFalse=99
 
 #   s:  set prompt - only short dirName
 f_env_prompt 5
 
-#   s:  show more if random
+#   s:  generate FWK.exit.code
 declare -i r=$RANDOM
-v_FWK_iRandom=$r && export v_FWK_iRandom
-if [ $v_FWK_iRandom -lt 1000 ]
+v_FWK_iEc=$r && export v_FWK_iEc
+if [ $v_FWK_iEc -lt 1000 ]
 then
     f_fwk_info
 else
-    echo "+ rnd: {$v_FWK_iRandom} -> noInfoMore."
+    echo "+ rnd: {$v_FWK_iEc}"
 fi
 
 #   s:  footer
 v_DTM=`echo $(date '+%y%m%d|%H%M%S')`
-echo "=== fwk.end::{$v_DTM}:{$v_FWK_iExit}"
+echo "=== fwk.end::{$v_DTM}:{$v_FWK_iEc}"
