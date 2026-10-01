@@ -273,7 +273,7 @@ function f_lib_color_setValue() {
 
     if [ $bColor ] ; then
         v_LIB_COLOR_VID_red=$v_LIB_COLOR_VID_DK_red
-        v_LIB_COLOR_VID_green=$v_LIB_COLOR_VID_LH_green
+        v_LIB_COLOR_VID_green=$v_LIB_COLOR_VID_DK_green
         v_LIB_COLOR_VID_yellow=$v_LIB_COLOR_VID_LH_yellow
         v_LIB_COLOR_VID_blue=$v_LIB_COLOR_VID_LH_blue
         v_LIB_COLOR_VID_magenta=$v_LIB_COLOR_VID_LH_magenta
@@ -431,6 +431,12 @@ function f_lib_file_write()   {
 #   m:  F.logging
 #   ===========================================================================
 
+#   logFile append
+function f__log_puts() {
+    local s=$1
+    echo "$s" >>  $v_LIB_log_sFileName
+    return ${#s}
+}
 
 function f__log_determineFilePath() {
 
@@ -505,31 +511,30 @@ function f_lib_logging_getPath() {
 }
 
 #   ===========================================================================
-#   m:  F.logging
+#   m:  F.menu
 #   ===========================================================================
 
 function f_lib_header() {
 
     local p_sScp=$1     #   callerScp
     local p_iPos=$2     #   line
-    local p_iLRc=$3     #   lib replyCode
+    local p_iHRc=$3     #   lib headerRc
     local l_sFct=${FUNCNAME[0]}
     local l_sNow=$(date $v_LIB_dtmFormatString_now)
+    local -x s
 
     #   save replyCode
-    v_LIB_iEc=$p_iLRc
+    v_LIB_iEc=$p_HLRc
 
-    #   logging
-    #   s="*** hdr.created pos:[$l_sFct;$p_sScp;$p_iPos] dtm:[$l_sNow]"
-    #   f_lib_puts "$s" $v_LIB_COLOR_VID_none
-    #   exit
+    #   show header
+    #   s="=== hdr.Created [ $l_sFct;$p_sScp;$p_iPos]:[$l_sNow]"
+    s="=== hdr:[$p_sScp;$p_iPos]:[$l_sNow]"
+    f_lib_puts "$s" $v_LIB_COLOR_VID_green
 
-    local -i i=1
-    local -x s
-    #   s="=== hdrNow [$l_sFct ; $p_sScp ; $p_iPos ]"
-    s="=== hdrNow"
-
-    f_lib_puts $s $i
+    #   s=">>> =h= "
+    #   s=">>> "
+    #   s+="$p_sScp<$v_TIME_HDR>:[$p_iLine]:{$p_iReply}";
+    #   f__output "$s" $v_COL_ID_green
 
     #   time.Start
     v_LIB_timer_tStart=$(date +%s.%N)
@@ -559,6 +564,14 @@ function f_lib_header() {
         echo "< L.iRc       :: [$iRc]"
     fi
 
+    #   create+write into myLogFile
+    s="--- automaticall created by '$p_sScp'"
+    echo "$s" >  $v_LIB_log_sFileName
+
+    #   create+write into myLogFile
+    s=">>> hdr:[$p_sScp;$p_iPos]:[$l_sNow]:$p_iLRc"
+    f__log_puts "$s"
+
     #   return
     return $v_LIB_iEc
 }
@@ -567,6 +580,8 @@ function f_lib_footer() {
 
     local p_sScp=$1     #   callerScp
     local p_iPos=$2     #   line
+    local p_iFRc=$3     #   current.footer.Rc
+
     local l_sFct=${FUNCNAME[0]}
 
     #   time.Stop
@@ -580,6 +595,14 @@ function f_lib_footer() {
         echo "< L.iEc  :: [$v_LIB_iEc]"
         echo "< L.tDtm.stopp :: [$v_LIB_timer_tStopp]"
     fi
+
+    #   diff time
+    local fDiff=$(echo "($v_LIB_timer_tStopp-$v_LIB_timer_tStart) / 1" | bc)
+    local sSec=$(echo $fDiff)
+
+    #   create+write into myLogFile
+    s="<<< ftr:[$p_sScp;$p_iPos]:$p_iFRc:{$sSec}"
+    f__log_puts "$s"
 
     #   return
     return $v_LIB_iEc

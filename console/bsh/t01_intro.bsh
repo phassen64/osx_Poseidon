@@ -23,6 +23,7 @@ echo "=== header runMe($BASH_SOURCE) [`date`]"
 declare -x s
 declare -i i
 declare -i iRc
+declare -i z_iRc
 declare -x sRc
 
 #   s:  include
@@ -40,7 +41,7 @@ f_lib_configuration $i
 echo ""
 echo "$ call LIB.header"
 f_lib_header $BASH_SOURCE $LINENO $v_FWK_iEc
-exit
+z_iRc=$v_FWK_iEc
 
 #   s:  info
 echo ""
@@ -222,7 +223,7 @@ echo "< m.iRc =: [$iRc]"
 
 echo ""
 echo "$ call LIB.footer"
-f_lib_footer $BASH_SOURCE $LINENO ; iRc=$?
+f_lib_footer $BASH_SOURCE $LINENO $z_iRc; iRc=$?
 echo "< m.iRc =: [$iRc]"
 
 echo -e "\n=== footer [`date`]."
