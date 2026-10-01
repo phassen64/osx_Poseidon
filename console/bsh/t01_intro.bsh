@@ -40,7 +40,6 @@ f_lib_configuration $i
 echo ""
 echo "$ call LIB.header"
 f_lib_header $BASH_SOURCE $LINENO $v_FWK_iEc
-
 exit
 
 #   s:  info
@@ -110,6 +109,8 @@ f_lib_puts "1:red!"         $v_LIB_COLOR_VID_red
 f_lib_puts "2:yellow!"      $v_LIB_COLOR_VID_yellow
 f_lib_puts "3:green!"       $v_LIB_COLOR_VID_green
 
+#   s:  puts (NoColor)
+f_lib_puts "9:noColor"
 
 #   ===========================================================================
 #   m:  F.file

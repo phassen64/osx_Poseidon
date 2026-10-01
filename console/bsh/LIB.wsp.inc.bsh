@@ -520,9 +520,16 @@ function f_lib_header() {
     v_LIB_iEc=$p_iLRc
 
     #   logging
-    s="*** hdr.created pos:[$l_sFct;$p_sScp;$p_iPos] dtm:[$l_sNow]"
-    f_lib_puts "$s"
-    exit
+    #   s="*** hdr.created pos:[$l_sFct;$p_sScp;$p_iPos] dtm:[$l_sNow]"
+    #   f_lib_puts "$s" $v_LIB_COLOR_VID_none
+    #   exit
+
+    local -i i=1
+    local -x s
+    #   s="=== hdrNow [$l_sFct ; $p_sScp ; $p_iPos ]"
+    s="=== hdrNow"
+
+    f_lib_puts $s $i
 
     #   time.Start
     v_LIB_timer_tStart=$(date +%s.%N)
