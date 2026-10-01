@@ -10,6 +10,7 @@
 #       m:  F.printing
 #       m:  F.file
 #       m:  F.logging
+#       m:  F.plgs
 #       m:  F.footer
 
 #   ===========================================================================
@@ -22,8 +23,9 @@ echo "=== header runMe($BASH_SOURCE) [`date`]"
 #   s:  declare my variables
 declare -x s
 declare -i i
+declare -i c    #   color
 declare -i iRc
-declare -i z_iRc
+declare -i z_iRc    # localer Rc
 declare -x sRc
 
 #   s:  include
@@ -216,6 +218,16 @@ iMod=1
 f_lib_file_write $pTestFilePath $sTxt $iMod; iRc=$?
 echo "< m.iRc =: [$iRc]"
 
+#   ===========================================================================
+#   m:  F.plgs
+#   ===========================================================================
+
+echo ""
+echo "$ call LIB.text"
+s="Peter & Harvey"
+
+#   f_lib_puts '123' $v_LIB_COLOR__red
+f_lib_text "$s"  $v_LIB_COLOR__red
 
 #   ===========================================================================
 #   m:  F.footer

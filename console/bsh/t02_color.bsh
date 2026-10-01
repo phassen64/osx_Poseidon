@@ -1,0 +1,13 @@
+#!/bin/bash
+
+
+clear
+
+source LIB.wsp.inc.bsh
+f_lib_configuration
+
+echo "=== header runMe($BASH_SOURCE) [`date`]"
+
+f_lib_puts '123' $v_LIB_COLOR__red
+
+echo -e "\n=== footer [`date`]."

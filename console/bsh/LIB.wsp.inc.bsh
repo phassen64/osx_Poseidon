@@ -33,6 +33,7 @@
 #               •   s:  f.define.colorValue
 #           •   m:  F.echo & F.print & F.puts
 #           •   m:  F.logging
+#           •   m:  F.plgs
 #           •   m:  F.menu
 #       b:  B.body
 
@@ -52,9 +53,9 @@ function f_lib_configuration() {
         echo "< L.sRc :: [$v_LIB_reply_sRc]"
     fi
     #   set my internals
-    f_lib_color_defineEscapeCode
-    f_lib_color_defineValue
-    f_lib_color_configure
+    f__color_defineEscapeCode
+    f__color_defineValue
+    f__color_configure
 }
 
 function f_lib_info() {
@@ -165,7 +166,7 @@ function f_lib_random() {
 
 #   s:  f.define.colorEscape
 
-function f_lib_color_defineEscapeCode() {
+function f__color_defineEscapeCode() {
 
     #!URL   https://stackoverflow.com/questions/5947742/
     #               /how-to-change-the-output-color-of-echo-in-linux
@@ -235,7 +236,7 @@ function f_lib_color_defineEscapeCode() {
 
 #   s:  f.define.colorValue
 
-function f_lib_color_defineValue() {
+function f__color_defineValue() {
     #   standard
     v_LIB_COLOR_VID_none=-1
     v_LIB_COLOR_VID_black=0
@@ -258,7 +259,7 @@ function f_lib_color_defineValue() {
     v_LIB_COLOR_VID_LH_white=15
 }
 
-function f_lib_color_configure() {
+function f__color_configure() {
 
 #   handle color
     local iEnvId=$v_ENV__id
@@ -345,13 +346,12 @@ function f__print() {
     fi
 }
 
-#   wrapper
+#   wrapper.print
 function f_lib_print() {
     f__print "$1" "$2" "$3" "$4"
 }
-function f_lib_puts() {
-    f__print "$1" "$v_LIB_bTrue" "$2"
-}
+
+#   wrapper.puts
 function f__puts() {
     f__print "$1" "$v_LIB_bTrue" "$2"
 }
@@ -455,7 +455,7 @@ function f_lib_file_write()   {
 #   m:  F.logging
 #   ===========================================================================
 
-#   logFile append
+#   log string create||append
 function f__logs() {
     local s=$1
     local bCreate=$2
@@ -539,6 +539,29 @@ function f_lib_logging_getPath() {
     s=$v_LIB_reply_sRc
     return ${#s}        # reply strlen
 }
+
+#   ===========================================================================
+#   m:  F.plgs (print & log)
+#   ===========================================================================
+
+function f__plgs() {
+    f__puts "$1" "$2"
+    f__logs "$1"
+    return 1
+}
+
+function f_lib_puts() {
+    f__plgs "$1" "$2"
+}
+
+function f_lib_text() {
+    local p_sTxt=$1
+    local c=$2
+    s='   '
+    s+=$p_sTxt     # 3x space
+    f__plgs "$s" "$c"
+}
+
 
 #   ===========================================================================
 #   m:  F.menu
@@ -637,7 +660,6 @@ function f_lib_footer() {
     #   return
     return $v_LIB_iEc
 }
-
 
 
 #   &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
