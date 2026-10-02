@@ -7,7 +7,7 @@ printf "=== header runMe($BASH_SOURCE) [`date`]\n"
 
 #   include
 source LIB.wsp.inc.bsh
-f_lib_configuration #   $v_LIB_bTrue
+f_lib_configuration     #   $v_LIB_bTrue
 
 #   libHeader
 f_lib_header $BASH_SOURCE $LINENO 123
@@ -17,6 +17,9 @@ f_lib_puts "\trun :MyTest..." $v_LIB_COLOR__magenta
 
 #   libTest
 f_lib_test
+
+#   libText mit auto tabe
+f_lib_text "Harvey & Peter" $v_LIB_COLOR__red
 
 #   Ausgabe mit externer Funktion
 f_lib_puts "\tI have finished :MyTest." $v_LIB_COLOR__magenta

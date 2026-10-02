@@ -548,18 +548,20 @@ function f_lib_logging_getPath() {
 
 function f__plgs() {
     f__puts "$1" "$2"
-    f__logs "$1"
+    #   remove tabs & newLine of $1 before logging
+    x=$(printf "%b\n" "$1")
+    f__logs "$x"
     return 1
 }
 
 function f_lib_puts() {
-    #      f__plgs "$1" "$2"
-    f__puts "$1" "$2"
+    f__plgs "$1" "$2"
 }
+
 function f_lib_text() {
-    local p_sTxt=$1
+    local t=$1
     local c=$2
-    s="\t $p_sTxt"
+    s="\t$t"
     f__plgs "$s" "$c"
 }
 
