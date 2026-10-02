@@ -1,5 +1,8 @@
 #!/bin/bash
 
+#   !url:
+#   https://www.w3schools.com/bash/
+
 
 #   header
 clear
@@ -14,9 +17,6 @@ f_lib_header $BASH_SOURCE $LINENO 123
 #   Ausgabe mit externer Funktion
 f_lib_puts "\trun :MyTest..." $v_LIB_COLOR__magenta
 
-#   libTest
-f_lib_test
-
 #   libText mit auto tabe
 f_lib_text "Harvey & Peter" $v_LIB_COLOR__red
 
@@ -25,5 +25,3 @@ f_lib_puts "\tI have finished :MyTest." $v_LIB_COLOR__magenta
 
 #   libfooter
 f_lib_footer $BASH_SOURCE $LINENO 761
-
-

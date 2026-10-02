@@ -6,7 +6,8 @@
 
 #   content:
 #       m:  F.header
-#       m:  F.helper
+#       m:  F.test
+#       m:  F.helpe
 #       m:  F.printing
 #       m:  F.file
 #       m:  F.logging
@@ -29,15 +30,10 @@ declare -i z_iRc    # localer Rc
 declare -x sRc
 
 #   s:  include
-echo ""
-echo "* include library 'LIB'"
 source LIB.wsp.inc.bsh
 
 #   s:  lib.header - take out exitCode
-echo ""
-echo "$ call LIB.header"
 f_lib_header $BASH_SOURCE $LINENO $v_FWK_iEc
-z_iRc=$v_FWK_iEc
 
 #   s:  lib.configuration
 echo ""
@@ -48,6 +44,13 @@ f_lib_configuration "2"
 echo ""
 echo "$ call LIB.info"
 f_lib_info
+
+#   ===========================================================================
+#   m:  F.test
+#   ===========================================================================
+
+#   libTest
+f_lib_test
 
 #   ===========================================================================
 #   m:  F.helper
@@ -201,21 +204,25 @@ fi
 
 #   run
 pSrc=$BASH_SOURCE
-dObj=$HOME
+dObj=$v_FWK_dirScratch
+bMod=$v_LIB_bTrue
 f_lib_logging_getPath $pSrc $dObj $bMod iRc=$?; sRc=$v_LIB_reply_sRc
 
 #   reply
 echo "< m.sRc =: [$sRc]"
 echo "< m.iRc =: [$iRc]"
 declare -x pTestFilePath=$v_LIB_reply_sRc
+echo "< m.pTestFilePath =: [$pTestFilePath]"
+echo "$ call LIB.writeFile"
 
 #   write/append file
 echo ""
 echo "$ call LIB.writeFile"
 sTxt="peter:[`date`]"
-iMod=1
-f_lib_file_write $pTestFilePath $sTxt $iMod; iRc=$?
+bCrt=$v_LIB_bTrue
+f_lib_file_write $pTestFilePath $sTxt $bCrt; iRc=$?
 echo "< m.iRc =: [$iRc]"
+
 
 #   ===========================================================================
 #   m:  F.plgs
@@ -232,9 +239,4 @@ f_lib_text "$s"  $v_LIB_COLOR__red
 #   m:  F.footer
 #   ===========================================================================
 
-echo ""
-echo "$ call LIB.footer"
 f_lib_footer $BASH_SOURCE $LINENO $z_iRc; iRc=$?
-echo "< m.iRc =: [$iRc]"
-
-echo -e "\n=== footer [`date`]."
