@@ -1,8 +1,22 @@
 #!/bin/bash
+#   ***************************************************************************
+#   Tutorial.bsh 2026        ©[mATe64]                          [2026-10-01]
+#   ***************************************************************************
+
+#   encoding.UTF8:
+#   !@€ƒ„…†‡ˆ‰Š‹ŒŽ +‘“”•—™š›œžŸ+¡¢£¤¥¦§¨©«¬®°±²³µ¶·¹º»¼½¾¿ÄÖÜÑ×ØÞßäæçîðñôö÷üýþÿ
 
 #   !url:
 #   https://www.w3schools.com/bash/
 
+<<CONTENT_T1
+    content:
+        •   include library
+        •   F.lib.header
+        •   F.lib.puts
+        •   F.lib.text
+        •   F.lib.footer
+CONTENT_T1
 
 #   header
 clear
