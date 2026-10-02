@@ -460,10 +460,12 @@ function f__logs() {
     local s=$1
     local bCreate=$2
     #   create or append
-    if [ ! -z $bCreate ] && [ $v_LIB_bTrue -eq $bCreate ]; then
-        echo "$s" >  $v_LIB_log_sFileName
-    else
-        echo "$s" >>  $v_LIB_log_sFileName
+    if [ $v_LIB_bTrue -eq $v_LIB_log_bEnabled ]; then
+        if [ ! -z $bCreate ] && [ $v_LIB_bTrue -eq $bCreate ]; then
+            echo "$s" >  $v_LIB_log_sFileName
+        else
+            echo "$s" >>  $v_LIB_log_sFileName
+        fi
     fi
     return ${#s}
 }
@@ -557,8 +559,7 @@ function f_lib_puts() {
 function f_lib_text() {
     local p_sTxt=$1
     local c=$2
-    s='   '
-    s+=$p_sTxt     # 3x space
+    s="\t $p_sTxt"
     f__plgs "$s" "$c"
 }
 

@@ -6,8 +6,6 @@ clear
 source LIB.wsp.inc.bsh
 f_lib_configuration
 
-echo "=== header runMe($BASH_SOURCE) [`date`]"
-
-f_lib_puts '123' $v_LIB_COLOR__red
-
-echo -e "\n=== footer [`date`]."
+f_lib_puts "=== header runMe($BASH_SOURCE) [`date`]"
+f_lib_puts "\tPeter" $v_LIB_COLOR__red
+f_lib_puts "=== footer [`date`]."
