@@ -37,6 +37,7 @@
             •   s:  f.color.defineFontValue :   color of the font
             •   s:  f.color.configure       :   map color Font->Letter
             •   s:  f.color.test
+
         •   m:  F.lib.helper
             •   s:  f.info
             •   s:  f.who
@@ -44,6 +45,14 @@
             •   s:  f.dateTime
             •   s:  f.sleep
             •   s:  f.random
+        •   m:  F.lib.exprHelper
+        •   m:  F.lib.isType
+            •   s:  f.isNumeric
+            •   s:  f.isAlpha
+            •   s:  f.isAlnum
+            •   s:  f.isHexnum
+            •   s:  f.isPunct
+            •   s:  f.isSpace
         •   m:  F.lib.print
                 •   s:  f.echo
                 •   s:  f.~~print
@@ -418,6 +427,146 @@ function f_lib_random() {
 }
 
 
+#   ===========================================================================
+#   m:  F.lib.exprHelper
+#   ===========================================================================
+
+function f__echoExpr() {
+
+    #   IN: iFunction   :   >1: do echo
+    #   IN: bValue      :   TRUE/FALSE
+    #   IN: sInfo       :   "more text"
+    #   IN: sParameter  :   original input
+
+    declare -i iFc=$1
+    local bVal=$2
+    local sInfo=$3
+    local sPar=$4
+    local sRc
+    #   echo "bRc:'$bVal'"
+    #   echo "sPar:'$sPar'"
+    #   return
+
+    if [ "$iFc" == "" ] || [ $iFc -eq 0 ] ; then
+        return #   echo "empty mode"
+    fi
+    if [ $iFc -ge 1 ]; then
+        if [ "$sInfo" == "" ]; then
+            sInfo=""
+        elif [ $iFc -eq 1 ]  ; then
+            sInfo="";
+        elif [ $iFc -eq 2 ]  ; then
+            sInfo+=":";
+        else
+            sInfo+="('$sPar')"
+        fi
+        if [ $bVal -eq $v_LIB_bTrue ]
+            then    sRc="TRUE"
+            else    sRc="FALSE"
+        fi
+        if [ $iFc -gt 2 ]; then
+            printf "%s\t:\t%s\n" $sInfo $sRc
+        else
+            printf "%s%s\n" $sInfo $sRc
+        fi
+    fi
+}
+
+
+#   ===========================================================================
+#   m:  F.lib.isType
+#   ===========================================================================
+
+
+#   s:  f.isNumeric
+function f_lib_isNumeric() {
+    local s='?IsNumeric'
+    local bRc=$v_LIB_bFalse; declare -i iFc=$2
+    if [ $(echo $1 | egrep "^[0-9]+$") ]
+    then bRc=$v_LIB_bTrue; fi
+    f__echoExpr $iFc $bRc $s $1
+    return $bRc
+}
+
+#   s:  f.isAlpha
+function f_lib_isAlpha() {
+    local s='?IsAlpha'
+    local bRc=$v_LIB_bFalse; declare -i iFc=$2
+    if [ $(echo $1 | egrep "^[A-Za-z]+$") ]
+    then bRc=$v_LIB_bTrue; fi
+    f__echoExpr $2 $bRc $s $1
+    return $bRc
+}
+
+#   s:  f.isAlnum
+function f_lib_isAlnum() {
+    local s='?IsAlnum'
+    local bRc=$v_LIB_bFalse; declare -i iFc=$2
+    if [ $(echo $1 | egrep "^[A-Za-z0-9]+$") ]
+    then bRc=$v_LIB_bTrue; fi
+    f__echoExpr $2 $bRc $s $1
+    return $bRc
+}
+
+#   s:  f.isHexNum
+function f_lib_isHexnum() {
+    local s='?IsHexnum'
+    local bRc=$v_LIB_bFalse; declare -i iFc=$2
+    if [ $(echo $1 | egrep "^[{a-f}{0-9}{A-F}]+$") ]    #!PHA: 'ab,3' : OK
+    then bRc=$v_LIB_bTrue; fi
+    f__echoExpr $2 $bRc $s $1
+    return $bRc
+}
+
+#   s:  f.isPunct
+function f_lib_isPunct() {
+    local s='?IsPunct'
+    local bRc=$v_LIB_bFalse; declare -i iFc=$2
+    if [ $(echo $1 | egrep "^[{\,}{\.}{\;}]+$") ]       #!PHA:not works ','
+    then bRc=$v_LIB_bTrue; fi
+    f__echoExpr $2 $bRc $s $1
+    return $bRc
+}
+
+#   s:  f.isUpper
+function f_lib_isUpper() {
+    local s='?IsUpper'
+    local bRc=$v_LIB_bFalse; declare -i iFc=$2
+    if [ $(echo $1 | egrep "^[A-Z]+$") ]
+    then bRc=$v_LIB_bTrue; fi
+    f__echoExpr $2 $bRc $s $1
+    return $bRc
+}
+
+#   s:  f.isLower
+function f_lib_isLower() {
+    local s='?IsLower'
+    local bRc=$v_LIB_bFalse; declare -i iFc=$2
+    if [ $(echo $1 | egrep "^[a-z]+$") ]
+    then bRc=$v_LIB_bTrue; fi
+    f__echoExpr $iFc $bRc $s $1
+    return $bRc
+}
+
+#   s:  f.isCntrl
+function f_lib_isCntrl() {
+    local s='?IsCntrl'
+    local bRc=$v_LIB_bFalse; declare -i iFc=$2
+    if [ $(echo $1 | egrep "[:cntrl]") ]    # !PHA:true
+    then bRc=$v_LIB_bTrue; fi
+    f__echoExpr $iFc $bRc $s '$1'
+    return $bRc
+}
+
+#   s:  f.isSpace
+function f_lib_isSpace() {
+    local s='?IsSpace'
+    local bRc=$v_LIB_bFalse; declare -i iFc=$2
+    if [ $(echo '$1' | egrep "[:space]") ]   # !PHA:true fix
+    then bRc=$v_LIB_bTrue; fi
+    f__echoExpr $iFc $bRc $s $1
+    return $bRc
+}
 
 #   ===========================================================================
 #   m:  F.lib.print
