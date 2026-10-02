@@ -205,8 +205,8 @@ fi
 #   run
 pSrc=$BASH_SOURCE
 dObj=$v_FWK_dirScratch
-bMod=$v_LIB_bTrue
-f_lib_logging_getPath $pSrc $dObj $bMod iRc=$?; sRc=$v_LIB_reply_sRc
+bCrt=$v_LIB_bTrue
+f_lib_logging_getPath $pSrc $dObj $bCrt iRc=$?; sRc=$v_LIB_reply_sRc
 
 #   reply
 echo "< m.sRc =: [$sRc]"
