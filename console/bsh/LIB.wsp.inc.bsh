@@ -532,27 +532,16 @@ function f_lib_file_getModificationTime()   {
 
 #   s:  f.file.write
 function f_lib_file_write()   {
-
-    local p_sFilePath=$1
-    local p_sText=$2
-    local p_bCrt=$3
-    local s=$p_sText
-
-    if [ $v_LIB_bTrue == $v_LIB_mode_bVerbose ]; then
-        echo "< L.sFpt :: [$p_sFilePath]"
-        echo "< L.sTxt :: [$p_sText]"
-        echo "< L.iMod :: [$p_iMod]"
-    fi
-
-    if [ $v_LIB_bTrue == $p_bCrt ]; then
-        echo "append file"
-        echo $sTxt >> $p_sFilePath
+    local p_pFile=$1
+    local p_sString=$2
+    local p_bCreate=$3
+    #   create or append
+    if [ ! -z $p_bCreate ] && [ $v_LIB_bTrue -eq $p_bCreate ]; then
+        echo "$p_sString" > $p_pFile
     else
-        echo "create & write file"
-        echo $sTxt > $p_sFilePath
+        echo "$p_sString" >> $p_pFile
     fi
-
-    return ${#s}    # reply strlen
+    return ${#p_sString}    # reply strlen
 }
 
 
