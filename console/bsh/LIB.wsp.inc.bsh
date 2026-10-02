@@ -86,14 +86,14 @@ function f_lib_configuration() {
     local p_iMod=$1
 
     if [ "$p_iMod" == 1 ]; then
-        echo "+++   libCfg.1"
+        #   echo "+++   libCfg.1"
         f__color_defineEscapeCode
         f__color_defineFontValue
         f__color_configure
         v_LIB_mode_bVerbose=$v_LIB_bFalse
         v_LIB_mode_bExtended=$v_LIB_bFalse
     elif [ "$p_iMod" == 2 ]; then
-        echo "+++   libCfg.2"
+        #   echo "+++   libCfg.2"
         v_LIB_mode_bVerbose=$v_LIB_bTrue
     else
         echo "+++   libCfg.3"
@@ -694,7 +694,7 @@ function f_lib_header() {
 
     #   show header
     sHeaderText="=== hdr:[$p_sScp;$p_iPos]:[$l_sNow]:[$v_LIB_reply_iEc]."
-    f__puts "$sHeaderText" $v_LIB_COLOR__green
+    f__puts "$sHeaderText\n " $v_LIB_COLOR__green
 
     #   time.Start
     v_LIB_timer_tStart=$(date +%s.%N)
@@ -765,12 +765,50 @@ function f_lib_footer() {
     #   create+write into myLogFile
     local iRc=$v_LIB_reply_iEc
     s="=== ftr:[$p_sScp;$p_iPos]:[$iRc] elapsed:<$sSec> seconds."
-    f__puts "$s" $v_LIB_COLOR__green
+    f__puts "\n$s" $v_LIB_COLOR__green
     f__logs "$s"
 
     #   return
     return $v_LIB_reply_iEc
 }
+
+#   s:  f.menu.M
+function f_lib_menu() {
+    local sText=$1
+    local iLine=$2
+    v_LIB_menu_iCtr+=1
+    v_LIB_menuS1_iCtr=0
+    v_LIB_menuS2_iCtr=0
+    printf -v x "[%2.2d]" "$v_LIB_menu_iCtr"
+    s="=== m$x : $sText at:[$iLine]"
+    f__puts "\n$s" $v_LIB_COLOR__green
+    f__logs "$s"
+}
+
+#   s:  f.menu.S1
+function f_lib_menuS1() {
+    local sText=$1
+    local iLine=$2
+    v_LIB_menuS1_iCtr+=1
+    v_LIB_menuS2_iCtr=0
+    printf -v x "[%2.2d]" "$v_LIB_menuS1_iCtr"
+    s="=== s$x : $sText at:[$iLine]"
+    f__puts "\n$s" $v_LIB_COLOR__green
+    f__logs "$s"
+}
+
+#   s:  f.menu.S1
+function f_lib_menuS2() {
+    local sText=$1
+    local iLine=$2
+    v_LIB_menuS2_iCtr+=1
+    printf -v x "[%2.2d][%2.2d]" "$v_LIB_menuS1_iCtr" "$v_LIB_menuS2_iCtr"
+    s="=== u$x : $sText at:[$iLine]"
+    f__puts "\n$s" $v_LIB_COLOR__green
+    f__logs "$s"
+}
+
+
 
 #   ===========================================================================
 #   m:  F.lib.test
@@ -821,5 +859,8 @@ declare -i v_LIB_log_bUseDtmName=$v_LIB_bFalse  # short Name
 declare -x v_LIB_log_sFileExtension='.log'
 declare -x v_LIB_log_pFile      #   filePath
 
-
+#   m:  v.menu
+declare -i v_LIB_menu_iCtr=0
+declare -i v_LIB_menuS1_iCtr=0
+declare -i v_LIB_menuS2_iCtr=0
 

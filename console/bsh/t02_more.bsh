@@ -19,7 +19,6 @@
 #   ===========================================================================
 
 clear
-echo "=== header runMe($BASH_SOURCE) [`date`]"
 
 #   s:  declare my variables
 declare -x s
@@ -50,29 +49,33 @@ f_lib_info
 #   ===========================================================================
 
 #   libTest
+f_lib_menu "Test" $LINENO
 f_lib_test
 
 #   ===========================================================================
 #   m:  F.helper
 #   ===========================================================================
 
+f_lib_menu "Helper" $LINENO
+
 #   s:  who
-echo ""
+f_lib_menuS1 "who" $LINENO
 echo "$ call LIB.who"
 f_lib_who
 
 #   s:  where
-echo ""
+f_lib_menuS1 "where" $LINENO
 echo "$ call LIB.where"
 f_lib_where  $BASH_SOURCE $LINENO $RANDOM
 
 #   s:  caller
+f_lib_menuS1 "caller" $LINENO
 echo ""
 echo "$ call LIB.caller"
 f_lib_caller  $BASH_SOURCE
 
 #   s:  show.DateTime
-echo ""
+f_lib_menuS1 "DateTime" $LINENO
 echo "$ call LIB.DateTime"
 f_lib_dateTime
 iRc=$?
@@ -81,7 +84,7 @@ echo "< m.sRc =: [$sRc]"
 echo "< m.iRc =: [$iRc]"
 
 #   s:  sleep
-echo ""
+f_lib_menuS1 "Sleep" $LINENO
 echo "$ call LIB.sleep [1]"
 f_lib_sleep 1
 
@@ -89,18 +92,20 @@ f_lib_sleep 1
 #   m:  F.printing
 #   ===========================================================================
 
+#   menu
+f_lib_menu "printing" $LINENO
+
 #   s:  echo
 echo -e "\n$ call LIB.echo"
 f_lib_echo "Hello Peter !"
 
-#   s:  print (foreground & background)
-echo ""
-
 #   u:  print.easy
+f_lib_menuS1 "printEasy" $LINENO
 echo "$ call LIB.print any"
 f_lib_print "A normal text printed" $v_LIB_bTrue
 
 #   u:  print.multiple in 1 line and colored
+f_lib_menuS1 "printColored noNewLine" $LINENO
 f_lib_print "1:red."        $v_LIB_bFalse   $v_LIB_COLOR__red
 f_lib_print "2:yellow."     $v_LIB_bFalse   $v_LIB_COLOR__yellow
 f_lib_print "3:green."      $v_LIB_bFalse   $v_LIB_COLOR__green
@@ -109,20 +114,20 @@ f_lib_print "5:magenta."    $v_LIB_bFalse   $v_LIB_COLOR__magenta
 f_lib_print "6:cyan."       $v_LIB_bTrue    $v_LIB_COLOR__cyan
 
 #   s:  puts (implicitely NL)
-echo -e "\n$ call LIB.puts"
+f_lib_menuS1 "puts.Colored withNewLine" $LINENO
 f_lib_puts "1:red!"         $v_LIB_COLOR__red
 f_lib_puts "2:yellow!"      $v_LIB_COLOR__yellow
 f_lib_puts "3:green!"       $v_LIB_COLOR__green
 
 #   s:  puts (NoColor)
+f_lib_menuS2 "puts.noColor" $LINENO
 f_lib_puts "9:noColor"
 
 #   ===========================================================================
 #   m:  F.file
 #   ===========================================================================
 
-echo ""
-echo "* LIB.file"
+f_lib_menu "File" $LINENO
 
 #   s:  L.filePath
 echo ""
@@ -180,8 +185,7 @@ echo "< m.iRc =: [$iRc]"
 #   m:  F.logging
 #   ===========================================================================
 
-echo ""
-echo "* LIB.logging"
+f_lib_menu "logging" $LINENO
 
 #   fetch random value[1,2]
 echo ""
@@ -227,7 +231,8 @@ echo "< m.iRc =: [$iRc]"
 #   m:  F.plgs
 #   ===========================================================================
 
-echo ""
+f_lib_menu "plgs" $LINENO
+
 echo "$ call LIB.text"
 s="Peter & Harvey"
 
