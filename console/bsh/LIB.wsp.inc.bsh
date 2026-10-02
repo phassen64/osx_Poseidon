@@ -552,17 +552,14 @@ function f_lib_file_write()   {
 #   s:  f.~~logs
 #   log string create||append
 function f__logs() {
-    local s=$1  # String
-    local bCreate=$2
-    #   create or append
-    if [ $v_LIB_bTrue -eq $v_LIB_log_bEnabled ]; then
-        if [ ! -z $bCreate ] && [ $v_LIB_bTrue -eq $bCreate ]; then
-            echo "$s" >  $v_LIB_log_pFile
-        else
-            echo "$s" >>  $v_LIB_log_pFile
-        fi
+    local p_sString=$1      # String
+    local p_bCreate=$2
+    #   check
+    if [ $v_LIB_bTrue -ne $v_LIB_log_bEnabled ]; then
+        return 0
     fi
-    return ${#s}
+    f_lib_file_write $v_LIB_log_pFile "$p_sString" $p_bCreate; iRc=$?
+    return $iRc
 }
 
 #   s:  f.log.determineFilePath
