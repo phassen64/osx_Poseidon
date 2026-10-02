@@ -609,3 +609,69 @@ echo "Hello, World! #2026" | tr -cd '[:alnum:]'
 
 +   Git Settings
     $   git config --list | sort
+
+
+### !date:<2026-10-02>:Fr 
+
+
+?   Command SyntaxExecution BehaviorAnalogy
+    The difference between && and ; 
+        in Bash lies in conditional execution:
+    command1 && command2
+        Runs command2 only if command1 succeeds (returns exit code 0).
+    command1 ; command2	
+        Runs command2 regardless of whether 
+            command1 succeeds or fails.
+
+?   Bash echo how I can save leading spaces ?
+    To preserve leading spaces, 
+        always wrap the string or variable in double quotes ("...").
+
+?   bash how I can store variable with leaning spaces ?
+    By default, storing a string with leading spaces in a 
+        Bash variable works as expected—the variable itself 
+        retains the spaces. 
+    The issue usually occurs when you try to print or use 
+        the variable without double quotes.
+    $>  s="   peter" 
+    $>  echo $s         
+    $<  peter           # no leading spaces 
+    $>  echo "$s"         
+    $<      peter       # now there are leading spaces 
+
+    Command Substitution: 
+        Wrap the command or the variable in double quotes.
+
+    # Capturing output that contains leading spaces
+    $>  var="$(printf "   hello world")"
+
+?   echo vs printf 
+
+    In Bash, printf is generally preferred over echo for portable, 
+        reliable script writing. 
+    While 'echo' is fine for quick terminal output, 
+        'printf' gives you exact control over formatting, 
+            variable expansion, and special characters.
+
+    # echo automatically adds a newline at the end
+        printf needs '\n'
+    $>  echo "Hello World"
+    $>  printf "Hello World\n"  # equal
+
+?   printf mit interner formatierung %b%
+    $>  s="Peter&\nHarvey"
+    
+    *   nur %s
+    $>  printf "%s\n" "$s"
+    $<  Peter&\nHarvey
+
+    *   mit %b
+    $>  printf "%b\n" "$s"
+    $<  Peter&
+    $<  Harvey
+
+
+
+
+
+
