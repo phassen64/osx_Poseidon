@@ -439,7 +439,9 @@ function f__echoExpr() {
         then sRc="TRUE"
         else sRc="FALSE"
     fi
-    printf "%s ('%s') \t=:\t %s\n" $p_sInfo $p_sExpr $sRc
+    s=$(printf "%s ('%s') \t=:\t %s\n" $p_sInfo $p_sExpr $sRc)
+    echo "$s"
+    f__logs "$s"
 }
 
 #   ===========================================================================
