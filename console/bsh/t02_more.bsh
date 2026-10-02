@@ -52,6 +52,10 @@ f_lib_info
 f_lib_menu "Test" $LINENO
 f_lib_test
 
+#   functioNamen = null
+#   t:  eof.test
+f_lib_trace $v_LIB_traceBody $LINENO "eof.libTest"
+
 #   ===========================================================================
 #   m:  F.helper
 #   ===========================================================================
@@ -88,6 +92,9 @@ f_lib_menuS1 "Sleep" $LINENO
 echo "$ call LIB.sleep [1]"
 f_lib_sleep 1
 
+#   t:  eof.helper
+f_lib_trace $v_LIB_traceBody $LINENO "eof.helper"
+
 #   ===========================================================================
 #   m:  F.printing
 #   ===========================================================================
@@ -122,6 +129,9 @@ f_lib_puts "3:green!"       $v_LIB_COLOR__green
 #   s:  puts (NoColor)
 f_lib_menuS2 "puts.noColor" $LINENO
 f_lib_puts "9:noColor"
+
+#   t:  eof.print
+f_lib_trace $v_LIB_traceBody $LINENO "eof.print"
 
 #   ===========================================================================
 #   m:  F.file
@@ -180,6 +190,8 @@ sRc=$v_LIB_reply_sRc
 echo "< m.sRc =: [$sRc]"
 echo "< m.iRc =: [$iRc]"
 
+#   t:  eof.fileInfo
+f_lib_trace $v_LIB_traceBody $LINENO "eof.fileInfo"
 
 #   ===========================================================================
 #   m:  F.logging
@@ -226,6 +238,8 @@ bCrt=$v_LIB_bTrue
 f_lib_file_write $pTestFilePath "$sTxt" $bCrt; iRc=$?
 echo "< m.iRc =: [$iRc]"
 
+#   t:  eof.fileInfo
+f_lib_trace $v_LIB_traceBody $LINENO "eof.logging"
 
 #   ===========================================================================
 #   m:  F.plgs
@@ -236,6 +250,9 @@ f_lib_menu "plgs" $LINENO
 echo "$ call LIB.text"
 s="Peter & Harvey"
 
+#   t:  mof.puts
+f_lib_trace $v_LIB_traceBody $LINENO "mof.puts"
+
 #   f_lib_puts '123' $v_LIB_COLOR__red
 f_lib_text "$s"  $v_LIB_COLOR__red
 
@@ -243,4 +260,8 @@ f_lib_text "$s"  $v_LIB_COLOR__red
 #   m:  F.footer
 #   ===========================================================================
 
+declare -i bTrp=$v_LIB_bTrue        #   trc:enabled
+declare -i bTrp=123                 #   trc:disabled
+
+f_lib_trace $v_LIB_traceBody $LINENO "eop" $bTrp
 f_lib_footer $BASH_SOURCE $LINENO $z_iRc; iRc=$?

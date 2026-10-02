@@ -63,6 +63,10 @@
         •   m:  F.lib.menu
                 •   s:  f.header
                 •   s:  f.footer
+                •   s:  f.menu.M
+                •   s:  f.menu.S1
+                •   s:  f.menu.S2
+                •   s:  f.debug.Trace
         •   m:  F.lib.test
     b:  B.body
         •   m:  v.boolType
@@ -774,33 +778,33 @@ function f_lib_footer() {
 
 #   s:  f.menu.M
 function f_lib_menu() {
-    local sText=$1
-    local iLine=$2
+    local p_sText=$1
+    local p_iLine=$2
     v_LIB_menu_iCtr+=1
     v_LIB_menuS1_iCtr=0
     v_LIB_menuS2_iCtr=0
     printf -v x "[%2.2d]" "$v_LIB_menu_iCtr"
-    s="=== m$x : $sText at:[$iLine]"
+    s="=== m$x : $sText at:[$p_iLine]"
     f__puts "\n$s" $v_LIB_COLOR__green
     f__logs "$s"
 }
 
 #   s:  f.menu.S1
 function f_lib_menuS1() {
-    local sText=$1
-    local iLine=$2
+    local p_sText=$1
+    local p_iLine=$2
     v_LIB_menuS1_iCtr+=1
     v_LIB_menuS2_iCtr=0
     printf -v x "[%2.2d]" "$v_LIB_menuS1_iCtr"
-    s="=== s$x : $sText at:[$iLine]"
+    s="=== s$x : $p_sText at:[$p_iLine]"
     f__puts "\n$s" $v_LIB_COLOR__green
     f__logs "$s"
 }
 
-#   s:  f.menu.S1
+#   s:  f.menu.S2
 function f_lib_menuS2() {
-    local sText=$1
-    local iLine=$2
+    local p_sText=$1
+    local p_iLine=$2
     v_LIB_menuS2_iCtr+=1
     printf -v x "[%2.2d][%2.2d]" "$v_LIB_menuS1_iCtr" "$v_LIB_menuS2_iCtr"
     s="=== u$x : $sText at:[$iLine]"
@@ -808,6 +812,36 @@ function f_lib_menuS2() {
     f__logs "$s"
 }
 
+
+#   s:  f.debug.Trace(sFct,iLine,sText,[bEnabled=true])
+
+function f_lib_trace()   {
+
+    #   fetch
+    local p_sFctn="$1"      # check - may not be null
+    local p_iLine="$2"
+    local p_sText="$3"
+    local p_bFlag="$4"
+
+    #   check flag (empty || true)
+    if [ -z $p_bFlag ]; then
+        p_bFlag=$v_LIB_bTrue
+    elif [ $p_bFlag != $v_LIB_bTrue ]; then
+        return 0    # no
+    fi
+
+    if [ $v_LIB_bTrue == $v_LIB_mode_bVerbose ]; then
+        echo "< L.sFct :: [$p_sFctn]"
+    fi
+
+    #   prepare text
+    local s="--- T:[$p_sFctn;$p_iLine]:'$p_sText'"
+
+    #   show
+    f__puts "\n$s" $v_LIB_COLOR__magenta
+    f__logs "$s"
+
+}
 
 
 #   ===========================================================================
@@ -863,4 +897,5 @@ declare -x v_LIB_log_pFile      #   filePath
 declare -i v_LIB_menu_iCtr=0
 declare -i v_LIB_menuS1_iCtr=0
 declare -i v_LIB_menuS2_iCtr=0
+declare -x v_LIB_traceBody="TraceBody"
 
