@@ -622,31 +622,8 @@ function f__log_determineFilePath() {
 
 #   s:  f.log.GetPath
 function f_lib_logging_getPath() {
-
-    #   parameter
-    local p_pSrc=$1
-    local p_dObj=$2
-    local p_bMod=$3     #   extended->DateTimeString
-
-    #   local
-    local s
-
-    if [ $v_LIB_bTrue == $v_LIB_mode_bVerbose ]; then
-        echo "< L.p_pSrc :: [$p_pSrc]"
-        echo "< L.p_dObj :: [$p_dObj]"
-        echo "< L.p_bMod :: [$p_bMod]"
-    fi
-
-    #   run internal
-    f__log_determineFilePath $p_pSrc $p_dObj $p_bMod; iRc=$?
-
-    if [ $v_LIB_bTrue == $v_LIB_mode_bVerbose ]; then
-        echo "< L.sReply :: [$v_LIB_reply_sRc]"
-    fi
-
-    #   return
-    s=$v_LIB_reply_sRc
-    return ${#s}        # reply strlen
+    f__log_determineFilePath "$1" "$2" "$3"; iRc=$?
+    return $iRc
 }
 
 #   ===========================================================================
