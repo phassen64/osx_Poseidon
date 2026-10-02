@@ -93,7 +93,7 @@ function f_lib_configuration() {
         v_LIB_mode_bExtended=$v_LIB_bFalse
     elif [ "$p_iMod" == 2 ]; then
         echo "+++   libCfg.2"
-        v_LIB_mode_bVerbose=$v_LIB_btrue
+        v_LIB_mode_bVerbose=$v_LIB_bTrue
     else
         echo "+++   libCfg.3"
     fi
@@ -531,7 +531,7 @@ function f_lib_file_getModificationTime()   {
 #   ===========================================================================
 
 #   s:  f.file.write
-function f_lib_file_write()   {
+function f__fputs()   {
     local p_pFile=$1
     local p_sString=$2
     local p_bCreate=$3
@@ -542,6 +542,24 @@ function f_lib_file_write()   {
         echo "$p_sString" >> $p_pFile
     fi
     return ${#p_sString}    # reply strlen
+}
+
+
+#   s:  f.file.write
+function f_lib_file_write()   {
+    local p_pFile=$1
+    local p_sString=$2
+    local p_bCreate=$3
+    echo "--- L.fileWrite:[$v_LIB_mode_bVerbose]"
+    if [ $v_LIB_bTrue == $v_LIB_mode_bVerbose ]; then
+        echo "+++ fileWrite"
+        echo "< L.pFpt :: [$p_pFile]"
+        echo "< L.sStr :: [$p_sString]"
+        echo "< L.bCrt :: [$p_bCreate]"
+    fi
+    #   run internal
+    f__fputs $p_pFile "$p_sString" $p_bCreate; iRc=$?
+    return $iRc
 }
 
 
@@ -558,7 +576,8 @@ function f__logs() {
     if [ $v_LIB_bTrue -ne $v_LIB_log_bEnabled ]; then
         return 0
     fi
-    f_lib_file_write $v_LIB_log_pFile "$p_sString" $p_bCreate; iRc=$?
+    #   run internal
+    f__fputs $v_LIB_log_pFile "$p_sString" $p_bCreate; iRc=$?
     return $iRc
 }
 
@@ -572,6 +591,14 @@ function f__log_determineFilePath() {
 
     #   me
     local sFct=${FUNCNAME[0]}
+
+     #   show
+    if [ $v_LIB_bTrue == $v_LIB_mode_bVerbose ]; then
+        echo "< +++ L.determinePath"
+        echo "< L.p1:: [$1]"
+        echo "< L.p2:: [$2]"
+        echo "< L.p3:: [$3]"
+    fi
 
     #   check.srcPth
     if [ ! -f $p_pSrc ]; then
@@ -609,6 +636,13 @@ function f__log_determineFilePath() {
 #   s:  f.log.GetPath
 function f_lib_logging_getPath() {
     f__log_determineFilePath "$1" "$2" "$3"; iRc=$?
+     #   show
+    if [ $v_LIB_bTrue == $v_LIB_mode_bVerbose ]; then
+        echo "< +++ L.loggingGetPath"
+        echo "< L.p1:: [$1]"
+        echo "< L.p2:: [$2]"
+        echo "< L.p3:: [$3]"
+    fi
     return $iRc
 }
 

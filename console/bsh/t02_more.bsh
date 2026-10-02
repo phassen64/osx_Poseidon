@@ -207,20 +207,19 @@ pSrc=$BASH_SOURCE
 dObj=$v_FWK_dirScratch
 bCrt=$v_LIB_bTrue
 f_lib_logging_getPath $pSrc $dObj $bCrt iRc=$?; sRc=$v_LIB_reply_sRc
-
-#   reply
 echo "< m.sRc =: [$sRc]"
 echo "< m.iRc =: [$iRc]"
+
+#   save
 declare -x pTestFilePath=$v_LIB_reply_sRc
 echo "< m.pTestFilePath =: [$pTestFilePath]"
-echo "$ call LIB.writeFile"
 
 #   write/append file
 echo ""
 echo "$ call LIB.writeFile"
-sTxt="peter:[`date`]"
+sTxt="Peter sitzt zu Hause - Datum:[`date`]"
 bCrt=$v_LIB_bTrue
-f_lib_file_write $pTestFilePath $sTxt $bCrt; iRc=$?
+f_lib_file_write $pTestFilePath "$sTxt" $bCrt; iRc=$?
 echo "< m.iRc =: [$iRc]"
 
 
