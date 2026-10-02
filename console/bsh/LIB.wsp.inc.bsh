@@ -348,7 +348,7 @@ function f__print() {
 
 #   wrapper.print
 function f_lib_print() {
-    f__print "$1" "$2" "$3" "$4"
+    f__print "$1" "$2" "$3" $v_LIB_COLOR_VID_none
 }
 
 #   wrapper.puts
@@ -555,7 +555,6 @@ function f__plgs() {
 function f_lib_puts() {
     f__plgs "$1" "$2"
 }
-
 function f_lib_text() {
     local p_sTxt=$1
     local c=$2
@@ -690,8 +689,10 @@ declare -x v_LIB_timer_tStopp
 declare -x v_LIB_dtmFormatString_now="+%y%m%d%H%M%S"
 
 #   s:  LIB.logging
-declare -i v_LIB_log_bEnabled=$v_LIB_bFalse
+declare -i c
 declare -i v_LIB_log_bUseDtmName=$v_LIB_bFalse  # short Name
 declare -x v_LIB_log_sFileExtension='.log'
 declare -x v_LIB_log_sFileName
+
+
 
