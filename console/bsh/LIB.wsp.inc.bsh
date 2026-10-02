@@ -346,7 +346,7 @@ function f__print() {
     fi
 }
 
-#   wrapper.print
+#   wrapper.print - no background option
 function f_lib_print() {
     f__print "$1" "$2" "$3" $v_LIB_COLOR_VID_none
 }
@@ -553,7 +553,8 @@ function f__plgs() {
 }
 
 function f_lib_puts() {
-    f__plgs "$1" "$2"
+    #      f__plgs "$1" "$2"
+    f__puts "$1" "$2"
 }
 function f_lib_text() {
     local p_sTxt=$1
@@ -575,18 +576,14 @@ function f_lib_header() {
     local l_sFct=${FUNCNAME[0]}
     local l_sNow=$(date $v_LIB_dtmFormatString_now)
     local -x s
+    local -x sHeaderText
 
     #   save replyCode
-    v_LIB_iEc=$p_HRc
+    v_LIB_iEc=$p_iHRc
 
     #   show header
-    s="=== hdr:[$p_sScp;$p_iPos]:[$l_sNow]"
-    f__puts "$s" $v_LIB_COLOR_VID_green
-
-    #   s=">>> =h= "
-    #   s=">>> "
-    #   s+="$p_sScp<$v_TIME_HDR>:[$p_iLine]:{$p_iReply}";
-    #   f__output "$s" $v_COL_ID_green
+    sHeaderText="=== hdr:[$p_sScp;$p_iPos]:[$l_sNow]:[$v_LIB_iEc]."
+    f__puts "$sHeaderText" $v_LIB_COLOR__green
 
     #   time.Start
     v_LIB_timer_tStart=$(date +%s.%N)
@@ -617,11 +614,11 @@ function f_lib_header() {
     fi
 
     #   create+write into myLogFile
-    s="--- automaticall created by '$p_sScp'"
+    s="--- automaticall created by:'$p_sScp'."
     f__logs "$s" $v_LIB_bTrue
 
     #   create+write into myLogFile
-    s=">>> hdr:[$p_sScp;$p_iPos]:[$l_sNow]:$p_iHRc"
+    s=$sHeaderText
     f__logs "$s"
 
     #   return
@@ -654,21 +651,40 @@ function f_lib_footer() {
     local sSec=$(echo $fDiff)
 
     #   create+write into myLogFile
-    s="<<< ftr:[$p_sScp;$p_iPos]:$p_iFRc:{$sSec}"
+    local iRc=$v_LIB_iEc
+    s="=== ftr:[$p_sScp;$p_iPos]:[$iRc] elapsed:<$sSec> seconds."
+    f__puts "$s" $v_LIB_COLOR__green
     f__logs "$s"
 
     #   return
     return $v_LIB_iEc
 }
 
+function f_lib_test() {
+    f__puts "+++ libTest.begin" $v_LIB_COLOR__blue
+    f__print "\t"
+    f__print "1:red."        $v_LIB_bFalse   $v_LIB_COLOR__red
+    f__print "2:yellow."     $v_LIB_bFalse   $v_LIB_COLOR__yellow
+    f__print "3:green."      $v_LIB_bFalse   $v_LIB_COLOR__green
+    f__print "4:blue."       $v_LIB_bFalse   $v_LIB_COLOR__blue
+    f__print "5:magenta."    $v_LIB_bFalse   $v_LIB_COLOR__magenta
+    f__print "6:cyan."       $v_LIB_bTrue    $v_LIB_COLOR__cyan
+    f__puts "+++ libTest.ending" $v_LIB_COLOR__blue
+}
+
+
 
 #   &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
 #   b:  B.body
 #   &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
 
+#   show
+#   echo "L.libWsp include"
+
 #   s:  LIB.boolean
-declare -i v_LIB_bTrue=100
-declare -i v_LIB_bFalse=255
+declare -i v_LIB_bTrue=100      && export v_LIB_bTrue
+declare -i v_LIB_bFalse=255     && export v_LIB_bFalse
+
 
 #   s:  LIB.config.setting.verbose : 1
 declare -i v_LIB_mode_bVerbose=$v_LIB_bFalse
