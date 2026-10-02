@@ -38,6 +38,12 @@
             •   s:  f.color.configure       :   map color Font->Letter
             •   s:  f.color.test
         •   m:  F.lib.helper
+            •   s:  f.info
+            •   s:  f.who
+            •   s:  f.where
+            •   s:  f.dateTime
+            •   s:  f.sleep
+            •   s:  f.random
         •   m:  F.lib.print
                 •   s:  f.echo
                 •   s:  f.~~print
@@ -56,7 +62,7 @@
             •   s:  f.~~logs
             •   s:  f.log.determineFilePath
             •   s:  f.log.GetPath
-        •   m:  F.plgs (print & log)
+        •   m:  F.lib.plgs (print & log)
                 •   s:  f.~~plgs
                 •   s:  f.lib.puts
                 •   s:  f.lib.text
@@ -310,6 +316,7 @@ function f__color_test() {
 #   m:  F.lib.helper
 #   ===========================================================================
 
+#   s:  f.info
 function f_lib_info() {
     local p=$BASH_SOURCE
     local s
@@ -319,6 +326,7 @@ function f_lib_info() {
     return ${#s}    # reply strlen
 }
 
+#   s:  f.who
 function f_lib_who() {
     local l_sPwd=`pwd`
     local l_sScp=$BASH_SOURCE
@@ -328,6 +336,7 @@ function f_lib_who() {
     fi
 }
 
+#   s:  f.where
 function f_lib_where() {
     local p_sCaller=$1
     local p_iLine=$2
@@ -353,6 +362,7 @@ function f_lib_caller() {
     fi
 }
 
+#   s:  f.dateTime
 function f_lib_dateTime() {
     local l_sDtm=$(date $v_LIB_dtmFormatString_now)
     local s
@@ -364,6 +374,7 @@ function f_lib_dateTime() {
     return ${#s}    # reply strlen
 }
 
+#   s:  f.sleep
 function f_lib_sleep() {
     local i=$1
     if [ $v_LIB_bTrue == $v_LIB_mode_bVerbose ]; then
@@ -372,6 +383,7 @@ function f_lib_sleep() {
     sleep $i
 }
 
+#   s:  f.random
 #   in: iMax [iMin]
 function f_lib_random() {
 
@@ -650,7 +662,7 @@ function f_lib_logging_getPath() {
 }
 
 #   ===========================================================================
-#   m:  F.plgs (print & log)
+#   m:  F.lib.plgs (print & log)
 #   ===========================================================================
 
 #   s:  f.~~plgs
@@ -814,7 +826,6 @@ function f_lib_menuS2() {
 
 
 #   s:  f.debug.Trace(sFct,iLine,sText,[bEnabled=true])
-
 function f_lib_trace()   {
 
     #   fetch
