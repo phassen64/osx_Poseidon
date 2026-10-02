@@ -33,17 +33,16 @@ echo ""
 echo "* include library 'LIB'"
 source LIB.wsp.inc.bsh
 
-#   s:  lib.configuration
-echo ""
-echo "$ call LIB.config"
-i=$v_LIB_bTrue
-f_lib_configuration $i
-
 #   s:  lib.header - take out exitCode
 echo ""
 echo "$ call LIB.header"
 f_lib_header $BASH_SOURCE $LINENO $v_FWK_iEc
 z_iRc=$v_FWK_iEc
+
+#   s:  lib.configuration
+echo ""
+echo "$ call LIB.config"
+f_lib_configuration "2"
 
 #   s:  info
 echo ""

@@ -22,8 +22,6 @@
 #               example:    $   echo -E "Line1\nLine2"
 
 
-
-
 #   content:
 #       b:  B.function
 #           •   m:  F.config
@@ -40,22 +38,53 @@
 
 #   &&& b:  b.function  &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
 
+<<COMMENT
+   Don't include the library during the starter !
+COMMENT
 
 #   ===========================================================================
 #   m:  F.config
 #   ===========================================================================
 
+
+<<COMMENT
+    if [ "$1" == "" ]; then     #   * noColor
+        PS1="${v_COL_NONE}\$ "
+    elif [ "$1" == 1 ]; then    #   * color standard
+        PS1='${debian_chroot:+($debian_chroot)}\[\033[1;32m\]\u@\h\[\033[00m\]:\[\033[1;34m\]\w\[\033[00m\]\$ '
+    elif [ "$1" == 7 ]; then    #   p='usr@tron:<FULLPATH> $ '
+        PS1="${v_COL_FG_Lgreen}\u@\h${v_COL_NONE}:${v_COL_FG_Lblue}\w${v_COL_NONE}\$ "
+    else
+        PS1="${v_COL_NONE}\$ "
+    fi
+COMMENT
+
+
 function f_lib_configuration() {
-    v_LIB_mode_bVerbose=$1
+
+    local p_iMod=$1
+
+    if [ "$p_iMod" == 1 ]; then
+        echo "+++   libCfg.1"
+        f__color_defineEscapeCode
+        f__color_defineValue
+        f__color_configure
+        v_LIB_mode_bVerbose=$v_LIB_bFalse
+        v_LIB_mode_bExtended=$v_LIB_bFalse
+    elif [ "$p_iMod" == 2 ]; then
+        echo "+++   libCfg.2"
+        v_LIB_mode_bVerbose=$v_LIB_btrue
+    else
+        echo "+++   libCfg.3"
+    fi
+
     if [ $v_LIB_bTrue == $v_LIB_mode_bVerbose ]; then
         echo "< L.configuration :: [$v_LIB_mode_bVerbose] !"
         echo "< L.iRc :: [$v_LIB_reply_iRc]"
         echo "< L.sRc :: [$v_LIB_reply_sRc]"
     fi
-    #   set my internals
-    f__color_defineEscapeCode
-    f__color_defineValue
-    f__color_configure
+
+    return 1
 }
 
 function f_lib_info() {
@@ -181,66 +210,69 @@ function f__color_defineEscapeCode() {
     #   Light Gray   0;37     White         1;37
 
     #   00:NONE
+    v_LIB_COLOR_ESC_RESET='\e[0m'           #   RESET
     v_LIB_COLOR_ESC_NONE='\033[0m'          #   no color or RESET
 
-    #   Foreground: '0'
-    v_LIB_COLOR_ESC_FG_black='\033[0;30m'
-    v_LIB_COLOR_ESC_FG_red='\033[0;31m'
-    v_LIB_COLOR_ESC_FG_green='\033[0;32m'
-    v_LIB_COLOR_ESC_FG_brown='\033[0;33m'
-    v_LIB_COLOR_ESC_FG_blue='\033[0;34m'
-    v_LIB_COLOR_ESC_FG_magenta='\033[0;35m'
-    v_LIB_COLOR_ESC_FG_cyan='\033[0;36m'
-    v_LIB_COLOR_ESC_FG_Lgray='\033[0;37m'
+    #   foreground:a:'regular'
+    v_LIB_COLOR_ESC_FG_R_black='\033[0;30m'
+    v_LIB_COLOR_ESC_FG_R_red='\033[0;31m'
+    v_LIB_COLOR_ESC_FG_R_green='\033[0;32m'
+    v_LIB_COLOR_ESC_FG_R_yellow='\033[0;33m'    #   * brown
+    v_LIB_COLOR_ESC_FG_R_blue='\033[0;34m'
+    v_LIB_COLOR_ESC_FG_R_magenta='\033[0;35m'
+    v_LIB_COLOR_ESC_FG_R_cyan='\033[0;36m'
+    v_LIB_COLOR_ESC_FG_R_gray='\033[0;37m'
 
-    #   Foreground 01:class '1'
-    v_LIB_COLOR_ESC_FG_gray='\033[1;30m'
-    v_LIB_COLOR_ESC_FG_Lred='\033[1;31m'
-    v_LIB_COLOR_ESC_FG_Lgreen='\033[1;32m'
-    v_LIB_COLOR_ESC_FG_yellow='\033[1;33m'
-    v_LIB_COLOR_ESC_FG_Lblue='\033[1;34m'
-    v_LIB_COLOR_ESC_FG_Lpurple='\033[1;35m'
-    v_LIB_COLOR_ESC_FG_Lcyan='\033[1;36m'
-    v_LIB_COLOR_ESC_FG_white='\033[1;37m'
+    #   foreground:b:'bold'
+    v_LIB_COLOR_ESC_FG_B_gray='\033[1;30m'
+    v_LIB_COLOR_ESC_FG_B_red='\033[1;31m'
+    v_LIB_COLOR_ESC_FG_B_green='\033[1;32m'
+    v_LIB_COLOR_ESC_FG_B_yellow='\033[1;33m'
+    v_LIB_COLOR_ESC_FG_B_blue='\033[1;34m'
+    v_LIB_COLOR_ESC_FG_B_purple='\033[1;35m'
+    v_LIB_COLOR_ESC_FG_B_cyan='\033[1;36m'
+    v_LIB_COLOR_ESC_FG_B_white='\033[1;37m'
 
-    #   Background
-    v_LIB_COLOR_ESC_BG_black='\033[40m'       # Black
-    v_LIB_COLOR_ESC_BG_red='\033[41m'         # Red
-    v_LIB_COLOR_ESC_BG_green='\033[42m'       # Green
-    v_LIB_COLOR_ESC_BG_yellow='\033[43m'      # Yellow
-    v_LIB_COLOR_ESC_BG_blue='\033[44m'        # Blue
-    v_LIB_COLOR_ESC_BG_magenta='\033[45m'      # Purple
-    v_LIB_COLOR_ESC_BG_cyan='\033[46m'        # Cyan
-    v_LIB_COLOR_ESC_BG_white='\033[47m'       # White
+    #   background:d:'dark'
+    v_LIB_COLOR_ESC_BG_D_black='\033[40m'       # Black
+    v_LIB_COLOR_ESC_BG_D_red='\033[41m'         # Red
+    v_LIB_COLOR_ESC_BG_D_green='\033[42m'       # Green
+    v_LIB_COLOR_ESC_BG_D_yellow='\033[43m'      # Yellow
+    v_LIB_COLOR_ESC_BG_D_blue='\033[44m'        # Blue
+    v_LIB_COLOR_ESC_BG_D_magenta='\033[45m'      # Purple
+    v_LIB_COLOR_ESC_BG_D_cyan='\033[46m'        # Cyan
+    v_LIB_COLOR_ESC_BG_D_white='\033[47m'       # White
 
-    # Bold
-    v_LIB_COLOR_ESC_BD_black='\033[1;30m'       # Black
-    v_LIB_COLOR_ESC_BD_red='\033[1;31m'         # Red
-    v_LIB_COLOR_ESC_BD_green='\033[1;32m'       # Bold.Green
-    v_LIB_COLOR_ESC_BD_yellow='\033[1;33m'      # Yellow
-    v_LIB_COLOR_ESC_BD_blue='\033[1;34m'        # Blue
-    v_LIB_COLOR_ESC_BD_magenta='\033[1;35m'      # Purple
-    v_LIB_COLOR_ESC_BD_cyan='\033[1;36m'        # Cyan
-    v_LIB_COLOR_ESC_BD_white='\033[1;37m'       # White
+    #   background:l':light
+    v_LIB_COLOR_ESC_BG_L_black='\033[1;30m'     # Black
+    v_LIB_COLOR_ESC_BG_L_red='\033[1;31m'       # Red
+    v_LIB_COLOR_ESC_BG_L_green='\033[1;32m'     # Bold.Green
+    v_LIB_COLOR_ESC_BG_L_yellow='\033[1;33m'    # Yellow
+    v_LIB_COLOR_ESC_BG_L_blue='\033[1;34m'      # Blue
+    v_LIB_COLOR_ESC_BG_L_magenta='\033[1;35m'   # Purple
+    v_LIB_COLOR_ESC_BG_L_cyan='\033[1;36m'      # Cyan
+    v_LIB_COLOR_ESC_BG_L_white='\033[1;37m'     # White
 
-    # Underline
-    v_LIB_COLOR_ESC_UL_black='\033[4;30m'       # Black
-    v_LIB_COLOR_ESC_UL_red='\033[4;31m'         # Red
-    v_LIB_COLOR_ESC_UL_green='\033[4;32m'       # Underline.Green
-    v_LIB_COLOR_ESC_UL_yellow='\033[4;33m'      # Yellow
-    v_LIB_COLOR_ESC_UL_blue='\033[4;34m'        # Blue
-    v_LIB_COLOR_ESC_UL_magenta='\033[4;35m'      # Purple
-    v_LIB_COLOR_ESC_UL_cyan='\033[4;36m'        # Cyan
-    v_LIB_COLOR_ESC_UL_white='\033[4;37m'       # White
+    #   Underline
+    v_LIB_COLOR_ESC_UL_Z_black='\033[4;30m'     # Black
+    v_LIB_COLOR_ESC_UL_Z_red='\033[4;31m'       # Red
+    v_LIB_COLOR_ESC_UL_Z_green='\033[4;32m'     # Underline.Green
+    v_LIB_COLOR_ESC_UL_Z_yellow='\033[4;33m'    # Yellow
+    v_LIB_COLOR_ESC_UL_Z_blue='\033[4;34m'      # Blue
+    v_LIB_COLOR_ESC_UL_Z_magenta='\033[4;35m'   # Purple
+    v_LIB_COLOR_ESC_UL_Z_cyan='\033[4;36m'      # Cyan
+    v_LIB_COLOR_ESC_UL_Z_white='\033[4;37m'     # White
 }
 
 #   s:  f.define.colorValue
 
 function f__color_defineValue() {
+
     #   standard
     v_LIB_COLOR_VID_none=-1
     v_LIB_COLOR_VID_black=0
     v_LIB_COLOR_VID_gray=8
+
     #   dark
     v_LIB_COLOR_VID_DK_red=1
     v_LIB_COLOR_VID_DK_green=2
@@ -249,6 +281,7 @@ function f__color_defineValue() {
     v_LIB_COLOR_VID_DK_magenta=5
     v_LIB_COLOR_VID_DK_cyan=6
     v_LIB_COLOR_VID_DK_white=7
+
     #   light - not for RPi?
     v_LIB_COLOR_VID_LH_red=9
     v_LIB_COLOR_VID_LH_green=10
@@ -307,6 +340,55 @@ function f__color_configure() {
     fi
 
 }
+
+
+function f__color_test() {
+
+    printf "\n>>> colorTest::begin \n"
+
+    declare -x x=$v_LIB_COLOR_ESC_RESET
+
+    #   foreground
+    f__puts "\n+   colorTest.foreground.FG \n"
+
+    echo -e "1: $v_LIB_COLOR_ESC_FG_R_black<rBlack>     $v_LIB_COLOR_ESC_FG_B_black<bBlack>"
+    echo -e "2: $v_LIB_COLOR_ESC_FG_R_red<rRed>         $v_LIB_COLOR_ESC_FG_B_red<bRed>"
+    echo -e "3: $v_LIB_COLOR_ESC_FG_R_green<rGreen>     $v_LIB_COLOR_ESC_FG_B_green<bGreen>"
+    echo -e "4: $v_LIB_COLOR_ESC_FG_R_yellow<rYellow>   $v_LIB_COLOR_ESC_FG_B_green<bYellow>"
+    echo -e "5: $v_LIB_COLOR_ESC_FG_R_blue<rBlue>       $v_LIB_COLOR_ESC_FG_B_blue<bBlue>"
+    echo -e "6: $v_LIB_COLOR_ESC_FG_R_magenta<rMagenta> $v_LIB_COLOR_ESC_FG_B_blue<bMagenta>"
+    echo -e "7: $v_LIB_COLOR_ESC_FG_R_cyan<rCyan>       $v_LIB_COLOR_ESC_FG_B_cyan<bCyan>"
+    echo -e "8: $v_LIB_COLOR_ESC_FG_R_gray<rGray>       $v_LIB_COLOR_ESC_FG_B_gray<bGray>"
+    echo -e "$v_LIB_COLOR_ESC_RESET"
+
+    #   background
+    printf "+   colorTest.background.BG \n"
+
+    echo -e "1: $v_LIB_COLOR_ESC_BG_D_black<dBlack>$x $v_LIB_COLOR_ESC_BG_L_black<lBlack>$x"
+    echo -e "2: $v_LIB_COLOR_ESC_BG_D_red<dRed>$x $v_LIB_COLOR_ESC_BG_L_red<lRed>$x"
+    echo -e "3: $v_LIB_COLOR_ESC_BG_D_green<dGreen>$x $v_LIB_COLOR_ESC_BG_L_green<lGreen>$x"
+    echo -e "4: $v_LIB_COLOR_ESC_BG_D_yellow<dYellow>$x   $v_LIB_COLOR_ESC_BG_L_green<lYellow>$x"
+    echo -e "5: $v_LIB_COLOR_ESC_BG_D_blue<dBlue>$x       $v_LIB_COLOR_ESC_BG_L_blue<lBlue>$x"
+    echo -e "6: $v_LIB_COLOR_ESC_BG_D_magenta<dMagenta>$x $v_LIB_COLOR_ESC_BG_L_blue<lMagenta>$x"
+    echo -e "7: $v_LIB_COLOR_ESC_BG_D_cyan<dCyan>$x       $v_LIB_COLOR_ESC_BG_L_cyan<lCyan>$x"
+    echo -e "8: $v_LIB_COLOR_ESC_BG_D_gray<dGray>$x       $v_LIB_COLOR_ESC_BG_L_gray<lGray>$x"
+
+    #   underline
+    printf "\n+   colorTest.underline \n"
+
+    echo -e "1: $v_LIB_COLOR_ESC_UL_Z_black<zBlack>$x"
+    echo -e "2: $v_LIB_COLOR_ESC_UL_Z_red<zRed>$x"
+    echo -e "3: $v_LIB_COLOR_ESC_UL_Z_green<zGreen>$x"
+    echo -e "4: $v_LIB_COLOR_ESC_UL_Z_yellow<zYellow>$x"
+    echo -e "5: $v_LIB_COLOR_ESC_UL_Z_magenta<zMagenta>$x"
+    echo -e "6: $v_LIB_COLOR_ESC_UL_Z_cyan<zCyan>$x"
+    echo -e "7: $v_LIB_COLOR_ESC_UL_Z_white<zWhite>$x"
+
+    printf "\n<<< colorTest::finished \n"
+
+}
+
+
 
 #   ===========================================================================
 #   m:  F.echo & F.print & F.puts
@@ -581,10 +663,13 @@ function f_lib_header() {
     local -x sHeaderText
 
     #   save replyCode
-    v_LIB_iEc=$p_iHRc
+    v_LIB_reply_iEc=$p_iHRc
+
+    #   config.SET
+    f_lib_configuration "1"
 
     #   show header
-    sHeaderText="=== hdr:[$p_sScp;$p_iPos]:[$l_sNow]:[$v_LIB_iEc]."
+    sHeaderText="=== hdr:[$p_sScp;$p_iPos]:[$l_sNow]:[$v_LIB_reply_iEc]."
     f__puts "$sHeaderText" $v_LIB_COLOR__green
 
     #   time.Start
@@ -595,7 +680,7 @@ function f_lib_header() {
         echo "< L.lFct :: [$l_sFct]"
         echo "< L.pScp :: [$p_sScp]"
         echo "< L.iPos :: [$p_iPos]"
-        echo "< L.iEc  :: [$v_LIB_iEc]"
+        echo "< L.iEc  :: [$v_LIB_reply_iEc]"
         echo "< L.tDtm.start :: [$v_LIB_timer_tStart]"
     fi
 
@@ -624,7 +709,7 @@ function f_lib_header() {
     f__logs "$s"
 
     #   return
-    return $v_LIB_iEc
+    return $v_LIB_reply_iEc
 }
 
 
@@ -644,7 +729,7 @@ function f_lib_footer() {
         echo "< L.lFct :: [$l_sFct]"
         echo "< L.pScp :: [$p_sScp]"
         echo "< L.iPos :: [$p_iPos]"
-        echo "< L.iEc  :: [$v_LIB_iEc]"
+        echo "< L.iEc  :: [$v_LIB_reply_iEc]"
         echo "< L.tDtm.stopp :: [$v_LIB_timer_tStopp]"
     fi
 
@@ -653,13 +738,13 @@ function f_lib_footer() {
     local sSec=$(echo $fDiff)
 
     #   create+write into myLogFile
-    local iRc=$v_LIB_iEc
+    local iRc=$v_LIB_reply_iEc
     s="=== ftr:[$p_sScp;$p_iPos]:[$iRc] elapsed:<$sSec> seconds."
     f__puts "$s" $v_LIB_COLOR__green
     f__logs "$s"
 
     #   return
-    return $v_LIB_iEc
+    return $v_LIB_reply_iEc
 }
 
 function f_lib_test() {
@@ -672,9 +757,9 @@ function f_lib_test() {
     f__print "5:magenta."    $v_LIB_bFalse   $v_LIB_COLOR__magenta
     f__print "6:cyan."       $v_LIB_bTrue    $v_LIB_COLOR__cyan
     f__puts "+++ libTest.ending" $v_LIB_COLOR__blue
+    #   test
+    f__color_test
 }
-
-
 
 #   &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
 #   b:  B.body
@@ -687,7 +772,6 @@ function f_lib_test() {
 declare -i v_LIB_bTrue=100      && export v_LIB_bTrue
 declare -i v_LIB_bFalse=255     && export v_LIB_bFalse
 
-
 #   s:  LIB.config.setting.verbose : 1
 declare -i v_LIB_mode_bVerbose=$v_LIB_bFalse
 declare -i v_LIB_mode_bExtended=$v_LIB_bFalse
@@ -697,7 +781,7 @@ declare -i v_LIB_reply_iRc=99
 declare -x v_LIB_reply_sRc='?None'
 
 #   s:  LIB.exitCode
-declare -i v_LIB_iEc=61
+declare -i v_LIB_reply_iEc=61
 
 #   s:  LIB.timer
 declare -x v_LIB_timer_tStart

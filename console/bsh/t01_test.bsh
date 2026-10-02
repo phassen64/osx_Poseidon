@@ -7,7 +7,7 @@ printf "=== header runMe($BASH_SOURCE) [`date`]\n"
 
 #   include
 source LIB.wsp.inc.bsh
-f_lib_configuration     #   $v_LIB_bTrue
+#   f_lib_configuration  1
 
 #   libHeader
 f_lib_header $BASH_SOURCE $LINENO 123
