@@ -4,15 +4,13 @@
 
 #   usage   :   $   bash t01_intro.bsh
 
-#   content:
-#       m:  F.header
-#       m:  F.test
-#       m:  F.helpe
-#       m:  F.printing
-#       m:  F.file
-#       m:  F.logging
-#       m:  F.plgs
-#       m:  F.footer
+<<CONTENT_T2
+    content:
+        b:  B.function
+        •   m:  F.header
+        •   m:  F.test
+        •   m:  F.footer
+CONTENT_T2
 
 #   ===========================================================================
 #   m:  F.header
@@ -43,6 +41,15 @@ f_lib_configuration "2"
 echo ""
 echo "$ call LIB.info"
 f_lib_info
+
+#   ===========================================================================
+#   m:  F.dataType
+#   ===========================================================================
+
+f_lib_menu "dataType" $LINENO
+
+#   numeric,alpha
+x=4711; f_lib_isNumeric $x; b=$?;   f__echoExpr "?isNumeric" $x $b
 
 #   ===========================================================================
 #   m:  F.test
@@ -94,16 +101,6 @@ f_lib_sleep 1
 
 #   t:  eof.helper
 f_lib_trace $v_LIB_traceBody $LINENO "eof.helper"
-
-#   ===========================================================================
-#   m:  F.dataType
-#   ===========================================================================
-
-iEcho=2
-
-#   numeric,alpha
-x=4711; f_lib_isNumeric $x $iEcho
-#   exit
 
 #   ===========================================================================
 #   m:  F.printing
