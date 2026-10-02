@@ -50,6 +50,7 @@
             •   s:  f.file.GetExtension
             •   s:  f.file.GetModificationTime
         •   m:  F.lib.fileHandling
+            •   s:  f.~~fputs
             •   s:  f.file.Write
         •   m:  F.lib.logging
             •   s:  f.~~logs
@@ -530,7 +531,7 @@ function f_lib_file_getModificationTime()   {
 #   m:  F.lib.fileHandling
 #   ===========================================================================
 
-#   s:  f.file.write
+#   s:  f.~~fputs
 function f__fputs()   {
     local p_pFile=$1
     local p_sString=$2
@@ -544,8 +545,7 @@ function f__fputs()   {
     return ${#p_sString}    # reply strlen
 }
 
-
-#   s:  f.file.write
+#   s:  f.file.write < wrapper() >
 function f_lib_file_write()   {
     local p_pFile=$1
     local p_sString=$2
@@ -561,7 +561,6 @@ function f_lib_file_write()   {
     f__fputs $p_pFile "$p_sString" $p_bCreate; iRc=$?
     return $iRc
 }
-
 
 #   ===========================================================================
 #   m:  F.lib.logging
@@ -633,7 +632,7 @@ function f__log_determineFilePath() {
     return ${#s}        # reply strlen
 }
 
-#   s:  f.log.GetPath
+#   s:  f.log.GetPath < wrapper() >
 function f_lib_logging_getPath() {
     f__log_determineFilePath "$1" "$2" "$3"; iRc=$?
      #   show
@@ -659,7 +658,7 @@ function f__plgs() {
     return 1
 }
 
-#   s:  f.lib.puts
+#   s:  f.lib.puts  < wrapper() >
 function f_lib_puts() {
     f__plgs "$1" "$2"
 }
@@ -790,7 +789,6 @@ function f_lib_test() {
     #   test
     f__color_test
 }
-
 
 #   &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
 #   b:  B.body
