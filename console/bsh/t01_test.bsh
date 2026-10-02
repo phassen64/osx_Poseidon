@@ -3,7 +3,6 @@
 
 #   header
 clear
-printf "=== header runMe($BASH_SOURCE) [`date`]\n"
 
 #   include
 source LIB.wsp.inc.bsh
@@ -27,6 +26,4 @@ f_lib_puts "\tI have finished :MyTest." $v_LIB_COLOR__magenta
 #   libfooter
 f_lib_footer $BASH_SOURCE $LINENO 761
 
-#   footer
-printf "=== footer [`date`].\n"
 
