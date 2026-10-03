@@ -19,7 +19,7 @@
 CONTENT_T1
 
 #   header
-clear
+#   clear
 
 #   include
 source LIB.wsp.inc.bsh

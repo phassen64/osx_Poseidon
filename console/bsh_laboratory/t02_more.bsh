@@ -28,7 +28,7 @@ CONTENT_T2
 #   m:  F.header
 #   ===========================================================================
 
-clear
+#   clear
 
 #   s:  declare my variables
 declare -x s

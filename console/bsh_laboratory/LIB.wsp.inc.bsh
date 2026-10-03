@@ -995,6 +995,8 @@ declare -i v_LIB_mode_bExtended=$v_LIB_bFalse
 declare -i v_LIB_reply_iRc=99
 declare -x v_LIB_reply_sRc='?None'
 declare -i v_LIB_reply_iEc=61
+#   array
+declare v_LIB_reply_aRc=()
 
 #   m:  v.timer
 declare -x v_LIB_timer_tStart
