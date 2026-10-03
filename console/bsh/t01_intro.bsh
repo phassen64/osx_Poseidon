@@ -1,41 +1,65 @@
 #!/bin/bash
-#   ***************************************************************************
-#   Tutorial.bsh 2026        ©[mATe64]                          [2026-10-01]
-#   ***************************************************************************
 
-#   encoding.UTF8:
-#   !@€ƒ„…†‡ˆ‰Š‹ŒŽ +‘“”•—™š›œžŸ+¡¢£¤¥¦§¨©«¬®°±²³µ¶·¹º»¼½¾¿ÄÖÜÑ×ØÞßäæçîðñôö÷üýþÿ
+#
+#   =*= :01 clear screen
+#
 
-#   !url:
-#   https://www.w3schools.com/bash/
+#   only call sceen, when called without parameters
+if [ "$1" == "" ]; then
+    clear && echo -en "\e[3J"
+fi
 
-<<CONTENT_T1
-    content:
-        •   include library
-        •   F.lib.header
-        •   F.lib.puts
-        •   F.lib.text
-        •   F.lib.footer
-CONTENT_T1
+#   this script
+z_EXE=$BASH_SOURCE
+z_SCP=`basename $z_EXE`
+
+#   EC/RC
+declare -i z_iEc=$1
+declare -i z_iRc
+
+#
+#   =*= :04 include library
+#
+
+source LIB.inc.bsh
 
 #   header
-clear
+sId='TUTOR'
+f_lib_header $z_SCP $LINENO $z_iEc; z_iEc=$?; z_iRc=$z_iEc
 
-#   include
-source LIB.wsp.inc.bsh
-#   f_lib_configuration  1
+#   log && tmp Dir
+f_lib_menu "logDir" $LINENO
+echo "dirLog:=<$v_DIR_LOG>"
 
-#   libHeader
-f_lib_header $BASH_SOURCE $LINENO 123
+f_lib_trace $z_SCP $LINENO "DIR:= '$v_DIR_LOG' && '$v_DIR_TMP'"
 
-#   Ausgabe mit externer Funktion
-f_lib_puts "\trun :MyTest..." $v_LIB_COLOR__magenta
+#   show version
+f_lib_versionShow
 
-#   libText mit auto tabe
-f_lib_text "Harvey & Peter" $v_LIB_COLOR__red
+f_lib_menuS1 "echo Test777" $LINENO
 
-#   Ausgabe mit externer Funktion
-f_lib_puts "\tI have finished :MyTest." $v_LIB_COLOR__magenta
+#   1)  echo with no line feed
+f_lib_text "peter" $LINENO
 
-#   libfooter
-f_lib_footer $BASH_SOURCE $LINENO 761
+#
+#   =*= :08 logging
+#
+
+f_lib_menu "logging" $LINENO
+
+#   using logfile - the variable is defined in the include file
+#   v_sLogfile="${z_SCP}.log"
+
+d=$(date +%s.%N)
+s="<<< TIME now is:$d"
+echo "I will log the text:'$s' into logfile:<$v_sLogfile>"
+echo "$s" >> $v_sLogfile   #    append into existing logfile
+
+#
+#   =*= :09 exit code and return
+#
+
+#   exit    -   stops script and probably the bash process
+#   return  -   return from a function - not inside a body
+
+f_lib_footer $z_SCP $LINENO $z_iRc
