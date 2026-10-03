@@ -34,15 +34,13 @@ echo "n==[$n] "
 declare sFmt="+%Y-%m-%d %H:%M:%S"
 declare sDtm=$(date "$sFmt")
 
-exit
-
 #   ===========================================================================
 #   m:  run.scripts
 #   ===========================================================================
 
 clear
 
-printf "BEG simple.run:[%s]\n\n" "$sDtm"
+printf "BEG advanced.run:[%s]\n\n" "$sDtm"
 
 declare -i i=0
 for xFile in $a
@@ -52,5 +50,5 @@ do
     bash $xFile
 done
 
-printf "END simple.run:[%s]\n\n" "$sDtm"
+printf "END advanced.run:[%s]\n\n" "$sDtm"
 
