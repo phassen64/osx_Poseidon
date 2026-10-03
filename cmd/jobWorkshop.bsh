@@ -1,2 +1,13 @@
 #!/bin/bash
-echo "peter"
+#  	***************************************************************************
+#   cron.job	    dtm:[2026-10-03].vcs
+#  	***************************************************************************
+sFmt="+%Y-%m-%d__%H:%M:%S"
+sDtm=$(echo `date $sFmt`)
+dSrc="$HOME/Documents/workshop/object"
+dObj="$HOME/VCS/fwk/cmd"
+
+printf "=== entry:[%s]\n" "$sDtm"
+printf "dirSrc:[%s]\n" "$dSrc"
+printf "dirObj:[%s]\n" "$dObj"
+cp $dSrc/*.bsh $dObj

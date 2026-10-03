@@ -680,7 +680,12 @@ $   git
 
 $   make 02 advanced
 
++   editor nano Zum Ende gehen
+    key:[pageDown]  
 
++   cron job
+    *   editieren 
+    $   crontab -e
 
 
 
