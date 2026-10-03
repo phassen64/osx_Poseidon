@@ -1,0 +1,99 @@
+#!/bin/bash
+
+#   ****************************************************************************
+#   TUTORIAL BASH:System
+#   ****************************************************************************
+
+<<  =*=
+    +   :01 perl
+    +   :02 python
+    +   :03 ruby
+=*=
+
+#
+#   =*= :   functions
+#
+
+function f_tmp_testPerl() {
+    local sDir=$v_DIR_CMD_PRL
+    local sScp='p01_overview.pl'
+    local sSrc=$sDir/$sScp
+    local fLog=$v_sLogfile  # created by libHeader
+    pushd $sDir
+    perl --version 1>> $fLog
+    perl -w -S -I $sDir $sSrc 1>> $fLog 2>> $fLog
+    popd
+#   show
+    perl --version
+}
+
+function f_tmp_testPython() {
+    local sDir=$v_DIR_CMD_PYT
+    local sScp='y01_hello.py'
+    local sSrc=$sDir/$sScp
+    local fLog=$v_sLogfile
+    pushd $sDir
+    python3 --version 1>> $fLog
+    python3 $sSrc 1>> $fLog 2>> $fLog
+#   show
+    python3 --version
+}
+
+function f_tmp_testRuby() {
+    local sDir=$v_DIR_CMD_RBY
+    local sScp='r01_intro.rb'
+    local sSrc=$sDir/$sScp
+    local fLog=$v_sLogfile
+    pushd $sDir
+    ruby --version 1>> $fLog
+    ruby $sSrc 1>> $fLog 2>> $fLog
+#   show
+    ruby --version
+}
+
+#
+#   =*= :   header
+#
+
+source LIB.inc.bsh
+
+z_EXE=$BASH_SOURCE; z_SCP=`basename $z_EXE`
+z_iEc=$1
+z_DTM=$(date $v_LIB__DTM_FORMAT_now)
+
+f_lib_header "$z_SCP" $LINENO $z_iEc; z_iEc=$?; z_iRc=$z_iEc
+
+#
+#   =*= :   define helper integer
+#
+
+f_lib_text "my helper" $LINENO
+declare -i i
+declare -i n
+
+#
+#   =*= :01 perl
+#
+
+f_lib_menu "perl" $LINENO
+f_tmp_testPerl
+
+#
+#   =*= :02 python
+#
+
+f_lib_menu "python" $LINENO
+f_tmp_testPython
+
+#
+#   =*= :03 ruby
+#
+
+f_lib_menu "ruby" $LINENO
+f_tmp_testRuby
+
+#
+#   =*= :   footer
+#
+
+f_lib_footer $z_SCP $LINENO $z_iRc $z_iEc
