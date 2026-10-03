@@ -302,7 +302,7 @@ function f_fwk_aliasGet() {
 function f_fwk_aliasSet(){
     #   echo "f:aliasSet:BEG"
 	#   =:= m:alias
-    alias +ali='f_fwk_aliasGet'
+    alias +aliGet='f_fwk_aliasGet'
     alias +aliSet='f_fwk_aliasSet; alias | grep +';
 	#   =:= m:go
     alias +go='source $v_STARTER'
@@ -344,7 +344,9 @@ function f_fwk_aliasSet(){
     alias +cls='clear'
     alias +clr='+cls'
 	#   =:= m:env
+    alias +ali='f_fwk_aliasGet'
     alias +fct='f_fwk_function_show'
+    alias +env='f_fwk_environment_show'
     alias +var='f_fwk_variable_show'
 	#   =:= m:ls
     alias +ls='ls -l'
@@ -387,6 +389,11 @@ function f_fwk_interpreter_check() {
 function f_fwk_variable_show() {
     #   echo "f:varShow"
     printenv | grep "^v_"  | sort
+}
+
+
+function f_fwk_environment_show() {
+    env | sort
 }
 
 #   ===========================================================================

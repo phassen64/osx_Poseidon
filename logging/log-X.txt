@@ -677,7 +677,8 @@ echo "Hello, World! #2026" | tr -cd '[:alnum:]'
 
 $   git 
     $>  git commit -m "update" log*.txt
-    
+
+$   make 02 advanced
 
 
 
