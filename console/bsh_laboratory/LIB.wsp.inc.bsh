@@ -106,17 +106,20 @@ function f_lib_configuration() {
     local p_iMod=$1
 
     if [ "$p_iMod" == 1 ]; then
-        #   echo "+++   libCfg.1"
+        echo "+++   libCfg.1"
         f__color_defineEscapeCode
         f__color_defineFontValue
         f__color_configure
         v_LIB_mode_bVerbose=$v_LIB_bFalse
         v_LIB_mode_bExtended=$v_LIB_bFalse
     elif [ "$p_iMod" == 2 ]; then
-        #   echo "+++   libCfg.2"
+        echo "+++   libCfg.2:Verbose"
         v_LIB_mode_bVerbose=$v_LIB_bTrue
+    elif [ "$p_iMod" == 3 ]; then
+        echo "+++   libCfg.3:Color"
+        v_LIB_mode_bColored=$v_LIB_bTrue
     else
-        echo "+++   libCfg.3"
+        echo "+++   libCfg.X"
     fi
 
     if [ $v_LIB_bTrue == $v_LIB_mode_bVerbose ]; then
@@ -581,14 +584,18 @@ function f__print() {
     if [ $# == 0 ]; then
         return 0
     fi
-    #   echo "L.print {$pStr}  {$pNL} {$pFgd} {$pBgd} "
+
     #   set colors
-    if [ ! -z $pFgd ] && [ $pFgd -ne $v_LIB_COLOR_VID_none ]; then
-        tput setaf $pFgd
+    if [ $v_LIB_bTrue == $v_LIB_mode_bColored ]
+    then
+        if [ ! -z $pFgd ] && [ $pFgd -ne $v_LIB_COLOR_VID_none ]; then
+            tput setaf $pFgd
+        fi
+        if [ ! -z $pBgd ] && [ $pBgd -ne $v_LIB_COLOR_VID_none ]; then
+            tput setab $pBgd
+        fi
     fi
-    if [ ! -z $pBgd ] && [ $pBgd -ne $v_LIB_COLOR_VID_none ]; then
-        tput setab $pBgd
-    fi
+
     #   set NewLine
     if [ ! -z $pNL ] && [ $v_LIB_bTrue == "$pNL" ]; then
         echo -e $pStr $v_LIB_COLOR_ESC_NONE
@@ -1041,6 +1048,7 @@ declare -i v_LIB_bFalse=199     && export v_LIB_bFalse
 #   m:  v.libConfiguration
 declare -i v_LIB_mode_bVerbose=$v_LIB_bFalse
 declare -i v_LIB_mode_bExtended=$v_LIB_bFalse
+declare -i v_LIB_mode_bColored=$v_LIB_bFalse
 
 #   m:  v.replyCodes
 declare -i v_LIB_reply_bRc=$v_LIB_bFalse

@@ -23,7 +23,7 @@ CONTENT_T1
 
 #   include
 source LIB.wsp.inc.bsh
-#   f_lib_configuration  1
+f_lib_configuration  "3"  # colored
 
 #   libHeader
 iEc=123
