@@ -1,0 +1,56 @@
+#!/bin/bash
+
+#   ***************************************************************************
+#   run:[advavanced]  Tutorial BASH 2026        ©[mATe64]       [2026-10-03]
+#   ***************************************************************************
+#   usage:
+#       $   bash [run_02_advanced.bsh]
+#   content:
+#       m:  run.prepare
+#       m:  run.scripts
+#   ***************************************************************************
+
+#
+#   m:  prepare
+#
+
+#   s:  show
+clear
+declare -i iReply=$RANDOM
+echo "+ run.simple:[$iReply]"
+
+#   s:  fetch all bash
+a=$(echo `ls t*.bsh`)
+
+#   s:  array size
+declare -i n
+n=0
+for xFile in $a; do
+    n+=1
+done
+echo "n==[$n] "
+
+#   s:  fetchDateTime
+declare sFmt="+%Y-%m-%d %H:%M:%S"
+declare sDtm=$(date "$sFmt")
+
+exit
+
+#   ===========================================================================
+#   m:  run.scripts
+#   ===========================================================================
+
+clear
+
+printf "BEG simple.run:[%s]\n\n" "$sDtm"
+
+declare -i i=0
+for xFile in $a
+do
+    i+=1
+    printf "*** run:[%2.2d]/[%2.2d]:'%s'\n" $i $n $xFile
+    bash $xFile
+done
+
+printf "END simple.run:[%s]\n\n" "$sDtm"
+

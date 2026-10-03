@@ -12,12 +12,13 @@
         b:  B.function-
         b:  B.body
         •   m:  F.header
-        •   m:  F.test
         •   m:  F.helper
+        •   m:  F.time
         •   m:  F.printing
         •   m:  F.file
         •   m:  F.logging
         •   m:  F.dataType
+        •   m:  F.lib.test
         •   m:  F.footer
 CONTENT_T2
 
@@ -42,29 +43,15 @@ declare -x sRc
 source LIB.wsp.inc.bsh
 
 #   s:  lib.header - take out exitCode
-f_lib_header $BASH_SOURCE $LINENO $v_FWK_iEc
+f_lib_header $v_FWK_iEc
 
 #   s:  lib.configuration
-echo ""
-echo "$ call LIB.config"
+printf "\n$ call LIB.config \n"
 f_lib_configuration "2"
 
 #   s:  info
-echo ""
-echo "$ call LIB.info"
+printf "\n$ call LIB.info \n"
 f_lib_info
-
-#   ===========================================================================
-#   m:  F.test
-#   ===========================================================================
-
-#   libTest
-f_lib_menu "Test" $LINENO
-f_lib_test
-
-#   functioNamen = null
-#   t:  eof.test
-f_lib_trace $v_LIB_traceBody $LINENO "eof.libTest"
 
 #   ===========================================================================
 #   m:  F.helper
@@ -74,19 +61,50 @@ f_lib_menu "Helper" $LINENO
 
 #   s:  who
 f_lib_menuS1 "who" $LINENO
-echo "$ call LIB.who"
+printf "\n$ call LIB.who \n"
 f_lib_who
 
 #   s:  where
 f_lib_menuS1 "where" $LINENO
-echo "$ call LIB.where"
-f_lib_where  $BASH_SOURCE $LINENO $RANDOM
+printf "\n$ call LIB.where \n"
+f_lib_where
 
 #   s:  caller
 f_lib_menuS1 "caller" $LINENO
-echo ""
-echo "$ call LIB.caller"
-f_lib_caller  $BASH_SOURCE
+printf "\n$ call LIB.caller\n"
+f_lib_caller
+
+#   s:  isPath
+f_lib_menuS1 "isPath" $LINENO
+
+#   u:  isDir
+f_lib_menuS2 "isPath.Dir" $LINENO
+
+#   any
+p=/peter1/
+f_lib_isDirectory $p; bRc=$?
+f_lib_dataTypeConverter_b2s $bRc;   sRc=$v_LIB_reply_sRc
+printf "\n? isDir:'%s' \n" $p
+printf "< m.bRc =:[%d] == '%s' \n" "$bRc" "$sRc"
+
+#   home
+p=$HOME
+f_lib_isDirectory $p; bRc=$?
+f_lib_dataTypeConverter_b2s $bRc;   sRc=$v_LIB_reply_sRc
+printf "\n? isDir:'%s' \n" $p
+printf "< m.bRc =:[%d] == '%s' \n" "$bRc" "$sRc"
+
+
+#   pwd
+p=$PWD
+f_lib_isDirectory $p; bRc=$?
+f_lib_dataTypeConverter_b2s $bRc;   sRc=$v_LIB_reply_sRc
+printf "\n? isDir:'%s' \n" $p
+printf "< m.bRc =:[%d] == '%s' \n" "$bRc" "$sRc"
+
+#   ===========================================================================
+#   m:  F.time
+#   ===========================================================================
 
 #   s:  show.DateTime
 f_lib_menuS1 "DateTime" $LINENO
@@ -103,7 +121,7 @@ echo "$ call LIB.sleep [1]"
 f_lib_sleep 1
 
 #   t:  eof.helper
-f_lib_trace $v_LIB_traceBody $LINENO "eof.helper"
+f_lib_trace "eof.helper"
 
 #   ===========================================================================
 #   m:  F.printing
@@ -141,7 +159,7 @@ f_lib_menuS2 "puts.noColor" $LINENO
 f_lib_puts "9:noColor"
 
 #   t:  eof.print
-f_lib_trace $v_LIB_traceBody $LINENO "eof.print"
+f_lib_trace "eof.print"
 
 #   ===========================================================================
 #   m:  F.file
@@ -201,7 +219,7 @@ echo "< m.sRc =: [$sRc]"
 echo "< m.iRc =: [$iRc]"
 
 #   t:  eof.fileInfo
-f_lib_trace $v_LIB_traceBody $LINENO "eof.fileInfo"
+f_lib_trace "eof.fileInfo"
 
 #   ===========================================================================
 #   m:  F.logging
@@ -249,7 +267,7 @@ f_lib_file_write $pTestFilePath "$sTxt" $bCrt; iRc=$?
 echo "< m.iRc =: [$iRc]"
 
 #   t:  eof.fileInfo
-f_lib_trace $v_LIB_traceBody $LINENO "eof.logging"
+f_lib_trace "eof.logging"
 
 #   ===========================================================================
 #   m:  F.plgs
@@ -276,11 +294,24 @@ f_lib_menu "dataType" $LINENO
 x=4711; f_lib_isNumeric $x; b=$?;   f__echoExpr "?isNumeric" $x $b
 
 #   ===========================================================================
+#   m:  F.lib.test
+#   ===========================================================================
+
+#   libTest
+f_lib_menu "Test" $LINENO
+f_lib_test
+
+#   functioNamen = null
+#   t:  eof.test
+f_lib_trace "eof.libTest"
+
+
+#   ===========================================================================
 #   m:  F.footer
 #   ===========================================================================
 
 declare -i bTrp=$v_LIB_bTrue        #   trc:enabled
 declare -i bTrp=123                 #   trc:disabled
 
-f_lib_trace $v_LIB_traceBody $LINENO "eop" $bTrp
-f_lib_footer $BASH_SOURCE $LINENO $z_iRc; iRc=$?
+f_lib_trace "eop" $bTrp
+f_lib_footer $z_iRc; iRc=$?
