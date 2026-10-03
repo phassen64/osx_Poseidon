@@ -20,7 +20,7 @@
 #       o:  v_FWK_pthStarter
 #       o:  v_FWK_dirCommand
 #       o:  v_FWK_iExit
-#       o:  v_FWK_dirTutor
+#       o:  v_FWK_dirTutorf
 #       o:  v_FWK_scratchDir
 #       o:  v_FWK_dirLogging
 #       o:  v_PWD
@@ -447,7 +447,7 @@ function f_fwk_variable_initialize () {
 
     #   dir.fwk.cmd
     v_DIR=$v_VCS_fwk/cmd
-    v_FWK_dirCommand=$v_DIR && export v_FWK_dirCommand
+    v_FWK_dirCommand=$v_DIR && export v_FWK_dirCommander
 
     #   FWK library needed for libary
     v_FWK_pthLibrary="$v_FWK_dirCommand/LIB.inc.bsh" && export v_FWK_pthLibrary
@@ -468,6 +468,17 @@ function f_fwk_variable_initialize () {
 
 }
 
+function f_fwk_path_update() {
+    if [ -z $v_FWK_path_isUpdated ] 
+    then 
+        v_FWK_path_isUpdated=$v_FWK_bTrue 
+        export PATH="$PATH:$v_FWK_dirCommand"
+        echo "+ fwk.pathUpdate"
+    else 
+        echo "- fwk.doNoPathUpdate"
+    fi 
+}
+
 function f_fwk_isFile {
     local bRc=$v_FWK_bfalse
     if [ -f $1 ]; then bRc=$v_FWK_bTrue; fi
@@ -486,6 +497,10 @@ function f_fwk_isDirectory {
 
 #   s:  clear host
 clear
+
+#   s:  boolean - no export
+declare -i v_FWK_bTrue=0
+declare -i v_FWK_bFalse=99
 
 #   s:  var.Global
 v_SCP=`basename $BASH_SOURCE`
@@ -511,9 +526,8 @@ f_fwk_aliasSet
 #   echo "init.var"
 f_fwk_variable_initialize
 
-#   s:  boolean - no export
-declare -i v_FWK_bTrue=0
-declare -i v_FWK_bFalse=99
+#   s:  change PATH
+f_fwk_path_update
 
 #   s:  set prompt - only short dirName
 f_env_prompt 5
