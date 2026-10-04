@@ -1,6 +1,6 @@
 #!/bin/bash
 #   ***************************************************************************
-#   Tutorial.bsh.2026   :more                           ©[mATe64]::[2026-10-03]
+#   Tutorial.bsh.2026   :   "more"                      ©[mATe64]::[2026-10-03]
 #   ***************************************************************************
 
 #   encoding.UTF8:
@@ -12,7 +12,6 @@
 
 <<CONTENT_T2
     content:
-        b:  B.function-
         b:  B.body
         •   m:  F.header
         •   m:  F.helper
@@ -23,9 +22,9 @@
         •   m:  F.dataType
         •   m:  F.lib.test
         •   m:  F.footer
+        b:  B.last
 CONTENT_T2
 
-#   b:  B.function-
 #   b:  B.body
 
 #   ===========================================================================
@@ -39,7 +38,7 @@ declare -x s
 declare -i i
 declare -i c    #   color
 declare -i iRc
-declare -i z_iRc    # localer Rc
+declare -i z_iRc=$v_FWK_iEc     # localer Rc
 declare -x sRc
 
 #   s:  include
@@ -288,7 +287,7 @@ echo "$ call LIB.text"
 s="Peter & Harvey"
 
 #   t:  mof.puts
-f_lib_trace $v_LIB_traceBody $LINENO "mof.puts"
+f_lib_trace "mof.puts"
 
 #   f_lib_puts '123' $v_LIB_COLOR__red
 f_lib_text "$s"  $v_LIB_COLOR__red
@@ -324,3 +323,5 @@ declare -i bTrp=123                 #   trc:disabled
 
 f_lib_trace "eop" $bTrp
 f_lib_footer $z_iRc; iRc=$?
+
+#   b:  B.last

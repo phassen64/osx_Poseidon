@@ -1,6 +1,6 @@
 #!/bin/bash
 #   ***************************************************************************
-#   Tutorial.bsh.2026   :more                           ©[mATe64]::[2026-10-01]
+#   Tutorial.bsh.2026   :   "intro"                     ©[mATe64]::[2026-10-01]
 #   ***************************************************************************
 
 #   description:    tester for my new BashLibrary 2026
@@ -15,20 +15,21 @@
 
 <<CONTENT_T1
     content:
-        •   include library
-        •   F.lib.header
-        •   F.lib.puts
-        •   F.lib.text
-        •   F.lib.footer
+        b:  B.body
+            •   m:  include
+            •   m:  config
+            •   m:  header
+            •   m:  misc
+            •   m:  footer
+        b:  B.last
 CONTENT_T1
 
-#   header
-#   clear
+#   b:  B.body
 
-#   include
+#   m:  include
 source LIB.wsp.inc.bsh
 
-#   libConfigure
+#   m:  configure
 f_lib_configuration
 if [ "$1" == "" ]; then
     #   clear
@@ -38,9 +39,11 @@ else
     p_sCaller=$1
 fi
 
-#   libHeader
+#   m:  header
 iEc=123
 f_lib_header $iEc
+
+#   m:  misc
 
 #   show my caller
 f_lib_echo "+ callerScript:{'"$p_sCaller"'}"
@@ -54,6 +57,8 @@ f_lib_text "Harvey & Peter" $v_LIB_COLOR__red
 #   Ausgabe mit externer Funktion
 f_lib_puts "\tI have finished :MyTest." $v_LIB_COLOR__magenta
 
-#   libfooter
+#   m:  footer
 iEc=761
 f_lib_footer $iEc
+
+#   b:  B.last
