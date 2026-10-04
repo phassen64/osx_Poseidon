@@ -41,7 +41,7 @@ fi
 #   m:  header
 f_lib_header $v_FWK_iEc
 
-f_lib_puts "hello dataType" $v_LIB_COLOR__red
+f_lib_puts "hello dataType" $v_LIB_color__red
 
 #   m:  trace
 declare -i  bTrace=$v_LIB_bTrue

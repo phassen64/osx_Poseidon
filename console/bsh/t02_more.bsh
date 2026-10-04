@@ -149,18 +149,18 @@ f_lib_print "A normal text printed" $v_LIB_bTrue
 
 #   u:  print.multiple in 1 line and colored
 f_lib_menuS1 "printColored noNewLine" $LINENO
-f_lib_print "1:red."        $v_LIB_bFalse   $v_LIB_COLOR__red
-f_lib_print "2:yellow."     $v_LIB_bFalse   $v_LIB_COLOR__yellow
-f_lib_print "3:green."      $v_LIB_bFalse   $v_LIB_COLOR__green
-f_lib_print "4:blue."       $v_LIB_bFalse   $v_LIB_COLOR__blue
-f_lib_print "5:magenta."    $v_LIB_bFalse   $v_LIB_COLOR__magenta
-f_lib_print "6:cyan."       $v_LIB_bTrue    $v_LIB_COLOR__cyan
+f_lib_print "1:red."        $v_LIB_bFalse   $v_LIB_color__red
+f_lib_print "2:yellow."     $v_LIB_bFalse   $v_LIB_color__yellow
+f_lib_print "3:green."      $v_LIB_bFalse   $v_LIB_color__green
+f_lib_print "4:blue."       $v_LIB_bFalse   $v_LIB_color__blue
+f_lib_print "5:magenta."    $v_LIB_bFalse   $v_LIB_color__magenta
+f_lib_print "6:cyan."       $v_LIB_bTrue    $v_LIB_color__cyan
 
 #   s:  puts (implicitely NL)
 f_lib_menuS1 "puts.Colored withNewLine" $LINENO
-f_lib_puts "1:red!"         $v_LIB_COLOR__red
-f_lib_puts "2:yellow!"      $v_LIB_COLOR__yellow
-f_lib_puts "3:green!"       $v_LIB_COLOR__green
+f_lib_puts "1:red!"         $v_LIB_color__red
+f_lib_puts "2:yellow!"      $v_LIB_color__yellow
+f_lib_puts "3:green!"       $v_LIB_color__green
 
 #   s:  puts (NoColor)
 f_lib_menuS2 "puts.noColor" $LINENO
@@ -289,8 +289,8 @@ s="Peter & Harvey"
 #   t:  mof.puts
 f_lib_trace "mof.puts"
 
-#   f_lib_puts '123' $v_LIB_COLOR__red
-f_lib_text "$s"  $v_LIB_COLOR__red
+#   f_lib_puts '123' $v_LIB_color__red
+f_lib_text "$s"  $v_LIB_color__red
 
 #   ===========================================================================
 #   m:  F.dataType

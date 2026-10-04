@@ -320,16 +320,16 @@ function f__color_configure() {
 
     #   map best colors
     if [ $bColor ] ; then
-        v_LIB_COLOR__none=$v_LIB_COLOR_VID_none
-        v_LIB_COLOR__black=$v_LIB_COLOR_VID_black
-        v_LIB_COLOR__red=$v_LIB_COLOR_VID_DK_red
-        v_LIB_COLOR__green=$v_LIB_COLOR_VID_DK_green
-        v_LIB_COLOR__yellow=$v_LIB_COLOR_VID_LH_yellow
-        v_LIB_COLOR__blue=$v_LIB_COLOR_VID_LH_blue
-        v_LIB_COLOR__magenta=$v_LIB_COLOR_VID_LH_magenta
-        v_LIB_COLOR__cyan=$v_LIB_COLOR_VID_LH_cyan
-        v_LIB_COLOR__gray=$v_LIB_COLOR_VID_gray
-        v_LIB_COLOR__white=$v_LIB_COLOR_VID_LH_white
+        v_LIB_color__none=$v_LIB_COLOR_VID_none
+        v_LIB_color__black=$v_LIB_COLOR_VID_black
+        v_LIB_color__red=$v_LIB_COLOR_VID_DK_red
+        v_LIB_color__green=$v_LIB_COLOR_VID_DK_green
+        v_LIB_color__yellow=$v_LIB_COLOR_VID_LH_yellow
+        v_LIB_color__blue=$v_LIB_COLOR_VID_LH_blue
+        v_LIB_color__magenta=$v_LIB_COLOR_VID_LH_magenta
+        v_LIB_color__cyan=$v_LIB_COLOR_VID_LH_cyan
+        v_LIB_color__gray=$v_LIB_COLOR_VID_gray
+        v_LIB_color__white=$v_LIB_COLOR_VID_LH_white
     fi
 
 }
@@ -344,14 +344,14 @@ function f__color_test() {
 
     #   font
     f__puts "\n+   colorTest.font"
-    f__puts "1:black"   $v_LIB_COLOR__black
-    f__puts "2:green"   $v_LIB_COLOR__green
-    f__puts "3:yellow"  $v_LIB_COLOR__yellow
-    f__puts "4:blue"    $v_LIB_COLOR__blue
-    f__puts "5:magenta" $v_LIB_COLOR__magenta
-    f__puts "6:cyan"    $v_LIB_COLOR__cyan
-    f__puts "7:white"   $v_LIB_COLOR__white
-    f__puts "8:gray"    $v_LIB_COLOR__gray
+    f__puts "1:black"   $v_LIB_color__black
+    f__puts "2:green"   $v_LIB_color__green
+    f__puts "3:yellow"  $v_LIB_color__yellow
+    f__puts "4:blue"    $v_LIB_color__blue
+    f__puts "5:magenta" $v_LIB_color__magenta
+    f__puts "6:cyan"    $v_LIB_color__cyan
+    f__puts "7:white"   $v_LIB_color__white
+    f__puts "8:gray"    $v_LIB_color__gray
 
 
     #   foreground
@@ -958,7 +958,7 @@ function f_lib_header() {
 
     #   show header
     sHeaderText="=== hdr:[$p_pBash;$p_iLine]:[$l_sNow]:[$v_LIB_reply_iEc]."
-    f__puts "$sHeaderText\n " $v_LIB_COLOR__green
+    f__puts "$sHeaderText\n " $v_LIB_color__green
 
     #   time.Start
     v_LIB_timer_tStart=$(date +%s.%N)
@@ -1031,12 +1031,12 @@ function f_lib_footer() {
 
     #   show logFile
     s=$v_LIB_log_pFile
-    f__puts "\n+++ logged into:'$s'." $v_LIB_COLOR__blue
+    f__puts "\n+++ logged into:'$s'." $v_LIB_color__blue
 
     #   create+write into myLogFile
     local iRc=$v_LIB_reply_iEc
     s="=== ftr:[$p_pBash;$p_iLine]:[$iRc] elapsed:<$sSec> seconds."
-    f__puts "\n$s" $v_LIB_COLOR__green
+    f__puts "\n$s" $v_LIB_color__green
     f__logs "$s"
 
     #   return
@@ -1053,7 +1053,7 @@ function f_lib_menu() {
     v_LIB_menuS2_iCtr=0
     printf -v x "[%2.2d]" "$v_LIB_menuS0_iCtr"
     s="=== m:$x:'$p_sText' at:[$p_pBash;$p_iLine]"
-    f__puts "\n$s" $v_LIB_COLOR__green
+    f__puts "\n$s" $v_LIB_color__green
     f__logs "$s"
 }
 
@@ -1065,7 +1065,7 @@ function f_lib_menuS1() {
     v_LIB_menuS2_iCtr=0
     printf -v x "[%2.2d.%2.2d]" "$v_LIB_menuS0_iCtr" "$v_LIB_menuS1_iCtr"
     s="=== s:$x:'$p_sText' at:[$p_iLine]"
-    f__puts "\n$s" $v_LIB_COLOR__green
+    f__puts "\n$s" $v_LIB_color__green
     f__logs "$s"
 }
 
@@ -1077,7 +1077,7 @@ function f_lib_menuS2() {
     printf -v x "[%2.2d.%2.2d.%2.2d]"\
         "$v_LIB_menuS0_iCtr"  "$v_LIB_menuS1_iCtr" "$v_LIB_menuS2_iCtr"
     s="=== u:$x:'$p_sText' at:[$p_iLine]"
-    f__puts "\n$s" $v_LIB_COLOR__green
+    f__puts "\n$s" $v_LIB_color__green
     f__logs "$s"
 }
 
@@ -1106,7 +1106,7 @@ function f_lib_trace()   {
     local s="--- T:[$p_sFctn;$p_iLine]:'$p_sText'"
 
     #   show
-    f__puts "\n$s" $v_LIB_COLOR__magenta
+    f__puts "\n$s" $v_LIB_color__magenta
     f__logs "$s"
 
 }
@@ -1117,15 +1117,15 @@ function f_lib_trace()   {
 #   ===========================================================================
 
 function f_lib_test() {
-    f__puts "+++ libTest.begin" $v_LIB_COLOR__blue
+    f__puts "+++ libTest.begin" $v_LIB_color__blue
     f__print "\t"
-    f__print "1:red."        $v_LIB_bFalse   $v_LIB_COLOR__red
-    f__print "2:yellow."     $v_LIB_bFalse   $v_LIB_COLOR__yellow
-    f__print "3:green."      $v_LIB_bFalse   $v_LIB_COLOR__green
-    f__print "4:blue."       $v_LIB_bFalse   $v_LIB_COLOR__blue
-    f__print "5:magenta."    $v_LIB_bFalse   $v_LIB_COLOR__magenta
-    f__print "6:cyan."       $v_LIB_bTrue    $v_LIB_COLOR__cyan
-    f__puts "+++ libTest.ending" $v_LIB_COLOR__blue
+    f__print "1:red."        $v_LIB_bFalse   $v_LIB_color__red
+    f__print "2:yellow."     $v_LIB_bFalse   $v_LIB_color__yellow
+    f__print "3:green."      $v_LIB_bFalse   $v_LIB_color__green
+    f__print "4:blue."       $v_LIB_bFalse   $v_LIB_color__blue
+    f__print "5:magenta."    $v_LIB_bFalse   $v_LIB_color__magenta
+    f__print "6:cyan."       $v_LIB_bTrue    $v_LIB_color__cyan
+    f__puts "+++ libTest.ending" $v_LIB_color__blue
     #   test
     f__color_test
 }

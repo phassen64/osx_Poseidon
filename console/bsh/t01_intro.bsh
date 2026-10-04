@@ -49,13 +49,13 @@ f_lib_header $iEc
 f_lib_echo "+ callerScript:{'"$p_sCaller"'}"
 
 #   Ausgabe mit externer Funktion
-f_lib_puts "\trun :MyTest($1)..." $v_LIB_COLOR__magenta
+f_lib_puts "\trun :MyTest($1)..." $v_LIB_color__magenta
 
 #   libText mit auto tabe
-f_lib_text "Harvey & Peter" $v_LIB_COLOR__red
+f_lib_text "Harvey & Peter" $v_LIB_color__red
 
 #   Ausgabe mit externer Funktion
-f_lib_puts "\tI have finished :MyTest." $v_LIB_COLOR__magenta
+f_lib_puts "\tI have finished :MyTest." $v_LIB_color__magenta
 
 #   m:  footer
 iEc=761
