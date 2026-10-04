@@ -25,4 +25,4 @@ printf "dirObj:[%s]\n" "$dObj"
 printf "logbook.copy: dirSrc -> dirObj\n"
 
 #   perform job
-cp $dSrc/*.log $dObj
+cp $dSrc/log*.txt $dObj

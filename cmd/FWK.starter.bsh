@@ -536,12 +536,6 @@ f_env_prompt 5
 #   s:  generate FWK.exit.code
 declare -i r=$RANDOM
 v_FWK_iEc=$r && export v_FWK_iEc
-if [ $v_FWK_iEc -lt 1000 ]
-then
-    f_fwk_info
-else
-    echo "+ rnd: {$v_FWK_iEc}"
-fi
 
 #   s:  footer
 v_DTM=`echo $(date '+%y%m%d|%H%M%S')`
