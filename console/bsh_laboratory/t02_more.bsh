@@ -41,6 +41,8 @@ declare -x sRc
 
 #   s:  include
 source LIB.wsp.inc.bsh
+f_lib_configuration "1"
+v_LIB_mode_bVerbose=$v_LIB_bTrue
 
 #   s:  lib.header - take out exitCode
 f_lib_header $v_FWK_iEc
