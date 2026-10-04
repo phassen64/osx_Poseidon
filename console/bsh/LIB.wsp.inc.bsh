@@ -31,6 +31,8 @@
 
     content:
         b:  B.function
+            •   m:  F.lib.init
+            •   m:  F.lib.alias
             •   m:  F.lib.config
             •   m:  F.lib.color
                 •   s:  f.color.defineEscape    :   Fgd,Bgd,Underline
@@ -92,20 +94,64 @@
             •   m:  v.libConfiguration
             •   m:  v.replyCodes
             •   m:  v.timer
+        b:  B.lastLine.
 
 CONTENT
 
 #   &&& b:  B.function
 
 #   ===========================================================================
-#   m:  F.lib.config
+#   m:  F.lib.init
+#   ===========================================================================
+
+function f_lib_initialize(){
+
+    #   echo "+++ lib.Init"
+
+    #   m:  v.replyCodes
+    declare -i v_LIB_reply_bRc=0    && export v_LIB_reply_bRc
+    declare -i v_LIB_reply_iRc=9    && export v_LIB_reply_iRc
+    declare -x v_LIB_reply_sRc='?'  && export v_LIB_reply_sRc
+    declare -i v_LIB_reply_iEc=0    && export v_LIB_reply_iEc
+    declare    v_LIB_reply_aRc=()   && export v_LIB_reply_aRc
+
+    #   m:  v.timer
+    declare -x v_LIB_timer_tStart   && export v_LIB_timer_tStart
+    declare -x v_LIB_timer_tStopp   && export v_LIB_timer_tStopp
+
+    #   m:  v.logging
+    declare -x v_LIB_log_pFile  && export v_LIB_log_pFile
+
+    #   m:  v.menu
+    declare -i v_LIB_menuS0_iCtr=0       && export v_LIB_mneuS0_iCtr
+    declare -i v_LIB_menuS1_iCtr=0 && export v_LIB_mneuS1_iCtr
+    declare -i v_LIB_menuS2_iCtr=0 && export v_LIB_mneuS2_iCtr
+    declare -x v_LIB_traceBody="TraceBody" && export v_LIB_traceBody
+
+    #   m:  v.config
+    declare -i v_LIB_mode_bColored=0    && export v_LIB_mode_bColored
+    declare -i v_LIB_mode_bVerbose=0    && export v_LIB_mode_bVerbose
+    declare -i v_LIB_mode_bExtended=0   && export v_LIB_mode_bExtended
+    declare -i v_LIB_mode_bDebugging=0  && export v_LIB_mode_bDebugging
+
+}
+
+#   ===========================================================================
+#   m:  F.lib.alias
 #   ===========================================================================
 
 function f_lib_alias_set() {
+    #   echo "+++ lib.aliasSet"
     alias +color='f_lib_configuration 3'
 }
 
+#   ===========================================================================
+#   m:  F.lib.config
+#   ===========================================================================
+
 function f_lib_configuration() {
+
+    #   echo "+++ lib.Config"
 
     local p_cMod1=$1
     local p_cMod2=$2
@@ -119,7 +165,7 @@ function f_lib_configuration() {
     v_LIB_mode_bDebugging=$v_LIB_bFalse
 
     if [ "$p_cMod1" == '+' ]; then
-        f_lib_debug "+++   libCfg.Color"
+            f_lib_debug "+++   libCfg.Color"
         f__color_defineEscapeCode
         f__color_defineFontValue
         f__color_configure
@@ -140,7 +186,7 @@ function f_lib_configuration() {
         v_LIB_mode_bDebugging=$v_LIB_bTrue
     fi
 
-    if [ $v_LIB_bTrue == $v_LIB_mode_bVerbose ]; then
+    if [ $v_LIB_bTrue == $v_LIB_mode_bDebugging ]; then
         echo "< L.configuration :: [$v_LIB_mode_bVerbose] !"
         echo "< L.iRc :: [$v_LIB_reply_iRc]"
         echo "< L.sRc :: [$v_LIB_reply_sRc]"
@@ -609,6 +655,14 @@ function f__print() {
         return 0
     fi
 
+    #   m:  v.boolType
+    #   declare -i v_LIB_bTrue=100
+    #   declare -i v_LIB_bFalse=199
+    #   declare -i v_LIB_mode_bVerbose=1
+    #   declare -i v_LIB_mode_bExtended=1
+    declare -i v_LIB_mode_bColored=$v_LIB_bTrue
+    #   declare -i v_LIB_mode_bDebugging=1
+
     #   set colors
     #   echo "setColor {$v_LIB_mode_bColored} "
     if [ $v_LIB_bTrue == $v_LIB_mode_bColored ]
@@ -745,7 +799,8 @@ function f_lib_file_write()   {
         echo "< L.bCrt :: [$p_bCreate]"
     fi
     #   run internal
-    f__fputs $p_pFile "$p_sString" $p_bCreate; iRc=$?
+    #   f__fputs $p_pFile "$p_sString" $p_bCreate; iRc=$?
+    f__fputs $p_pFile "$p_sString" "100"; iRc=$?
     return $iRc
 }
 
@@ -773,7 +828,7 @@ function f__log_determineFilePath() {
     #   filePath
     local p_pSrc=$1         #   source  sFilePath
     local p_dObj=$2         #   object  sDir
-    local p_bDtm=$3         #   appendix bDateTimeString
+    local p_bDtm=$3         #   appendix bDateTimeString request is True
 
     #   me
     local sFct=${FUNCNAME[0]}
@@ -918,9 +973,9 @@ function f_lib_header() {
     fi
 
     #   get logFileName
-    local bMod=$v_LIB_log_bUseDtmName      # dtmString?
     local sScp=$p_pBash
     local sDir=$v_LIB_dirScratch
+    local bMod=$v_LIB_log_bUseDtmName      # dtmString?
     f__log_determineFilePath $sScp $sDir $bMod; iRc=$?
 
     #   save reply
@@ -1082,42 +1137,39 @@ function f_lib_test() {
 #   show
 #   echo "L.libWsp include"
 
-#   m:  v.boolType
+#   #   m:  v.boolType
 declare -i v_LIB_bTrue=100      && export v_LIB_bTrue
-declare -i v_LIB_bFalse=199     && export v_LIB_bFalse
+declare -i v_LIB_bFalse=-99     && export v_LIB_bFalse
 
-#   m:  v.libConfiguration
-declare -i v_LIB_mode_bVerbose=$v_LIB_bFalse && export v_LIB_mode_bVerbose
-declare -i v_LIB_mode_bExtended=$v_LIB_bFalse
-declare -i v_LIB_mode_bDebug=$v_LIB_bTrue
+f_lib_initialize
+f_lib_alias_set
 
-#   m:  v.replyCodes
+#   m:  v.libConfiguration  - or in f.lib.init
+#
+#   #   m:  v.replyCodes
 declare -i v_LIB_reply_bRc=$v_LIB_bFalse
-declare -i v_LIB_reply_iRc=99
+declare -i v_LIB_reply_iRc=-19
 declare -x v_LIB_reply_sRc='?None'
 declare -i v_LIB_reply_iEc=61
-
-#   array
+#
+#   #   array
 declare v_LIB_reply_aRc=()
-
-#   m:  v.timer
-declare -x v_LIB_timer_tStart
-declare -x v_LIB_timer_tStopp
+#
+#   #   m:  v.timer
+#   declare -x v_LIB_timer_tStart
+#   declare -x v_LIB_timer_tStopp
 declare -x v_LIB_dtmFormatString_now="+%y%m%d%H%M%S"
-
-#   m:  v.logging
+#
+#   #   m:  v.logging
 declare -i v_LIB_log_bUseDtmName=$v_LIB_bFalse  # short Name
 declare -x v_LIB_log_sFileExtension='.log'
-declare -x v_LIB_log_pFile      #   filePath
+#   declare -x v_LIB_log_pFile      #   filePath
 declare -x v_LIB_dirScratch=$v_FWK_dirScratch  # by Framework
 
-#   m:  v.menu
-declare -i v_LIB_menuS0_iCtr=0
-declare -i v_LIB_menuS1_iCtr=0
-declare -i v_LIB_menuS2_iCtr=0
-declare -x v_LIB_traceBody="TraceBody"
+#   #   m:  v.menu
+#   declare -i v_LIB_menuS0_iCtr=0
+#   declare -i v_LIB_menuS1_iCtr=0
+#   declare -i v_LIB_menuS2_iCtr=0
+#   declare -x v_LIB_traceBody="TraceBody"
 
-
-
-#   m:  f.auto-function
-f_lib_alias_set
+#   b:  B.lastLine.

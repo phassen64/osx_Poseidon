@@ -41,9 +41,13 @@ declare -x sRc
 
 #   s:  include
 source LIB.wsp.inc.bsh
+f_lib_configuration
 if [ "$1" == "" ]; then
     clear
-    f_lib_configuration '+'
+    f_lib_configuration '+' '+'
+    p_sCaller='Dummy'
+else
+    p_sCaller=$1
 fi
 
 #   s:  lib.header - take out exitCode
@@ -96,7 +100,6 @@ f_lib_isDirectory $p; bRc=$?
 f_lib_dataTypeConverter_b2s $bRc;   sRc=$v_LIB_reply_sRc
 printf "\n? isDir:'%s' \n" $p
 printf "< m.bRc =:[%d] == '%s' \n" "$bRc" "$sRc"
-
 
 #   pwd
 p=$PWD
@@ -253,7 +256,7 @@ fi
 pSrc=$BASH_SOURCE
 dObj=$v_FWK_dirScratch
 bCrt=$v_LIB_bTrue
-f_lib_logging_getPath $pSrc $dObj $bCrt iRc=$?; sRc=$v_LIB_reply_sRc
+f_lib_logging_getPath "$pSrc" "$dObj" "$bCrt" iRc=$?; sRc=$v_LIB_reply_sRc
 echo "< m.sRc =: [$sRc]"
 echo "< m.iRc =: [$iRc]"
 

@@ -25,14 +25,21 @@ CONTENT_T1
 source LIB.wsp.inc.bsh
 
 #   libConfigure
+f_lib_configuration
 if [ "$1" == "" ]; then
-    clear
-    f_lib_configuration '+' '-' '-' '-'
+    #   clear
+    f_lib_configuration '+' '-' '-' '-'     #   apply colorMode
+    p_sCaller='Dummy'
+else
+    p_sCaller=$1
 fi
 
 #   libHeader
 iEc=123
 f_lib_header $iEc
+
+#   show my caller
+f_lib_echo "+ callerScript:{'"$p_sCaller"'}"
 
 #   Ausgabe mit externer Funktion
 f_lib_puts "\trun :MyTest($1)..." $v_LIB_COLOR__magenta

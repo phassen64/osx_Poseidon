@@ -43,7 +43,7 @@ function f_run_script {
         do
             iFile+=1
             printf "*** runScr:[%3.3d].[%2.2d]:'%s'\n" $n $iFile $xFile
-            bash $xFile "x"
+            bash $xFile "$BASH_SOURCE"
         done
     done
 
@@ -65,36 +65,43 @@ aTest=$(echo `ls t*.bsh`)
 declare sFmt="+%Y-%m-%d %H:%M:%S"
 
 #   s:  calculate stressCounter
-declare -i iCtr=1+$RANDOM%1
+declare -i n=5  #   rndMax
+declare -i iCtr=1+$RANDOM%$n
 
 #   m:  run
 clear
 #   f_lib_configuration  "1"  # init
 
-#   time.Start
-tDtmStart=$(date '+%s.%N')
-sDtm=$(date "$sFmt")
+#   s:  dateTime.Start
+sDtm=$(date "$sFmt");   tDtmStart=$(date '+%s.%N')
 
-printf ">>> BEG run*[%d] at:[%s]\n" "$iCtr" "$sDtm"
+#   s:  logFileName
+fLog="$v_FWK_dirScratch/run.log"
+printf -v xLog "&&& logFile:'%s'" "$fLog"
+printf "$xLog\n"
 
-#   logFileName
-fLog="$v_LIB_dirScratch/run.log"
-printf "+   logFile : '%s'\n" "$fLog"
+#   s:  header
+printf -v x ">>> runner.BEG *[%d] at:[%s]." "$iCtr" "$sDtm"
+printf "$x\n"
+echo "$x" > $fLog
 
+#   s:  flush.logFileName
+echo "" >>  $fLog
+echo "$xLog" >>  $fLog
 
-#   call runner
-#   f_run_script "$aTest" "$iCtr" "$RANDOM" > $fLog
-f_run_script "$aTest" "$iCtr" "$RANDOM"
+#   s:  run
+f_run_script "$aTest" "$iCtr" "$RANDOM" >> $fLog
+#   f_run_script "$aTest" "$iCtr" "$RANDOM"
 
-exit
+#   s:  dateTime.Stopp
+sDtm=$(date "$sFmt");   tDtmStopp=$(date '+%s.%N')
 
-#   show time
-sDtm=$(date "$sFmt")
-
-#   calc time STOPP
-tDtmStopp=$(date '+%s.%N')
+#   s:  calc.Time
 fSec=$(echo "($tDtmStopp-$tDtmStart) / 1" | bc)
 
-printf "<<< END run*[%d] at:[%s] elapsed:[%s]\n" "$iCtr" "$sDtm" "$fSec"
+#   s:  footer
+printf -v x "<<< runner.END *[%d] at:[%s] elapsed:[%s]." "$iCtr" "$sDtm" "$fSec"
+echo "$x" >> $fLog
+printf "$x\n"
 
 
