@@ -43,7 +43,7 @@ function f_run_script {
         do
             iFile+=1
             printf "*** runScr:[%3.3d].[%2.2d]:'%s'\n" $n $iFile $xFile
-            bash $xFile
+            bash $xFile "x"
         done
     done
 
@@ -65,7 +65,7 @@ aTest=$(echo `ls t*.bsh`)
 declare sFmt="+%Y-%m-%d %H:%M:%S"
 
 #   s:  calculate stressCounter
-declare -i iCtr=1+$RANDOM%10
+declare -i iCtr=1+$RANDOM%1
 
 #   m:  run
 clear
@@ -78,11 +78,15 @@ sDtm=$(date "$sFmt")
 printf ">>> BEG run*[%d] at:[%s]\n" "$iCtr" "$sDtm"
 
 #   logFileName
-fLog="$v_FWK_dirScratch/run.log"
+fLog="$v_LIB_dirScratch/run.log"
 printf "+   logFile : '%s'\n" "$fLog"
 
+
 #   call runner
-f_run_script "$aTest" "$iCtr" "$RANDOM" > $fLog
+#   f_run_script "$aTest" "$iCtr" "$RANDOM" > $fLog
+f_run_script "$aTest" "$iCtr" "$RANDOM"
+
+exit
 
 #   show time
 sDtm=$(date "$sFmt")

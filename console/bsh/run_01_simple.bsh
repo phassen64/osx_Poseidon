@@ -49,7 +49,7 @@ for xFile in $a
 do
     i+=1
     printf "*** run:[%2.2d]/[%2.2d]:'%s'\n" $i $n $xFile
-    bash $xFile
+    bash $xFile 'InsideBatch'
 done
 
 printf "END simple.run:[%s]\n\n" "$sDtm"

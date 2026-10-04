@@ -357,6 +357,11 @@ function f_fwk_alias_set(){
     alias +g++='g++ -Wall -Werror'
 	#   =:= m:remove
     alias +rm='rm -rf'
+    #   s:  tools
+    alias   +dfree='df -h'       # disk free
+    alias   +mfree='free -h'     # memory free
+    alias   +hi='history'     # bsh>!4711 # calls hisEntry '4711'
+    alias   +ip='ifconfig'
 	#   =:= m:misc
     alias +reboot='f_env_reboot'
     #   echo "f:aliasSet:END"

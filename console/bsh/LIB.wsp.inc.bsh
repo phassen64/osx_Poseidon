@@ -1,6 +1,6 @@
 #!/bin/bash
 #   ***************************************************************************
-#   Library.bsh 2026        ©[mATe64]               [2026-10-03]
+#   Library.bsh 2026        ©[mATe64]               [2026-10-04]:15:41
 #   ***************************************************************************
 
 #   !url:
@@ -101,30 +101,43 @@ CONTENT
 #   m:  F.lib.config
 #   ===========================================================================
 
-function f_lib_aliasSet() {
+function f_lib_alias_set() {
     alias +color='f_lib_configuration 3'
 }
 
 function f_lib_configuration() {
 
-    local p_iMod=$1
+    local p_cMod1=$1
+    local p_cMod2=$2
+    local p_cMod3=$3
+    local p_cMod4=$4
 
-    if [ "$p_iMod" == 1 ]; then
-        echo "+++   libCfg.1"
+    #   clear all flags
+    v_LIB_mode_bVerbose=$v_LIB_bFalse
+    v_LIB_mode_bExtended=$v_LIB_bFalse
+    v_LIB_mode_bColored=$v_LIB_bFalse
+    v_LIB_mode_bDebugging=$v_LIB_bFalse
+
+    if [ "$p_cMod1" == '+' ]; then
+        f_lib_debug "+++   libCfg.Color"
         f__color_defineEscapeCode
         f__color_defineFontValue
         f__color_configure
-        v_LIB_mode_bVerbose=$v_LIB_bFalse
-        v_LIB_mode_bExtended=$v_LIB_bFalse
         v_LIB_mode_bColored=$v_LIB_bTrue
-    elif [ "$p_iMod" == 2 ]; then
-        echo "+++   libCfg.2:Verbose"
+
+    fi
+    if [ "$p_cMod2" == '+' ]; then
+        f_lib_debug "+++   libCfg.Verbose"
         v_LIB_mode_bVerbose=$v_LIB_bTrue
-    elif [ "$p_iMod" == 3 ]; then
-        echo "+++   libCfg.3:Color"
-        v_LIB_mode_bColored=$v_LIB_bTrue
-    else
-        echo "+++   libCfg.X"
+
+    fi
+    if [ "$p_cMod3" == '+' ]; then
+        f_lib_debug "+++   libCfg.Extended"
+        v_LIB_mode_bExtended=$v_LIB_bTrue
+    fi
+    if [ "$p_cMod4" == '+' ]; then
+        f_lib_debug "+++   libCfg.Debugging"
+        v_LIB_mode_bDebugging=$v_LIB_bTrue
     fi
 
     if [ $v_LIB_bTrue == $v_LIB_mode_bVerbose ]; then
@@ -135,6 +148,9 @@ function f_lib_configuration() {
 
     #   export
     export v_LIB_mode_bColored
+    export v_LIB_mode_bVerbose
+    export v_LIB_mode_bDebugging
+    export v_LIB_mode_bExtended
 
     return 1
 }
@@ -594,16 +610,16 @@ function f__print() {
     fi
 
     #   set colors
-    #echo "setColor {$v_LIB_mode_bColored} "
-    #if [ $v_LIB_bTrue == $v_LIB_mode_bColored ]
-    #then
+    #   echo "setColor {$v_LIB_mode_bColored} "
+    if [ $v_LIB_bTrue == $v_LIB_mode_bColored ]
+    then
         if [ ! -z $pFgd ] && [ $pFgd -ne $v_LIB_COLOR_VID_none ]; then
             tput setaf $pFgd
         fi
         if [ ! -z $pBgd ] && [ $pBgd -ne $v_LIB_COLOR_VID_none ]; then
             tput setab $pBgd
         fi
-    #fi
+    fi
 
     #   set NewLine
     if [ ! -z $pNL ] && [ $v_LIB_bTrue == "$pNL" ]; then
@@ -842,6 +858,25 @@ function f_lib_text() {
     f__plgs "$s" "$c"
 }
 
+function f_lib_debug() {
+    if [ $v_LIB_bTrue ==  $v_LIB_mode_bDebugging ]; then
+        printf "=== debugString : [%s]\n" $1
+    fi
+}
+
+function f_lib_random() {
+    #   usage:
+    #       $   f_lib_random        #   returns 1..100
+    #       $   f_lib_random 5      #   returns 1..5
+    declare -i p_iMax=$1
+    if [ -z $1 ]; then
+        p_iMax=100
+    fi
+    echo $(( (RANDOM % $p_iMax) + 1 ))
+}
+
+
+
 #   ===========================================================================
 #   m:  F.lib.menu
 #   ===========================================================================
@@ -1054,6 +1089,7 @@ declare -i v_LIB_bFalse=199     && export v_LIB_bFalse
 #   m:  v.libConfiguration
 declare -i v_LIB_mode_bVerbose=$v_LIB_bFalse && export v_LIB_mode_bVerbose
 declare -i v_LIB_mode_bExtended=$v_LIB_bFalse
+declare -i v_LIB_mode_bDebug=$v_LIB_bTrue
 
 #   m:  v.replyCodes
 declare -i v_LIB_reply_bRc=$v_LIB_bFalse
@@ -1070,7 +1106,6 @@ declare -x v_LIB_timer_tStopp
 declare -x v_LIB_dtmFormatString_now="+%y%m%d%H%M%S"
 
 #   m:  v.logging
-declare -i c
 declare -i v_LIB_log_bUseDtmName=$v_LIB_bFalse  # short Name
 declare -x v_LIB_log_sFileExtension='.log'
 declare -x v_LIB_log_pFile      #   filePath
@@ -1082,5 +1117,7 @@ declare -i v_LIB_menuS1_iCtr=0
 declare -i v_LIB_menuS2_iCtr=0
 declare -x v_LIB_traceBody="TraceBody"
 
+
+
 #   m:  f.auto-function
-f_lib_aliasSet
+f_lib_alias_set

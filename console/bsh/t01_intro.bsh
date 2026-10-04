@@ -23,14 +23,19 @@ CONTENT_T1
 
 #   include
 source LIB.wsp.inc.bsh
-f_lib_configuration "1"
+
+#   libConfigure
+if [ "$1" == "" ]; then
+    clear
+    f_lib_configuration '+' '-' '-' '-'
+fi
 
 #   libHeader
 iEc=123
 f_lib_header $iEc
 
 #   Ausgabe mit externer Funktion
-f_lib_puts "\trun :MyTest..." $v_LIB_COLOR__magenta
+f_lib_puts "\trun :MyTest($1)..." $v_LIB_COLOR__magenta
 
 #   libText mit auto tabe
 f_lib_text "Harvey & Peter" $v_LIB_COLOR__red
