@@ -548,16 +548,16 @@ function f_lib_isFile {
 
 
 function f__echoExpr() {
-    local p_sInfo=$1
-    local p_sExpr=$2
-    local p_bRcVa=$3
+    local p_sInfo=$1        #   ?isSpace
+    local p_sExpr=$2        #   'p ter'
+    local p_bRcVa=$3        #   100
     if [ $v_LIB_bTrue -eq  $p_bRcVa ]
         then sRc="TRUE"
         else sRc="FALSE"
     fi
-    s=$(printf "%s('%s') \t=:\t %s\n" $p_sInfo $p_sExpr $sRc)
-    printf "    %s\n" "$s"
-    f__logs "$s"
+    printf -v x "    %s('%s') \t=:\t[%s]" "$p_sInfo" "$p_sExpr" "$sRc"
+    printf "%s\n" "$x"
+    f__logs "$x"
 }
 
 #   ===========================================================================
@@ -625,31 +625,19 @@ function f_lib_isLower() {
 #   s:  f.isCntrl
 function f_lib_isCntrl() {
     local bRc=$v_LIB_bFalse;
-    if [ $(echo $1 | egrep "[:cntrl]") ]
+    if [[ "$1" =~ [[:cntrl:]] ]]
+#   if [ $(echo $1 | egrep "[:cntrl]") ]
     then bRc=$v_LIB_bTrue; fi
     return $bRc
 }
 
 #   s:  f.isSpace
 function f_lib_isSpace() {
-    local s=$1
-    local bRc=$v_LIB_bFalse
-    if [[ "$s" =~ [[:space:]] ]]; then
-        bRc=$v_LIB_bTrue
-    fi
-#   if [ $(echo "$1" | egrep '[[:space:]]' )]
-#   if [ $(echo "$1" | egrep "[[:space:]]" )]
-#   if [ $(echo "$1" | egrep "[:space:]" )]
+    local bRc=$v_LIB_bFalse;
+    if [[ "$1" =~ [[:space:]] ]]
+    then bRc=$v_LIB_bTrue; fi
     return $bRc
 }
-
-str="hello world"
-
-if [[ "$str" =~ [[:space:]] ]]; then
-  echo "String contains whitespace (space, tab, or newline)"
-else
-  echo "No whitespace found"
-fi
 
 #   ===========================================================================
 #   m:  F.lib.print
@@ -1146,8 +1134,8 @@ function f_lib_test() {
 #   echo "L.libWsp include"
 
 #   #   m:  v.boolType
-declare -i v_LIB_bTrue=100      && export v_LIB_bTrue
-declare -i v_LIB_bFalse=-99     && export v_LIB_bFalse
+declare -i v_LIB_bTrue=10      && export v_LIB_bTrue
+declare -i v_LIB_bFalse=99     && export v_LIB_bFalse
 
 f_lib_alias_set
 f_lib_initialize
