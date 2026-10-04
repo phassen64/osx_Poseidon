@@ -43,6 +43,7 @@ declare
             •   s:  V.float
             •   s:  V.array
         •   m:  M.predefined.variable
+        •   m:  M.check.DataType
         •   m:  footer
         b:  B.last
 CONTENT_T2
@@ -184,8 +185,8 @@ declare -p aVal
 f_lib_menuS2 "array.print.Single" $LINENO
 
 #   v:  print single - single access
-x=${aVal[0]};   echo "aVal[0]:<$x>"     #   =>  <peter>
-x=${aVal[3]};   echo "aVal[3]:<$x>"     #   =>  <-4.5>
+x=${aVal[0]};   f_lib_text "aVal[0]:<$x>"     #   =>  <peter>
+x=${aVal[3]};   f_lib_text "aVal[3]:<$x>"     #   =>  <-4.5>
 
 #   v:  show arrray length with : 'aVal[@]'
 f_lib_menuS2 "array.length" $LINENO
@@ -194,7 +195,8 @@ f_lib_menuS2 "array.length" $LINENO
 xLength=${#aVal[@]}
 
 #   show
-printf "aVal.length:<%d>\n " "$xLength"
+printf -v x "aVal.length:<%d>\n" "$xLength"
+f_lib_text "$x" $LINENO
 
 #   u:  array.append
 f_lib_menuS2 "append" $LINENO
@@ -247,6 +249,78 @@ f_lib_text "LD_LIBRARY_PATH:<$LD_LIBRARY_PATH>"
 f_lib_text "PS1:<$PS1>"
 f_lib_text "USER:<$USER>"
 f_lib_text "LOGNAME:<$LOGNAME>"
+
+
+#   ===========================================================================
+#   m:  M.check.DataType
+#   ===========================================================================
+
+f_lib_menu "check.DataType" $LINENO
+
+echo ""
+x=1; f_lib_isNumeric $x; b=$?;      f__echoExpr "?isNumeric" $x $b
+x='a'; f_lib_isNumeric $x; b=$?;    f__echoExpr "?isNumeric" $x $b
+
+aVal=('Apple' 'Orange' 'Strawberry')
+declare -p aVal
+x=$aVal; f_lib_isNumeric $x; b=$?;  f__echoExpr "?isNumeric" $x $b
+
+#   numeric,alpha
+f_lib_menuS1 "?isNumeric" $LINENO
+x=4711;     f_lib_isNumeric $x; b=$?; f__echoExpr "?isNumeric" $x $b
+x='x';      f_lib_isNumeric $x; b=$?; f__echoExpr "?isNumeric" $x $b
+x='123';    f_lib_isNumeric $x; b=$?; f__echoExpr "?isNumeric" $x $b
+
+f_lib_menuS1 "?isAlnum" $LINENO
+x='pa1Ab';  f_lib_isAlpha   $x; b=$?; f__echoExpr "?isAlnum" $x $b
+x='paAbc';  f_lib_isAlpha   $x; b=$?; f__echoExpr "?isAlnum" $x $b
+x='1a3';    f_lib_isAlnum   $x; b=$?; f__echoExpr "?isAlnum" $x $b
+x='-1a3';   f_lib_isAlnum   $x; b=$?; f__echoExpr "?isAlnum" $x $b
+x='1a3+';   f_lib_isAlnum   $x; b=$?; f__echoExpr "?isAlnum" $x $b
+x='1a356a'; f_lib_isAlnum   $x; b=$?; f__echoExpr "?isAlnum" $x $b
+
+f_lib_menuS1 "?isUpper|isLower" $LINENO
+x='ZUA';    f_lib_isUpper   $x; b=$?; f__echoExpr "?isUpper" $x $b
+x='ab.';    f_lib_isUpper   $x; b=$?; f__echoExpr "?isUpper" $x $b
+x='aBc';    f_lib_isLower   $x; b=$?; f__echoExpr "?isLower" $x $b
+x='abc';    f_lib_isLower   $x; b=$?; f__echoExpr "?isLower" $x $b
+
+f_lib_menuS1 "?isHexnum" $LINENO
+x='abc2';   f_lib_isHexnum  $x; b=$?; f__echoExpr "?isHexnum" $x $b
+x='ab,c2';  f_lib_isHexnum  $x; b=$?; f__echoExpr "?isHexnum" $x $b
+x='3abc2';  f_lib_isHexnum  $x; b=$?; f__echoExpr "?isHexnum" $x $b
+x='ab(c2';  f_lib_isHexnum  $x; b=$?; f__echoExpr "?isHexnum" $x $b
+x='A0cF';   f_lib_isHexnum  $x; b=$?; f__echoExpr "?isHexnum" $x $b
+
+f_lib_menuS1 "?isPunct" $LINENO
+x='.';      f_lib_isPunct   $x; b=$?; f__echoExpr "?isPunct" $x $b
+x=',';      f_lib_isPunct   $x; b=$?; f__echoExpr "?isPunct" $x $b
+x=';';      f_lib_isPunct   $x; b=$?; f__echoExpr "?isPunct" $x $b
+x='=';      f_lib_isPunct   $x; b=$?; f__echoExpr "?isPunct" $x $b
+
+f_lib_menuS1 "?isSpace" $LINENO
+#   x='pet r';  f_lib_isSpace   $x; b=$?; f__echoExpr "?isSpace" $x $b
+
+
+str="hello world"
+declare -i bRc
+if [[ "$str" =~ [[:space:]] ]]; then
+    bRc=$v_LIB_bTrue
+    echo "isTrue"
+else
+    bRc=$v_LIB_bFalse
+    echo "isFalse"
+fi
+echo "result:[ $bRc ] "
+#   f_lib_dataTypeConverter_b2s $bRc
+#   sRc=$v_LIB_reply_sRc
+#   echo "result:[ $sRc ] "
+exit
+
+#   hexNum; b=?; f__echoExpr "?isDty" $x $c';    f_lib_isHexnum  $x; b=?; f__echoExpr "?isDty" $x $b
+
+
+#   punct; b=?; f__echoExpr "?isDty" $x $';     f_lib_isPunct   $x; b=?; f__echoExpr "?isDty" $x $b
 
 
 #   m:  footer
