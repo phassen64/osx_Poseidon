@@ -2,17 +2,18 @@
 #  	***************************************************************************
 #   cron.job	    dtm:[2026-10-03].vcs
 #  	***************************************************************************
+#   copy my logBook
 
 sFmt="+%Y-%m-%d__%H:%M:%S"
 sDtm=$(echo `date $sFmt`)
 
-dSrc="$HOME/Documents/workshop/object"
+dSrc="$HOME/Documents/basic"
 if [ ! -d $dSrc ]
 then
     return 99
 fi
 
-dObj="$HOME/VCS/fwk/console/bsh_laboratory"
+dObj="$HOME/VCS/fwk/basic"
 if [ ! -d $dObj ]
 then
     return 99
@@ -20,8 +21,8 @@ fi
 
 printf "=== entry:[%s]\n" "$sDtm"
 printf "dirSrc:[%s]\n" "$dSrc"
-#   printf "dirObj:[%s]\n" "$dObj"
-#   printf "copy:dirSrc->dirObj\n"
+printf "dirObj:[%s]\n" "$dObj"
+printf "logbook.copy: dirSrc -> dirObj\n"
 
 #   perform job
-#   cp $dSrc/*.bsh $dObj
+cp $dSrc/*.log $dObj
