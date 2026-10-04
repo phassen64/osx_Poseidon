@@ -34,10 +34,10 @@ function f_run_script {
     done
 
     #   run
-    printf "+++ script nMax:<%d>  iRnd:[%d]\n" $nFile $p_iRnd
+    printf "___ script nFiles:<%d>  iRnd:[%d]\n" $nFile $p_iRnd
 
     for (( n=1; n<=$p_nStressMax; n++ )); do
-        printf "\n+++ stress:[%3.3d]\n\n" $n
+        printf "\n### stress :: [%3.3d]/[%3.3d]\n\n" $n $p_nStressMax
         iFile=0
         for xFile in $p_aSrc
         do
@@ -63,15 +63,34 @@ aTest=$(echo `ls t*.bsh`)
 
 #   s:  fetchDateTime
 declare sFmt="+%Y-%m-%d %H:%M:%S"
-declare sDtm=$(date "$sFmt")
-declare -i iStressCounter=2
+
+#   s:  calculate stressCounter
+declare -i iCtr=1+$RANDOM%10
 
 #   m:  run
 clear
-printf "BEG advanced.run:[%s]\n\n" "$sDtm"
+#   f_lib_configuration  "1"  # init
 
-fLog='peter1.log'
-f_run_script "$aTest" "$iStressCounter" "$RANDOM" > $fLog
+#   time.Start
+tDtmStart=$(date '+%s.%N')
+sDtm=$(date "$sFmt")
 
-printf "END advanced.run:[%s]\n\n" "$sDtm"
+printf ">>> BEG run*[%d] at:[%s]\n" "$iCtr" "$sDtm"
+
+#   logFileName
+fLog="$v_FWK_dirScratch/run.log"
+printf "+   logFile : '%s'\n" "$fLog"
+
+#   call runner
+f_run_script "$aTest" "$iCtr" "$RANDOM" > $fLog
+
+#   show time
+sDtm=$(date "$sFmt")
+
+#   calc time STOPP
+tDtmStopp=$(date '+%s.%N')
+fSec=$(echo "($tDtmStopp-$tDtmStart) / 1" | bc)
+
+printf "<<< END run*[%d] at:[%s] elapsed:[%s]\n" "$iCtr" "$sDtm" "$fSec"
+
 

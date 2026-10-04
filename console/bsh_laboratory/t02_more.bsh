@@ -47,7 +47,6 @@ f_lib_header $v_FWK_iEc
 
 #   s:  lib.configuration
 printf "\n$ call LIB.config \n"
-f_lib_configuration "2"
 
 #   s:  info
 printf "\n$ call LIB.info \n"
