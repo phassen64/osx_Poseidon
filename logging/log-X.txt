@@ -687,5 +687,5 @@ $   make 02 advanced
     *   editieren 
     $   crontab -e
 
-
++   git diff 
 

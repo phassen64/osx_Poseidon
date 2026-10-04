@@ -20,8 +20,8 @@ fi
 
 printf "=== entry:[%s]\n" "$sDtm"
 printf "dirSrc:[%s]\n" "$dSrc"
-printf "dirObj:[%s]\n" "$dObj"
-printf "copy:dirSrc->dirObj\n"
+#   printf "dirObj:[%s]\n" "$dObj"
+#   printf "copy:dirSrc->dirObj\n"
 
 #   perform job
-cp $dSrc/*.bsh $dObj
+#   cp $dSrc/*.bsh $dObj

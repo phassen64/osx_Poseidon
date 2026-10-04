@@ -41,6 +41,7 @@ declare -x sRc
 
 #   s:  include
 source LIB.wsp.inc.bsh
+f_lib_configuration "1"
 
 #   s:  lib.header - take out exitCode
 f_lib_header $v_FWK_iEc

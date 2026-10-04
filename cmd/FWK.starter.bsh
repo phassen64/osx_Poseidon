@@ -326,7 +326,7 @@ function f_fwk_aliasSet(){
 	#   =:= m:cd.tutor
     alias +cdtutor='cd $v_FWK_dirTutor && pwd'
     alias +cdb='cd $v_FWK_dirTutor/bsh && pwd'
-    alias +cdbl='cd $v_FWK_dirTutor/bsh_laboratory && pwd'
+    alias +cdbl='cd $v_FWK_dirTutor/bsh_legacy && pwd'
     alias +cdc='cd $v_FWK_dirTutor/c && pwd'
     alias +cdc89=+cdc
     alias +cdp='cd $v_FWK_dirTutor/pl && pwd'
