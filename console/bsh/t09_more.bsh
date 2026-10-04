@@ -10,7 +10,7 @@
 
 #   !url        :   https://www.w3schools.com/bash/
 
-<<CONTENT_T2
+<<CONTENT_T9
     content:
         b:  B.body
         •   m:  F.header
@@ -23,7 +23,7 @@
         •   m:  F.lib.test
         •   m:  F.footer
         b:  B.last
-CONTENT_T2
+CONTENT_T9
 
 #   b:  B.body
 
@@ -240,7 +240,7 @@ echo ""
 declare -i iMax=2
 declare -i iMin=1
 echo "$ call LIB.random ($iMax,$iMin)"
-f_lib_random $iMax $iMin; iRnd=$?
+f_lib_randomMore $iMax $iMin; iRnd=$?
 echo "< m.iRnd =: [$iRnd]"
 
 #   show logFilePath

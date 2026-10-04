@@ -122,12 +122,6 @@ function f_lib_initialize(){
     #   m:  v.logging
     declare -x v_LIB_log_pFile  && export v_LIB_log_pFile
 
-    #   m:  v.menu
-    declare -i v_LIB_menuS0_iCtr=0       && export v_LIB_mneuS0_iCtr
-    declare -i v_LIB_menuS1_iCtr=0 && export v_LIB_mneuS1_iCtr
-    declare -i v_LIB_menuS2_iCtr=0 && export v_LIB_mneuS2_iCtr
-    declare -x v_LIB_traceBody="TraceBody" && export v_LIB_traceBody
-
     #   m:  v.config
     declare -i v_LIB_mode_bColored=0    && export v_LIB_mode_bColored
     declare -i v_LIB_mode_bVerbose=0    && export v_LIB_mode_bVerbose
@@ -466,8 +460,21 @@ function f_lib_sleep() {
 }
 
 #   s:  f.random
-#   in: iMax [iMin]
 function f_lib_random() {
+    #   usage:
+    #       $   f_lib_random        #   returns 1..100
+    #       $   f_lib_random 5      #   returns 1..5
+    declare -i p_iMax=$1
+    if [ -z $1 ]; then
+        p_iMax=100
+    fi
+    echo $(( (RANDOM % $p_iMax) + 1 ))
+}
+
+
+#   s:  f.randomMore
+#   in: iMax [iMin]
+function f_lib_randomMore() {
 
     declare -i p_iMax=$1     #   iRnd = [iMax...iMin]
     declare -i p_iMin=$2
@@ -909,28 +916,9 @@ function f_lib_puts() {
 function f_lib_text() {
     local t=$1
     local c=$2
-    s="\t$t"
-    f__plgs "$s" "$c"
+    printf "    %s\n" "$t"  #   print directly
+    f__logs "$t" "$c"
 }
-
-function f_lib_debug() {
-    if [ $v_LIB_bTrue ==  $v_LIB_mode_bDebugging ]; then
-        printf "=== debugString : [%s]\n" $1
-    fi
-}
-
-function f_lib_random() {
-    #   usage:
-    #       $   f_lib_random        #   returns 1..100
-    #       $   f_lib_random 5      #   returns 1..5
-    declare -i p_iMax=$1
-    if [ -z $1 ]; then
-        p_iMax=100
-    fi
-    echo $(( (RANDOM % $p_iMax) + 1 ))
-}
-
-
 
 #   ===========================================================================
 #   m:  F.lib.menu
@@ -1112,6 +1100,13 @@ function f_lib_trace()   {
 }
 
 
+#   s:  f.lib.debug
+function f_lib_debug() {
+    if [ $v_LIB_bTrue ==  $v_LIB_mode_bDebugging ]; then
+        printf "=== debugString : [%s]\n" $1
+    fi
+}
+
 #   ===========================================================================
 #   m:  F.lib.test
 #   ===========================================================================
@@ -1168,9 +1163,9 @@ declare -x v_LIB_log_sFileExtension='.log'
 declare -x v_LIB_dirScratch=$v_FWK_dirScratch  # by Framework
 
 #   #   m:  v.menu
-#   declare -i v_LIB_menuS0_iCtr=0
-#   declare -i v_LIB_menuS1_iCtr=0
-#   declare -i v_LIB_menuS2_iCtr=0
-#   declare -x v_LIB_traceBody="TraceBody"
+declare -i v_LIB_menuS0_iCtr=0
+declare -i v_LIB_menuS1_iCtr=0
+declare -i v_LIB_menuS2_iCtr=0
+declare -x v_LIB_traceBody="TraceBody"
 
 #   b:  B.lastLine.

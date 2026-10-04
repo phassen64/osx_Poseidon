@@ -1,0 +1,255 @@
+#!/bin/bash
+#   ***************************************************************************
+#   Tutorial.bsh.2026   :   "dataType"                  ©[mATe64]::[2026-10-03]
+#   ***************************************************************************
+
+#   encoding.UTF8:
+#   !@€ƒ„…†‡ˆ‰Š‹ŒŽ +‘“”•—™š›œžŸ+¡¢£¤¥¦§¨©«¬®°±²³µ¶·¹º»¼½¾¿ÄÖÜÑ×ØÞßäæçîðñôö÷üýþÿ
+
+#   usage       :   $   bash <$BASH_SOURCE>
+
+#   !url        :   https://www.w3schools.com/bash/
+#                   https://www.w3schools.com/bash/bash_variables.php
+#                   https://www.w3schools.com/bash/bash_data_types.php
+
+<<  declare
+    -a  Variable is an array.
+    -f  Use function names only.
+    -i  The variable is to be treated as an integer;
+        arithmetic evaluation is performed when the variable
+            is assigned a value (see Section 3.4.6).
+    -p  Display the attributes and values of each variable.
+        When -p is used, additional options are ignored.
+    -r  Make variables read-only.
+        These variables cannot then be assigned values
+            by subsequent assignment statements,
+        nor can they be unset.
+    -t  Give each variable the trace attribute.
+    -x  Mark each variable for export to subsequent commands
+            via the environment.
+declare
+
+
+<<CONTENT_T2
+    content:
+        b:  B.function
+        b:  B.body
+        •   m:  include
+        •   m:  header
+        •   m:  M.const
+        •   m:  M.variable
+            •   s:  V.string
+            •   s:  V.integer
+            •   s:  V.float
+            •   s:  V.array
+        •   m:  M.predefined.variable
+        •   m:  footer
+        b:  B.last
+CONTENT_T2
+
+#
+#   &&& b:  B.function
+#
+
+function f_mod_main() {
+    f_lib_puts "main.hello dataType" $v_LIB_color__red
+    f_lib_trace "eof"
+}
+
+#
+#   &&& b:  B.body
+#
+
+#   m:  include
+source LIB.wsp.inc.bsh
+if [ "$1" == "" ]; then
+    f_lib_configuration '+'
+fi
+
+#   m:  header
+f_lib_header $v_FWK_iEc
+
+#   s:  trace.flag
+declare -i  bTrace=$v_LIB_bTrue
+
+#   s:  main
+f_mod_main
+f_lib_trace "eop" "$bTrace"
+
+#
+#   m:  M.constant
+#
+
+f_lib_menu "constants" $LINENO
+
+#   the constant may define only 1x per bash-session
+declare -r v_C_TMP=123
+f_lib_text "C_CONSTANT_TEST:<$v_C_TMP>"
+
+#
+#   m:  M.variable
+#
+
+f_lib_menu "variables" $LINENO
+
+#   ===========================================================================
+#   s:  V.string
+#   ===========================================================================
+
+f_lib_menuS1 "string" $LINENO
+
+declare sVal='ABC'
+f_lib_text "s[$LINENO]:<$sVal>"     #   s:ABC
+
+sVal='theodor'
+f_lib_text "s[$LINENO]:<$sVal>"     #   s:theodor
+
+#   write wrong type : no error
+sVal=3
+f_lib_text "s[$LINENO]:<$sVal>"     #   s:3
+
+#   increment   : OK
+sVal+=1
+f_lib_text "s[$LINENO]:<$sVal>"     #   s:31
+
+#   write wrong type inc
+sVal='theodor'
+sVal+=1
+f_lib_text "s[$LINENO]:<$sVal>"     #   s:theodor1
+
+#   ===========================================================================
+#   s:  V.integer
+#   ===========================================================================
+
+f_lib_menuS1 "integer" $LINENO
+
+#   create an integer variable
+declare -i iVal=45
+f_lib_text "i[$LINENO]:<$iVal>"     # => i=45
+
+#   add it
+iVal=$iVal+3
+f_lib_text "i[$LINENO]:<$iVal>"     # => i=48
+
+#   increment it
+iVal+=1
+f_lib_text "i[$LINENO]:<$iVal>"     # => i=49
+
+#   write wrong type => produce an error
+iVal='peter'
+f_lib_text "i[$LINENO]:<$iVal>"     # => i=0
+
+#   decrement to minus
+#   iVal-=1 error
+iVal=0
+iVal=$iVal-9
+f_lib_text "i[$LINENO]:<$iVal>"     # => i=-9
+
+#   s:  float
+#   REM:    iVal=3.14 hard syntax error
+
+f_lib_menuS1 "float" $LINENO
+
+fVal=3/5
+f_lib_text "f[$LINENO]:<$fVal>"     # 3/5
+
+#   not correct multiplication
+fVal=$fVal*2
+f_lib_text "f[$LINENO]:<$fVal>"     # 3/5*2
+
+#   ===========================================================================
+#   s:  V.array
+#   ===========================================================================
+
+f_lib_menuS1 "array" $LINENO
+
+#   u:  decalare array
+declare -a aVal
+
+#   u:  array.init
+x='!'
+aVal=('peter' 4711 $x -4.5)
+
+#
+#   u:  array.print
+#
+
+f_lib_menuS2 "array.print.ALL" $LINENO
+
+#   v:  print all
+declare -p aVal
+#   => declare -a aVal=([0]="peter" [1]="4711" [2]="/mnt/d/MY/cmd/rb" [3]="-4.5")
+
+#   u:  array.print.Single
+f_lib_menuS2 "array.print.Single" $LINENO
+
+#   v:  print single - single access
+x=${aVal[0]};   echo "aVal[0]:<$x>"     #   =>  <peter>
+x=${aVal[3]};   echo "aVal[3]:<$x>"     #   =>  <-4.5>
+
+#   v:  show arrray length with : 'aVal[@]'
+f_lib_menuS2 "array.length" $LINENO
+
+#   calc length
+xLength=${#aVal[@]}
+
+#   show
+printf "aVal.length:<%d>\n " "$xLength"
+
+#   u:  array.append
+f_lib_menuS2 "append" $LINENO
+
+f_lib_text "show array" $LINENO
+
+#   define array & show
+aVal=('Merkur' 'Venus' 'Erde' 'Mars')
+declare -p aVal
+
+#   define element & show
+x='Jupiter'
+f_lib_text "append:'$x'" $LINENO
+
+#   append now  a+=($x) NOT a+=$x
+aVal+=($x)
+
+#   show result
+declare -p aVal
+
+#
+#   u:  array.slice
+#
+
+f_lib_menuS2 "slice" $LINENO
+
+#   define
+aVal1=('peter' 'mike' 'Donald' 'britney')
+
+#   do slicing
+iFrom=1; iTo=2; aVal2=("${aVal1[@]:$iFrom:$iTo}")
+
+#   show result
+f_lib_text "slice(FROM:$iFrom;TO:$iTo)" $LINENO
+declare -p aVal1
+declare -p aVal2
+
+#   ===========================================================================
+#   m:  M.predefined variables
+#   ===========================================================================
+
+f_lib_menu "predefined variable" $LINENO
+
+f_lib_text "BASH_VERSION:<$BASH_VERSION>"
+f_lib_text "HOME:<$HOME>"
+f_lib_text "HOSTNAME:<$HOSTNAME>"
+f_lib_text "LANG:<$LANG>"
+f_lib_text "PATH:<$PATH>"
+f_lib_text "LD_LIBRARY_PATH:<$LD_LIBRARY_PATH>"
+f_lib_text "PS1:<$PS1>"
+f_lib_text "USER:<$USER>"
+f_lib_text "LOGNAME:<$LOGNAME>"
+
+
+#   m:  footer
+f_lib_footer $v_FWK_iEc
+
+#   &&& b:  B.last
