@@ -25,7 +25,8 @@ CONTENT_T3
 #   ===========================================================================
 
 function f_mod_main() {
-    printf "Hello main\n"
+    f_lib_puts "main.hello dataType" $v_LIB_color__red
+    f_lib_trace "eof"
 }
 
 #   ===========================================================================
@@ -41,10 +42,11 @@ fi
 #   m:  header
 f_lib_header $v_FWK_iEc
 
-f_lib_puts "hello dataType" $v_LIB_color__red
-
-#   m:  trace
+#   m:  trace.flag
 declare -i  bTrace=$v_LIB_bTrue
+
+#   m:  main
+f_mod_main
 f_lib_trace "eop" "$bTrace"
 
 #   m:  footer

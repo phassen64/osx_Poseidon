@@ -1089,7 +1089,7 @@ function f_lib_trace()   {
     local p_sText="$1"
     local p_bFlag="$2"
     local p_iLine=${BASH_LINENO[0]}     #   stack.lineNo
-    local p_sFctn=${FUNCNAME[0]}        #   stack.fctn
+    local p_sFctn=${FUNCNAME[1]}        #   stack.fctn
 
     #   check flag (empty || true)
     if [ -z $p_bFlag ]; then
@@ -1106,7 +1106,7 @@ function f_lib_trace()   {
     local s="--- T:[$p_sFctn;$p_iLine]:'$p_sText'"
 
     #   show
-    f__puts "\n$s" $v_LIB_color__magenta
+    f__puts "$s" $v_LIB_color__magenta
     f__logs "$s"
 
 }
