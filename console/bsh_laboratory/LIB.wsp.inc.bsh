@@ -44,6 +44,11 @@
                 •   s:  f.dateTime
                 •   s:  f.sleep
                 •   s:  f.random
+            •   m:  F.lib.converter
+                •   s:  f.converter.b2s
+            •   m:  F.lib.isPath
+                •   s:  f.isDirectory
+                •   s:  f.isFile
             •   m:  F.lib.exprHelper
             •   m:  F.lib.isType
                 •   s:  f.isNumeric
@@ -90,31 +95,36 @@
 
 CONTENT
 
-#   &&& b:  b.function  &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
-
-<<COMMENT
-COMMENT
+#   &&& b:  B.function
 
 #   ===========================================================================
 #   m:  F.lib.config
 #   ===========================================================================
+
+function f_lib_aliasSet() {
+    alias +color='f_lib_configuration 3'
+}
 
 function f_lib_configuration() {
 
     local p_iMod=$1
 
     if [ "$p_iMod" == 1 ]; then
-        #   echo "+++   libCfg.1"
+        echo "+++   libCfg.1"
         f__color_defineEscapeCode
         f__color_defineFontValue
         f__color_configure
         v_LIB_mode_bVerbose=$v_LIB_bFalse
         v_LIB_mode_bExtended=$v_LIB_bFalse
+        v_LIB_mode_bColored=$v_LIB_bTrue
     elif [ "$p_iMod" == 2 ]; then
-        #   echo "+++   libCfg.2"
+        echo "+++   libCfg.2:Verbose"
         v_LIB_mode_bVerbose=$v_LIB_bTrue
+    elif [ "$p_iMod" == 3 ]; then
+        echo "+++   libCfg.3:Color"
+        v_LIB_mode_bColored=$v_LIB_bTrue
     else
-        echo "+++   libCfg.3"
+        echo "+++   libCfg.X"
     fi
 
     if [ $v_LIB_bTrue == $v_LIB_mode_bVerbose ]; then
@@ -122,6 +132,9 @@ function f_lib_configuration() {
         echo "< L.iRc :: [$v_LIB_reply_iRc]"
         echo "< L.sRc :: [$v_LIB_reply_sRc]"
     fi
+
+    #   export
+    export v_LIB_mode_bColored
 
     return 1
 }
@@ -268,7 +281,7 @@ function f__color_test() {
     declare -x x=$v_LIB_COLOR_ESC_RESET
 
     #   font
-    f__puts "\n+   colorTest.font \n"
+    f__puts "\n+   colorTest.font"
     f__puts "1:black"   $v_LIB_COLOR__black
     f__puts "2:green"   $v_LIB_COLOR__green
     f__puts "3:yellow"  $v_LIB_COLOR__yellow
@@ -280,7 +293,7 @@ function f__color_test() {
 
 
     #   foreground
-    f__puts "\n+   colorTest.foreground.FG \n"
+    f__puts "\n+   colorTest.foreground.FG"
 
     echo -e "1: $v_LIB_COLOR_ESC_FG_R_black<rBlack>     $v_LIB_COLOR_ESC_FG_B_black<bBlack>"
     echo -e "2: $v_LIB_COLOR_ESC_FG_R_red<rRed>         $v_LIB_COLOR_ESC_FG_B_red<bRed>"
@@ -293,7 +306,7 @@ function f__color_test() {
     echo -e "$v_LIB_COLOR_ESC_RESET"
 
     #   background
-    printf "+   colorTest.background.BG \n"
+    f__puts "\n+   colorTest.background.BG"
 
     echo -e "1: $v_LIB_COLOR_ESC_BG_D_black<dBlack>$x $v_LIB_COLOR_ESC_BG_L_black<lBlack>$x"
     echo -e "2: $v_LIB_COLOR_ESC_BG_D_red<dRed>$x $v_LIB_COLOR_ESC_BG_L_red<lRed>$x"
@@ -305,7 +318,7 @@ function f__color_test() {
     echo -e "8: $v_LIB_COLOR_ESC_BG_D_gray<dGray>$x       $v_LIB_COLOR_ESC_BG_L_gray<lGray>$x"
 
     #   underline
-    printf "\n+   colorTest.underline \n"
+    f__puts "\n+   colorTest.underline"
 
     echo -e "1: $v_LIB_COLOR_ESC_UL_Z_black<zBlack>$x"
     echo -e "2: $v_LIB_COLOR_ESC_UL_Z_red<zRed>$x"
@@ -315,7 +328,8 @@ function f__color_test() {
     echo -e "6: $v_LIB_COLOR_ESC_UL_Z_cyan<zCyan>$x"
     echo -e "7: $v_LIB_COLOR_ESC_UL_Z_white<zWhite>$x"
 
-    printf "\n<<< colorTest::finished \n"
+    #   eof.test
+    f__puts "\n- colorTest::finished."
 
 }
 
@@ -336,38 +350,36 @@ function f_lib_info() {
 
 #   s:  f.who
 function f_lib_who() {
+    local p_pBash=${BASH_SOURCE[1]}     #   caller.bscp
     local l_sPwd=`pwd`
-    local l_sScp=$BASH_SOURCE
-    local l_sPth=$l_sPwd/$l_sScp
-    if [ $v_LIB_bTrue == $v_LIB_mode_bVerbose ]; then
-        echo "< L.who :: I am file:[$l_sPth]"
-    fi
+    local l_sPth=$l_sPwd/$p_pBash
+    #   show
+    printf "< L.who.srce    '%s'\n"  $p_pBash
+    printf "< L.who.sDir    '%s'\n"  $l_sPwd
+    printf "< L.who.sPth    '%s'\n"  $l_sPth
 }
 
 #   s:  f.where
 function f_lib_where() {
-    local p_sCaller=$1
-    local p_iLine=$2
-    local p_iValue=$3
-    #   my Name
-    local l_sFct=${FUNCNAME[0]}
+    local p_pBash=${BASH_SOURCE[1]}     #   caller.bscp
+    local p_iLine=${BASH_LINENO[0]}     #   caller.lineNo
+    local p_sFctn=${FUNCNAME[0]}        #   caller.fctn
     #   show
-    if [ $v_LIB_bTrue == $v_LIB_mode_bVerbose ]; then
-        echo "< L.where :: Hello I am:[$l_sFct] !"
-        echo "< L.where :: I was called by:[$p_sCaller] atLine:[$p_iLine]"
-        echo "< L.where :: I got the value:[$p_iValue]"
-    fi
+    printf "< L.where.srce  '%s'\n"  $p_pBash
+    printf "< L.where.line  '%s'\n"  $p_iLine
+    printf "< L.where.fctn  '%s'\n"  $p_sFctn
 }
 
+#   s:  f.caller            replies: $< { this() main() }
 function f_lib_caller() {
-    local p_sCaller=$1
-    local l_sPwd=`pwd`
-    local l_sPth
-    #   show
-    l_sPth=$l_sPwd/$p_sCaller
-    if [ $v_LIB_bTrue == $v_LIB_mode_bVerbose ]; then
-        echo "< L.caller :: [$l_sPth] !"
-    fi
+    declare -i i
+    declare -i n=${#FUNCNAME[@]}
+    declare -x s=''
+    printf "< found '%d' caller\n" $n
+    for (( i=0; i<$n; i++ )); do
+        s=${FUNCNAME[$i]}
+        printf "caller[%d] : '%s' \n"  $i $s
+    done
 }
 
 #   s:  f.dateTime
@@ -425,6 +437,41 @@ function f_lib_random() {
     return $i
 }
 
+#   ===========================================================================
+#   m:  F.lib.converter
+#   ===========================================================================
+
+#   s:  f.converter.b2s
+function f_lib_dataTypeConverter_b2s {
+    if [ $v_LIB_bTrue == $1 ]; then
+        v_LIB_reply_sRc="T R U E !"
+    else
+        v_LIB_reply_sRc="F A L S E ?"
+    fi
+    return 1
+}
+
+#   ===========================================================================
+#   m:  F.lib.isPath
+#   ===========================================================================
+
+#   s:  f.isDirectory
+function f_lib_isDirectory {
+    if [ -d $1 ]; then
+        return $v_LIB_bTrue
+    else
+        return $v_LIB_bFalse
+    fi
+}
+
+#   s:  f.isFile
+function f_lib_isFile {
+    if [ -f $1 ]; then
+        return $v_LIB_bTrue
+    else
+        return $v_LIB_bfalse
+    fi
+}
 
 #   ===========================================================================
 #   m:  F.lib.exprHelper
@@ -545,14 +592,19 @@ function f__print() {
     if [ $# == 0 ]; then
         return 0
     fi
-    #   echo "L.print {$pStr}  {$pNL} {$pFgd} {$pBgd} "
+
     #   set colors
-    if [ ! -z $pFgd ] && [ $pFgd -ne $v_LIB_COLOR_VID_none ]; then
-        tput setaf $pFgd
-    fi
-    if [ ! -z $pBgd ] && [ $pBgd -ne $v_LIB_COLOR_VID_none ]; then
-        tput setab $pBgd
-    fi
+    #echo "setColor {$v_LIB_mode_bColored} "
+    #if [ $v_LIB_bTrue == $v_LIB_mode_bColored ]
+    #then
+        if [ ! -z $pFgd ] && [ $pFgd -ne $v_LIB_COLOR_VID_none ]; then
+            tput setaf $pFgd
+        fi
+        if [ ! -z $pBgd ] && [ $pBgd -ne $v_LIB_COLOR_VID_none ]; then
+            tput setab $pBgd
+        fi
+    #fi
+
     #   set NewLine
     if [ ! -z $pNL ] && [ $v_LIB_bTrue == "$pNL" ]; then
         echo -e $pStr $v_LIB_COLOR_ESC_NONE
@@ -797,22 +849,25 @@ function f_lib_text() {
 #   s:  f.header
 function f_lib_header() {
 
-    local p_sScp=$1     #   callerScp
-    local p_iPos=$2     #   line
-    local p_iHRc=$3     #   lib headerRc
-    local l_sFct=${FUNCNAME[0]}
+    #   reply rc
+    local p_iReply=$1     #   lib headerRc
+
+    #   bash stack variables
+    local p_pBash=${BASH_SOURCE[1]}     #   caller.bscp
+    local p_iLine=${BASH_LINENO[0]}     #   caller.lineNo
+    local p_sFctn=${FUNCNAME[0]}        #   caller.fctn
+
+    #   ${BASH_LINENO[0]}
+
     local l_sNow=$(date $v_LIB_dtmFormatString_now)
     local -x s
     local -x sHeaderText
 
     #   save replyCode
-    v_LIB_reply_iEc=$p_iHRc
-
-    #   config.SET
-    f_lib_configuration "1"
+    v_LIB_reply_iEc=$p_iReply
 
     #   show header
-    sHeaderText="=== hdr:[$p_sScp;$p_iPos]:[$l_sNow]:[$v_LIB_reply_iEc]."
+    sHeaderText="=== hdr:[$p_pBash;$p_iLine]:[$l_sNow]:[$v_LIB_reply_iEc]."
     f__puts "$sHeaderText\n " $v_LIB_COLOR__green
 
     #   time.Start
@@ -820,18 +875,18 @@ function f_lib_header() {
 
     #   show
     if [ $v_LIB_bTrue == $v_LIB_mode_bVerbose ]; then
-        echo "< L.lFct :: [$l_sFct]"
-        echo "< L.pScp :: [$p_sScp]"
-        echo "< L.iPos :: [$p_iPos]"
+        echo "< L.pScp :: [$p_pBash]"
+        echo "< L.iPos :: [$p_iLine]"
+        echo "< L.dFct :: [$p_sFctn]"
         echo "< L.iEc  :: [$v_LIB_reply_iEc]"
         echo "< L.tDtm.start :: [$v_LIB_timer_tStart]"
     fi
 
     #   get logFileName
     local bMod=$v_LIB_log_bUseDtmName      # dtmString?
-    local sFpt=$p_sScp
-    local sDir=$v_FWK_dirScratch
-    f__log_determineFilePath $sFpt $sDir $bMod; iRc=$?
+    local sScp=$p_pBash
+    local sDir=$v_LIB_dirScratch
+    f__log_determineFilePath $sScp $sDir $bMod; iRc=$?
 
     #   save reply
     v_LIB_log_bEnabled=$v_LIB_bTrue
@@ -859,20 +914,23 @@ function f_lib_header() {
 #   s:  f.footer
 function f_lib_footer() {
 
-    local p_sScp=$1     #   callerScp
-    local p_iPos=$2     #   line
-    local p_iFRc=$3     #   current.footer.Rc
+    #   fetch parameter
+    local p_iReply=$1     #   current.footer.Rc
 
-    local l_sFct=${FUNCNAME[0]}
+    #   bash stack variables
+    local p_pBash=${BASH_SOURCE[1]}     #   caller.bscp
+    local p_iLine=${BASH_LINENO[0]}     #   caller.lineNo
+    local p_sFctn=${FUNCNAME[0]}        #   caller.fctn
 
     #   time.Stop
     v_LIB_timer_tStopp=$(date +%s.%N)
 
     #   show
     if [ $v_LIB_bTrue == $v_LIB_mode_bVerbose ]; then
-        echo "< L.lFct :: [$l_sFct]"
-        echo "< L.pScp :: [$p_sScp]"
-        echo "< L.iPos :: [$p_iPos]"
+        echo "< L.pScp :: [$p_pBash]"
+        echo "< L.iPos :: [$p_iLine]"
+        echo "< L.lFct :: [$p_sFctn]"
+        echo "< L.iRc  :: [$p_iReply]"
         echo "< L.iEc  :: [$v_LIB_reply_iEc]"
         echo "< L.tDtm.stopp :: [$v_LIB_timer_tStopp]"
     fi
@@ -881,9 +939,13 @@ function f_lib_footer() {
     local fDiff=$(echo "($v_LIB_timer_tStopp-$v_LIB_timer_tStart) / 1" | bc)
     local sSec=$(echo $fDiff)
 
+    #   show logFile
+    s=$v_LIB_log_pFile
+    f__puts "\n+++ logged into:'$s'." $v_LIB_COLOR__blue
+
     #   create+write into myLogFile
     local iRc=$v_LIB_reply_iEc
-    s="=== ftr:[$p_sScp;$p_iPos]:[$iRc] elapsed:<$sSec> seconds."
+    s="=== ftr:[$p_pBash;$p_iLine]:[$iRc] elapsed:<$sSec> seconds."
     f__puts "\n$s" $v_LIB_COLOR__green
     f__logs "$s"
 
@@ -894,12 +956,13 @@ function f_lib_footer() {
 #   s:  f.menu.M
 function f_lib_menu() {
     local p_sText=$1
-    local p_iLine=$2
-    v_LIB_menu_iCtr+=1
+    local p_pBash=${BASH_SOURCE[1]}     # stack.caller
+    local p_iLine=${BASH_LINENO[0]}     # stack.lineNo
+    v_LIB_menuS0_iCtr+=1
     v_LIB_menuS1_iCtr=0
     v_LIB_menuS2_iCtr=0
-    printf -v x "[%2.2d]" "$v_LIB_menu_iCtr"
-    s="=== m$x : $p_sText at:[$p_iLine]"
+    printf -v x "[%2.2d]" "$v_LIB_menuS0_iCtr"
+    s="=== m:$x:'$p_sText' at:[$p_pBash;$p_iLine]"
     f__puts "\n$s" $v_LIB_COLOR__green
     f__logs "$s"
 }
@@ -907,11 +970,11 @@ function f_lib_menu() {
 #   s:  f.menu.S1
 function f_lib_menuS1() {
     local p_sText=$1
-    local p_iLine=$2
+    local p_iLine=${BASH_LINENO[0]}     # stack.lineNo
     v_LIB_menuS1_iCtr+=1
     v_LIB_menuS2_iCtr=0
-    printf -v x "[%2.2d]" "$v_LIB_menuS1_iCtr"
-    s="=== s$x : $p_sText at:[$p_iLine]"
+    printf -v x "[%2.2d.%2.2d]" "$v_LIB_menuS0_iCtr" "$v_LIB_menuS1_iCtr"
+    s="=== s:$x:'$p_sText' at:[$p_iLine]"
     f__puts "\n$s" $v_LIB_COLOR__green
     f__logs "$s"
 }
@@ -919,10 +982,11 @@ function f_lib_menuS1() {
 #   s:  f.menu.S2
 function f_lib_menuS2() {
     local p_sText=$1
-    local p_iLine=$2
+    local p_iLine=${BASH_LINENO[0]}     # stack.lineNo
     v_LIB_menuS2_iCtr+=1
-    printf -v x "[%2.2d][%2.2d]" "$v_LIB_menuS1_iCtr" "$v_LIB_menuS2_iCtr"
-    s="=== u$x : $sText at:[$iLine]"
+    printf -v x "[%2.2d.%2.2d.%2.2d]"\
+        "$v_LIB_menuS0_iCtr"  "$v_LIB_menuS1_iCtr" "$v_LIB_menuS2_iCtr"
+    s="=== u:$x:'$p_sText' at:[$p_iLine]"
     f__puts "\n$s" $v_LIB_COLOR__green
     f__logs "$s"
 }
@@ -932,10 +996,10 @@ function f_lib_menuS2() {
 function f_lib_trace()   {
 
     #   fetch
-    local p_sFctn="$1"      # check - may not be null
-    local p_iLine="$2"
-    local p_sText="$3"
-    local p_bFlag="$4"
+    local p_sText="$1"
+    local p_bFlag="$2"
+    local p_iLine=${BASH_LINENO[0]}     #   stack.lineNo
+    local p_sFctn=${FUNCNAME[0]}        #   stack.fctn
 
     #   check flag (empty || true)
     if [ -z $p_bFlag ]; then
@@ -985,16 +1049,20 @@ function f_lib_test() {
 
 #   m:  v.boolType
 declare -i v_LIB_bTrue=100      && export v_LIB_bTrue
-declare -i v_LIB_bFalse=255     && export v_LIB_bFalse
+declare -i v_LIB_bFalse=199     && export v_LIB_bFalse
 
 #   m:  v.libConfiguration
-declare -i v_LIB_mode_bVerbose=$v_LIB_bFalse
+declare -i v_LIB_mode_bVerbose=$v_LIB_bFalse && export v_LIB_mode_bVerbose
 declare -i v_LIB_mode_bExtended=$v_LIB_bFalse
 
 #   m:  v.replyCodes
+declare -i v_LIB_reply_bRc=$v_LIB_bFalse
 declare -i v_LIB_reply_iRc=99
 declare -x v_LIB_reply_sRc='?None'
 declare -i v_LIB_reply_iEc=61
+
+#   array
+declare v_LIB_reply_aRc=()
 
 #   m:  v.timer
 declare -x v_LIB_timer_tStart
@@ -1006,10 +1074,13 @@ declare -i c
 declare -i v_LIB_log_bUseDtmName=$v_LIB_bFalse  # short Name
 declare -x v_LIB_log_sFileExtension='.log'
 declare -x v_LIB_log_pFile      #   filePath
+declare -x v_LIB_dirScratch=$v_FWK_dirScratch  # by Framework
 
 #   m:  v.menu
-declare -i v_LIB_menu_iCtr=0
+declare -i v_LIB_menuS0_iCtr=0
 declare -i v_LIB_menuS1_iCtr=0
 declare -i v_LIB_menuS2_iCtr=0
 declare -x v_LIB_traceBody="TraceBody"
 
+#   m:  f.auto-function
+f_lib_aliasSet
