@@ -1,11 +1,14 @@
 #!/bin/bash
 #   ***************************************************************************
-#   Tutorial.bsh 2026        ©[mATe64]                          [2026-10-02]
+#   Tutorial.bsh.2026   :more                           ©[mATe64]::[2026-10-03]
 #   ***************************************************************************
 
-#   description:    tester for my new BashLibrary 2026
-#   usage   :   $   bash t02_more.bsh
-#   remark  :   more tests than in info
+#   encoding.UTF8:
+#   !@€ƒ„…†‡ˆ‰Š‹ŒŽ +‘“”•—™š›œžŸ+¡¢£¤¥¦§¨©«¬®°±²³µ¶·¹º»¼½¾¿ÄÖÜÑ×ØÞßäæçîðñôö÷üýþÿ
+
+#   usage       :   $   bash t02_more.bsh
+
+#   !url        :   https://www.w3schools.com/bash/
 
 <<CONTENT_T2
     content:

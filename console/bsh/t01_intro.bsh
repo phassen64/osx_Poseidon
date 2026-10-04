@@ -1,13 +1,17 @@
 #!/bin/bash
 #   ***************************************************************************
-#   Tutorial.bsh 2026        ©[mATe64]                          [2026-10-01]
+#   Tutorial.bsh.2026   :more                           ©[mATe64]::[2026-10-01]
 #   ***************************************************************************
+
+#   description:    tester for my new BashLibrary 2026
+
+#   usage       :   $   bash t01_intro.bsh
+
+#   !url        :   https://www.w3schools.com/bash/
 
 #   encoding.UTF8:
 #   !@€ƒ„…†‡ˆ‰Š‹ŒŽ +‘“”•—™š›œžŸ+¡¢£¤¥¦§¨©«¬®°±²³µ¶·¹º»¼½¾¿ÄÖÜÑ×ØÞßäæçîðñôö÷üýþÿ
 
-#   !url:
-#   https://www.w3schools.com/bash/
 
 <<CONTENT_T1
     content:
