@@ -42,6 +42,7 @@ declare
             •   s:  V.integer
             •   s:  V.float
             •   s:  V.array
+            •   s:  V.assocArray
         •   m:  M.predefined.variable
         •   m:  M.check.DataType
         •   m:  footer
@@ -237,6 +238,31 @@ iFrom=1; iTo=2; aVal2=("${aVal1[@]:$iFrom:$iTo}")
 f_lib_text "slice(FROM:$iFrom;TO:$iTo)" $LINENO
 declare -p aVal1
 declare -p aVal2
+
+
+#   ===========================================================================
+#   s:  V.assocArray
+#   ===========================================================================
+
+f_lib_menuS1 "assocArray"
+
+#   Associative array example
+declare -A hColor
+
+f_lib_trace "add.hColor"
+hColor[apple]="red"
+hColor[banana]="yellow"
+hColor[grape]="purple"
+
+f_lib_trace "declare.hColor"
+declare -p hColor
+
+f_lib_trace "unset.hColor"
+unset hColor[banana]
+
+f_lib_trace "echo.hColor"
+echo ${hColor[apple]} # red
+echo ${hColor[grape]} # purple
 
 #   ===========================================================================
 #   m:  M.predefined variables
