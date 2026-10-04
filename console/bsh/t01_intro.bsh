@@ -30,7 +30,7 @@ CONTENT_T1
 source LIB.wsp.inc.bsh
 
 #   m:  configure
-f_lib_configuration
+#   f_lib_configuration
 if [ "$1" == "" ]; then
     #   clear
     f_lib_configuration '+' '-' '-' '-'     #   apply colorMode

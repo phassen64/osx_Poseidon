@@ -1141,8 +1141,9 @@ function f_lib_test() {
 declare -i v_LIB_bTrue=100      && export v_LIB_bTrue
 declare -i v_LIB_bFalse=-99     && export v_LIB_bFalse
 
-f_lib_initialize
 f_lib_alias_set
+f_lib_initialize
+f_lib_configuration
 
 #   m:  v.libConfiguration  - or in f.lib.init
 #

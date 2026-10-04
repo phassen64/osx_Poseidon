@@ -43,7 +43,7 @@ declare -x sRc
 
 #   s:  include
 source LIB.wsp.inc.bsh
-f_lib_configuration
+#   f_lib_configuration
 if [ "$1" == "" ]; then
     clear
     f_lib_configuration '+' '+'

@@ -32,24 +32,22 @@ function f_mod_main() {
 #   b:  B.body
 #   ===========================================================================
 
-declare -i bTrp=$v_LIB_bTrue        #   trc:enabled
-
 #   m:  include
 source LIB.wsp.inc.bsh
-f_lib_configuration
 if [ "$1" == "" ]; then
-    clear
     f_lib_configuration '+'
-    p_sCaller='Dummy'
-else
-    p_sCaller=$1
 fi
 
 #   m:  header
 f_lib_header $v_FWK_iEc
 
+f_lib_puts "hello dataType" $v_LIB_COLOR__red
+
+#   m:  trace
+declare -i  bTrace=$v_LIB_bTrue
+f_lib_trace "eop" "$bTrace"
+
 #   m:  footer
-f_lib_trace "eop" $bTrp
 f_lib_footer $v_FWK_iEc
 
 #   b:  B.last
