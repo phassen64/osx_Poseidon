@@ -294,16 +294,16 @@ function f_fwk_clearScreen() {
 #  	s:	F.alias
 #
 
-function f_fwk_aliasGet() {
+function f_fwk_alias_get() {
     s='GET alias...'; echo "$s"; sleep 1
 	alias| grep +
 }
 
-function f_fwk_aliasSet(){
+function f_fwk_alias_set(){
     #   echo "f:aliasSet:BEG"
 	#   =:= m:alias
-    alias +aliGet='f_fwk_aliasGet'
-    alias +aliSet='f_fwk_aliasSet; alias | grep +';
+    alias +aliGet='f_fwk_alias_get'
+    alias +aliSet='f_fwk_alias_set; alias | grep +';
 	#   =:= m:go
     alias +go='source $v_STARTER'
     alias +start=+go
@@ -345,7 +345,7 @@ function f_fwk_aliasSet(){
     alias +cls='clear'
     alias +clr='+cls'
 	#   =:= m:env
-    alias +ali='f_fwk_aliasGet'
+    alias +ali='f_fwk_alias_get'
     alias +fct='f_fwk_function_show'
     alias +env='f_fwk_environment_show'
     alias +var='f_fwk_variable_show'
@@ -363,19 +363,19 @@ function f_fwk_aliasSet(){
     return 1
 }
 
-function f_fwk_aliasClear() {
+function f_fwk_alias_Clear() {
     s='CLEAR alias...'; echo "$s"; sleep 1
     unalias -a
     sleep 1
     alias
-    alias +alias=f_fwk_aliasSet; alias +alias
+    alias +alias=f_fwk_alias_set; alias +alias
 }
 
-function f_fwk_aliasReset() {
+function f_fwk_alias_Reset() {
     s='RESET alias...'; echo "$s"; sleep 1
     unalias -a
     sleep 1
-    f_fwk_aliasSet
+    f_fwk_alias_set
 }
 
 function f_fwk_interpreter_check() {
@@ -429,7 +429,7 @@ function f_fwk_function_show() {
     declare -F | grep '^declare -f f_[[:lower:]]'
 }
 
-function f_fwk_variable_initialize () {
+function f_fwk_variable_define () {
 
     #   FWK starter
     v_FWK_pthStarter=$v_STARTER && export v_FWK_pthStarter
@@ -469,17 +469,6 @@ function f_fwk_variable_initialize () {
 
 }
 
-function f_fwk_path_update() {
-    if [ -z $v_FWK_path_isUpdated ]
-    then
-        v_FWK_path_isUpdated=$v_FWK_bTrue
-        export PATH="$PATH:$v_FWK_dirCommand"
-        echo "+ fwk.pathUpdate"
-    else
-        echo "- fwk.doNoPathUpdate"
-    fi
-}
-
 function f_fwk_isFile {
     local bRc=$v_FWK_bfalse
     if [ -f $1 ]; then bRc=$v_FWK_bTrue; fi
@@ -499,44 +488,53 @@ function f_fwk_isDirectory {
 #   s:  clear host
 clear
 
-#   s:  boolean - no export
-declare -i v_FWK_bTrue=0
-declare -i v_FWK_bFalse=99
-
-#   s:  var.Global
-v_SCP=`basename $BASH_SOURCE`
-
 #   s:  header
 v_DTM=`echo $(date '+%y%m%d|%H%M%S')`
-echo "=== fwk.beg::{$v_DTM}:{$HOSTNAME}"
+printf "=== fwk.beg :: {%s}:{%s} \n"   $v_DTM $HOSTNAME
 sleep 1
 
-#   s:  show.PWD
-v_PWD=`pwd`
-echo "+ pwd: {$v_PWD}"
-export v_PWD
+#   show starter of bashRc
+printf "+ sta : {%s} \n" $v_STARTER
 
-#   show starter
-echo "+ str: {$v_STARTER}"
+#   s:  show.SCP
+v_SCP=`basename $BASH_SOURCE`;    echo "+ scp : {$v_SCP}"
+v_PWD=`pwd`;    echo "+ pwd : {$v_PWD}"
 
-#   s:  run some
-f_fwk_aliasSet
+#   s:  alias define
+f_fwk_alias_set
 
-#   s:  run variable
+#   s:  update FWK
+if [ -z $v_FWK_path_isUpdated ]
+then
 
-#   echo "init.var"
-f_fwk_variable_initialize
+    declare -i v_FWK_bTrue=0        # no export
+    declare -i v_FWK_bFalse=99
 
-#   s:  change PATH
-f_fwk_path_update
+    v_FWK_path_isUpdated=$v_FWK_bTrue
 
-#   s:  set prompt - only short dirName
-f_env_prompt 5
+    #   s:  set prompt
+    f_env_prompt 5
+
+    #   init var
+    f_fwk_variable_define
+
+    #   update path
+    export PATH="$PATH:$v_FWK_dirCommand"
+
+    #   show
+    echo "+ fwk : pathUpdate"
+
+else
+    echo "- fwk : pathIsNotUpdated !"  # !CRQ-261004:not.printf()
+fi
+
+#   path
+#   printf "+ path  : {%s} \n" $PATH
 
 #   s:  generate FWK.exit.code
 declare -i r=$RANDOM
 v_FWK_iEc=$r && export v_FWK_iEc
 
-#   s:  footer
+#   s:  header
 v_DTM=`echo $(date '+%y%m%d|%H%M%S')`
-echo "=== fwk.end::{$v_DTM}:{$v_FWK_iEc}"
+printf "=== fwk.end::{%s}:{%s} \n"   $v_DTM $v_FWK_iEc
