@@ -37,12 +37,12 @@ function f_run_script {
     printf "___ script nFiles:<%d>  iRnd:[%d]\n" $nFile $p_iRnd
 
     for (( n=1; n<=$p_nStressMax; n++ )); do
-        printf "\n### stress :: [%3.3d]/[%3.3d]\n\n" $n $p_nStressMax
+        printf "\n### stress :: [%3.3d]/[%3.3d]\n" $n $p_nStressMax
         iFile=0
         for xFile in $p_aSrc
         do
             iFile+=1
-            printf "*** runScr:[%3.3d].[%2.2d]:'%s'\n" $n $iFile $xFile
+            printf "\n*** runScr:[%3.3d].[%2.2d]:'%s'\n\n" $n $iFile $xFile
             bash $xFile "$BASH_SOURCE"
         done
     done
@@ -65,7 +65,7 @@ aTest=$(echo `ls t*.bsh`)
 declare sFmt="+%Y-%m-%d %H:%M:%S"
 
 #   s:  calculate stressCounter
-declare -i n=5  #   rndMax
+declare -i n=1  #   rndMax
 declare -i iCtr=1+$RANDOM%$n
 
 #   m:  run
