@@ -530,13 +530,13 @@ $<  graphical.target
     Maximale Dauer
         1 Stunden
 
-+   aktuelle IP 
++   aktuelle IP
     35.246.100.13
     34.89.49.77
-    
 
-+   Voraussetzung für RDP 
-    set password root && usr 
+
++   Voraussetzung für RDP
+    set password root && usr
         usr|pwd:="phassen64"|"!tron0"
         usr|pwd:="root"|"!tron0"
 
@@ -547,10 +547,10 @@ $<  graphical.target
 >>> xpr::osx.Framework  <2026-09-28>:Mo
 
 +   toDo:
-    f_fwk_isDir 
-    f_fwk_isFile 
-    f_env_prompt für Root special 
-    snapshot erstellen 
+    f_fwk_isDir
+    f_fwk_isFile
+    f_env_prompt für Root special
+    snapshot erstellen
     Apache nicht start - Lampp
 
 +   .bashrc
@@ -559,36 +559,36 @@ $<  graphical.target
 <<< xpr::osx.Framework.
 
 
- ### !date:<2026-09-29>:Di 
+ ### !date:<2026-09-29>:Di
 
-+   VsCode - show my available ShortCuts 
-    Access these via 
-        Ctrl+Shift+P (Windows/Linux) or 
++   VsCode - show my available ShortCuts
+    Access these via
+        Ctrl+Shift+P (Windows/Linux) or
         Cmd+Shift+P (macOS):
     $<  Ctrl+Shift+P
 
  +  bookmarks How I jump ?
     https://marketplace.visualstudio.com/items?itemName=alefragnani.Bookmarks
     https://code.visualstudio.com/docs/configure/extensions/extension-marketplace
-    $<  zu finden durch VsCode    
+    $<  zu finden durch VsCode
 
 +   bookmark Handling - only in current file
     List All Bookmarks	Ctrl + Alt + P	* ?
-    Toggle Bookmark	    Ctrl + Alt + K	
-    Next Bookmark	    Ctrl + Alt + L	
-    Previous Bookmark	Ctrl + Alt + J	
-    
-+   The -c option in bash -c tells Bash to read and 
-    execute commands from a string argument rather than 
+    Toggle Bookmark	    Ctrl + Alt + K
+    Next Bookmark	    Ctrl + Alt + L
+    Previous Bookmark	Ctrl + Alt + J
+
++   The -c option in bash -c tells Bash to read and
+    execute commands from a string argument rather than
         reading from a file script or waiting for interactive user input.
     Bash
     $>  bash -c "string_of_commands"
 
 +   export variables
-    The most obvious one, which you've already mentioned, is to use 
-        source or . 
+    The most obvious one, which you've already mentioned, is to use
+        source or .
     to execute the script in the context of the calling shell.
-    $>  source b00_dummy.bsh  
+    $>  source b00_dummy.bsh
 
 
 +   logging no control chars
@@ -603,7 +603,7 @@ echo "a b c d" | tr -d '[:space:]'
 echo "Hello, World! #2026" | tr -cd '[:alnum:]'
 # Output: HelloWorld2026
 
-### !date:<2026-09-30>:Mi 
+### !date:<2026-09-30>:Mi
 
 +   VsCode apply smartCommit
 
@@ -611,46 +611,46 @@ echo "Hello, World! #2026" | tr -cd '[:alnum:]'
     $   git config --list | sort
 
 
-### !date:<2026-10-02>:Fr 
+### !date:<2026-10-02>:Fr
 
 
 ?   Command SyntaxExecution BehaviorAnalogy
-    The difference between && and ; 
+    The difference between && and ;
         in Bash lies in conditional execution:
     command1 && command2
         Runs command2 only if command1 succeeds (returns exit code 0).
-    command1 ; command2	
-        Runs command2 regardless of whether 
+    command1 ; command2
+        Runs command2 regardless of whether
             command1 succeeds or fails.
 
 ?   Bash echo how I can save leading spaces ?
-    To preserve leading spaces, 
+    To preserve leading spaces,
         always wrap the string or variable in double quotes ("...").
 
 ?   bash how I can store variable with leaning spaces ?
-    By default, storing a string with leading spaces in a 
-        Bash variable works as expected—the variable itself 
-        retains the spaces. 
-    The issue usually occurs when you try to print or use 
+    By default, storing a string with leading spaces in a
+        Bash variable works as expected—the variable itself
+        retains the spaces.
+    The issue usually occurs when you try to print or use
         the variable without double quotes.
-    $>  s="   peter" 
-    $>  echo $s         
-    $<  peter           # no leading spaces 
-    $>  echo "$s"         
-    $<      peter       # now there are leading spaces 
+    $>  s="   peter"
+    $>  echo $s
+    $<  peter           # no leading spaces
+    $>  echo "$s"
+    $<      peter       # now there are leading spaces
 
-    Command Substitution: 
+    Command Substitution:
         Wrap the command or the variable in double quotes.
 
     # Capturing output that contains leading spaces
     $>  var="$(printf "   hello world")"
 
-?   echo vs printf 
+?   echo vs printf
 
-    In Bash, printf is generally preferred over echo for portable, 
-        reliable script writing. 
-    While 'echo' is fine for quick terminal output, 
-        'printf' gives you exact control over formatting, 
+    In Bash, printf is generally preferred over echo for portable,
+        reliable script writing.
+    While 'echo' is fine for quick terminal output,
+        'printf' gives you exact control over formatting,
             variable expansion, and special characters.
 
     # echo automatically adds a newline at the end
@@ -660,7 +660,7 @@ echo "Hello, World! #2026" | tr -cd '[:alnum:]'
 
 ?   printf mit interner formatierung %b%
     $>  s="Peter&\nHarvey"
-    
+
     *   nur %s
     $>  printf "%s\n" "$s"
     $<  Peter&\nHarvey
@@ -670,27 +670,27 @@ echo "Hello, World! #2026" | tr -cd '[:alnum:]'
     $<  Peter&
     $<  Harvey
 
-### !date:<2026-10-03>:Sa 
+### !date:<2026-10-03>:Sa
 
 +   make git lab
 +   git push
 
-$   git 
+$   git
     $>  git commit -m "update" log*.txt
 
 $   make 02 advanced
 
 +   editor nano Zum Ende gehen
-    key:[pageDown]  
+    key:[pageDown]
 
 +   cron job
-    *   editieren 
+    *   editieren
     $   crontab -e
 
-+   git diff 
++   git diff
 
 
-### !date:<2026-10-04>:So 
+### !date:<2026-10-04>:So
 
 +   edit crontab
     bash$   crontab -e
@@ -712,25 +712,34 @@ $   make 02 advanced
     was changed
 
 $>  "Debian Linux key "AltGr" jumps 1 character left"
-$<  
-    This is a known  issue on Debian/Linux desktop environments 
-        (especially GNOME and XFCE) where AltGr is 
-            captured as ISO_Level3_Shift or Mode_switch. 
-    In VS Code and GTK applications, 
-        the AltGr keypress emits a raw keycode that gets 
-            interpreted as Alt or Ctrl+Alt, 
-            triggering cursor navigation commands 
+$<
+    This is a known  issue on Debian/Linux desktop environments
+        (especially GNOME and XFCE) where AltGr is
+            captured as ISO_Level3_Shift or Mode_switch.
+    In VS Code and GTK applications,
+        the AltGr keypress emits a raw keycode that gets
+            interpreted as Alt or Ctrl+Alt,
+            triggering cursor navigation commands
             like moving one character or word to the left.
    Fix 1: Change VS Code Keyboard Dispatching (Recommended)
-    Tell VS Code to listen to physical keys (keyCode) rather 
+    Tell VS Code to listen to physical keys (keyCode) rather
         than layout-resolved characters (code).
-    Open settings.json in VS Code 
-    (Ctrl + Shift + P $\rightarrow$ 
+    Open settings.json in VS Code
+    (Ctrl + Shift + P $\rightarrow$
         Preferences: Open User Settings (JSON)).
         Add or update this line:
-        
-    "keyboard.dispatch": "keyCode"
-   
-    
 
-        
+    "keyboard.dispatch": "keyCode"
+
++   VsCode
+    open Settings.Json
+    1.  open gui::VsCode
+    2.  key:CTRL + key:SHIFT + key:'P'
+    3.  goto "Preferences: Open User Settings (JSON)".
+    4.  enter "keyboard.dispatch": "keyCode
+
++   VsCode settings.JSon location
+    dir:    '/home/peter/.config/Code/User'
+    fnm:    'settings.json'
+
+
