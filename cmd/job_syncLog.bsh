@@ -1,0 +1,70 @@
+#!/bin/bash
+#  	***************************************************************************
+#   cron.job	    dtm:[2026-10-05].vcs
+#  	***************************************************************************
+
+#   description:
+#           Synchronize my logBook (dirDoc->dirVcs).
+
+#   usage:
+#       +   edit crontab
+#               bash$   crontab -e
+#               nano$   key:[PgnDwn]
+#       +   show crontab entry
+#               bash$   crontab -l | tail -1
+
+
+#   entry inside crontab
+#   */10 * * * * /home/peter/VCS/cmd/jobWorkshop.bsh >>
+#                   /home/peter/Documents/log/cron.log 2>&1
+
+#  	***************************************************************************
+
+sFmt="+%Y-%m-%d__%H:%M:%S"
+sDtm=$(echo `date $sFmt`)
+sVer='athene1'
+
+#
+#   m:  check.Dir
+#
+
+#   s:  dSrc
+dSrc="$HOME/Documents/basic"
+if [ ! -d $dSrc ]
+then
+    return 99
+fi
+
+
+#   s:  dObj
+dObj="$HOME/VCS/fwk/basic"
+if [ ! -d $dObj ]
+then
+    return 99
+fi
+
+#
+#   m:  check.FilePath
+#
+
+fnam='log-X.txt'
+
+#   s:  pSrc
+pSrc="$dSrc/$fNam"
+if [ ! -f $pSrc ]; then
+    return 99
+fi
+
+#   s:  pObj
+pObj="$dObj/$fNam"
+if [ ! -f $pObj ]; then
+    return 99
+fi
+
+printf "=== entry v.(%s):[%s]\n" "$sVer" "$sDtm"
+printf "    dirSrc:[%s]\n" "$dSrc"
+printf "    dirObj:[%s]\n" "$dObj"
+printf "    logbook.copy: dirSrc -> dirObj\n"
+
+#   perform job
+cp $dSrc/log*.txt $dObj
