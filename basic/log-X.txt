@@ -742,4 +742,20 @@ $<
     dir:    '/home/peter/.config/Code/User'
     fnm:    'settings.json'
 
++   C Auswahl-Operator
+    1) (a==b) ? a : b         (AUSWAHL-OPERATOR)
+     (x < y) ? 
+        printf("(%d < %d)?=:YES",x,y) : printf("(%d < %d)?=:NO",x,y);
 
+$   In C ist der Auswahl-Operator 
+    (auch Ternärer Operator oder Bedingungsoperator genannt) 
+    der einzige Operator in C, 
+    der drei Operanden verwendet. 
+    Er dient als eine kompakte Kurzschreibweise für einfache 
+        if-else-Anweisungen.
+ 
+$   Bash Ternär Operator 
+    ALTER=18
+    # Short-Hand Syntax
+    STATUS=$([[ $ALTER -ge 18 ]] && echo "Volljährig" || echo "Minderjährig")
+    echo "Status: $STATUS"  # Ausgabe: Volljährig
