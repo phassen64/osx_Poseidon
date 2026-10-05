@@ -807,8 +807,7 @@ function f_lib_file_write()   {
         echo "< L.bCrt :: [$p_bCreate]"
     fi
     #   run internal
-    #   f__fputs $p_pFile "$p_sString" $p_bCreate; iRc=$?
-    f__fputs $p_pFile "$p_sString" "100"; iRc=$?
+    f__fputs $p_pFile "$p_sString" "$p_bCreate"; iRc=$?
     return $iRc
 }
 
@@ -916,7 +915,7 @@ function f_lib_puts() {
 #   s:  f.lib.text
 function f_lib_text() {
     local t=$1
-    local c=$2
+    local c=$2  #   ?create
     printf "    %s\n" "$t"  #   print directly
     f__logs "$t" "$c"
 }
