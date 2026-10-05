@@ -713,7 +713,7 @@ $   make 02 advanced
 
 $>  "Debian Linux key "AltGr" jumps 1 character left"
 $<  
-    This is a known issue on Debian/Linux desktop environments 
+    This is a known  issue on Debian/Linux desktop environments 
         (especially GNOME and XFCE) where AltGr is 
             captured as ISO_Level3_Shift or Mode_switch. 
     In VS Code and GTK applications, 
@@ -721,6 +721,15 @@ $<
             interpreted as Alt or Ctrl+Alt, 
             triggering cursor navigation commands 
             like moving one character or word to the left.
+   Fix 1: Change VS Code Keyboard Dispatching (Recommended)
+    Tell VS Code to listen to physical keys (keyCode) rather 
+        than layout-resolved characters (code).
+    Open settings.json in VS Code 
+    (Ctrl + Shift + P $\rightarrow$ 
+        Preferences: Open User Settings (JSON)).
+        Add or update this line:
+        
+    "keyboard.dispatch": "keyCode"
    
     
 
