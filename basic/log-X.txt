@@ -1,4 +1,4 @@
-###############################################################################
+﻿###############################################################################
 --- !log.2026.Debian.Linix
 ###############################################################################
 
@@ -710,4 +710,18 @@ $   make 02 advanced
         pSrc="$HOME/Documents/basic/log-X.txt"
         pObj="$HOME/VCS/fwk/basic/log-X.txt"
     was changed
+
+$>  "Debian Linux key "AltGr" jumps 1 character left"
+$<  
+    This is a known issue on Debian/Linux desktop environments 
+        (especially GNOME and XFCE) where AltGr is 
+            captured as ISO_Level3_Shift or Mode_switch. 
+    In VS Code and GTK applications, 
+        the AltGr keypress emits a raw keycode that gets 
+            interpreted as Alt or Ctrl+Alt, 
+            triggering cursor navigation commands 
+            like moving one character or word to the left.
+   
+    
+
         
