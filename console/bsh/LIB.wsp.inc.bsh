@@ -469,6 +469,7 @@ function f_lib_random() {
     #   usage:
     #       $   f_lib_random        #   returns 1..100
     #       $   f_lib_random 5      #   returns 1..5
+    #   returns echo
     declare -i p_iMax=$1
     if [ -z $1 ]; then
         p_iMax=100
@@ -480,35 +481,18 @@ function f_lib_random() {
 #   s:  f.randomMore
 #   in: iMax [iMin]
 function f_lib_randomMore() {
-
-    declare -i p_iMax=$1     #   iRnd = [iMax...iMin]
-    declare -i p_iMin=$2
-    declare -i n
-    declare -i i
-
-    #   return if wrong input
-    if [ $p_iMax -le 0 ]; then
-        return 0
-    fi
-
-    #   calc random
-    n=$RANDOM
-
-    #   modulo
-    i=$(( $n % $iMax ))         #  RANDOM() => 0...nMax-1
-
-    #   add lower boundary
-    let "i += $p_iMin"          #  MIN..MAX
-
-    #   show
-    if [ $v_LIB_bTrue == $v_LIB_mode_bVerbose ]; then
-        echo "< L.iMax      :: [$p_iMax]"
-        echo "< L.iMin      :: [$p_iMin]"
-        echo "< L.random    :: [$n]"
-        echo "< L.iRnd      :: [$i]"
-    fi
-
-    return $i
+    #   f~lib_randomMore <nMax> <nMin>
+    local -i    p_iMin=0
+    local -i    p_iMax=100
+    #   extrema
+    if [ ! -z $1 ];     then    p_iMax=$1;     fi
+    if [ ! -z $2 ];     then    p_iMin=$2;     fi
+    if [ $p_iMax -lt $p_iMin ];    then    return 0;       fi
+    #   range
+    local -i nRange=1+$p_iMax-$p_iMin
+    local -i i=$(( RANDOM % $nRange ))
+    let "i += $p_iMin"      #  MIN..MAX
+    return $i               # returns => nMin..nMax
 }
 
 #   ===========================================================================
@@ -720,8 +704,8 @@ function f_lib_file_getPath() {
     local l_sPwd=`pwd`
     local s
     if [ $v_LIB_bTrue == $v_LIB_mode_bVerbose ]; then
-        echo "< L.pScp :: [$p_sScp]"
-        echo "< L.sPwd :: [$l_sPwd]"
+        echo "< L.filePath.pScp :: [$p_sScp]"
+        echo "< L.filePath.sPwd :: [$l_sPwd]"
     fi
     s=$l_sPwd/$p_sScp
     v_LIB_reply_sRc=$s
@@ -958,11 +942,11 @@ function f_lib_header() {
 
     #   show
     if [ $v_LIB_bTrue == $v_LIB_mode_bVerbose ]; then
-        echo "< L.pScp :: [$p_pBash]"
-        echo "< L.iPos :: [$p_iLine]"
-        echo "< L.dFct :: [$p_sFctn]"
-        echo "< L.iEc  :: [$v_LIB_reply_iEc]"
-        echo "< L.tDtm.start :: [$v_LIB_timer_tStart]"
+        echo "< L.hdr.pScp :: [$p_pBash]"
+        echo "< L.hdr.iPos :: [$p_iLine]"
+        echo "< L.hdr.dFct :: [$p_sFctn]"
+        echo "< L.hdr.iEc  :: [$v_LIB_reply_iEc]"
+        echo "< L.hdr.tDtm.start :: [$v_LIB_timer_tStart]"
     fi
 
     #   get logFileName
@@ -977,8 +961,8 @@ function f_lib_header() {
 
     #   show
     if [ $v_LIB_bTrue == $v_LIB_mode_bVerbose ]; then
-        echo "< L.sLogFile  :: [$v_LIB_log_pFile]"
-        echo "< L.iRc       :: [$iRc]"
+        echo "< L.hdr.sLogFile  :: [$v_LIB_log_pFile]"
+        echo "< L.hdr.iRc       :: [$iRc]"
     fi
 
     #   create+write into myLogFile
@@ -1009,14 +993,13 @@ function f_lib_footer() {
     v_LIB_timer_tStopp=$(date +%s.%N)
 
     #   show
-    v_LIB_mode_bVerbose=$v_LIB_bTrue
     if [ $v_LIB_bTrue == $v_LIB_mode_bVerbose ]; then
-        echo "< L.pScp :: [$p_pBash]"
-        echo "< L.iPos :: [$p_iLine]"
-        echo "< L.sFct :: [$p_sFctn]"
-        echo "< L.iRc  :: [$p_iReply]"
-        echo "< L.iEc  :: [$v_LIB_reply_iEc]"
-        echo "< L.tDtm.stopp :: [$v_LIB_timer_tStopp]"
+        echo "< L.ftr.pScp :: [$p_pBash]"
+        echo "< L.ftr.iPos :: [$p_iLine]"
+        echo "< L.ftr.sFct :: [$p_sFctn]"
+        echo "< L.ftr.iRc  :: [$p_iReply]"
+        echo "< L.ftr.iEc  :: [$v_LIB_reply_iEc]"
+        echo "< L.ftr.tDtm.stopp :: [$v_LIB_timer_tStopp]"
     fi
 
     #   diff time
