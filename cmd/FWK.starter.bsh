@@ -512,7 +512,7 @@ f_fwk_alias_set
 if [ -z $v_FWK_path_isUpdated ]
 then
 
-    declare -i v_FWK_bTrue=0        # no export
+    declare -i v_FWK_bTrue=40     # no export
     declare -i v_FWK_bFalse=99
 
     v_FWK_path_isUpdated=$v_FWK_bTrue
