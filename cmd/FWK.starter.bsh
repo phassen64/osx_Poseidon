@@ -475,13 +475,13 @@ function f_fwk_variable_define () {
 }
 
 function f_fwk_isFile {
-    local bRc=$v_FWK_bfalse
+    local bRc=$v_FWK_bFalse
     if [ -f $1 ]; then bRc=$v_FWK_bTrue; fi
     return $bRc
 }
 
 function f_fwk_isDirectory {
-    local bRc=$v_FWK_bfalse
+    local bRc=$v_FWK_bFalse
     if [ -d $1 ]; then bRc=$v_FWK_bTrue; fi
     return $bRc
 }
