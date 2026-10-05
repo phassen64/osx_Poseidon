@@ -223,35 +223,31 @@ f_lib_text "$s"
 
 f_lib_menuS1 'internal logic'
 
-local -i x=$v_LIB_bTrue
-#   f_lib_puts "+ x:'$x'" $v_LIB_color__cyan
+declare -i b=$v_LIB_bTrue   # !CRQ-261005:notWorkingWith:'x'
+f_lib_puts "x == '$b'" $v_LIB_color__cyan
 
-echo "value of x:= [$x]"
+#   u:  op:{'=='}
+t="{ x == TRUE } :"
+s=$([[ $b == $v_LIB_bTrue ]] && echo "True!" || echo "?false")
+printf -v x "%s => [%s]" "$t" "$s"; f_lib_text "$x"     # True!
 
-#   declare -x s="{ x == TRUE } :"
-#   sVal=$([[ $x -eq 100 ]] && echo "ok" || echo "no")
-#   echo "Status :$sVal"
+#   u:  op:{'!='}
+t="{ x != TRUE } :"
+s=$([[ $b != $v_LIB_bTrue ]] && echo "True!" || echo "?false")
+printf -v x "%s => [%s]" "$t" "$s"; f_lib_text "$x"     # ?false
 
-# Short-Hand Syntax
-sTxt=$([[ $x == $v_LIB_bTrue ]] && echo "True" || echo "False")
-#   echo "x:=$x;Status:$sTxt"  # Ausgabe: Volljährig
+#   u:  op:{'-eq'}
+t="{ x -eq TRUE } :"
+s=$([[ $b -eq $v_LIB_bTrue ]] && echo "True!" || echo "?false")
+printf -v x "%s => [%s]" "$t" "$s"; f_lib_text "$x"     #   True!
 
-exit
+#   take x:=false
+b=$v_LIB_bFalse
+f_lib_puts "x == '$b'" $v_LIB_color__cyan
 
-s="{ x != TRUE } :"
-[ $x != $v_LIB_bTrue ] && s+='YES' ||  s+='NEPP'     # nepp
-f_lib_text "$s"
-
-s="{ x -eq TRUE } :"
-[ $x -eq $v_LIB_bTrue ] && s+='YES' ||  s+='NEPP'    # yes
-f_lib_text "$s"
-
-x=$v_LIB_bFalse
-f_lib_puts "--- x:$x" $v_LIB_color__cyan
-
-s="{ x -eq FALSE } =:"
-[ $x -eq $v_LIB_bFalse ] && s+='YES' ||  s+='NEPP'   # yes
-f_lib_text "$s"
+t="{ x -eq FALSE } =:"
+s=$([[ $b -eq $v_LIB_bFalse ]] && echo "True!" || echo "?false")
+printf -v x "%s => [%s]" "$t" "$s"; f_lib_text "$x"     #   True!
 
 
 #   m:  footer
