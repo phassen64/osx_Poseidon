@@ -14,15 +14,32 @@
 #       :09 backtick        : '`',expr
 #   >>>
 
+<<CONTENT_OPERATOR
+    content:
+        b:  B.body
+        •   m:  include
+        •   m:  header
+            •   m:  F.arithmetic
+            •   m:  F.comparing.numbers
+            •   m:  F.logical.operators
+        •   m:  footer
+        b:  B.last
+CONTENT_OPERATOR
+
+
+#
+#   &&& b:  B.body
+#
+
 #   m:  include
 source LIB.wsp.inc.bsh
-if [ "$1" == "" ]; then f_lib_configuration '+'; fi
+if [ "$1" == "" ]; then f_lib_configuration '+' '-'; fi
 declare -i z_iEc=$1
 
-#   =*= :   header
+#   m:  header
 f_lib_header $z_iEc
-f_lib_footer 77
 
+#   m:  operatorSpace
 
 declare -i i=0
 declare -i j=0
@@ -30,39 +47,40 @@ declare -i k=0
 declare -i l=0
 declare -i n=10
 
-#   =*= :   body
+#   ===========================================================================
+#   m:  F.arithmetic
+#   ===========================================================================
 
-#
-#   =*= :01 arithmetics
-#
+f_lib_menu 'arithmetic'
 
-f_lib_menu 'arithmetics' $LINENO
-
-f_lib_menuS1 'basic' $LINENO
+#   s:  basic
+f_lib_menuS1 'basic'
 a=1;b=8;x=$(($a+$b));   f_lib_text "a:<$a> + b:<$b> =: <$x>"
 a=2;b=7;x=$(($a-$b));   f_lib_text "a:<$a> - b:<$b> =: <$x>"
 a=6;b=5;x=$(($a*$b));   f_lib_text "a:<$a> * b:<$b> =: <$x>"
 a=9;b=2;x=$(($a/$b));   f_lib_text "a:<$a> / b:<$b> =: <$x>"        #   4
 a=3;b=7;x=$(($a/$b));   f_lib_text "a:<$a> / b:<$b> =: <$x>"        #   0
 
-f_lib_menuS1 'potential' $LINENO
+#   s:      power
+f_lib_menuS1 'power'
 a=2;b=4;x=$(($a**$b));  f_lib_text "a:<$a> ** b:<$b> =: <$x>"       #   16
 
-f_lib_menuS1 'divisor,modulo,reminder(using:let)' $LINENO
+f_lib_menuS1 'divisor'
 a=13;b=5;x=$(($a/$b));   f_lib_text "a:<$a> / b:<$b> =: <$x>"        #   3
 a=13;b=5;x=$(($a%$b));   f_lib_text "a:<$a> % b:<$b> =: <$x>"        #   2
+
 #   special usage of let()
 a=13;b=5;x=$a;let "x %= $b";    f_lib_text "let a:<$a>=:x %= b:<$b> =: <$x>"    #   2
 
-f_lib_menuS1 'modulo vs reminder' $LINENO
+f_lib_menuS1 'modulo vs reminder'
 i=18;b=-5;x=$(($a%$b));         f_lib_text "<$a>   %  <$b>  =: <$x>"
 i=18;b=-5;x=$a;let "x %= $b";   f_lib_text "<$a>  %=  <$b>  =: <$x>"
 
 #   x=$(($a%=$b))
 #   f_lib_puts "a:<$a> %= b:<$b> =: <?>"   #   ? notOK
 
-f_lib_menuS1 'inc,dec' $LINENO
-f_lib_text 'using: let command' $LINENO
+f_lib_menuS1 'inc,dec'
+f_lib_text 'using: let command'
 #   REM: NOT WORKING:    x=$a; x+=$b
 
 a=5;b=2;x=$a; let "x += $b" ;   f_lib_text "x=<$a> += <$b> => <$x>"
@@ -70,135 +88,184 @@ a=5;b=2;x=$a; let "x -= $b" ;   f_lib_text "x=<$a> -= <$b> => <$x>"
 a=5;b=2;x=$a; let "x *= $b" ;   f_lib_text "x=<$a> *= <$b> => <$x>"
 a=5;b=2;x=$a; let "x /= $b" ;   f_lib_text "x=<$a> /= <$b> => <$x>"
 
+
+#   ===========================================================================
+#   m:  F.comparing.numbers
+#   ===========================================================================
+
+f_lib_menu 'compare operators'
+
+#   fetch my random number - 2 ways
+i=$(f_lib_random $n)
+j=$(f_lib_random $n)
+f_lib_randomMore $n; k=$?   #   not used
+f_lib_randomMore $n; l=$?   #   not used
+
+#   show
+f_lib_puts "--- i:$i;j:$j" $v_LIB_color__cyan
+
 #
-#   =*= :02 comparing numbers
+#   s:  standard.operator
 #
 
-f_lib_menu 'compare operators' $LINENO
+f_lib_menuS1 'standard : -[op]'
 
-f_lib_random $n; i=$?
-f_lib_random $n; j=$?
-f_lib_puts "i:$i;j:$j" $v_COL_ID_cyan
+#   u:  operator: 'eq'
+s='?eq => '; if [ $i -eq $j ]; then s+='TRUE!'; else s+='false'; fi
+f_lib_text "$s"
 
-s='eq:'; if [ $i -eq $j ]; then s+='TRUE!'; else s+='false'; fi
-f_lib_print "$s" $v_LIB__PRT_onNLonPx
+#   u:  operator: 'ne'
+s='?ne:'; if [ $i -ne $j ]; then s+='TRUE!'; else s+='false'; fi
+f_lib_text "$s"
 
-s='ne:'; if [ $i -ne $j ]; then s+='TRUE!'; else s+='false'; fi
-f_lib_print "$s" $v_LIB__PRT_onNLonPx
+#   u:  operator: 'gt'
+s='?gt:'; if [ $i -gt $j ]; then s+='TRUE!'; else s+='false'; fi
+f_lib_text "$s"
 
-s='gt:'; if [ $i -gt $j ]; then s+='TRUE!'; else s+='false'; fi
-f_lib_print "$s" $v_LIB__PRT_onNLonPx
+#   u:  operator: 'lt'
+s='?lt:'; if [ $i -lt $j ]; then s+='TRUE!'; else s+='false'; fi
+f_lib_text "$s"
 
-s='lt:'; if [ $i -lt $j ]; then s+='TRUE!'; else s+='false'; fi
-f_lib_print "$s" $v_LIB__PRT_onNLonPx
-
+#   u:  operator: 'ge'
 s='ge:'; if [ $i -ge $j ]; then s+='TRUE!'; else s+='false'; fi
-f_lib_print "$s" $v_LIB__PRT_onNLonPx
+f_lib_text "$s"
 
+#   u:  operator: 'le'
 s='le:'; if [ $i -le $j ]; then s+='TRUE!'; else s+='false'; fi
-f_lib_print "$s" $v_LIB__PRT_onNLonPx
+f_lib_text "$s"
 
+#
+#   s:  special.operator
+#
+f_lib_menuS1 'special : {[==] [!=]}'
+
+#   u:  operator: '=='
 s='op:{==}:'; if [ $i == $j ]; then s+='TRUE!'; else s+='false'; fi
-f_lib_print "$s" $v_LIB__PRT_onNLonPx
+f_lib_text "$s"
+
+#   u:  operator: '!='
 s='op:{!=}:'; if [ $i != $j ]; then s+='TRUE!'; else s+='false'; fi
-f_lib_print "$s" $v_LIB__PRT_onNLonPx
+f_lib_text "$s"
 
-i=1; j=1
-f_lib_puts "i:$i;j:$j" $v_COL_ID_cyan
-s='op:{==}:'; if [ $i == $j ]; then s+='TRUE!'; else s+='false'; fi
-f_lib_print "$s" $v_LIB__PRT_onNLonPx
-echo "&&& END"
-
-#
-#   =*= :03 logical operators
-#
+#   ===========================================================================
+#   m:  F.logical.operators
+#   ===========================================================================
 
 f_lib_menu 'logical operators' $LINENO
 
-f_lib_random $n; i=$?
-f_lib_random $n; j=$?
-f_lib_random $n; k=$?
-f_lib_random $n; l=$?
+#   fetch
+f_lib_randomMore $n; i=$?
+f_lib_randomMore $n; j=$?
+f_lib_randomMore $n; k=$?
+f_lib_randomMore $n; l=$?
 
-f_lib_puts "i:$i;j:$j;k:$k;l:$l" $v_COL_ID_cyan
+#   show
+f_lib_puts "--- i:$i;j:$j;k:$k;l:$l" $v_LIB_color__cyan
 
-s='{ i<=j && k>=l } \t=:'
+#
+#   s:  normal.logic
+#
+
+f_lib_menuS1 'normal.logic'
+
+s='{ i<=j && k>=l } :'
 if [ $i -le $j ] && [ $k -ge $l ]
     then s+='TRUE!'
     else s+='false'
 fi
-f_lib_print "$s" $v_LIB__PRT_onNLonPx
+f_lib_text "$s"
 
-s='{ i<=j || k>=l } \t=:'
+s='{ i<=j || k>=l } :'
 if [ $i -le $j ] || [ $k -ge $l ]
     then s+='TRUE!'
     else s+='false'
 fi
-f_lib_print "$s" $v_LIB__PRT_onNLonPx
+f_lib_text "$s"
 
-s='{ i<j && k>l } \t=:'
+s='{ i<j && k>l } :'
 if [ $i -gt $j ] && [ $k -lt $l ]
     then s+='TRUE!'
     else s+='false'
 fi
-f_lib_print "$s" $v_LIB__PRT_onNLonPx
+f_lib_text "$s"
 
-s='{ i<j || k>l } \t=:'
+s='{ i<j || k>l } :'
 if [ $i -gt $j ] || [ $k -lt $l ]
     then s+='TRUE!'
     else s+='false'
 fi
-f_lib_print "$s" $v_LIB__PRT_onNLonPx
+f_lib_text "$s"
 
-printf "\t"
-f_lib_info "using '()' in: ( [ <boolStatement> op <boolStatement> ] )" $LINENO
-
-s='{ (i!=j && k!=l) || (k>8)) } \t=:'
+s='{ (i!=j && k!=l) || (k>8)) } :'
 if ( ( [ $i -ne $j ] && [ $k -ne $l ] ) || [ $k -gt 8 ] )
     then s+='TRUE!'
     else s+='false'
 fi
-f_lib_print "$s" $v_LIB__PRT_onNLonPx
+f_lib_text "$s"
 
-s="{ (i=j || k==l)  && (k<8)) } \t=:"
+s="{ (i=j || k==l)  && (k<8)) } :"
 if ( ( [ $i -eq $j ] || [ $k -eq $l ] ) && [ $k -lt 8 ] )
     then s+='TRUE!'
     else s+='false'
 fi
-f_lib_print "$s" $v_LIB__PRT_onNLonPx
+f_lib_text "$s"
 
-s="{ ! i == j } \t=:"
-f_lib_info "i:$i j:$j"
+s="{ ! i == j } :"
 if [ ! $i -eq $j ]
-    then s+='is !='
-    else s+='is =='
+    then s+='TRUE!'
+    else s+='false'
 fi
-f_lib_print "$s" $v_LIB__PRT_onNLonPx
-
-
-f_lib_menuS1 'internal logic' $LINENO
-
-x=$v_TRUE
-
-s="{ x == TRUE } \t=:"
-[ $x == $v_TRUE ] && s+='YES' ||  s+='NEPP'     # yes
-f_lib_debug "$s" $LINENO
-
-s="{ x != TRUE } \t=:"
-[ $x != $v_TRUE ] && s+='YES' ||  s+='NEPP'     # nepp
-f_lib_debug "$s" $LINENO
-
-s="{ x -eq TRUE } \t=:"
-[ $x -eq $v_TRUE ] && s+='YES' ||  s+='NEPP'    # yes
-f_lib_debug "$s" $LINENO
-
-x=$v_FALSE
-
-s="{ x -eq FALSE } \t=:"
-[ $x -eq $v_FALSE ] && s+='YES' ||  s+='NEPP'   # yes
-f_lib_debug "$s" $LINENO
+f_lib_text "$s"
 
 #
+#   s:  internal.logic
+#
+
+f_lib_menuS1 'internal logic'
+
+local -i x=$v_LIB_bTrue
+#   f_lib_puts "+ x:'$x'" $v_LIB_color__cyan
+
+echo "value of x:= [$x]"
+
+#   declare -x s="{ x == TRUE } :"
+#   sVal=$([[ $x -eq 100 ]] && echo "ok" || echo "no")
+#   echo "Status :$sVal"
+
+# Short-Hand Syntax
+sTxt=$([[ $x == $v_LIB_bTrue ]] && echo "True" || echo "False")
+#   echo "x:=$x;Status:$sTxt"  # Ausgabe: Volljährig
+
+exit
+
+s="{ x != TRUE } :"
+[ $x != $v_LIB_bTrue ] && s+='YES' ||  s+='NEPP'     # nepp
+f_lib_text "$s"
+
+s="{ x -eq TRUE } :"
+[ $x -eq $v_LIB_bTrue ] && s+='YES' ||  s+='NEPP'    # yes
+f_lib_text "$s"
+
+x=$v_LIB_bFalse
+f_lib_puts "--- x:$x" $v_LIB_color__cyan
+
+s="{ x -eq FALSE } =:"
+[ $x -eq $v_LIB_bFalse ] && s+='YES' ||  s+='NEPP'   # yes
+f_lib_text "$s"
+
+
+#   m:  footer
+f_lib_footer 77
+#   ===========================================================================
+#   m:  F.wildcard
+#   ===========================================================================
+
+f_lib_menu 'wildcard'
+
+
+
+
+
 #   =*= :04 wilcard
 #
 
