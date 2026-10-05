@@ -4,6 +4,14 @@
 #  	***************************************************************************
 #   copy my logBook
 
+#   usage:
+#       +   edit crontab
+#           bash$   crontab -e
+#           nano$   key:[PgnDwn]
+#       +   show crontab entry
+#           bash$   crontab -l | tail -1
+
+
 sFmt="+%Y-%m-%d__%H:%M:%S"
 sDtm=$(echo `date $sFmt`)
 
@@ -19,10 +27,18 @@ then
     return 99
 fi
 
+#   fileName
+fnam='log-X.txt'
+dObj="$HOME/VCS/fwk/basic/$fNam"
+if [ ! -d $dObj ]
+then
+    return 99
+fi
+
 printf "=== entry:[%s]\n" "$sDtm"
-printf "dirSrc:[%s]\n" "$dSrc"
-printf "dirObj:[%s]\n" "$dObj"
-printf "logbook.copy: dirSrc -> dirObj\n"
+printf "    dirSrc:[%s]\n" "$dSrc"
+printf "    dirObj:[%s]\n" "$dObj"
+printf "    logbook.copy: dirSrc -> dirObj\n"
 
 #   perform job
 cp $dSrc/log*.txt $dObj

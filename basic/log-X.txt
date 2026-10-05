@@ -692,6 +692,22 @@ $   make 02 advanced
 
 ### !date:<2026-10-04>:So 
 
-+   update cronJob
-+   $   crontab -n <file>   #    Fehler
++   edit crontab
+    bash$   crontab -e
 
+### !date:<2026-10-05>:Mo
+
++   show crontab last line
+    bash$   crontab -l | tail -1
+
++   entry inside crontab
+    */10 * * * * <pScp> >> <pLog> 2>&1
+    with:
+        pScp='/home/peter/VCS/fwk/cmd/jobWorkshop.bsh'
+        pLog='/home/peter/Documents/log/cron.log'
+
++   in detail - copy only if
+        pSrc="$HOME/Documents/basic/log-X.txt"
+        pObj="$HOME/VCS/fwk/basic/log-X.txt"
+    was changed
+        
