@@ -4,28 +4,27 @@
 #   tutorial BASH 2026  :   "operator"                 ©[mATe64]::[2026-10-03]
 #   ***************************************************************************
 
-#   remark: use: normal comment BSH has problems with backtick
-
-#   <<< operators
-#       :01 arithmetics     : +,-,*,/: ** : /,%,%=: +=,-=,*=,/=
-#       :02 compare         : -eq,-ne,-gt,-lt,-ge,-le
-#       :03 logical         : && , ||
-#       :04 wildcard        : *
-#       :09 backtick        : '`',expr
-#   >>>
+#   remark: normal comment BSH has problems with backtick
 
 <<CONTENT_OPERATOR
     content:
         b:  B.body
         •   m:  include
         •   m:  header
-            •   m:  F.arithmetic
-            •   m:  F.comparing.numbers
-            •   m:  F.logical.operators
+            •   m:  F.arithmetic            { +,-,*,/: ** : /,%,%=: +=,-=,*=,/= }
+            •   m:  F.comparing.numbers     { eq,-ne,-gt,-lt,-ge,-le }
+            •   m:  F.logical.operators     { && , || }
+                    •   s:  normal.logic
+                    •   s:  internal.logic
+            •   m:  F.wildcard              {*}
+                    •   s:  wildcard.example
+                    •   s:  wildcard.pattern
+            •   m:  F.expr-with-backtick    {`expr`}
+                    •   s:  expr(a+b)
+                    •   s:  expr(a-b)
         •   m:  footer
-        b:  B.last
+        b:  B.lastLine
 CONTENT_OPERATOR
-
 
 #
 #   &&& b:  B.body
@@ -249,57 +248,58 @@ t="{ x -eq FALSE } =:"
 s=$([[ $b -eq $v_LIB_bFalse ]] && echo "True!" || echo "?false")
 printf -v x "%s => [%s]" "$t" "$s"; f_lib_text "$x"     #   True!
 
-
-#   m:  footer
-f_lib_footer 77
 #   ===========================================================================
 #   m:  F.wildcard
 #   ===========================================================================
 
-f_lib_menu 'wildcard'
-
-
-
-
-
-#   =*= :04 wilcard
-#
-
 #   URL:https://stackoverflow.com/questions/102049/how-do-i-escape-the-wildcard-asterisk-character-in-bash
 #   how i get "BAR * BAR" ?
 
-f_lib_menu 'escape wildcard' $LINENO
+#
+#   s:  wildcard.example
+#
+
+f_lib_menuS1 'wildcard'
 
 f_lib_text 'area is:' $LINENO
 x='width'; y='length'
 s=
 s+="'$x'"
-s+="*"      # add with "*"
+s+=" * "    # add with "*"
 s+="'$y'"
-f_lib_puts "Area:= < $s >"     # already an array
+f_lib_text "Area:= < $s >"     # already an array
 
 #
-#   how avoid the eval ???
+#   s:  wildcard.pattern
 #
-f_lib_menuS1 'using wildcard as pattern' $LINENO
+
+f_lib_menuS1 'using wildcard as pattern'
 x='b??'; y='bsh'; s="$x*.$y"
 
 #   avoid eval - use: "$x"
-f_lib_puts  "pattern : <$s>"   # >echo $s    #   evaluates
+f_lib_text  "pattern : <$s>"   # >echo $s    #   evaluates
 
-#
-#   =*= :09 backtick
-#
+#   ===========================================================================
+#   m:  F.expr-with-backtick
+#   ===========================================================================
 
-f_lib_menu 'backticks and expr' $LINENO
+f_lib_menu 'expr-with-backticks' $LINENO
 
 #   only view operations like {+} and {-} but not:{*}
 
+#   s:  expr(a+b)
+f_lib_menuS1 'expr(a+b)'
 a=5;b=2
 x=`expr $a + $b`
-f_lib_puts "\`expr <$a> + <$b> \`  =: <$x>"
+f_lib_text "\`expr <$a> + <$b> \`  =: <$x>" # 7
 
-a=8;b=3; x=`expr $a - $b`; f_lib_puts "\`expr <$a> - <$b> \`  =: <$x>"
+#   s:  expr(a-b)
+f_lib_menuS1 'expr(a-b)'
+a=8;b=3; x=`expr $a - $b`
+f_lib_text "\`expr <$a> - <$b> \`  =: <$x>" # 5
 
-#   =*= :   footer
-f_lib_footer $z_SCP $LINENO $z_iRc $z_iEc
+#   m:  footer
+f_lib_footer 77
+
+
+#   &&& b:  B.lastLine
