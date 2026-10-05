@@ -8,10 +8,12 @@
 #   https://wiki.ubuntuusers.de/Shell/Bash-Skripting-Guide_f%C3%BCr_Anf%C3%A4nger/
 
 #   input:
-#           •   v_FWK_dirScratch
+#       •   v_FWK_dirScratch
 
-#   remark:
-#       The lib configuration should be set to verbose
+#   remarks:
+#       •   default:no color must be enabled by:lib configuration
+#       •   exit code only 0..255 - but 0,1,250...255 are reserved
+#
 
 #   remark 'echo':
 #       The primary options (flags) supported by the Bash echo command are:
@@ -87,7 +89,10 @@
                     •   s:  f.menu.M
                     •   s:  f.menu.S1
                     •   s:  f.menu.S2
-                    •   s:  f.debug.Trace
+            •   m:  F.lib.debugging
+                    •   s:  f.trace
+                    •   s:  f.debug
+                    •   s:  f.exit
             •   m:  F.lib.test
         b:  B.body
             •   m:  v.boolType
@@ -112,7 +117,7 @@ function f_lib_initialize(){
     declare -i v_LIB_reply_bRc=0    && export v_LIB_reply_bRc
     declare -i v_LIB_reply_iRc=9    && export v_LIB_reply_iRc
     declare -x v_LIB_reply_sRc='?'  && export v_LIB_reply_sRc
-    declare -i v_LIB_reply_iEc=0    && export v_LIB_reply_iEc
+    declare -i v_LIB_reply_iEc=0    && export v_LIB_reply_iEc       # 1byte:0..255
     declare    v_LIB_reply_aRc=()   && export v_LIB_reply_aRc
 
     #   m:  v.timer
@@ -851,12 +856,12 @@ function f__log_determineFilePath() {
     #   check.srcPth
     if [ ! -f $p_pSrc ]; then
         echo "? p1:[$p_pSrc] at:[$sFct;$LINENO]"
-        exit
+        v_Lib_iEc=19
     fi
     #   check.objDir
     if [ ! -d $p_dObj ]; then
         echo "? p2:[$p_dObj] at:[$sFct;$LINENO]"
-        exit
+        v_Lib_iEc=29
     fi
 
     #   getFileName and getFileBody
@@ -945,7 +950,7 @@ function f_lib_header() {
     v_LIB_reply_iEc=$p_iReply
 
     #   show header
-    sHeaderText="=== hdr:[$p_pBash;$p_iLine]:[$l_sNow]:[$v_LIB_reply_iEc]."
+    sHeaderText="=== hdr:[$p_pBash;$p_iLine]:[$l_sNow] #ec:{$v_LIB_reply_iEc}."
     f__puts "$sHeaderText\n " $v_LIB_color__green
 
     #   time.Start
@@ -993,21 +998,22 @@ function f_lib_header() {
 function f_lib_footer() {
 
     #   fetch parameter
-    local p_iReply=$1     #   current.footer.Rc
+    local p_iReply=$1     #   alternative footer.Rc
 
     #   bash stack variables
     local p_pBash=${BASH_SOURCE[1]}     #   caller.bscp
     local p_iLine=${BASH_LINENO[0]}     #   caller.lineNo
-    local p_sFctn=${FUNCNAME[0]}        #   caller.fctn
+    local p_sFctn=${FUNCNAME[1]}        #   caller.fctn
 
     #   time.Stop
     v_LIB_timer_tStopp=$(date +%s.%N)
 
     #   show
+    v_LIB_mode_bVerbose=$v_LIB_bTrue
     if [ $v_LIB_bTrue == $v_LIB_mode_bVerbose ]; then
         echo "< L.pScp :: [$p_pBash]"
         echo "< L.iPos :: [$p_iLine]"
-        echo "< L.lFct :: [$p_sFctn]"
+        echo "< L.sFct :: [$p_sFctn]"
         echo "< L.iRc  :: [$p_iReply]"
         echo "< L.iEc  :: [$v_LIB_reply_iEc]"
         echo "< L.tDtm.stopp :: [$v_LIB_timer_tStopp]"
@@ -1027,8 +1033,8 @@ function f_lib_footer() {
     f__puts "\n$s" $v_LIB_color__green
     f__logs "$s"
 
-    #   return
-    return $v_LIB_reply_iEc
+    #   do exit
+    f_lib_exit $v_LIB_reply_iEc
 }
 
 #   s:  f.menu.M
@@ -1069,8 +1075,12 @@ function f_lib_menuS2() {
     f__logs "$s"
 }
 
+#   ===========================================================================
+#   m:  F.lib.debugging
+#   ===========================================================================
 
-#   s:  f.debug.Trace(sFct,iLine,sText,[bEnabled=true])
+
+#   s:  f.trace
 function f_lib_trace()   {
 
     #   fetch
@@ -1100,11 +1110,18 @@ function f_lib_trace()   {
 }
 
 
-#   s:  f.lib.debug
+#   s:  f.debug
 function f_lib_debug() {
     if [ $v_LIB_bTrue ==  $v_LIB_mode_bDebugging ]; then
         printf "=== debugString : [%s]\n" $1
     fi
+}
+
+#   s:  f.exit
+function f_lib_exit() {
+    local -i iEc=$1
+    ##  echo "I got F.lib.exit : [$iEc]"
+    exit $iEc
 }
 
 #   ===========================================================================

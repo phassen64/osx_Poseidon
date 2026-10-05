@@ -51,9 +51,10 @@ if [ "$1" == "" ]; then
 else
     p_sCaller=$1
 fi
+declare -i z_iEc=$1
 
 #   s:  lib.header - take out exitCode
-f_lib_header $v_FWK_iEc
+f_lib_header $z_iEc
 
 #   s:  lib.configuration
 printf "\n$ call LIB.config \n"
@@ -322,6 +323,7 @@ declare -i bTrp=$v_LIB_bTrue        #   trc:enabled
 declare -i bTrp=123                 #   trc:disabled
 
 f_lib_trace "eop" $bTrp
-f_lib_footer $z_iRc; iRc=$?
+
+f_lib_footer 71
 
 #   b:  B.last

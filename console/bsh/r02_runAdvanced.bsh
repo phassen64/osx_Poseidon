@@ -33,17 +33,35 @@ function f_run_script {
         nFile+=1
     done
 
+    #   define my runner.exitCode [3,...199]
+    local -i iEc=55
+    local -i iBashReply=0
+
     #   run
-    printf "___ script nFiles:<%d>  iRnd:[%d]\n" $nFile $p_iRnd
+    printf "___ script nFiles:<%d>  iRnd:[%d] :#{%d}\n" $nFile $p_iRnd $iEc
 
     for (( n=1; n<=$p_nStressMax; n++ )); do
+
         printf "\n### stress :: [%3.3d]/[%3.3d]\n" $n $p_nStressMax
         iFile=0
+
         for xFile in $p_aSrc
         do
             iFile+=1
             printf "\n*** runScr:[%3.3d].[%2.2d]:'%s'\n\n" $n $iFile $xFile
-            bash $xFile "$BASH_SOURCE"
+
+            #   call script, save exitCode
+            bash $xFile $iEc;   iBashReply=$?
+
+            #   check reply
+            printf "\n<<< iReply[%d]:'%s': #{%d}" $n $xFile $iBashReply
+            if [ $iEc == $iBashReply ]
+            then
+                printf "==: OK\n"
+            else
+                printf "==: ?False\n"
+            fi
+
         done
     done
 

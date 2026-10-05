@@ -67,9 +67,10 @@ source LIB.wsp.inc.bsh
 if [ "$1" == "" ]; then
     f_lib_configuration '+'
 fi
+declare -i z_iReply_iEc=$1
 
 #   m:  header
-f_lib_header $v_FWK_iEc
+f_lib_header $z_iReply_iEc
 
 #   s:  trace.flag
 declare -i  bTrace=$v_LIB_bTrue
@@ -239,7 +240,6 @@ f_lib_text "slice(FROM:$iFrom;TO:$iTo)" $LINENO
 declare -p aVal1
 declare -p aVal2
 
-
 #   ===========================================================================
 #   s:  V.assocArray
 #   ===========================================================================
@@ -279,7 +279,6 @@ f_lib_text "LD_LIBRARY_PATH:<$LD_LIBRARY_PATH>"
 f_lib_text "PS1:<$PS1>"
 f_lib_text "USER:<$USER>"
 f_lib_text "LOGNAME:<$LOGNAME>"
-
 
 #   ===========================================================================
 #   m:  M.check.DataType
@@ -342,7 +341,6 @@ x='peter';
 f_lib_isCntrl   $x; b=$?; f__echoExpr "?isCntrl" $x $b
 x="p\ta";
 f_lib_isCntrl   $x; b=$?; f__echoExpr "?isCntrl" $x $b  # not OkFALSE
-
 
 #   m:  footer
 f_lib_footer $v_FWK_iEc

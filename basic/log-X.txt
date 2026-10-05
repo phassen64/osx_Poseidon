@@ -738,7 +738,7 @@ $<
     3.  goto "Preferences: Open User Settings (JSON)".
     4.  enter "keyboard.dispatch": "keyCode
 
-+   VsCode settings.JSon location
++   VsCode settings.JSON location
     dir:    '/home/peter/.config/Code/User'
     fnm:    'settings.json'
 

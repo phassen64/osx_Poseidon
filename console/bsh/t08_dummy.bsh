@@ -1,0 +1,24 @@
+#!/bin/bash
+#   ***************************************************************************
+#   tutorial BASH 2026  :   "dummy"                 ©[mATe64]::[2026-10-04]
+#   ***************************************************************************
+#   encoding.UTF8:
+#   !@€ƒ„…†‡ˆ‰Š‹ŒŽ +‘“”•—™š›œžŸ+¡¢£¤¥¦§¨©«¬®°±²³µ¶·¹º»¼½¾¿ÄÖÜÑ×ØÞßäæçîðñôö÷üýþÿ
+<<CONTENT_dummy
+    content:
+        b:  B.body
+        b:  B.last
+CONTENT_dummy
+
+#   b:  B.body
+#   m:  include
+source LIB.wsp.inc.bsh
+declare -i z_iReply_iEc=$1
+
+#   m:  header
+f_lib_header $z_iReply_iEc
+
+#   m:  footer with alternative replyCode
+f_lib_footer 9
+
+#   b:  B.last
