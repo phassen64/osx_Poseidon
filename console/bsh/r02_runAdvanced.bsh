@@ -36,6 +36,11 @@ function f_run_script {
     #   define my runner.exitCode [3,...199]
     local -i iEc=55
     local -i iBashReply=0
+    local -x sLine
+
+    #   build sLine
+    s=''; c='#'; for((i=0;i<80;i++)); do s+="$c"; done
+    sLine=$s
 
     #   run
     printf "___ script nFiles:<%d>  iRnd:[%d] :#{%d}\n" $nFile $p_iRnd $iEc
@@ -48,7 +53,12 @@ function f_run_script {
         for xFile in $p_aSrc
         do
             iFile+=1
-            printf "\n*** runScr:[%3.3d].[%2.2d]:'%s'\n\n" $n $iFile $xFile
+
+            s=''; c='#'; for((i=0;i<80;i++)); do s+="$c"; done
+
+            printf "\n%s\n" $sLine
+            printf "*** run:[%2.2d]/[%3.3d]:'%s'\n" $iFile $n  $xFile
+            printf "%s\n\n" $sLine
 
             #   call script, save exitCode
             bash $xFile $iEc;   iBashReply=$?
