@@ -4,7 +4,7 @@
 #   tutorial BASH 2026  :   "operator"                 ©[mATe64]::[2026-10-03]
 #   ***************************************************************************
 
-#   remark: normal comment BSH has problems with backtick
+#   !CRQ-261006:noBacktickComment - else the logging fails !
 
 <<CONTENT_OPERATOR
     content:
@@ -19,7 +19,7 @@
             •   m:  F.wildcard              {*}
                     •   s:  wildcard.example
                     •   s:  wildcard.pattern
-            •   m:  F.expr-with-backtick    {`expr`}
+            •   m:  F.expr-with-backtick    {expr}  see:[CRQ-261006]
                     •   s:  expr(a+b)
                     •   s:  expr(a-b)
         •   m:  footer
