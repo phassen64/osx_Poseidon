@@ -337,6 +337,9 @@ function f__color_configure() {
 
 function f__color_test() {
 
+    local s
+    local x
+
     printf "\n>>> colorTest::begin \n"
 
     declare -x x=$v_LIB_COLOR_ESC_RESET
@@ -457,7 +460,7 @@ function f_lib_dateTime() {
 
 #   s:  f.sleep
 function f_lib_sleep() {
-    local i=$1
+    local -i i=$1
     if [ $v_LIB_bTrue == $v_LIB_mode_bVerbose ]; then
         echo "< L.sleep :: [$i]"
     fi
@@ -484,13 +487,15 @@ function f_lib_randomMore() {
     #   f~lib_randomMore <nMax> <nMin>
     local -i    p_iMin=0
     local -i    p_iMax=100
+    local -i    i
+    local -i    nRange
     #   extrema
     if [ ! -z $1 ];     then    p_iMax=$1;     fi
     if [ ! -z $2 ];     then    p_iMin=$2;     fi
     if [ $p_iMax -lt $p_iMin ];    then    return 0;       fi
     #   range
-    local -i nRange=1+$p_iMax-$p_iMin
-    local -i i=$(( RANDOM % $nRange ))
+    nRange=1+$p_iMax-$p_iMin
+    i=$(( RANDOM % $nRange ))
     let "i += $p_iMin"      #  MIN..MAX
     return $i               # returns => nMin..nMax
 }
@@ -540,6 +545,8 @@ function f__echoExpr() {
     local p_sInfo=$1        #   ?isSpace
     local p_sExpr=$2        #   'p ter'
     local p_bRcVa=$3        #   100
+    local x
+    local sRc
     if [ $v_LIB_bTrue -eq  $p_bRcVa ]
         then sRc="TRUE"
         else sRc="FALSE"
@@ -825,9 +832,10 @@ function f__log_determineFilePath() {
     local p_pSrc=$1         #   source  sFilePath
     local p_dObj=$2         #   object  sDir
     local p_bDtm=$3         #   appendix bDateTimeString request is True
-
     #   me
     local sFct=${FUNCNAME[0]}
+    #   local else
+    local s
 
      #   show
     if [ $v_LIB_bTrue == $v_LIB_mode_bVerbose ]; then
@@ -872,6 +880,7 @@ function f__log_determineFilePath() {
 
 #   s:  f.log.GetPath < wrapper() >
 function f_lib_logging_getPath() {
+    local -i iRc
     f__log_determineFilePath "$1" "$2" "$3"; iRc=$?
      #   show
     if [ $v_LIB_bTrue == $v_LIB_mode_bVerbose ]; then
@@ -889,6 +898,7 @@ function f_lib_logging_getPath() {
 
 #   s:  f.~~plgs
 function f__plgs() {
+    local x
     f__puts "$1" "$2"
     #   remove tabs & newLine of $1 before logging
     x=$(printf "%b\n" "$1")
@@ -1030,6 +1040,8 @@ function f_lib_menu() {
     local p_sText=$1
     local p_pBash=${BASH_SOURCE[1]}     # stack.caller
     local p_iLine=${BASH_LINENO[0]}     # stack.lineNo
+    local s
+    local x
     v_LIB_menuS0_iCtr+=1
     v_LIB_menuS1_iCtr=0
     v_LIB_menuS2_iCtr=0
@@ -1043,6 +1055,8 @@ function f_lib_menu() {
 function f_lib_menuS1() {
     local p_sText=$1
     local p_iLine=${BASH_LINENO[0]}     # stack.lineNo
+    local s
+    local x
     v_LIB_menuS1_iCtr+=1
     v_LIB_menuS2_iCtr=0
     printf -v x "[%2.2d.%2.2d]" "$v_LIB_menuS0_iCtr" "$v_LIB_menuS1_iCtr"
@@ -1055,6 +1069,8 @@ function f_lib_menuS1() {
 function f_lib_menuS2() {
     local p_sText=$1
     local p_iLine=${BASH_LINENO[0]}     # stack.lineNo
+    local s
+    local x
     v_LIB_menuS2_iCtr+=1
     printf -v x "[%2.2d.%2.2d.%2.2d]"\
         "$v_LIB_menuS0_iCtr"  "$v_LIB_menuS1_iCtr" "$v_LIB_menuS2_iCtr"
@@ -1077,6 +1093,9 @@ function f_lib_trace()   {
     local p_iLine=${BASH_LINENO[0]}     #   stack.lineNo
     local p_sFctn=${FUNCNAME[1]}        #   stack.fctn
 
+    #   local
+    local s
+
     #   check flag (empty || true)
     if [ -z $p_bFlag ]; then
         p_bFlag=$v_LIB_bTrue
@@ -1089,7 +1108,7 @@ function f_lib_trace()   {
     fi
 
     #   prepare text
-    local s="--- T:[$p_sFctn;$p_iLine]:'$p_sText'"
+    s="--- T:[$p_sFctn;$p_iLine]:'$p_sText'"
 
     #   show
     f__puts "$s" $v_LIB_color__magenta
