@@ -1,0 +1,307 @@
+#!/bin/bash
+
+#   ***************************************************************************
+#   tutorial BASH 2026  :   "control"               ©[mATe64]::[2026-10-06]
+#   ***************************************************************************
+
+<< hereDoc_content_tutor__control
+        b:  B.body
+            b:  include
+            b:  F.header
+            b:  main
+            •   m:  C.if-then-else-fi
+                •   s:  if-if-then-else-fi
+                •   s:  if-thenelse-fi
+            •   m:  C.case-esac
+            •   m:  C.for.do.done
+            •   m:  while
+            •   m:  until
+            b:  F.footer
+        b:  B.lastLine
+hereDoc_content_tutor__control
+
+#
+#   &&& b:  B.body
+#
+
+#   b:  include
+source LIB.wsp.inc.bsh
+if [ "$1" == "" ]; then f_lib_configuration '+' '-'; fi
+declare -i z_iEc=$1
+
+#   b:  F.header
+f_lib_header $z_iEc
+
+
+#
+#   b:  main
+#
+
+#   s:  local integer
+declare -i i
+declare -i j
+declare -i m
+declare -i n
+declare -i x
+
+#   ===========================================================================
+#   m:  C.if-then-else-fi
+#   ===========================================================================
+
+#   m:  F.menu
+f_lib_menu "if-then-else-fi"
+
+#   s:  if-if-then-else-fi
+f_lib_menuS1 "if-else-fi:long" $LINENO
+a=1
+if [ $a == 1 ]
+then
+    f_lib_text "a==1"
+else
+    f_lib_text "a is not 1"
+fi
+
+#   s:  if-thenelse-fi - no extra lines
+f_lib_menuS1 "if-thenelse-fi" $LINENO
+
+n=10
+i=$(f_lib_random $n)
+
+#   declare -i x
+x=$(f_lib_random $n)
+
+
+#   f_lib_puts "____x:<$x>" $v_LIB_color__cyan
+
+if [ $x == 5 ] || [ $x -gt 1 ]
+    then f_lib_text "x==2 or >1"
+    else f_lib_text "x not found"
+fi
+
+
+f_lib_menuS1 "if-fi:short" $LINENO
+f_lib_puts "x=='$x'"
+[ $x == 5 ] &&      f_lib_puts "x==5"     $v_LIB_color__green \
+            ||      f_lib_puts "x != 5"   $v_LIB_color__red
+
+
+#   ===========================================================================
+#   m:  C.case-esac
+#   ===========================================================================
+
+#   m:  F.menu
+f_lib_menu "case" $LINENO
+
+#
+#   =*= :number-test
+#
+
+f_lib_menuS1 "test a number" $LINENO
+
+f_lib_print "testing directly" $v_LIB__PRT_onNLonPx
+
+function f_tmp_testNumber {
+    f_lib_print "${FUNCNAME[0]}('$1'):" $v_LIB__PRT_noNLonPx
+    case $1 in
+        [1-3])
+            f_lib_print ":between 1 and 3"
+        ;;
+        [4-8])
+            f_lib_print ":between 4 and 8"
+        ;;
+        *)
+            f_lib_print "default"
+        ;;
+    esac
+}
+
+#   fetch a number
+n=10; f_lib_random $n; i=$?;
+f_tmp_testNumber $i; sleep 1
+f_lib_random $n; i=$?
+f_tmp_testNumber "$i"
+
+#
+#   =*= :name-test or string-test
+#
+
+f_lib_menuS1 "test a fixed name" $LINENO
+
+function f_tmp_testName {
+    f_lib_print "${FUNCNAME[0]}('$1'):" $v_LIB__PRT_noNLonPx
+    case $1 in
+        'Luke')
+            f_lib_print "'first name'"
+        ;;
+        'Skywalker')
+            f_lib_print "'second name'"
+        ;;
+        *)
+            f_lib_print "'?:unknown name'"
+        ;;
+    esac
+}
+
+f_tmp_testName 'Luke'
+f_tmp_testName 'Skywalker'
+f_tmp_testName 'Darth'
+
+#
+#   =*= :character-test
+#
+
+f_lib_menuS1 "test a char" $LINENO
+
+function f_tmp_testChar {
+    f_lib_print "${FUNCNAME[0]}('$1'):" $v_LIB__PRT_noNLonPx
+    case $1 in
+        [a-j]*)
+            f_lib_puts "'lowcase letter:a-j'"
+        ;;
+        [A-J]*)
+            f_lib_puts "'upper letter:A-J'"
+        ;;
+        [A-Za-z]*)
+            f_lib_puts "'letters'"
+        ;;
+        [0-9]*)
+            f_lib_puts "'digits'"
+        ;;
+        [+*-/]*)
+            f_lib_puts "'arithmmetics'"
+        ;;
+        *)
+            f_lib_puts "'any chars'"
+        ;;
+    esac
+}
+
+# only the first char is relevant
+f_tmp_testChar 'abc'  #  letter
+f_tmp_testChar 'AbC'    # letter - nocase
+f_tmp_testChar '123'    # digits
+f_tmp_testChar '+'      # arithmentics
+f_tmp_testChar '/'      # arithmentics
+f_tmp_testChar '!'      # any
+
+
+#   ===========================================================================
+#   m:  C.for.do.done
+#   ===========================================================================
+
+#   m:  F.menu
+f_lib_menu "for"
+
+#  by sequence
+f_lib_menuS1 "by sequence1" $LINENO
+i=1
+n=3
+f_lib_print "for FROM:<$i> TO:<$n> is:[" $v_LIB__PRT_noNLonPx
+for x in `seq $i $n`;
+do
+    f_lib_print "[$i/$n]:$x;" $v_LIB__PRT_noNLnoPx $v_COL_ID_red
+    i+=1
+done
+f_lib_print "]." $v_LIB__PRT_onNLnoPx
+
+#  by range
+f_lib_menuS1 "by range" $LINENO
+aShl=( "bash" "shell" "ksh" )
+i=1
+n=${#aShl[@]};
+for x in "${aShl[@]}"
+do
+    f_lib_print "[$i/$n]:$x;" $v_LIB__PRT_noNLnoPx $v_COL_ID_red
+    i+=1
+done
+f_lib_print "." $v_LIB__PRT_onNLnoPx
+
+#  by char
+f_lib_menuS1 "by string range" $LINENO
+s="abcdefgh"
+i=1
+n=${#s}
+for x in $s
+do
+    f_lib_print "[$i/$n]:$x;" $v_LIB__PRT_noNLnoPx $v_COL_ID_red
+    i+=1
+done
+f_lib_print "." $v_LIB__PRT_onNLnoPx
+
+#  by For Loop to iterate over an Array c-for
+f_lib_menuS1 "by forC" $LINENO
+aCar=( "audi" "mercedes" "toyota" "honda" )
+n=${#aCar[@]}
+for (( i=1; i < ${n}+1; i++ ));
+do
+    f_lib_puts "[$i/$n]:${aCar[$i-1]}"  $v_COL_ID_red
+done
+
+#   for loop that iterates over each element in arr - using break
+f_lib_menuS1 "using break" $LINENO
+aScp=( "bash" "shell" "script" "language" )
+declare -p aScp
+f_lib_print "for <x> in aScp :{" $v_LIB__PRT_noNLonPx
+i=0
+n=${#aScp[@]}-1
+for x in "${aScp[@]}"
+do
+    f_lib_print "[$i/$n]:${x};" $v_LIB__PRT_noNLnoPx $v_COL_ID_red
+    # break for loop based on a condition
+    if [ $x == "script" ]; then
+        break
+    fi
+    i+=1
+done
+f_lib_print "} ." $v_LIB__PRT_onNLnoPx
+
+#   ===========================================================================
+#   m:  C.while
+#   ===========================================================================
+
+#   m:  F.menu
+f_lib_menu "while" $LINENO
+
+#   simple while loop
+f_lib_menuS1 "Example of bash while loop" $LINENO
+i=0;n=3
+f_lib_print "while <i>=$i -lt <$n> ...:{" $v_LIB__PRT_noNLonPx
+while [ $i -lt $n ]; do
+   f_lib_print "[$i];" $v_LIB__PRT_noNLnoPx $v_COL_ID_red
+   let i++
+done
+f_lib_print "} ." $v_LIB__PRT_onNLnoPx
+
+#   double while
+f_lib_menuS1 "multiple conditions in expression" $LINENO
+i=0;j=0;n=4;m=9
+f_lib_print "while <i>=$i -lt <$n> && <j>=$j -lt <$m>...:{" $v_LIB__PRT_noNLonPx
+while [[ $i -lt $n && $j -lt $m ]]; do
+   f_lib_print "[$i/$j];" $v_LIB__PRT_noNLnoPx $v_COL_ID_red
+#  f_lib_puts "[$i/$j/$n]"  $v_COL_ID_red
+   let i++
+   let j+=2
+done
+f_lib_print "} ." $v_LIB__PRT_onNLnoPx
+
+
+#   ===========================================================================
+#   m:  C.until
+#   ===========================================================================
+
+#   m:  F.menu
+f_lib_menu "until" $LINENO
+
+n=5; i=10
+f_lib_print "until <$i> -lt <$n> ...:{" $v_LIB__PRT_noNLonPx
+until [ $i -lt $n ]; do
+   f_lib_print "[$i/$n];" $v_LIB__PRT_noNLnoPx $v_COL_ID_red
+   let i--
+done
+f_lib_print "} ." $v_LIB__PRT_onNLnoPx
+f_lib_puts "\n!END."
+
+#   b:  F.footer
+f_lib_footer 77
+
+#   &&& b:  B.lastLine
