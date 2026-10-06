@@ -94,7 +94,10 @@ clear
 sDtm=$(date "$sFmt");   tDtmStart=$(date '+%s.%N')
 
 #   s:  logFileName
-fLog="$v_FWK_dirScratch/run.log"
+v_SCP=`basename $BASH_SOURCE`
+v_SCP_bdy="${v_SCP%.*}"
+v_SCP_ext="${v_SCP##*.}"
+fLog="$v_FWK_dirScratch/$v_SCP_bdy.log"
 printf -v xLog "&&& logFile:'%s'" "$fLog"
 printf "$xLog\n"
 
