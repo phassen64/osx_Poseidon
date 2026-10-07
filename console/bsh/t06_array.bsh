@@ -1,0 +1,157 @@
+#!/bin/bash
+#   ***************************************************************************
+#   tutorial BASH 2026  :   "array"                 ©[mATe64]::[2026-10-07]
+#   ***************************************************************************
+#   encoding.UTF8:
+#   !@€ƒ„…†‡ˆ‰Š‹ŒŽ +‘“”•—™š›œžŸ+¡¢£¤¥¦§¨©«¬®°±²³µ¶·¹º»¼½¾¿ÄÖÜÑ×ØÞßäæçîðñôö÷üýþÿ
+
+
+<< hereDoc_content_tutor__array
+    content:
+        p:  p.function
+        p:  p.body
+            b:  b.include
+            b:  b.header
+            b:  b.main
+                •   m:  A.define
+                •   m:  A.size
+                •   m:  A.add
+                •   m:  A.slice
+            b:  b.footer
+        p:  p.last
+hereDoc_content_tutor__array
+
+#   p:  p.function
+#   p:  p.body
+
+#   b:  b.include
+source LIB.wsp.inc.bsh
+if [ "$1" == "" ]; then f_lib_configuration '+' '-'; fi
+declare -i z_iReply_iEc=$1
+
+#   b:  b.header
+f_lib_header $z_iReply_iEc
+
+#   b:  b.main
+declare -i i
+declare -i n
+
+#   ===========================================================================
+#   m:  A.define
+#   ===========================================================================
+
+#   m:  F.menu
+f_lib_menu "A.define"
+
+#   prepare
+f_lib_puts "define some arrays ..." $v_LIB_color__blue
+
+#   define empty array use declare
+declare -a aEmpty
+
+#   show
+s=$(declare -p aEmpty); f_lib_text "$s"     #   aEmpty
+
+#   define another empty array
+aEmpty2=()
+
+#   show
+s=$(declare -p aEmpty2); f_lib_text "$s"   #   aEmpty2
+
+#   define array with os
+aOs=('ubuntu' 'centos' 'redhat' 'windows' 'macOs' 'andoid')
+
+#   show
+s=$(declare -p aOs); f_lib_text "$s"
+
+#   define digit
+aDigit=( 1 5 6 )
+
+#   show
+s=$(declare -p aDigit); f_lib_text "$s"
+
+#   define alse
+declare -a aNumber=(\
+'One' 'Two' 'Three' 'Four' 'Five')
+s=$(declare -p aNumber); f_lib_puts "$s"
+
+declare -a aFruit=(\
+'Apple' 'Banana' 'Cherry' 'Duran' 'Eggfruit' 'Fig' 'Grapefruit' 'Huckleberry')
+s=$(declare -p aFruit); f_lib_puts "$s"
+
+#   ===========================================================================
+#   m:  A.size      n=${#a[@]}
+#   ===========================================================================
+
+#   m:  F.menu
+f_lib_menu "A.size"
+
+#   calc
+n=${#aEmpty[@]};    f_lib_text "sizeof(aEmpty)=<$n>"    #   0
+n=${#aOs[@]};       f_lib_text "sizeof(aOs)=<$n>"       #   6
+n=${#aDigit[@]};    f_lib_text "sizeof(aDigit)=<$n>"    #   3
+n=${#aNumber[@]};   f_lib_text "sizeof(aNumber)=<$n>"   #   5
+n=${#aFruit[@]};    f_lib_text "sizeof(aFruit)=<$n>"    #   8
+
+
+#   ===========================================================================
+#   m:  A.add       a+=('x')
+#   ===========================================================================
+
+#   m:  F.menu
+f_lib_menu "A.add"
+
+#   define first
+aName=('Donald')
+
+#   add by: += array
+aName+=('Peter')
+aName+=('Britney')
+aName+=('Mike')
+aName+=('Ronaldo')
+aName+=('Vicky')
+
+#   add by: += string
+s='Harvey'; aName+=("$s")
+
+#   show
+s=$(declare -p aName); f_lib_text "$s"
+
+
+#   ===========================================================================
+#   m:  A.slice     n=${#a[@]:$i:$n}
+#   ===========================================================================
+
+#   REM: no overlap possible - bash cuts to long slices
+
+#   m:  F.menu
+f_lib_menu "A.slice" $LINENO
+
+#   syntax: $bsh> aNew  = "${aOld[@]:$Idx:$Num}"
+
+#   define my color
+c=$v_LIB_color__blue
+
+#   get size
+n=${#aFruit[@]}
+f_lib_puts "<<< nMax=[$n]" $c           #   8
+
+#   get position
+iPos=$((RANDOM % $n))
+f_lib_puts "<<< iPos=[$iPos]" $c        #   0..7
+
+#   get length
+iLen=$((RANDOM % $n))
+f_lib_puts "<<< iLen=[$iLen]" $c        #   0..7
+
+#   make slice
+aTmp=("${aFruit[@]:$iPos:$iLen}")       #   ... ''Banana' 'Cherry' 'Duran' ...
+
+#   show
+s=$(declare -p aTmp); f_lib_text "$s"
+
+
+#   b:  b.footer
+f_lib_footer 0
+
+#   p:  p.last
