@@ -916,9 +916,6 @@ function f_lib_text() {
     local t=$1
     local p=$2  #   optional position - take any number
     local p_iLine=${BASH_LINENO[0]}     #   caller.lineNo
-    if [ ! -z $p ]; then
-        p=$p_iLine
-    fi
     t+=" [$p_iLine]"
     printf "    %s\n" "$t"  #   print directly
     f__logs "$t"
