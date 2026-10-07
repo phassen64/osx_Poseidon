@@ -22,9 +22,11 @@
                 •   s:  F.case.name
                 •   s:  F.case.char
             •   m:  C.loop.while
+            •   m:  C.loop.repeat
             •   m:  C.loop.for
                 •   s:  loop.for.index
                 •   s:  loop.for.each
+                •   s:  loop.for.range
             •   m:  until
             b:  F.footer
         b:  B.lastLine
@@ -118,8 +120,6 @@ declare -a aNumber=(\
 'One' 'Two' 'Three' 'Four' 'Five')
 declare -a aFruit=(\
 'Apple' 'Banana' 'Cherry' 'Duran' 'Eggfruit' 'Fig' 'Grapefruit' 'Huckleberry')
-
-
 
 #   ===========================================================================
 #   m:  C.if
@@ -225,7 +225,7 @@ f_test_char '!'      #  any
 #   ===========================================================================
 
 #   m:  F.menu
-f_lib_menu "while"
+f_lib_menu "loop.while"
 
 #   s:  loop.while.easy
 f_lib_menuS1 "example 1:easy"
@@ -258,11 +258,11 @@ done
 f_lib_puts ";"
 
 #   ===========================================================================
-#   m:  C.loop until
+#   m:  C.loop.repeat
 #   ===========================================================================
 
 #   m:  F.menu
-f_lib_menu "until"
+f_lib_menu "loop.until"
 
 n=5; i=10
 
