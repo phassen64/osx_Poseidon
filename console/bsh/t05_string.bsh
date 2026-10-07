@@ -1,0 +1,40 @@
+#!/bin/bash
+#   ***************************************************************************
+#   tutorial BASH 2026  :   "string"                    ©[mATe64]::[2026-10-07]
+#   ***************************************************************************
+
+#   description:    tester for my new BashLibrary 2026
+
+#   usage       :   $   bash t05_string
+
+#   !url        :   https://www.w3schools.com/bash/
+
+#   encoding.UTF8:
+#   !@€ƒ„…†‡ˆ‰Š‹ŒŽ +‘“”•—™š›œžŸ+¡¢£¤¥¦§¨©«¬®°±²³µ¶·¹º»¼½¾¿ÄÖÜÑ×ØÞßäæçîðñôö÷üýþÿ
+
+
+<< hereDoc_content_tutor__string
+    content:
+        b:  B.body
+            b:  b.include
+            b:  f.header
+            b:  f.main
+            b:  f.footer
+        b:  B.last
+hereDoc_content_tutor__string
+
+#   b:  B.body
+
+#   m:  b.include
+source LIB.wsp.inc.bsh
+declare -i z_iReply_iEc=$1
+
+#   m:  f.header
+f_lib_header $z_iReply_iEc
+
+#   m:  f.main
+
+#   m:  f.footer
+f_lib_footer 7
+
+#   b:  B.last
