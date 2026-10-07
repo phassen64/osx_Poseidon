@@ -12,6 +12,18 @@
 #   encoding.UTF8:
 #   !@€ƒ„…†‡ˆ‰Š‹ŒŽ +‘“”•—™š›œžŸ+¡¢£¤¥¦§¨©«¬®°±²³µ¶·¹º»¼½¾¿ÄÖÜÑ×ØÞßäæçîðñôö÷üýþÿ
 
+#   Quotes
+#   In Bash, single quotes ('...') and double quotes ("...")
+#   both group characters into a single argument,
+#   but they handle variable expansion and special characters completely differently:
+#   Single quotes ('...') = Literal Strings:
+#       Preserves the exact literal value of every character inside.
+#   No expansion occurs whatsoever.
+#   Double quotes ("...") =
+#       Evaluated Strings: Allows variable expansion ($var),
+#       command substitution ($(...)), and arithmetic expansion ($((...))),
+#       while preventing word splitting and globbing (wildcards).
+
 
 <<CONTENT_T1
     content:
@@ -55,7 +67,17 @@ f_lib_puts "\trun :MyTest($1)..." $v_LIB_color__magenta
 f_lib_text "Harvey & Peter" $v_LIB_color__red
 
 #   Ausgabe mit externer Funktion
-f_lib_puts "\tI have finished :MyTest." $v_LIB_color__magenta
+f_lib_puts "\tI have finished :MyScript." $v_LIB_color__magenta
+
+#   Quoting single vs double
+f_lib_puts "\nMouse and Cat" $v_LIB_color__green
+t='Tom'
+j='Jerry'
+s1='$t & $j'    # no evaluation
+s2="$t & $j"    # evaluated
+f_lib_puts "string.single quoted =: [$s1]"    # "$t & $j"
+f_lib_puts "string.double quoted =: [$s2]"    # "Tom & Jerry"
+
 
 #   m:  footer with alternative replyCode
 f_lib_footer 7
