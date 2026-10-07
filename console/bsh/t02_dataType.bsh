@@ -30,7 +30,7 @@
 declare
 
 
-<<CONTENT_T2
+<< hereDoc_content_tutor__dataType
     content:
         b:  B.function
         b:  B.body
@@ -47,7 +47,7 @@ declare
         •   m:  M.check.DataType
         •   m:  footer
         b:  B.last
-CONTENT_T2
+hereDoc_content_tutor__dataType
 
 #
 #   &&& b:  B.function

@@ -6,7 +6,7 @@
 
 #   !CRQ-261006:noBacktickComment - else the logging fails !
 
-<<CONTENT_OPERATOR
+<<hereDoc_content_tutor__operator
     content:
         b:  B.body
         •   m:  include
@@ -24,7 +24,7 @@
                     •   s:  expr(a-b)
         •   m:  footer
         b:  B.lastLine
-CONTENT_OPERATOR
+hereDoc_content_tutor__operator
 
 #
 #   &&& b:  B.body

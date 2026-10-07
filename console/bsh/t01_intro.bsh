@@ -25,7 +25,7 @@
 #       while preventing word splitting and globbing (wildcards).
 
 
-<<CONTENT_T1
+<<hereDoc_content_tutor__intro
     content:
         b:  B.body
             •   m:  include
@@ -34,7 +34,7 @@
             •   m:  misc
             •   m:  footer
         b:  B.last
-CONTENT_T1
+hereDoc_content_tutor__intro
 
 #   b:  B.body
 
