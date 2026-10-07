@@ -28,6 +28,9 @@
                 •   s:  t.append s+=t
                 •   s:  t.sequence s=s1s2
                 •   s:  t.include s="s1s2"
+            •   m:  S.split by IFS
+            •   m:  S.cut (simple slice)
+            •   m:  S.splice
             b:  f.footer
         b:  B.last
 hereDoc_content_tutor__string
@@ -217,6 +220,82 @@ f_lib_text "s=\$s1\$s2 : <$s>"
 f_lib_menuS1 "include"
 s="$s1$s2"
 f_lib_text "s=\"\$s1\$s2\" : <$s>"
+
+
+
+#   ===========================================================================
+#   m:  S.split by IFS
+#   ===========================================================================
+
+#   IFS =: Internal Field Separator (IFS)
+#   https://en.wikipedia.org/wiki/Input_Field_Separators
+
+#   m:  F.menu
+f_lib_menu "string splitting using:IFS"
+
+#   define string
+s="Peter,Paul,Mary or Britney and Kevin"
+f_lib_puts "s := '$s'\n" $v_LIB_color__blue
+
+#   s:  s.split IFS := [SPACE]
+f_lib_menuS1 "split.IFS =: {' '}"
+
+IFS=' '                 # IFS delimiter is := space
+read -ra aVal <<< "$s"  # str 's' is read into an array as tokens separated by IFS
+
+#   show array
+declare -p aVal
+
+#   s:  s.split IFS := [COMMA]
+f_lib_menuS1 "split.IFS =: {','}"
+
+s="Peter,Paul,Mary,Britney and Kevin"
+
+IFS=','                 #   IFS delimiter is := comma
+read -ra aVal <<< "$s"
+
+#   show array
+declare -p aVal
+
+
+#   ===========================================================================
+#   m:  S.cut  (simple slice)
+#   ===========================================================================
+
+#   m:  F.menu
+f_lib_menu "cut strings"
+
+#   define string and show
+sSrc="ABCDEFGHIJ"
+f_lib_puts "s := '$sSrc'\n" $v_LIB_color__blue
+
+#   prepare command
+iPos=3
+sObj=${sSrc:$iPos}      # cut :sSrc at position :iPos
+
+#   show
+f_lib_puts "*{sSrc:$iPos} => '$sObj'"           #   =>  'DEFGHIJ'
+
+
+#   ===========================================================================
+#   m:  S.splice
+#   ===========================================================================
+
+
+f_lib_menu "splice strings" $LINENO
+
+#   define string and show
+sSrc="ABCDEFGHIJ"
+f_lib_puts "s := '$sSrc'\n" $v_LIB_color__blue
+
+
+#   prepare command
+iPos=3;iLen=2
+sObj=${sSrc:$iPos:$iLen}
+
+#   show
+f_lib_puts "*{sSrc:$iPos:$iLen} => '$sObj'"     #   =>  'DE'
+
 
 
 #   m:  f.footer
