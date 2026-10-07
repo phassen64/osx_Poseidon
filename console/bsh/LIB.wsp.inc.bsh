@@ -1044,9 +1044,11 @@ function f_lib_menu() {
     v_LIB_menuS2_iCtr=0
     printf -v x "[%2.2d]" "$v_LIB_menuS0_iCtr"
     s="=== m:$x:'$p_sText' at:[$p_pBash;$p_iLine]"
-    f__puts "\n$s" $v_LIB_color__green
+    if [ $v_LIB_menuS0_iCtr -gt 1 ];then printf "\n";fi
+    f__puts "$s\n" $v_LIB_color__green
     f__logs "$s"
 }
+
 
 #   s:  f.menu.S1
 function f_lib_menuS1() {
@@ -1058,7 +1060,7 @@ function f_lib_menuS1() {
     v_LIB_menuS2_iCtr=0
     printf -v x "[%2.2d.%2.2d]" "$v_LIB_menuS0_iCtr" "$v_LIB_menuS1_iCtr"
     s="=== s:$x:'$p_sText' at:[$p_iLine]"
-    f__puts "\n$s" $v_LIB_color__green
+    f__puts "$s" $v_LIB_color__green
     f__logs "$s"
 }
 
@@ -1072,7 +1074,7 @@ function f_lib_menuS2() {
     printf -v x "[%2.2d.%2.2d.%2.2d]"\
         "$v_LIB_menuS0_iCtr"  "$v_LIB_menuS1_iCtr" "$v_LIB_menuS2_iCtr"
     s="=== u:$x:'$p_sText' at:[$p_iLine]"
-    f__puts "\n$s" $v_LIB_color__green
+    f__puts "$s" $v_LIB_color__green
     f__logs "$s"
 }
 

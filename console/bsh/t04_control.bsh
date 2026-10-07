@@ -156,9 +156,25 @@ fi
 
 #   s:  if-fi short
 f_lib_menuS1 "if-fi:short"
+
+#   u:  block
 f_lib_puts "?(x == 5)" $v_LIB_color__cyan
 [ $x == 5 ] &&      f_lib_puts "<<< true: x==5"     $v_LIB_color__green \
             ||      f_lib_puts "<<< false: x != 5"  $v_LIB_color__red
+
+#   u:  all in 1 line
+f_lib_puts "?(x == i)" $v_LIB_color__cyan
+i=1
+x=2
+if [ $x -eq $i ]; then s='TRUE!'; else s='false'; fi
+f_lib_text "<<< x==i :[$s]"
+
+#   u:  all in 1 line and no else
+f_lib_puts "?(x != i)" $v_LIB_color__cyan
+i=1
+x=2
+if [ $x -ne $i ]; then s='TRUE!'; fi
+f_lib_text "<<< x!=i :[$s]"
 
 
 #   ===========================================================================

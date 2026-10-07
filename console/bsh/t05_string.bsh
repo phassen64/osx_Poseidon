@@ -66,7 +66,6 @@ f_lib_puts "STRING2:$x:$y"   # "STRING2:ABCDEFGHIJ:peter"
 
 #   m:  F.menu
 f_lib_menu "S.length"
-echo ""
 
 s='ABCDEFGHIJ'
 f_lib_puts "using string: s='$s'" $v_LIB_color__blue
@@ -110,13 +109,14 @@ s1="Zeus"
 s2="Zeus"
 s3="Zeus and Hera"
 s4="ZEUS"
-echo ""
 
 #   show
 f_lib_puts "s1:'$s1'"    $v_LIB_color__blue
 f_lib_puts "s2:'$s2'"    $v_LIB_color__blue
 f_lib_puts "s3:'$s3'"    $v_LIB_color__blue
 f_lib_puts "s4:'$s4'"    $v_LIB_color__blue
+
+f_lib_menuS1 "compare.operator '=='"
 
 #   test
 
