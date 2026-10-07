@@ -4,6 +4,7 @@
 #   ***************************************************************************
 #   encoding.UTF8:
 #   !@€ƒ„…†‡ˆ‰Š‹ŒŽ +‘“”•—™š›œžŸ+¡¢£¤¥¦§¨©«¬®°±²³µ¶·¹º»¼½¾¿ÄÖÜÑ×ØÞßäæçîðñôö÷üýþÿ
+
 <<CONTENT_dummy
     content:
         b:  B.body
@@ -18,7 +19,7 @@ declare -i z_iReply_iEc=$1
 #   m:  header
 f_lib_header $z_iReply_iEc
 
-#   m:  footer with alternative replyCode
-f_lib_footer 9
+#   m:  footer
+f_lib_footer 0
 
 #   b:  B.last
