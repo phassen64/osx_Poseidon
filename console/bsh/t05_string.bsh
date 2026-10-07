@@ -38,7 +38,7 @@ declare x
 declare y
 
 #   b:  F.header
-f_lib_header $z_iEc;    z_iEc=$1
+f_lib_header $z_iReply_iEc;    z_iEc=$1
 
 #   b:  f.main
 

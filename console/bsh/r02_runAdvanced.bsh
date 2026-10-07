@@ -37,6 +37,7 @@ function f_run_script {
     local -i iEc=55
     local -i iBashReply=0
     local -x sLine
+    local -i iRc=0
 
     #   build sLine
     s=''; c='#'; for((i=0;i<80;i++)); do s+="$c"; done
@@ -64,17 +65,21 @@ function f_run_script {
             bash $xFile $iEc;   iBashReply=$?
 
             #   check reply
-            printf "\n<<< iReply[%d]:'%s': #{%d}" $n $xFile $iBashReply
+            printf "\n<<< replyOf[%d]:'%s': #{%d}" $n $xFile $iBashReply
             if [ $iEc == $iBashReply ]
             then
-                printf "==: OK\n"
+                printf ":scpEc==:!OK\n"
             else
-                printf "==: ?False\n"
+                printf ":scpEc==:?nok\n"
+                iRc+=1
             fi
 
         done
+
     done
 
+    printf "___ total.iRc:<%d>\n" $iRc
+    return $iRc
 }
 
 #   ===========================================================================
@@ -95,6 +100,8 @@ declare sFmt="+%Y-%m-%d %H:%M:%S"
 #   s:  calculate stressCounter
 declare -i n=1  #   rndMax
 declare -i iCtr=1+$RANDOM%$n
+declare -i iRc=0
+declare  x  #   formatStr
 
 #   m:  run
 clear
@@ -122,8 +129,12 @@ echo "$xLog" >>  $fLog
 
 #   s:  run
 f_run_script "$aTest" "$iCtr" "$RANDOM" >> $fLog
-#   f_run_script "$aTest" "$iCtr" "$RANDOM"
+iRc=$?
+s="# total_sum_of_errors := [$iRc]"
+printf "\t$s\n"
+echo "$s" >> $fLog
 
+#   f_run_script "$aTest" "$iCtr" "$RANDOM"
 #   s:  dateTime.Stopp
 sDtm=$(date "$sFmt");   tDtmStopp=$(date '+%s.%N')
 
