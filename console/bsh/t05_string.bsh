@@ -2,15 +2,14 @@
 #   ***************************************************************************
 #   tutorial BASH 2026  :   "string"                    ©[mATe64]::[2026-10-07]
 #   ***************************************************************************
+#   encoding.UTF8:
+#   !@€ƒ„…†‡ˆ‰Š‹ŒŽ +‘“”•—™š›œžŸ+¡¢£¤¥¦§¨©«¬®°±²³µ¶·¹º»¼½¾¿ÄÖÜÑ×ØÞßäæçîðñôö÷üýþÿ
 
-#   description:    tester for my new BashLibrary 2026
+#   description:    string compare
 
 #   usage       :   $   bash t05_string
 
 #   !url        :   https://www.w3schools.com/bash/
-
-#   encoding.UTF8:
-#   !@€ƒ„…†‡ˆ‰Š‹ŒŽ +‘“”•—™š›œžŸ+¡¢£¤¥¦§¨©«¬®°±²³µ¶·¹º»¼½¾¿ÄÖÜÑ×ØÞßäæçîðñôö÷üýþÿ
 
 
 << hereDoc_content_tutor__string
@@ -19,6 +18,9 @@
             b:  b.include
             b:  f.header
             b:  f.main
+            •   m:  S.definition
+            •   m:  S.length
+            •   m:  S.compare
             b:  f.footer
         b:  B.last
 hereDoc_content_tutor__string
@@ -27,12 +29,115 @@ hereDoc_content_tutor__string
 
 #   m:  b.include
 source LIB.wsp.inc.bsh
+if [ "$1" == "" ]; then f_lib_configuration '+' '-'; fi
 declare -i z_iReply_iEc=$1
 
-#   m:  f.header
-f_lib_header $z_iReply_iEc
+declare s
+declare t
+declare x
+declare y
 
-#   m:  f.main
+#   b:  F.header
+f_lib_header $z_iEc;    z_iEc=$1
+
+#   b:  f.main
+
+#   ===========================================================================
+#   m:  S.definition
+#   ===========================================================================
+
+#   m:  F.menu
+f_lib_menu "S.definition"
+
+#   s:  m.simple.string
+f_lib_menuS1 "simple '...' strings"
+
+#   immediately definition with '...' and usage
+x='ABCDEFGHIJ'
+y='peter'
+f_lib_puts 'STRING1:$x:$y'   # "STRING1:$x:$y"
+
+f_lib_menuS1 'evaluated-strings:"..." '
+f_lib_puts "STRING2:$x:$y"   # "STRING2:ABCDEFGHIJ:peter"
+
+#   ===========================================================================
+#   m:  S.length
+#   ===========================================================================
+
+#   m:  F.menu
+f_lib_menu "S.length"
+echo ""
+
+s='ABCDEFGHIJ'
+f_lib_puts "using string: s='$s'" $v_LIB_color__blue
+
+#   u:  intro
+#   calc length immediately
+
+l=${#s}
+
+#   show
+f_lib_text "length(s) =: [$l]"   # 10
+
+#   u:  try expression
+f_lib_puts 'try expr' $v_LIB_color__blue
+x=`expr "$s"`
+f_lib_text "s =: [$x]"          # ABCD..IJ
+
+#   u:  using.formula
+f_lib_puts 'using:`expr $str`' $v_LIB_color__blue
+l=`expr "$s" : '.*'`
+f_lib_text "length(s) =: [$l]"   # 10
+
+#   u:  elseString
+s='LaSamba'
+f_lib_puts "using string: s='$s'" $v_LIB_color__blue
+
+#   u:  using.formula again
+l=`expr "$s" : '.*'`
+f_lib_text "length(s) =: [$l]"   # 7
+
+
+
+#   ===========================================================================
+#   m:  S.compare
+#   ===========================================================================
+
+f_lib_menu "S.compare"
+
+#   input variables
+s1="Zeus"
+s2="Zeus"
+s3="Zeus and Hera"
+s4="ZEUS"
+echo ""
+
+#   show
+f_lib_puts "s1:'$s1'"    $v_LIB_color__blue
+f_lib_puts "s2:'$s2'"    $v_LIB_color__blue
+f_lib_puts "s3:'$s3'"    $v_LIB_color__blue
+f_lib_puts "s4:'$s4'"    $v_LIB_color__blue
+
+#   test
+
+t1="compare: s1==s2"
+if [ "$s1" == "$s2" ];
+    then f_lib_text "$t1:TRUE"
+    else f_lib_text "$t1:FALSE"
+fi  # true
+
+t1="compare: s1==s3"
+if [ "$s1" == "$s3" ]
+    then f_lib_text "$t1:TRUE"
+    else f_lib_text "$t1:FALSE"
+fi  # false
+
+t1="compare: s1==s3"
+if [ "$s1" == "$s3" ]
+    then f_lib_text "$t1:TRUE"
+    else f_lib_text "$t1:FALSE"
+fi  # false - case sensitive
+
 
 #   m:  f.footer
 f_lib_footer 7
