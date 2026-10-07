@@ -257,9 +257,24 @@ done
 
 f_lib_puts ";"
 
-exit
+#   ===========================================================================
+#   m:  C.loop until
+#   ===========================================================================
 
+#   m:  F.menu
+f_lib_menu "until"
 
+n=5; i=10
+
+f_lib_text "until [ i < n ] ..."
+f_lib_print "<<< "
+
+until [ $i -lt $n ]; do
+   f_lib_print "[$i/$n]" $v_LIB_bFalse  $v_LIB_color__red
+   let i--
+done
+
+f_lib_puts ";"
 
 #   ===========================================================================
 #   m   C.loop.for
@@ -338,24 +353,5 @@ done
 #   b:  F.footer
 f_lib_footer 1
 
-
-#   ===========================================================================
-#   m:  C.until
-#   ===========================================================================
-
-#   m:  F.menu
-f_lib_menu "until" $LINENO
-
-n=5; i=10
-f_lib_print "until <$i> -lt <$n> ...:{" $v_LIB__PRT_noNLonPx
-until [ $i -lt $n ]; do
-   f_lib_print "[$i/$n];" $v_LIB__PRT_noNLnoPx $v_COL_ID_red
-   let i--
-done
-f_lib_print "} ." $v_LIB__PRT_onNLnoPx
-f_lib_puts "\n!END."
-
-#   b:  F.footer
-f_lib_footer 77
 
 #   &&& b:  B.lastLine
