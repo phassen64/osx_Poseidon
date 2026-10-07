@@ -79,6 +79,11 @@ declare -a aFruit=(\
 'Apple' 'Banana' 'Cherry' 'Duran' 'Eggfruit' 'Fig' 'Grapefruit' 'Huckleberry')
 s=$(declare -p aFruit); f_lib_puts "$s"
 
+#   show with printf
+f_lib_puts "show array with printf ..." $v_LIB_color__blue
+printf "aDigit =: [%s]\n" "${aDigit[@]}"
+
+
 #   ===========================================================================
 #   m:  A.size      n=${#a[@]}
 #   ===========================================================================
@@ -119,13 +124,13 @@ s=$(declare -p aName); f_lib_text "$s"
 
 
 #   ===========================================================================
-#   m:  A.slice     n=${#a[@]:$i:$n}
+#   m:  A.slice     n=${#a[@]:$iPos:$iLen}
 #   ===========================================================================
 
 #   REM: no overlap possible - bash cuts to long slices
 
 #   m:  F.menu
-f_lib_menu "A.slice" $LINENO
+f_lib_menu "A.slice"
 
 #   syntax: $bsh> aNew  = "${aOld[@]:$Idx:$Num}"
 
@@ -151,7 +156,29 @@ aTmp=("${aFruit[@]:$iPos:$iLen}")       #   ... ''Banana' 'Cherry' 'Duran' ...
 s=$(declare -p aTmp); f_lib_text "$s"
 
 
+#   ===========================================================================
+#   m:  A.sort
+#   ===========================================================================
+
+#   m:  F.menu
+f_lib_menu "A.sort"
+
+#   color
+c=$v_LIB_color__blue
+
+#   define
+aInteger=(19 81 -1 6 3 66 43 2)
+s=$(declare -p aInteger); f_lib_puts "$s"
+
+#   sort - echo but no save
+f_lib_puts "do sorting..." $c
+mapfile -t aInteger_sorted < <(printf '%s\n' "${aInteger[@]}" | sort -n)
+echo "${aInteger_sorted[@]}"
+
+
+#   ###########################################################################
 #   b:  b.footer
+#   ###########################################################################
 f_lib_footer 0
 
 #   p:  p.last
