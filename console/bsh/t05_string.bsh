@@ -21,6 +21,13 @@
             •   m:  S.definition
             •   m:  S.length
             •   m:  S.compare
+                •   s:  c.compare ==
+                •   s:  c.compare !=
+                •   s:  c.compare -z
+            •   m:  S.concatenate
+                •   s:  t.append s+=t
+                •   s:  t.sequence s=s1s2
+                •   s:  t.include s="s1s2"
             b:  f.footer
         b:  B.last
 hereDoc_content_tutor__string
@@ -102,6 +109,7 @@ f_lib_text "length(s) =: [$l]"   # 7
 #   m:  S.compare
 #   ===========================================================================
 
+#   m:  F.menu
 f_lib_menu "S.compare"
 
 #   input variables
@@ -115,6 +123,11 @@ f_lib_puts "s1:'$s1'"    $v_LIB_color__blue
 f_lib_puts "s2:'$s2'"    $v_LIB_color__blue
 f_lib_puts "s3:'$s3'"    $v_LIB_color__blue
 f_lib_puts "s4:'$s4'"    $v_LIB_color__blue
+f_lib_puts "."
+
+#
+#   s:  c.compare ==
+#
 
 f_lib_menuS1 "compare.operator '=='"
 
@@ -137,6 +150,73 @@ if [ "$s1" == "$s3" ]
     then f_lib_text "$t1:TRUE"
     else f_lib_text "$t1:FALSE"
 fi  # false - case sensitive
+
+
+#
+#   s:  c.compare !=
+#
+
+f_lib_menuS1 "compare.operator '!='"
+
+t1="compare: s1!=s3"
+
+if [ "$s1" != "$s3" ]
+    then echo -e "$t1:TRUE"
+    else echo -e "$t1:FALSE";
+fi # true
+
+
+#
+#   s:  c.compare -z
+#
+
+f_lib_menuS1 "compare.operator '-z'"
+
+#   assignment
+sSome='someBody'
+sNone=''            # zero string
+
+f_lib_puts "s1=: '$sSome'"    $v_LIB_color__blue
+f_lib_puts "s2=: '$sNone'"    $v_LIB_color__blue
+f_lib_puts "."
+
+f_lib_puts "? s1 isZero"    #   ?someSody
+if [ -z $sSome ]
+then f_lib_text "true!"; else f_lib_text "false"; fi    # false
+
+f_lib_puts "? s2 isZero"    #   ?noBody
+if [ -z $sNone ]
+then f_lib_text "true!"; else f_lib_text "false"; fi    # true
+
+
+#   ===========================================================================
+#   m:  S.concatenate
+#   ===========================================================================
+
+#   m:  F.menu
+f_lib_menu "S.concatenate"
+
+s1="LearnABC"
+s2="123"
+f_lib_puts "s1='$s1'"    $v_LIB_color__blue
+f_lib_puts "s2='$s2'"    $v_LIB_color__blue
+f_lib_puts "."
+
+#   s:  t.append s+=t
+f_lib_menuS1 "append s+=s1"
+s=$s1
+s+=$s2
+f_lib_text "s=\$s1;s+=\$s2 : <$s>"
+
+#   s:  t.sequence s=s1s2
+f_lib_menuS1 "sequence s=s1s2"
+s=$s1$s2
+f_lib_text "s=\$s1\$s2 : <$s>"
+
+#   s:  t.include s="s1s2"
+f_lib_menuS1 "include"
+s="$s1$s2"
+f_lib_text "s=\"\$s1\$s2\" : <$s>"
 
 
 #   m:  f.footer
