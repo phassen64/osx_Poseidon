@@ -16,7 +16,15 @@
                 •   m:  A.define
                 •   m:  A.size
                 •   m:  A.add
+                •   m:  A.access
                 •   m:  A.slice
+                •   m:  A.sort
+                    •   s:  s.sorting.numbers
+                    •   s:  s.sorting.words
+                •   m:  A.shuffle
+                •   m:  A.copy
+                •   m:  A.mix
+                •   m:  H.define - hashArray
             b:  b.footer
         p:  p.last
 hereDoc_content_tutor__array
@@ -34,7 +42,10 @@ f_lib_header $z_iReply_iEc
 
 #   b:  b.main
 declare -i i
+declare -i j
 declare -i n
+declare -i m
+declare c=$v_LIB_color__blue
 
 #   ===========================================================================
 #   m:  A.define
@@ -124,6 +135,30 @@ s=$(declare -p aName); f_lib_text "$s"
 
 
 #   ===========================================================================
+#   m:  A.access        x=${a[$i]};
+#   ===========================================================================
+
+f_lib_menu "A.access"
+
+#   max number of array elements
+m=${#aFruit[@]} # 8
+
+#   take the half
+n=$n/2          # 4
+
+#   show
+f_lib_puts "access [$n] fruits of [$m] ..." $c
+
+#   loop
+for (( i=0; i < ${n}; i++ ));
+do
+    j=$((RANDOM % $m))
+    x=${aFruit[$j]};
+    f_lib_text "iFruit[$j] =: ['$x']"
+done
+
+
+#   ===========================================================================
 #   m:  A.slice     n=${#a[@]:$iPos:$iLen}
 #   ===========================================================================
 
@@ -163,18 +198,136 @@ s=$(declare -p aTmp); f_lib_text "$s"
 #   m:  F.menu
 f_lib_menu "A.sort"
 
-#   color
-c=$v_LIB_color__blue
+#   s:  s.sorting.numbers
+f_lib_menuS1 "s.sorting.numbers"
 
 #   define
 aInteger=(19 81 -1 6 3 66 43 2)
 s=$(declare -p aInteger); f_lib_puts "$s"
 
 #   sort - echo but no save
-f_lib_puts "do sorting..." $c
+f_lib_puts "do sorting numbers..." $c
 mapfile -t aInteger_sorted < <(printf '%s\n' "${aInteger[@]}" | sort -n)
 echo "${aInteger_sorted[@]}"
 
+#   store
+s=$(echo "${aInteger_sorted[@]}")
+f_lib_text "aInteger=$s"
+
+#   s:  s.sorting.words
+f_lib_menuS1 "s.sorting.words"
+
+#   define
+aName=('Bert' 'Ernie' 'Arnold')
+s=$(declare -p aName); f_lib_puts "$s"
+
+#   sort - echo but no save
+f_lib_puts "do sorting names..." $c
+mapfile -t aName_sorted < <(printf '%s\n' "${aName[@]}" | sort)
+s=$(echo "${aName_sorted[@]}")
+f_lib_text "aName=$s"
+
+
+#   ===========================================================================
+#   m:  A.shuffle
+#   ===========================================================================
+
+#   m:  F.menu
+f_lib_menu "A.shuffle"
+
+#   show.before
+f_lib_puts "\nbefore shuffle..." $c
+s=$(declare -p aFruit); f_lib_puts "$s"
+
+#   perform shuffle
+aTmp=( $(shuf -e "${aFruit[@]}") )
+
+#   show.after
+f_lib_puts  "\nafter shuffle..." $c
+s=$(declare -p aTmp); f_lib_puts "$s"
+
+#   ===========================================================================
+#   m:  A.copy
+#   ===========================================================================
+
+#   m:  F.menu
+f_lib_menu "A.shuffle"
+
+#   define aAlpha(aNumber)
+f_lib_puts "\nbefore copy..." $c
+s=$(declare -p aNumber); f_lib_text "$s"
+
+#   copy aBeta:=aNumber and show
+f_lib_puts "\ndo copy  aBeta:=aNumber"
+aBeta=("${aNumber[@]}")
+s=$(declare -p aBeta); f_lib_text "$s"
+
+#   add Zero
+f_lib_puts "\nadd aBeta += Zero"
+aBeta+=('Zero')
+s=$(declare -p aBeta); f_lib_text "$s"
+
+#   show old aNumber    -> proof: aBeta is not a link !
+f_lib_puts "\nshow old aNumber" $c
+s=$(declare -p aNumber); f_lib_text "$s"
+
+
+#   ===========================================================================
+#   m:  A.mix       array a := a1 && a2
+#   ===========================================================================
+
+#   m:  F.menu
+f_lib_menu "A.mix"
+
+declare -a Common
+
+aCity=('NewYork' 'Chicago' 'Berlin')
+aPets=('Harvey' 'Putzi' 'Whisky')
+declare -p aCity
+declare -p aPets
+
+#   combine and calc length
+aCommon=( ${aCity[@]} ${aPets[@]} )
+nCommon=${#aCommon[@]}
+
+#   show
+f_lib_puts "\nshow results...\n" $c
+s="nCommon =: [$nCommon]";    f_lib_text "$s"
+s="${aCommon[@]}"; f_lib_text "aCommon =: [$s]"
+
+f_lib_puts "\nshow each element ...\n" $c
+i=0
+for xCommon in "${aCommon[@]}"
+do
+    i+=1
+    printf "\tcommon:[%2.2d]:'%s'\n" $i $xCommon
+done
+
+
+#   ===========================================================================
+#   m:  H.define    hashArray
+#   ===========================================================================
+
+#   m:  F.menu
+f_lib_menu "H.define"           # means append
+
+#   s:  define as "declare -A" and not "declare -a"
+f_lib_puts "define hash Champ" $c
+declare -A hChamp
+
+#   s:  add
+hChamp=(['Bobby']='Fischer')
+hChamp+=(['mike']='tyson')
+hChamp+=(['Britney']='Spears')
+hChamp+=(['Michael']='Jackson')
+declare -p hChamp
+
+#   s:  retrieve
+f_lib_puts "\nretrieve elements" $c
+k='Bobby'   ; v=${hChamp['Bobby']}; f_lib_puts "'$k' => '$v'"
+k='Britney' ; v=${hChamp[$k]};      f_lib_puts "'$k' => '$v'"
+k='mike'    ; v=${hChamp[$k]};      f_lib_puts "'$k' => '$v'"
+k='Michael' ; v=${hChamp[$k]};      f_lib_puts "'$k' => '$v'"
 
 #   ###########################################################################
 #   b:  b.footer
