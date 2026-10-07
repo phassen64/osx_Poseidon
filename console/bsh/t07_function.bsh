@@ -1,0 +1,98 @@
+#!/bin/bash
+#   ***************************************************************************
+#   tutorial BASH 2026  :   "function"                 ©[mATe64]::[2026-10-07]
+#   ***************************************************************************
+#   encoding.UTF8:
+#   !@€ƒ„…†‡ˆ‰Š‹ŒŽ +‘“”•—™š›œžŸ+¡¢£¤¥¦§¨©«¬®°±²³µ¶·¹º»¼½¾¿ÄÖÜÑ×ØÞßäæçîðñôö÷üýþÿ
+
+: '
+        $@              :   array of all parameter
+        $#              :   parameter-counter
+        $1...$9..       :   current parameter
+        $?              :   return code
+        ${FUNCNAME[0]}  :   function name
+'
+
+<< hereDoc_content_tutor__function
+    content:
+        p:  p.function
+        p:  p.body
+            b:  b.include
+            b:  b.header
+            b:  b.main
+                •   m:  F.standard
+                •   m:  F.multi.Parameter (variadisch)
+            b:  b.footer
+        p:  p.last
+hereDoc_content_tutor__function
+
+#   ===========================================================================
+#   p:  p.function
+#   ===========================================================================
+
+#   s:  declare with keyword 'function'
+function f01_single {
+    #   parameter '$1','$2',...
+    local s=${FUNCNAME[0]}
+    f_lib_puts "I am in function '$s' \n\tand I got parameter: '$1'"
+    return 66   # only 0...255
+}
+
+#   s:  declare with '()' only and multi parameter
+f02_multi () {
+    local s
+    declare -i i=1
+    for x in "$@"
+    do
+        s=${FUNCNAME[0]}
+        f_lib_puts "{$s}:arg[$i/$#]=$x"
+        i+=1
+    done
+    return 82   # only 0...255
+}
+
+#   ===========================================================================
+#   p:  p.body
+#   ===========================================================================
+
+#   b:  b.include
+source LIB.wsp.inc.bsh
+if [ "$1" == "" ]; then f_lib_configuration '+' '-'; fi
+declare -i z_iReply_iEc=$1
+
+#   b:  b.header
+f_lib_header $z_iReply_iEc
+
+#   b:  b.main
+declare -i i
+declare -i n
+declare c=$v_LIB_color__blue
+
+#
+#   m:  F.standard
+#
+
+f_lib_menu "F.standard"
+
+f01_single "Britney"
+
+#   fetch my return code
+iRc=$?
+f_lib_puts "\n<<< reply code received is : [$iRc]"
+
+
+#
+#   m:  F.multi.Parameter
+#
+
+f_lib_menu "F.multi"
+
+f02_multi "Beckenbauer" "Pele" "Maradonna" "Messi" "Ronaldo" ; iRc=$?
+
+#   reply
+f_lib_puts "\n<<< iRc =: [$iRc]"
+
+#   b:  b.footer
+f_lib_footer 0
+
+#   p:  p.last
