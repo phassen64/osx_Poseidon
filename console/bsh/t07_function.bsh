@@ -82,7 +82,7 @@ f_lib_puts "\n<<< reply code received is : [$iRc]"
 
 
 #
-#   m:  F.multi.Parameter
+#   m:  F.multi
 #
 
 f_lib_menu "F.multi"
