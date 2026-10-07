@@ -1,0 +1,43 @@
+#   einfache Ausgabe
+echo "hello bash"
+
+#   variable string
+declare s='peter'
+echo "variable s= :[$s]"
+
+#   variable integer
+declare -i i=1
+echo "variable i= :[$i]"
+
+#   s:  foreach.array
+echo "+ foreach direct"
+i=0
+for x in bus bike car; do
+    echo "Vehicle[$i]: $x"
+    i+=1
+done
+
+#   array
+declare -a aFruit=(\
+'Apple' 'Banana' 'Cherry' 'Duran' 'Eggfruit' 'Fig' 'Grapefruit' 'Huckleberry')
+
+#   array Ausgabe
+echo "variable a= :[$aFruit]"        # Falsch - nur das erste Element
+
+#   alle ausgeben
+declare -p aFruit
+
+#   s:  foreach.variable_to_array
+echo "+ foreach variable"
+i=0
+for x in "${aFruit[@]}"; do
+    echo "Fruit[$i]: $x"
+    i+=1
+done
+
+echo "done."
+
+#   ausgabe
+#   echo "variable a= :[$a]"   # nur das erste Element
+
+#   declare -p $a
