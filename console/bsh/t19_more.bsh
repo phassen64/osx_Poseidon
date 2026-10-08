@@ -45,7 +45,6 @@ declare -x sRc
 source LIB.wsp.inc.bsh
 #   f_lib_configuration
 if [ "$1" == "" ]; then
-    clear
     f_lib_configuration '+' '+'
     p_sCaller='Dummy'
 else
@@ -110,6 +109,12 @@ f_lib_isDirectory $p; bRc=$?
 f_lib_dataTypeConverter_b2s $bRc;   sRc=$v_LIB_reply_sRc
 printf "\n? isDir:'%s' \n" $p
 printf "< m.bRc =:[%d] == '%s' \n" "$bRc" "$sRc"
+
+#   get.some.Name
+pFile=$(f_lib_file_getsomeName 'rock' "$v_LIB_dirScratch" '.txt' '+')
+echo "&&& file:'$pFile'"
+exit
+
 
 #   ===========================================================================
 #   m:  F.time

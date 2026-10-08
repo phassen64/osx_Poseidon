@@ -50,7 +50,7 @@ function f_uni_getsomeFileName {
     sFidn=${p_sBody:0:3}
     #   random
     iRndm=1
-    if [ ! -z $p_sModi ] && [ $p_sModi == '-' ]; then
+    if [ ! -z $p_sModi ] && [ $p_sModi == '+' ]; then
         iRndm=$(( RANDOM % 998 ))
         let "iRndm += 1"
     fi

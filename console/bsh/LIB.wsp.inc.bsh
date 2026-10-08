@@ -733,6 +733,46 @@ function f_lib_file_joinPath() {
     return ${#s}            #   reply strlen
 }
 
+
+#   s:  f.file.getsomeName
+function f_lib_file_getsomeName {
+
+    #   replies fileName using callerScp - optional random naming
+    #   usage:  bash$>  pFile=$(func 'someName' ['+'])
+    #   example:    $>  f 'samba' '+'
+    #               $<  t00_samba_123.txt
+
+    local p_sPara=$1    #   alternative name
+    local p_dTemp=$2    #   objectDir
+    local p_sFExt=$3    #   file extension
+    local p_sModi=$4    #   '+':random, else:fix
+
+    local p_sBody=${BASH_SOURCE[1]%.*}    #   t08_file
+
+    local sFidn     #   't00'
+    local iRndm     #  ~ 1...1000
+    local sFnam
+    local s
+
+    #   calc fileBody
+    sFidn=${p_sBody:0:3}
+
+    iRndm=1
+    if [ ! -z $p_sModi ] && [ $p_sModi == '+' ]; then
+        iRndm=$(( RANDOM % 998 ))
+        let "iRndm += 1"
+    fi
+
+    #   fileName
+    printf -v sFnam "%s_%s_%3.3d%s" $sFidn $p_sPara $iRndm $p_sFExt
+
+    #   filePath
+    s="$p_dTemp/$sFnam"
+
+    #   reply FilePath
+    echo $s
+}
+
 #   ===========================================================================
 #   m:  F.lib.fileInfo
 #   ===========================================================================
@@ -1242,8 +1282,9 @@ declare -x v_LIB_dtmFormatString_hdr="+%Y-%m-%d__%H:%M:%S"
 #   #   m:  v.logging
 declare -i v_LIB_log_bUseDtmName=$v_LIB_bFalse  # short Name
 declare -x v_LIB_log_sFileExtension='.log'
-#   declare -x v_LIB_log_pFile      #   filePath
+
 declare -x v_LIB_dirScratch=$v_FWK_dirScratch  # by Framework
+declare -x v_LIB_fnm_stdFileExtension='.txt'
 
 #   #   m:  v.menu
 declare -i v_LIB_menuS0_iCtr=0
