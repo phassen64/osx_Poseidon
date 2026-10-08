@@ -16,12 +16,16 @@
 << hereDoc_content_tutor__function
     content:
         p:  p.function
+                •   m:  F.single
+                •   m:  F.multi
+                •   m:  F.twin
         p:  p.body
             b:  b.include
             b:  b.header
             b:  b.main
-                •   m:  F.standard
-                •   m:  F.multi.Parameter (variadisch)
+                •   m:  F.single
+                •   m:  F.multi (variadisch)
+                •   m:  F.twin
             b:  b.footer
         p:  p.last
 hereDoc_content_tutor__function
@@ -30,16 +34,20 @@ hereDoc_content_tutor__function
 #   p:  p.function
 #   ===========================================================================
 
-#   s:  declare with keyword 'function'
-function f01_single {
+#   m:  F.single
+
+#   REM:    declare with :() only
+f_tor_single() {
     #   parameter '$1','$2',...
     local s=${FUNCNAME[0]}
     f_lib_puts "I am in function '$s' \n\tand I got parameter: '$1'"
-    return 66   # only 0...255
+    return 16   # only 0...255
 }
 
-#   s:  declare with '()' only and multi parameter
-f02_multi () {
+#   m:  F.multi
+
+#   REM:    declare with :function but not :()
+function f_tor_multi {
     local s
     declare -i i=1
     for x in "$@"
@@ -48,7 +56,25 @@ f02_multi () {
         f_lib_puts "{$s}:arg[$i/$#]=$x"
         i+=1
     done
-    return 82   # only 0...255
+    return 22   # only 0...255
+}
+
+#   m:  F.twin
+
+#   s:  twin1
+function f_tor_twin () {
+    local p=$1
+    local s=${FUNCNAME[0]}
+    f_lib_puts "twin.A :[$s] && parameter.A :[$p]'"
+    return 31
+}
+
+#   s:  twin2 - identical name, but different return
+f_tor_twin () {
+    local p=$1
+    local s=${FUNCNAME[0]}
+    f_lib_puts "twin.B :[$s] && parameter.B :[$p]'"
+    return 32
 }
 
 #   ===========================================================================
@@ -69,16 +95,16 @@ declare -i n
 declare c=$v_LIB_color__blue
 
 #
-#   m:  F.standard
+#   m:  F.single
 #
 
-f_lib_menu "F.standard"
+f_lib_menu "F.single"
 
-f01_single "Britney"
+f_tor_single "Britney"
 
 #   fetch my return code
 iRc=$?
-f_lib_puts "\n<<< reply code received is : [$iRc]"
+f_lib_puts "<<< reply code received is : [$iRc]\n"
 
 
 #
@@ -87,10 +113,17 @@ f_lib_puts "\n<<< reply code received is : [$iRc]"
 
 f_lib_menu "F.multi"
 
-f02_multi "Beckenbauer" "Pele" "Maradonna" "Messi" "Ronaldo" ; iRc=$?
+f_tor_multi "Beckenbauer" "Pele" "Maradonna" "Messi" "Ronaldo" ; iRc=$?
 
 #   reply
-f_lib_puts "\n<<< iRc =: [$iRc]"
+f_lib_puts "<<< iRc =: [$iRc]\n"
+
+#
+#   m:  F.twin
+#
+
+f_tor_twin "Twin A||B"; iRc=$?
+f_lib_puts "<<< reply.twin.iRc =: [$iRc]"   # replies: '32' = twin2
 
 #   b:  b.footer
 f_lib_footer 0
