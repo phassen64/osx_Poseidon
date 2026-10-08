@@ -61,7 +61,7 @@ function f_tor_multi {
 
 #   m:  F.twin
 
-#   s:  twin1
+#   s:  twin1   *   declared with :function &&  :()
 function f_tor_twin () {
     local p=$1
     local s=${FUNCNAME[0]}
@@ -69,7 +69,7 @@ function f_tor_twin () {
     return 31
 }
 
-#   s:  twin2 - identical name, but different return
+#   s:  twin2   *   identical name, but different return
 f_tor_twin () {
     local p=$1
     local s=${FUNCNAME[0]}
