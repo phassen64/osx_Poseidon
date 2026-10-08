@@ -535,7 +535,7 @@ function f_lib_isFile {
     if [ -f $1 ]; then
         return $v_LIB_bTrue
     else
-        return $v_LIB_bfalse
+        return $v_LIB_bFalse
     fi
 }
 
@@ -569,7 +569,7 @@ function f_lib_isNumeric() {
     if [ $(echo $1 | egrep "^[0-9]+$") ]; then
         return $v_LIB_bTrue
     else
-        return $v_LIB_bfalse
+        return $v_LIB_bFalse
     fi
 }
 
