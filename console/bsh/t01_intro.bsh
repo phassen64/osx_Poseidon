@@ -9,6 +9,9 @@
 
 #   !url        :   https://www.w3schools.com/bash/
 
+#   definitions:
+#       [functionName] ::  'f_tor_'_[name]
+
 #   encoding.UTF8:
 #   !@€ƒ„…†‡ˆ‰Š‹ŒŽ +‘“”•—™š›œžŸ+¡¢£¤¥¦§¨©«¬®°±²³µ¶·¹º»¼½¾¿ÄÖÜÑ×ØÞßäæçîðñôö÷üýþÿ
 
