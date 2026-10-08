@@ -18,6 +18,17 @@
             •   m:  R.grep
                 •   s:  grep.file
                 •   s:  grep.piping
+            •   m:  R.tr
+                •   s:  option [:lower:][:upper:]
+                •   s:  option [:space:]
+                •   s:  option [-s]
+                •   s:  option [-c]
+                •   s:  option [-d]
+                •   s:  option [-cd]
+            •   m:  R.sed
+                •   s:  sed.replace.1x
+                •   s:  sed.replace.all
+                •   s:  sed.replace.InAFile
             b:  b.footer
         p:  p.last
 hereDoc_content_tutor__regExpr
@@ -186,8 +197,12 @@ f_lib_header $z_iReply_iEc
 #   b:  b.main
 
 #   prepare, get FileName
-pFile=$(f_lib_file_getsomeName 'jupiter' "$v_LIB_dirScratch" '.log' '-')
-f_lib_puts "generated file :'$pFile'"
+
+pFile=$(f_lib_file_getsomeName 'grep' "$v_LIB_dirScratch" '.log' '-')
+f_lib_puts "get fileName:'$pFile'"
+
+pFile_sed=$(f_lib_file_getsomeName 'sed' "$v_LIB_dirScratch" '.log' '-')
+f_lib_puts "get fileName:'$pFile_sed'"
 
 #   generate
 f_uni_generateFile $pFile; iRc=$?
@@ -332,8 +347,11 @@ f_lib_menu "R.tr"
 #   option and stringValue2 are optional for tr command.
 #   You can use -c, -s and -d option with tr command to do different types of tasks.
 
-#   s:  lower2upper
-f_lib_menuS1 "[:lower:] [:upper:]"; echo ""
+#
+#   s:  option [:lower:][:upper:]
+#
+
+f_lib_menuS1 "[:lower:][:upper:]"; echo ""
 x='abcdEFGH'
 
 s=$(echo $x | tr [:lower:] [:upper:])    #   => ABCDEFGH
@@ -341,6 +359,114 @@ f_lib_text $s
 
 s=$(echo $x | tr [:upper:] [:lower:])    #   => abcdefgh
 f_lib_text $s
+
+#
+#   s:  option [:space:]
+#
+
+f_lib_menuS1 '[:space:]'
+echo "Welcome To Malboro." | tr [:space:] '\n'
+
+#
+#   s:  option [-s]    : substitute
+#
+
+f_lib_menuS1 '[-s]'
+
+#   tr command uses �s option for
+#   search and replace any string from a text.
+#   In the following example, space (� �) is replaced by tab (�\t�).
+
+
+#   translate space to TAB
+echo "BASH Programming" | tr -s ' ' '\t'
+
+
+#   translate 'A' to 'x'
+echo "ABCDEFGHABCDEFGHABCDEFGH" | tr -s 'A' 'x'
+
+#
+#   s:  option [-c]     : replace don't matches
+#
+
+echo ""
+f_lib_menuS1 'option:-c'
+
+#   replace char
+#   tr command can be used with -c option to replace
+#   those characters with the second character that don't match with
+#   the first character value.
+#   In the following example,
+#       tr #command is used to search those characters in
+#       the string "abc" that don't match with the #character �b�
+#       and replace them by �x�.
+#   The output is �xbxxxx'.
+#   Four characters are #converted here. These are ,�a�,�c�,and �\n�.
+
+echo "abc\n" | tr -c 'b' 'x'
+echo -e "\n"                    # xbxxxx
+
+#
+#   s:  option [-d]    : delete
+#
+
+f_lib_menuS1 '[-d]'
+
+echo "ABCDEFGHABCDEFGHABCDEFGH" | tr -d 'A'
+
+#
+#  s:   option [-cd]   : change+delete
+#
+
+f_lib_menuS1 'option:-cd'
+
+#   remove all non-digits
+echo "Phone No: 985634854" | tr -cd '0-9'   # 985634854
+echo -e "\n"
+
+#   remove all non-alpha
+echo "Phone No: 985634854" | tr -cd 'A-Z'   # => PN
+echo -e "\n"
+
+
+#   ===========================================================================
+#   m:  R.sed
+#   ===========================================================================
+
+<<  -*-:sed
+    $> sed s/<pattern>/<replacement>/<flags>
+    There are four types of substitutions:
+    'g':    replace all occurrences.
+    <A number>, the occurrence number for the new text that you want to substitute.
+    'p'         : print the original content.
+    'w file'    : means write the results to a file.
+-*-:sed
+
+#   change the price
+f_lib_menu "sed"
+
+f_lib_puts "text replace\n"
+s="Welcome to Like Geeks page"
+
+#   s:  sed.replace.1x
+y=$(echo $s | sed 's/e/x/')
+f_lib_puts "sed 's/e/x/'"   $v_LIB_color__blue
+f_lib_text "$y"
+#   Wxlcome to Like Geeks page
+
+#   s:  sed.replace.all
+y=$(echo $s | sed 's/e/x/g')
+f_lib_puts "sed 's/e/x/g'"  $v_LIB_color__blue
+f_lib_text "$y"
+#   Wxlcomx to Likx Gxxks pagx
+
+#   s:  sed.replace.InAFile
+f_lib_puts 'handle a file' $v_LIB_color__blue
+
+#   sed replace raises all prices from:$6.30 to:$9.95
+sed 's/6.30/9.95/' $pFile > $pFile_sed
+echo "+++ created file:'$pFile_sed'"
+
 
 #   b:  b.footer
 f_lib_footer 0
