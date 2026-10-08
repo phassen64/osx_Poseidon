@@ -1,9 +1,11 @@
 #!/bin/bash
 #   ***************************************************************************
-#   tutorial BASH 2026  :   "dummy"                 ©[mATe64]::[2026-10-04]
+#   tutorial BASH 2026  :   "dummy"                     ©[mATe64]::[2026-10-04]
 #   ***************************************************************************
 #   encoding.UTF8:
 #   !@€ƒ„…†‡ˆ‰Š‹ŒŽ +‘“”•—™š›œžŸ+¡¢£¤¥¦§¨©«¬®°±²³µ¶·¹º»¼½¾¿ÄÖÜÑ×ØÞßäæçîðñôö÷üýþÿ
+
+#   usage   :   bash$>  bash <SCP.bsh>
 
 
 << hereDoc_content_tutor__dummy
@@ -22,6 +24,7 @@ hereDoc_content_tutor__dummy
 
 #   b:  b.include
 source LIB.wsp.inc.bsh
+if [ "$1" == "" ]; then f_lib_configuration '+'; fi
 declare -i z_iReply_iEc=$1
 
 #   b:  b.header
