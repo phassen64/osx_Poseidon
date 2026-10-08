@@ -1013,7 +1013,7 @@ function f_lib_header() {
     fi
 
     #   create+write into myLogFile
-    s="--- automaticall created by:'$p_sScp'."
+    s="--- automatically created by:'$sScp'."
     f__logs "$s" $v_LIB_bTrue
 
     #   create+write into myLogFile
@@ -1236,7 +1236,9 @@ declare v_LIB_reply_aRc=()
 #   declare -x v_LIB_timer_tStart
 #   declare -x v_LIB_timer_tStopp
 declare -x v_LIB_dtmFormatString_now="+%y%m%d%H%M%S"
-#
+declare -x v_LIB_dtmFormatString_hdr="+%Y-%m-%d__%H:%M:%S"
+
+
 #   #   m:  v.logging
 declare -i v_LIB_log_bUseDtmName=$v_LIB_bFalse  # short Name
 declare -x v_LIB_log_sFileExtension='.log'

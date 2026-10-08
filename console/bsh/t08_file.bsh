@@ -18,6 +18,9 @@
             b:  b.header
             b:  b.main
                 •   m:  F.create
+                •   m:  F.write
+                •   m:  F.read
+                •   m:  F.delete
             b:  b.footer
         p:  p.last
 hereDoc_content_tutor__file
@@ -30,37 +33,33 @@ hereDoc_content_tutor__file
 
 #   s:  f.getsomeFileName
 function f_uni_getsomeFileName {
-
-    #   usage:  bash$>  pFile=$(func 'someName' '+')
-
-    local p_sPara=$1
-    local p_sModi=$2  #   '+':random, else:fix
+    #   replies fileName using callerScp - optional random naming
+    #   usage:  bash$>  pFile=$(func 'someName' ['+'])
+    #   example:    $>  f 'samba' '+'
+    #               $<  t00_samba_123.txt
+    local p_sPara=$1    #   alternative namew
+    local p_sModi=$2    #   '+':random, else:fix
     local p_sBody=${BASH_SOURCE[1]%.*}    #   t08_file
     local p_dTemp=$v_UNI_dirTemp
     local p_sFExt=$v_UNI_fileExtension
-    local iRndm     #  ~ 1...1000
     local sFidn     #   't00'
+    local iRndm     #  ~ 1...1000
     local sFnam
     local s
-
     #   calc fileBody
     sFidn=${p_sBody:0:3}
-
     #   random
     iRndm=1
     if [ ! -z $p_sModi ] && [ $p_sModi == '-' ]; then
         iRndm=$(( RANDOM % 998 ))
         let "iRndm += 1"
     fi
-
     #   fileName
     printf -v sFnam "%s_%s_%3.3d%s" $sFidn $p_sPara $iRndm $p_sFExt
-
     #   filePath
-    sPath="$p_dTemp/$sFnam"
-
-    #   reply code
-    echo $sPath
+    s="$p_dTemp/$sFnam"
+    #   reply FilePath
+    echo $s
 }
 
 
@@ -176,6 +175,8 @@ f_lib_menu "FILE.write"
 
 #   s:  write
 f_uni_fileWrite $pFile 'SambaEnLaCasa'
+sDtm=$(date)
+f_uni_fileWrite $pFile "$sDtm"
 
 #   s:  ?fileSize
 f_uni_getFileSize $pFile; iRc=$?
@@ -193,6 +194,7 @@ f_lib_menu "FILE.read"
 f_uni_fileRead $pFile; iRc=$?
 f_lib_text "reply.iRc:[$iRc]"
 f_lib_text "reply.sRc:['$v_LIB_reply_sRc']"
+
 
 #   ---------------------------------------------------------------------------
 #   m:  F.delete
