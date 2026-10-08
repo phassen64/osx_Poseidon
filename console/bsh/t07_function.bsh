@@ -37,7 +37,7 @@ hereDoc_content_tutor__function
 #   m:  F.single
 
 #   REM:    declare with :() only
-f_tor_single() {
+f_uni_single() {
     #   parameter '$1','$2',...
     local s=${FUNCNAME[0]}
     f_lib_puts "I am in function '$s' \n\tand I got parameter: '$1'"
@@ -47,7 +47,7 @@ f_tor_single() {
 #   m:  F.multi
 
 #   REM:    declare with :function but not :()
-function f_tor_multi {
+function f_uni_multi {
     local s
     declare -i i=1
     for x in "$@"
@@ -62,7 +62,7 @@ function f_tor_multi {
 #   m:  F.twin
 
 #   s:  twin1   *   declared with :function &&  :()
-function f_tor_twin () {
+function f_uni_twin () {
     local p=$1
     local s=${FUNCNAME[0]}
     f_lib_puts "twin.A :[$s] && parameter.A :[$p]'"
@@ -70,7 +70,7 @@ function f_tor_twin () {
 }
 
 #   s:  twin2   *   identical name, but different return
-f_tor_twin () {
+f_uni_twin () {
     local p=$1
     local s=${FUNCNAME[0]}
     f_lib_puts "twin.B :[$s] && parameter.B :[$p]'"
@@ -100,7 +100,7 @@ declare c=$v_LIB_color__blue
 
 f_lib_menu "F.single"
 
-f_tor_single "Britney"
+f_uni_single "Britney"
 
 #   fetch my return code
 iRc=$?
@@ -113,7 +113,7 @@ f_lib_puts "<<< reply code received is : [$iRc]\n"
 
 f_lib_menu "F.multi"
 
-f_tor_multi "Beckenbauer" "Pele" "Maradonna" "Messi" "Ronaldo" ; iRc=$?
+f_uni_multi "Beckenbauer" "Pele" "Maradonna" "Messi" "Ronaldo" ; iRc=$?
 
 #   reply
 f_lib_puts "<<< iRc =: [$iRc]\n"
@@ -122,7 +122,7 @@ f_lib_puts "<<< iRc =: [$iRc]\n"
 #   m:  F.twin
 #
 
-f_tor_twin "Twin A||B"; iRc=$?
+f_uni_twin "Twin A||B"; iRc=$?
 f_lib_puts "<<< reply.twin.iRc =: [$iRc]"   # replies: '32' = twin2
 
 #   b:  b.footer
