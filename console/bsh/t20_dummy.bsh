@@ -1,0 +1,39 @@
+#!/bin/bash
+#   ***************************************************************************
+#   tutorial BASH 2026  :   "dummy"                     ©[mATe64]::[2026-10-04]
+#   ***************************************************************************
+#   encoding.UTF8:
+#   !@€ƒ„…†‡ˆ‰Š‹ŒŽ +‘“”•—™š›œžŸ+¡¢£¤¥¦§¨©«¬®°±²³µ¶·¹º»¼½¾¿ÄÖÜÑ×ØÞßäæçîðñôö÷üýþÿ
+
+#   usage   :   bash$>  bash <SCP.bsh>
+
+
+<< hereDoc_content_tutor__dummy
+    content:
+        p:  p.function
+        p:  p.body
+            b:  b.include
+            b:  b.header
+            b:  b.main
+            b:  b.footer
+        p:  p.last
+hereDoc_content_tutor__dummy
+
+#   p:  p.function
+#   p:  p.body
+
+#   b:  b.include
+source LIB.wsp.inc.bsh
+if [ "$1" == "" ]; then f_lib_configuration '+'; fi
+declare -i z_iReply_iEc=$1
+
+#   b:  b.header
+f_lib_header $z_iReply_iEc
+
+#   b:  b.main
+f_lib_puts "hello"
+
+#   b:  b.footer
+f_lib_footer 0
+
+#   p:  p.last
