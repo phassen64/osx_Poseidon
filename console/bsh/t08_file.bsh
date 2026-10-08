@@ -10,6 +10,7 @@
 << hereDoc_content_tutor__file
     content:
         p:  p.function
+                    m:  f.helper
                 •   m:  F.create
         p:  p.body
             b:  b.include
@@ -25,48 +26,105 @@ hereDoc_content_tutor__file
 #   p:  p.function
 #   ===========================================================================
 
-function f_tor_dummy {
-    local sPara=$1
-    local sFunc=${FUNCNAME[0]}
-    local iLine=$LINENO
-    local dTemp=$v_LIB_dirScratch
-    local s; local sTemp
-    printf "<<< myName:[%s] p:[%s] at l:[%d]\n" $sFunc $sPara $iLine
-    sName="$sFunc.txt"
+#   m:  f.helper
 
-    f_lib_file_joinPath "$dTemp" "$sName"
+#   s:  f.getsomeFileName
+function f_uni_getsomeFileName {
 
-    printf "<<< reply via rs:[%s]\n" $v_LIB_reply_sRc
+    #   usage:  bash$>  pFile=$(func 'someName' '+')
 
+    local p_sPara=$1
+    local p_sModi=$2  #   '+':random, else:fix
+    local p_sBody=${BASH_SOURCE[1]%.*}    #   t08_file
+    local p_dTemp=$v_UNI_dirTemp
+    local p_sFExt=$v_UNI_fileExtension
+    local iRndm     #  ~ 1...1000
+    local sFidn     #   't00'
+    local sFnam
+    local s
 
-    sRc=$(f_lib_file_joinPath "$dTemp" "$sName")
+    #   calc fileBody
+    sFidn=${p_sBody:0:3}
 
-    printf "<<< reply2[%s]\n" $sRc
+    #   random
+    iRndm=1
+    if [ ! -z $p_sModi ] && [ $p_sModi == '-' ]; then
+        iRndm=$(( RANDOM % 998 ))
+        let "iRndm += 1"
+    fi
 
+    #   fileName
+    printf -v sFnam "%s_%s_%3.3d%s" $sFidn $p_sPara $iRndm $p_sFExt
 
-    #   sTemp=v_LIB_reply_sRc
+    #   filePath
+    sPath="$p_dTemp/$sFnam"
 
-    #   printf "<<< joined Path:[%s]\n" $s
+    #   reply code
+    echo $sPath
 }
+
+
+#   s:  f.getFileSize
+function f_uni_getFileSize {
+    local pFile=$1
+    local iSize=$(stat -c%s $pFile)
+    #   echo "size:$iSize" =0
+    return $iSize
+}
+
 
 #   m:  F.create
-f_lib_menu "FILE.create"
-function f_tor_fileCreate {  #   $>: ls :> $f
-
-    local x; local y; local s; local f
-
-    local sDtm=$(date "+%y%m%d%H%M%S")
-    local sExt='tmp.txt'
-    local iPos=$LINENO
-
-    #f="${v_DIR_TMP}/$z_SCP-$sDtm-$iPos.$sExt"
-
-    #f_lib_puts "try: \$> create:<$f>..."
-    #:> $f      #    create an empty file
-
-    #f_lib_text "empty FILE:<$f> created!" $LINENO
+function f_uni_fileCreate {
+    #   $>: ls :> $f
+    local pFile=$1
+    f_lib_puts "... create file:[$pFile]"
+    #   perform :: create an empty file
+    :> $pFile
+    #   reply
+    return 0
 }
 
+#   m:  F.delete
+function f_uni_fileDelete {
+    local pFile=$1
+    #   perform :: remove
+    rm $pFile 2> /dev/null
+    return 0
+}
+
+#   m:  F.write
+function f_uni_fileWrite {
+    local pFile=$1
+    local sText=$2
+    #   perform :: append text
+    echo "$sText" >> $pFile
+    return 0
+}
+
+#   m:  F.read
+function f_uni_fileRead {
+
+    #   locals
+    local pFile=$1
+    local iSize=$(stat -c%s $pFile)
+
+    #   check the file
+    if [ ! -f $pFile ]; then
+        return $LINENO      #   noFile
+    elif [ ! -r $pFile ]; then
+        return $LINENO      #   not readable
+    elif [ $iSize == 0 ]; then
+        return $LINENO      #   empty File
+    fi
+
+    #   read the file
+    s=$(<$pFile)
+
+    #   save
+    v_LIB_reply_sRc=$s
+
+    return ${#s}            #   reply strlen
+}
 
 #   ===========================================================================
 #   p:  p.body
@@ -77,29 +135,87 @@ source LIB.wsp.inc.bsh
 if [ "$1" == "" ]; then f_lib_configuration '+'; fi
 declare -i z_iReply_iEc=$1
 
+#   universal fileExtension
+declare v_UNI_fileExtension='.txt'
+declare v_UNI_dirTemp=$v_LIB_dirScratch
 
 #   b:  b.header
 f_lib_header $z_iReply_iEc
 
 #   b:  b.main
-f_lib_puts "hello"
+pFile=$(f_uni_getsomeFileName 'samba' '+')
+f_lib_text "pFile:[$pFile]"; echo ""
 
-
-
-v_DIR_TMP=$v_LIB_dirScratch
-v_SCP=`basename $BASH_SOURCE`
-
-
-echo "name:$v_SCP"
-f_tor_dummy "test1"
-
-
-
+#   ---------------------------------------------------------------------------
 #   m:  F.create
-#   f_lib_menu "FILE.create"
-#   f_tor_fileCreate    #   $>: ls :> $f
+#   ---------------------------------------------------------------------------
+
+#   s:  menu
+f_lib_menu "FILE.create"
+
+#   s:  create empty file
+f_uni_fileCreate $pFile
+
+#   s:  ?isFile
+f_lib_isFile $pFile; bRc=$?
+if [ $v_LIB_bTrue != $bRc ]; then
+    f_lib_eXit 91
+fi
+f_lib_text "< file:[$pFile] was created."
+
+#   s:  ?fileSize
+f_uni_getFileSize $pFile; iRc=$?
+f_lib_text "reply.iFileSize=:[$iRc]"    #   == 0
+
+#   ---------------------------------------------------------------------------
+#   m:  F.write
+#   ---------------------------------------------------------------------------
+
+#   s:  menu
+f_lib_menu "FILE.write"
+
+#   s:  write
+f_uni_fileWrite $pFile 'SambaEnLaCasa'
+
+#   s:  ?fileSize
+f_uni_getFileSize $pFile; iRc=$?
+f_lib_text "reply.iFileSize=:[$iRc]"    #   !=0
+
+
+#   ---------------------------------------------------------------------------
+#   m:  F.read
+#   ---------------------------------------------------------------------------
+
+#   s:  menu
+f_lib_menu "FILE.read"
+
+#   s:  read
+f_uni_fileRead $pFile; iRc=$?
+f_lib_text "reply.iRc:[$iRc]"
+f_lib_text "reply.sRc:['$v_LIB_reply_sRc']"
+
+#   ---------------------------------------------------------------------------
+#   m:  F.delete
+#   ---------------------------------------------------------------------------
+
+#   s:  menu
+f_lib_menu "FILE.delete"
+
+#   s:  remove
+f_uni_fileDelete $pFile; iRc=$?
+f_lib_text "reply.delete.iRc:[$iRc]"
+
+#   s:  check
+f_lib_isFile $pFile; bRc=$?
+if [ $v_LIB_bFalse != $bRc ]; then
+    f_lib_eXit 92
+fi
+f_lib_text "< file:[$pFile] was deleted."
+
+
+#   &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
 
 #   b:  b.footer
-f_lib_footer 0
+f_lib_footer 1
 
 #   p:  p.last
