@@ -770,9 +770,13 @@ $   Bash Ternär Operator
 
 ### !date:<2026-10-08>:Do 
 
-+   scp naming
-    local sLogfileId=${p_sScp:0:3} # ersten 3 Zeichen 
-    v_sGrepx_run="$v_SCP_????????.$v_IDX_log"
++   scp naming and parts
+    v_SCP=`basename $BASH_SOURCE`
+    v_SCP_sid=${v_SCP:0:3}          # ersten 3 Zeichen 
+    v_SCP_bdy="${v_SCP%.*}"
+    v_SCP_ext="${v_SCP##*.}"
+    v_SCP_nam="$v_SCP_????????.'log'"   # logFile naming
+
 
 
     

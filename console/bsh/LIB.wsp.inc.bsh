@@ -12,7 +12,7 @@
 
 #   remarks:
 #       •   default:no color must be enabled by:lib configuration
-#       •   exit code only 0..255 - but 0,1,250...255 are reserved
+#       •   eXit code only 0..255 - but 0,1,250...255 are reserved
 #
 
 #   remark 'echo':
@@ -66,6 +66,8 @@
                     •   s:  f.~~print
                     •   s:  f.print
                     •   s:  f.~~puts
+            •   m:  F.lib.filePath
+                •   s:  f.file.joinPath
             •   m:  F.lib.fileInfo
                 •   s:  f.file.GetPath
                 •   s:  f.file.GetName
@@ -92,7 +94,8 @@
             •   m:  F.lib.debugging
                     •   s:  f.trace
                     •   s:  f.debug
-                    •   s:  f.exit
+                    •   s:  f.eXit
+                    •   s:  f.flag
             •   m:  F.lib.test
         b:  B.body
             •   m:  v.boolType
@@ -209,7 +212,7 @@ function f_lib_configuration() {
 function f__color_defineEscapeCode() {
 
     #!URL   https://stackoverflow.com/questions/5947742/
-    #               /how-to-change-the-output-color-of-echo-in-linux
+    #               /how-to-change-the-output-color-of-echo-in-linuxff
     #   ansi colors
     #   Black        0;30     Dark Gray     1;30
     #   Red          0;31     Light Red     1;31
@@ -700,6 +703,37 @@ function f__puts() {
 }
 
 #   ===========================================================================
+#   m:  F.lib.filePath
+#   ===========================================================================
+
+#   in: filePath
+
+#   s:  f.file.joinPath     - no validation
+function f_lib_file_joinPath() {
+
+    #   usage:
+    #   $   sPath=$(f() $sDir $sFnm)
+
+    #   define my locals
+    local p_pTop=$1
+    local p_pSub=$2
+    local s
+
+    #   perform lib debugging
+    if [ $v_LIB_bTrue == $v_LIB_mode_bVerbose ]; then
+        echo "< L.joinPath.p1 :: [$p_pTop]"
+        echo "< L.joinPath.p2 :: [$p_pSub]"
+    fi
+
+    s="$p_pTop/$p_pSub"     #   build path
+
+    v_LIB_reply_sRc=$s      #   save into global value
+    echo "$s"               #   echo to bash
+
+    return ${#s}            #   reply strlen
+}
+
+#   ===========================================================================
 #   m:  F.lib.fileInfo
 #   ===========================================================================
 
@@ -707,16 +741,17 @@ function f__puts() {
 
 #   s:  f.file.GetPath
 function f_lib_file_getPath() {
-    local p_sScp=$1
-    local l_sPwd=`pwd`
+    local p_pScp=${BASH_SOURCE[1]}     #   caller.script
     local s
+    s=$(realpath "$p_pScp")
     if [ $v_LIB_bTrue == $v_LIB_mode_bVerbose ]; then
-        echo "< L.filePath.pScp :: [$p_sScp]"
-        echo "< L.filePath.sPwd :: [$l_sPwd]"
+        echo "< L.filePath.pScp :: [$p_pScp]"
+        echo "< L.filePath.sRc  :: [$s]"
+    else
+        echo "$s"           #   echo to bash needed ?
     fi
-    s=$l_sPwd/$p_sScp
-    v_LIB_reply_sRc=$s
-    return ${#s}        # reply strlen
+    v_LIB_reply_sRc=$s      #   save
+    return ${#s}            #   reply strlen
 }
 
 #   s:  f.file.GetName
@@ -1028,8 +1063,8 @@ function f_lib_footer() {
     f__puts "\n$s" $v_LIB_color__green
     f__logs "$s"
 
-    #   do exit
-    f_lib_exit $v_LIB_reply_iEc
+    #   do eXit
+    f_lib_eXit $v_LIB_reply_iEc
 }
 
 #   s:  f.menu.M
@@ -1081,8 +1116,6 @@ function f_lib_menuS2() {
 #   ===========================================================================
 #   m:  F.lib.debugging
 #   ===========================================================================
-
-
 #   s:  f.trace
 function f_lib_trace()   {
 
@@ -1123,12 +1156,31 @@ function f_lib_debug() {
     fi
 }
 
-#   s:  f.exit
-function f_lib_exit() {
+#   s:  f.eXit
+function f_lib_eXit() {
     local -i iEc=$1
-    ##  echo "I got F.lib.exit : [$iEc]"
     exit $iEc
 }
+
+#   s:  f.flag      # !CRQ-261008
+function f_lib_flag__verbose() {
+
+    #   convert 0|1=> boolean int
+    local -i p_iFlag=$1
+
+    if [ -z $p_iFlag ]; then
+        return $v_LIB_mode_bVerbose
+    fi
+
+    if [ $p_iFlag == 0 ]; then
+        v_LIB_mode_bVerbose=$v_LIB_bFalse
+    elif [ $p_iFlag == 1 ]; then
+        v_LIB_mode_bVerbose=$v_LIB_bTrue
+    else
+        return $v_LIB_mode_bVerbose
+    fi
+}
+
 
 #   ===========================================================================
 #   m:  F.lib.test
