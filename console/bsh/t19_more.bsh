@@ -53,7 +53,7 @@ else
 fi
 declare -i z_iEc=$1
 
-#   s:  lib.header - take out exitCode
+#   s:  lib.header - take out replyCode
 f_lib_header $z_iEc
 
 #   s:  lib.configuration
@@ -176,20 +176,34 @@ f_lib_trace "eof.print"
 
 f_lib_menu "File" $LINENO
 
-#   s:  L.filePath
+#   s:  L.filePath.get
 echo ""
 echo "$ call LIB.file.getPath"
-f_lib_file_getPath $BASH_SOURCE
 
-#   save return code
-iRc=$?
+#   REGION verbose==false
+bVbs=f_lib_flag__verbose
+f_lib_flag__verbose 0
 
-#   fetch global lib reply code
-sRc=$v_LIB_reply_sRc
+if [ $v_LIB_bTrue == $v_LIB_mode_bVerbose ]; then
+    echo "+++ flag.Verbose==true"
+    f_lib_file_getPath; iRc_lib=$?
+else
+    echo "+++ flag.Verbose==false"
+    sRc=$(f_lib_file_getPath)   # runs echo
+    iRc_lib=$?
+    echo "< m.sRc =: [$sRc]"
+fi
+
+#   REGION verbose==old
+v_LIB_mode_bVerbose=$bVbs
+
+#   fetch data
+echo "< m.iRc_lib   =: [$iRc_lib]"
+sRc_lib=$v_LIB_reply_sRc
+echo "< m.sRc.lib   =: [$sRc_lib]"      # !CRQ-261008:?replies dateTime
 
 #   show main variables
-echo "< m.sRc =: [$sRc]"
-echo "< m.iRc =: [$iRc]"
+echo "< m.sRc   =: [$sRc]"
 
 #   s:  L.fileName
 echo ""
