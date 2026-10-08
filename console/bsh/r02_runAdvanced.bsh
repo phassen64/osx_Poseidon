@@ -33,7 +33,7 @@ function f_run_script {
         nFile+=1
     done
 
-    #   define my runner.exitCode [3,...199]
+    #   define my runner.eXitCode [3,...199]
     local -i iEc=55
     local -i iBashReply=0
     local -x sLine
@@ -61,7 +61,7 @@ function f_run_script {
             printf "*** run:[%2.2d]/[%3.3d]:'%s'\n" $iFile $n  $xFile
             printf "%s\n\n" $sLine
 
-            #   call script, save exitCode
+            #   call script, save eXitCode
             bash $xFile $iEc;   iBashReply=$?
 
             #   check reply
@@ -130,7 +130,7 @@ echo "$xLog" >>  $fLog
 #   s:  run
 f_run_script "$aTest" "$iCtr" "$RANDOM" >> $fLog
 iRc=$?
-s="# total_sum_of_errors := [$iRc]"
+s="# total_sum_of_eRRoRs := [$iRc]"
 printf "\t$s\n"
 echo "$s" >> $fLog
 

@@ -107,7 +107,7 @@ f_lib_text "s[$LINENO]:<$sVal>"     #   s:ABC
 sVal='theodor'
 f_lib_text "s[$LINENO]:<$sVal>"     #   s:theodor
 
-#   write wrong type : no error
+#   write wrong type : no eRRoR
 sVal=3
 f_lib_text "s[$LINENO]:<$sVal>"     #   s:3
 
@@ -138,12 +138,12 @@ f_lib_text "i[$LINENO]:<$iVal>"     # => i=48
 iVal+=1
 f_lib_text "i[$LINENO]:<$iVal>"     # => i=49
 
-#   write wrong type => produce an error
+#   write wrong type => produce an eRRoR
 iVal='peter'
 f_lib_text "i[$LINENO]:<$iVal>"     # => i=0
 
 #   decrement to minus
-#   iVal-=1 error
+#   iVal-=1 eRRoR
 iVal=0
 iVal=$iVal-9
 f_lib_text "i[$LINENO]:<$iVal>"     # => i=-9
@@ -153,7 +153,7 @@ f_lib_text "i[$LINENO]:<$iVal>"     # => i=-9
 #   ===========================================================================
 
 #   s:  float
-#   REM:    iVal=3.14 hard syntax error
+#   REM:    iVal=3.14 hard syntax eRRoR
 
 f_lib_menuS1 "float" $LINENO
 
