@@ -29,6 +29,7 @@
                 •   s:  sed.replace.1x
                 •   s:  sed.replace.all
                 •   s:  sed.replace.InAFile
+            •   m:  R.awk
             b:  b.footer
         p:  p.last
 hereDoc_content_tutor__regExpr
@@ -466,6 +467,19 @@ f_lib_puts 'handle a file' $v_LIB_color__blue
 #   sed replace raises all prices from:$6.30 to:$9.95
 sed 's/6.30/9.95/' $pFile > $pFile_sed
 echo "+++ created file:'$pFile_sed'"
+
+
+#   ===========================================================================
+#   m:  R.awk
+#   ===========================================================================
+
+f_lib_menu "awk"
+
+f_lib_puts 'show file' $v_LIB_color__blue
+awk -F':' '{ print $1 }' $pFile
+
+f_lib_text 'show systemdate'
+echo|awk '{ system("date")}'
 
 
 #   b:  b.footer
