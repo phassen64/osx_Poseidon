@@ -766,3 +766,14 @@ $   Bash Ternär Operator
 
 +   10 x '#'
     bash $> s=''; c='#'; for((i=0;i<10;i++)); do s+="$c"; done; echo "$s"
+
+
+### !date:<2026-10-08>:Do 
+
++   scp naming
+    local sLogfileId=${p_sScp:0:3} # ersten 3 Zeichen 
+    v_sGrepx_run="$v_SCP_????????.$v_IDX_log"
+
+
+    
+
