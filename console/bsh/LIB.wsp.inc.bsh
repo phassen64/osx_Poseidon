@@ -739,8 +739,10 @@ function f_lib_file_getsomeName {
 
     #   replies fileName using callerScp - optional random naming
     #   usage:  bash$>  pFile=$(func 'someName' ['+'])
-    #   example:    $>  f 'samba' '+'
-    #               $<  t00_samba_123.txt
+
+    #   example:
+    #       $>  pFile=$(f_lib_file_getsomeName 'rock' "$v_LIB_dirScratch" '.txt' '+')
+    #       $<  "/home/peter/Documents/temp/t08_rock_947.txt"
 
     local p_sPara=$1    #   alternative name
     local p_dTemp=$2    #   objectDir

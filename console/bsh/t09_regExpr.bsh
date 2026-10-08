@@ -147,8 +147,29 @@ hereDoc_content_tutor__regExpr
 hereDoc_UNIX_tools
 
 
-
 #   p:  p.function
+
+function f_uni_generateFile() {
+
+    local pFile=$1
+    local sDtm=$(date)
+
+    echo "Star Database" > $pFile
+    echo "+++ created [$sDtm]" >> $pFile
+
+    echo "1, Justin Timberlake, Title 545, Price \$6.30" >> $pFile
+    echo "2, Taylor Swift, Title 723, Price \$7.90"      >> $pFile
+    echo "3, Mick Jagger, Title 610, Price \$7.90"       >> $pFile
+    echo "4, Lady Gaga, Title 118, Price \$6.30"         >> $pFile
+    echo "5, Johnny Cash, Title 482, Price \$6.50"       >> $pFile
+    echo "6, Elvis Presley, Title 335, Price \$6.30"     >> $pFile
+    echo "7, John Lennon, Title 271, Price \$7.90"       >> $pFile
+    echo "8, Britney Spears, Title 852, Price \$5.85"    >> $pFile
+
+    return 31
+}
+
+
 #   p:  p.body
 
 #   b:  b.include
@@ -160,7 +181,140 @@ declare -i z_iReply_iEc=$1
 f_lib_header $z_iReply_iEc
 
 #   b:  b.main
-f_lib_puts "hello"
+
+#   prepare, get FileName
+pFile=$(f_lib_file_getsomeName 'jupiter' "$v_LIB_dirScratch" '.log' '-')
+f_lib_puts "generated file :'$pFile'"
+
+#   generate
+f_uni_generateFile $pFile; iRc=$?
+f_lib_puts "iRc = [$iRc]\n"     # 31
+
+
+#   ---------------------------------------------------------------------------
+#   m:  R.grep
+#   ---------------------------------------------------------------------------
+
+#   m:  menu
+f_lib_menu "R.grep"
+
+#
+#   s:  grep.file
+#
+
+f_lib_menuS1 'grep.file'
+f_lib_puts "\nusing file '$pFile'\n"
+
+#   Option:'--' None
+f_lib_menuS2 'option :{//} NONE'
+
+#   ok
+x='Ju'
+y=$(grep $x $pFile);
+f_lib_puts "grep('$x') => '$y'"         #   ::  Justin Timberlake...
+
+#   nOK
+x='TA'
+y=$(grep $x $pFile)
+f_lib_puts "grep('$x') => '$y'"         #   ::  <> * empty
+
+#   Option:'-i' : case-in-sensitive
+f_lib_menuS2 'option :{-i}'
+
+x='TA'
+y=$(grep -i $x $pFile)
+f_lib_puts "grep -i ('$x') => '$y'"     #   ::  Taylor Swift...
+
+x='OH'
+y=$(grep -i $x $pFile)
+f_lib_puts "grep -i ('$x') => '$y'"     #   ::  Johnny Cash && John Lennon
+
+#   Option:'-w' : word
+f_lib_menuS2 'option :{-w}'
+
+x='Mick';   y=$(grep -w $x $pFile)
+f_lib_puts "grep -w '$x' => '$y'"       #   ::   Mick Jagger
+
+x='Presley';   y=$(grep -w $x $pFile)
+f_lib_puts "grep -w '$x' => '$y'"       #   ::   Elvis Presley
+
+#   Option:-c count
+f_lib_menuS2 'option :{-c}'
+
+x='Title';  y=$(grep -c $x $pFile)
+f_lib_puts "grep -c '$x' => '$y'"       #   ::  8
+
+x='$7.90';  y=$(grep -c $x $pFile)
+f_lib_puts "grep -c '$x' => '$y'"       #   ::  3
+
+#   Option:-n show line number
+f_lib_menuS2 'option :{-n}'
+x='Br';   y=$(grep -n $x $pFile)
+f_lib_puts "grep -n '$x' => '$y'"
+#   replies
+#   '10:8, Britney Spears, Title 852, Price $5.85'
+#       aber nur 10 ist die ZeilenNummer !
+
+echo ""
+
+#
+#   s:  grep.piping
+#
+f_lib_menuS1 'grep.piping'
+echo ""
+
+function f_tmp_grepRc {
+    local sInfo="$1"
+    local sRc=$2
+    local bRc=$v_LIB_bFalse
+    if [ $sRc ] ; then
+        bRc=$v_LIB_bTrue
+    fi
+    if [ $bRc == $v_LIB_bTrue ]; then
+        f_lib_puts "$sInfo =>: true" $v_LIB_color__blue
+    else
+        f_lib_puts "$sInfo =>: false" $v_LIB_color__red
+    fi
+}
+
+#   u:  grep.pipe.simple
+f_lib_menuS2 'simple'
+
+#   simple
+t='abc'; r='[a-z]'; y=$(echo $t | grep "$r")            # true
+f_tmp_grepRc "grep('$r','$t') :[$LINENO]" $y
+
+#   option:{-E} vs egrep: egrep:=grep -E
+
+#   extended REGEX with : '^' '$' '+'
+t='abcde'; r='^[a-z]+$'; y=$(echo $t | grep -E "$r")    # true
+f_tmp_grepRc "grep -E('$r','$t') :[$LINENO]" $y
+
+t='abcdef'; r='^[a-z]+$'; y=$(echo $t | egrep "$r")     # true
+f_tmp_grepRc "egrep('$r','$t') :[$LINENO]" $y
+
+#   option:{-i}
+
+t='abcDef'; r='^[a-z]+$'; y=$(echo $t | egrep "$r")     # false
+f_tmp_grepRc "egrep ('$r','$t') :[$LINENO]" $y
+
+t='abcDef'; r='^[a-z]+$'; y=$(echo $t | egrep -i "$r")  # true
+f_tmp_grepRc "egrep -i ('$r','$t') :[$LINENO]" $y
+
+#   option:{-w}
+
+t='abcx def ghi abcP'; r='abc'; y=$(echo $t | egrep -w "$r")  # false
+f_tmp_grepRc "egrep -w ('$r','$t') :[$LINENO]" $y
+
+t='abcx def ghi abc'; r='abc'; y=$(echo $t | egrep -w "$r")  # true
+f_tmp_grepRc "egrep -w ('$r','$t') :[$LINENO]" $y
+
+#   option:{-n}
+
+t='abcx def ghi abc'; r='a'; y=$(echo $t | egrep -n "$r")
+f_tmp_grepRc "egrep -w ('$r','$t') :[$LINENO]" $y
+n=${y:0:1}
+f_lib_puts "n.Rc:=<$n>" # number of found patterns  # 1
 
 #   b:  b.footer
 f_lib_footer 0
