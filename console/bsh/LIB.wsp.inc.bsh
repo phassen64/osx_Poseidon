@@ -1155,9 +1155,15 @@ function f_lib_test() {
 #   show
 #   echo "L.libWsp include"
 
-#   #   m:  v.boolType
+#   m:  boolean
 declare -i v_LIB_bTrue=10      && export v_LIB_bTrue
 declare -i v_LIB_bFalse=99     && export v_LIB_bFalse
+
+
+#   m:  scp
+v_SCP=`basename $BASH_SOURCE`
+v_SCP_bdy="${v_SCP%.*}"
+v_SCP_ext="${v_SCP##*.}"
 
 f_lib_alias_set
 f_lib_initialize
