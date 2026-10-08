@@ -113,8 +113,6 @@ printf "< m.bRc =:[%d] == '%s' \n" "$bRc" "$sRc"
 #   get.some.Name
 pFile=$(f_lib_file_getsomeName 'rock' "$v_LIB_dirScratch" '.txt' '+')
 echo "&&& file:'$pFile'"
-exit
-
 
 #   ===========================================================================
 #   m:  F.time
