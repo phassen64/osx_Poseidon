@@ -194,9 +194,9 @@ f_uni_generateFile $pFile; iRc=$?
 f_lib_puts "iRc = [$iRc]\n"     # 31
 
 
-#   ---------------------------------------------------------------------------
+#   ===========================================================================
 #   m:  R.grep
-#   ---------------------------------------------------------------------------
+#   ===========================================================================
 
 #   m:  menu
 f_lib_menu "R.grep"
@@ -318,6 +318,29 @@ t='abcx def ghi abc'; r='a'; y=$(echo $t | egrep -n "$r")
 f_tmp_grepRc "egrep -w ('$r','$t') :[$LINENO]" $y
 n=${y:0:1}
 f_lib_puts "n.Rc:=<$n>" # number of found patterns  # 1
+
+
+#   ===========================================================================
+#   m:  R.tr
+#   ===========================================================================
+
+#   m:  menu
+f_lib_menu "R.tr"
+
+#   $> tr [option] stringValue1 [stringValue2]
+
+#   option and stringValue2 are optional for tr command.
+#   You can use -c, -s and -d option with tr command to do different types of tasks.
+
+#   s:  lower2upper
+f_lib_menuS1 "[:lower:] [:upper:]"; echo ""
+x='abcdEFGH'
+
+s=$(echo $x | tr [:lower:] [:upper:])    #   => ABCDEFGH
+f_lib_text $s
+
+s=$(echo $x | tr [:upper:] [:lower:])    #   => abcdefgh
+f_lib_text $s
 
 #   b:  b.footer
 f_lib_footer 0
