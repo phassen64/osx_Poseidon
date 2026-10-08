@@ -5,13 +5,20 @@
 #   encoding.UTF8:
 #   !@€ƒ„…†‡ˆ‰Š‹ŒŽ +‘“”•—™š›œžŸ+¡¢£¤¥¦§¨©«¬®°±²³µ¶·¹º»¼½¾¿ÄÖÜÑ×ØÞßäæçîðñôö÷üýþÿ
 
-#   usage   :   bash$>  bash <SCP.bsh>
+#   description :   I/O of text files
+#   usage       :   bash$>  bash <SCP.bsh>
+
 
 << hereDoc_content_tutor__file
     content:
         p:  p.function
-                    m:  f.helper
+                •   m:  f.helper
+                    •   s:  f_uni_getsomeFileName
+                    •   s:  f_uni_getFileSize
                 •   m:  F.create
+                •   m:  F.write
+                •   m:  F.read
+                •   m:  F.delete
         p:  p.body
             b:  b.include
             b:  b.globals
@@ -29,7 +36,9 @@ hereDoc_content_tutor__file
 #   p:  p.function
 #   ===========================================================================
 
+#
 #   m:  f.helper
+#
 
 #   s:  f.getsomeFileName
 function f_uni_getsomeFileName {
@@ -71,6 +80,7 @@ function f_uni_getFileSize {
     return $iSize
 }
 
+#   ---------------------------------------------------------------------------
 
 #   m:  F.create
 function f_uni_fileCreate {
