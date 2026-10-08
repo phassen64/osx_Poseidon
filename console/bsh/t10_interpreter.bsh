@@ -1,0 +1,56 @@
+#!/bin/bash
+#   ***************************************************************************
+#   tutorial BASH 2026  :   "interpreter"               ©[mATe64]::[2026-10-09]
+#   ***************************************************************************
+#   encoding.UTF8:
+#   !@€ƒ„…†‡ˆ‰Š‹ŒŽ +‘“”•—™š›œžŸ+¡¢£¤¥¦§¨©«¬®°±²³µ¶·¹º»¼½¾¿ÄÖÜÑ×ØÞßäæçîðñôö÷üýþÿ
+
+#   usage   :   bash$>  bash <SCP.bsh>
+
+
+<< hereDoc_content_tutor__interpreter
+    content:
+        p:  p.function
+        p:  p.body
+            b:  b.include
+            b:  b.header
+            b:  b.main
+                m:  i.perl
+                m:  i.ruby
+                m:  i.python
+            b:  b.footer
+        p:  p.last
+hereDoc_content_tutor__interpreter
+
+#   p:  p.function
+#   p:  p.body
+
+#   b:  b.include
+source LIB.wsp.inc.bsh
+if [ "$1" == "" ]; then f_lib_configuration '+'; fi
+declare -i z_iReply_iEc=$1
+
+#   b:  b.header
+f_lib_header $z_iReply_iEc
+
+#   b:  b.main
+
+#   m:  i.perl
+f_lib_menu "python"
+s=$(perl --version)
+f_lib_puts "$s"
+
+#   m:  i.ruby
+f_lib_menu "ruby"
+s=$(ruby --version)
+f_lib_puts "$s"
+
+#   m:  i.python
+f_lib_menu "python"
+s=$(python3 --version)
+f_lib_puts "$s"
+
+#   b:  b.footer
+f_lib_footer 0
+
+#   p:  p.last
