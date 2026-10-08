@@ -15,6 +15,9 @@
             b:  b.include
             b:  b.header
             b:  b.main
+            •   m:  R.grep
+                •   s:  grep.file
+                •   s:  grep.piping
             b:  b.footer
         p:  p.last
 hereDoc_content_tutor__regExpr
