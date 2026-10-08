@@ -1,0 +1,168 @@
+#!/bin/bash
+#   ***************************************************************************
+#   tutorial BASH 2026  :   "regExpr"                   ©[mATe64]::[2026-10-08]
+#   ***************************************************************************
+#   encoding.UTF8:
+#   !@€ƒ„…†‡ˆ‰Š‹ŒŽ +‘“”•—™š›œžŸ+¡¢£¤¥¦§¨©«¬®°±²³µ¶·¹º»¼½¾¿ÄÖÜÑ×ØÞßäæçîðñôö÷üýþÿ
+
+#   usage   :   bash$>  bash <SCP.bsh>
+
+
+<< hereDoc_content_tutor__regExpr
+    content:
+        p:  p.function
+        p:  p.body
+            b:  b.include
+            b:  b.header
+            b:  b.main
+            b:  b.footer
+        p:  p.last
+hereDoc_content_tutor__regExpr
+
+
+<< hereDoc_UNIX_tools
+
+    •   grep    "global regular expression print"
+
+                https://de.wikipedia.org/wiki/Grep
+
+        $ grep [Optionen] Suchstring [Datei(en)]
+
+        grep ist ein Programm,
+                das unter den Betriebssystemen Unix und Unix-Derivaten
+                der Suche und Filterung definierter Zeichenketten aus
+            Dateien oder Datenströmen dient.
+
+        Es wurde ursprünglich von Ken Thompson entwickelt,[1]
+                    erschien erstmals als Teil von Version 6 AT&T UNIX und ist POSIX.1-konform
+
+        Der Begriff grep steht für global/regular expression/print[2][3]
+                oder auch für :
+            "global search for a regular expression and print out matched lines",
+
+    •   egrep   "extended grep"
+
+        egrep ist wie grep, nur mit dem Unterschied,
+                    daß man auch +, ?, | und ()
+                als Regular Expression nutzen kannst.
+
+        egrep ist nichts anderes als ein grep -E.
+                Auf vielen Maschinen ist egrep sogar nur ein Link auf grep.
+
+        Ausserdem ist egrep "deprecated",
+            weswegen du lieber zum grep -E greifen solltest.
+
+    •   tr  "translate"
+
+            https://de.wikipedia.org/wiki/Tr_(Unix)
+
+        tr ist ein Unix-Kommando,
+            dessen Name eine Abkürzung für translate (deutsch: übersetzen) ist,
+            das bestimmte Zeichen aus einem Datenstrom ersetzt oder entfernt.
+
+        Das Werkzeug liest den Datenstrom der Standardeingabe,
+            schreibt auf die Standardausgabe und benötigt
+            je nach Modus ein (Löschen und Komprimieren) oder zwei (Ersetzen) Argumente.
+
+        Sollen Zeichen ersetzt werden,
+            werden zwei Argumente benötigt, zuerst die zu ersetzenden Zeichen,
+        im zweiten die neuen.
+
+
+    •   sed     "stream editor"
+
+                https://de.wikipedia.org/wiki/Sed_(Unix)
+
+        sed steht für Stream EDitor und ist ein Unix-Werkzeug,
+            mit dem Text-Datenströme bearbeitet werden können.
+            Der Datenstrom kann auch aus einer Datei gelesen werden.
+
+        Im Gegensatz zu einem Texteditor wird die Ursprungsdatei aber nicht verändert.
+
+        Im Gegensatz zu einem interaktiven Texteditor,
+            wie etwa dem vi,
+        wird sed mittels eines Skripts gesteuert.
+
+        Der sed-Befehlssatz orientiert sich an jenem des
+            zeilenorientierten Texteditors 'ed'.
+
+        Dabei werden für die Text-Durchmusterung laut der
+            POSIX-Spezifikation eine bestimmte Abart der Regular Expressions,
+            sogenannte (POSIX-) Basic Regular Expressions (BRE) verwendet.
+
+        Auch wenn der Sprachumfang von sed ziemlich limitiert
+            und spezialisiert erscheint,
+        so handelt es sich doch um eine Turing-vollständige Sprache.
+
+        Beweisen kann man die Turing-Vollständigkeit,
+            indem man eine Turing-Maschine mittels sed programmiert[2][3]
+        oder indem man mit sed einen Interpreter für eine andere,
+            Turing-vollständige Sprache schreibt.[4]
+
+        Folglich konnten und wurden sogar Spiele wie Sokoban oder
+            Arkanoid und andere anspruchsvolle Programme wie Debugger mit sed geschrieben.[5]
+
+
+    •   awk     <akronym>
+
+                "https://de.wikipedia.org/wiki/Awk"
+
+        Tool from:
+            'A'lfred V. Aho, Peter J. 'W'einberger and Brian W. 'K'ernighan
+
+        awk ist eine Programmiersprache (Skriptsprache) zur Bearbeitung
+            und Auswertung strukturierter Textdaten,
+                beispielsweise CSV-Dateien.
+        Der zugehörige Interpreter war eines der ersten Werkzeuge,
+            das in der Version 3 von Unix erschien;
+                es wird auch heute noch vielfach zusammen mit sed in Shell-Skripten eingesetzt,
+            um Daten zu bearbeiten, umzuformen oder auszuwerten.
+
+        Der Name "awk" ist aus den Anfangsbuchstaben der Nachnamen ihrer drei Autoren
+                Alfred V. Aho,
+                Peter J. Weinberger und
+                Brian W. Kernighan
+        zusammengesetzt.
+
+        Wine Version von awk ist heute in fast jedem Unix-System,
+            das historisch auf UNIX zurückzuführen ist,
+
+        sowie in jeder Linux-Distribution zu finden.
+
+        Ein vergleichbares Programm ist aber auch für fast
+            alle anderen Betriebssysteme verfügbar.
+
+        Die Sprache arbeitet fast ausschließlich mit
+            dem Datentyp Zeichenkette (englisch string).
+
+        Daneben sind assoziative Arrays (d. h. mit Zeichenketten indizierte Arrays,
+            auch Hashs genannt) und reguläre Ausdrücke grundlegende Bestandteile der Sprache.
+
+        Die Leistungsfähigkeit, Kompaktheit,
+            aber auch die Beschränkungen der awk- und sed-Skripte
+        regten Larry Wall zur Entwicklung
+            der Sprache Perl an.
+
+
+hereDoc_UNIX_tools
+
+
+
+#   p:  p.function
+#   p:  p.body
+
+#   b:  b.include
+source LIB.wsp.inc.bsh
+if [ "$1" == "" ]; then f_lib_configuration '+'; fi
+declare -i z_iReply_iEc=$1
+
+#   b:  b.header
+f_lib_header $z_iReply_iEc
+
+#   b:  b.main
+f_lib_puts "hello"
+
+#   b:  b.footer
+f_lib_footer 0
+
+#   p:  p.last
