@@ -1,0 +1,71 @@
+#!/bin/bash
+#   ***************************************************************************
+#   tutorial BASH 2026  :   "file"                  ©[mATe64]::[2026-10-08]
+#   ***************************************************************************
+#   encoding.UTF8:
+#   !@€ƒ„…†‡ˆ‰Š‹ŒŽ +‘“”•—™š›œžŸ+¡¢£¤¥¦§¨©«¬®°±²³µ¶·¹º»¼½¾¿ÄÖÜÑ×ØÞßäæçîðñôö÷üýþÿ
+
+#   usage   :   bash$>  bash <SCP.bsh>
+
+<< hereDoc_content_tutor__file
+    content:
+        p:  p.function
+                •   m:  F.create
+        p:  p.body
+            b:  b.include
+            b:  b.globals
+            b:  b.header
+            b:  b.main
+                •   m:  F.create
+            b:  b.footer
+        p:  p.last
+hereDoc_content_tutor__file
+
+#   ===========================================================================
+#   p:  p.function
+#   ===========================================================================
+
+#   m:  F.create
+f_lib_menu "FILE.create"
+function f_tor_fileCreate {  #   $>: ls :> $f
+
+    local x; local y; local s; local f
+    local d=$(date "+%y%m%d%H%M%S")
+    local e='tmp.txt'
+
+    f="${v_DIR_TMP}/$z_SCP-$d-$LINENO.$e"
+
+    f_lib_puts "try: \$> create:<$f>..."
+    :> $f      #    create an empty file
+
+    f_lib_text "empty FILE:<$f> created!" $LINENO
+}
+
+
+#   ===========================================================================
+#   p:  p.body
+#   ===========================================================================
+
+#   b:  b.include
+source LIB.wsp.inc.bsh
+if [ "$1" == "" ]; then f_lib_configuration '+'; fi
+declare -i z_iReply_iEc=$1
+
+#   b:  b.globals
+v_DIR_TMP=$v_LIB_dirScratch
+
+#   b:  b.header
+f_lib_header $z_iReply_iEc
+
+#   b:  b.main
+
+f_lib_puts "hello"
+
+#   m:  F.create
+f_lib_menu "FILE.create"
+f_tmp_fileCreate    #   $>: ls :> $f
+
+#   b:  b.footer
+f_lib_footer 0
+
+#   p:  p.last
