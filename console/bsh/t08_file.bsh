@@ -112,11 +112,9 @@ function f_uni_fileWrite {
 
 #   m:  F.read
 function f_uni_fileRead {
-
     #   locals
     local pFile=$1
     local iSize=$(stat -c%s $pFile)
-
     #   check the file
     if [ ! -f $pFile ]; then
         return $LINENO      #   noFile
@@ -125,13 +123,10 @@ function f_uni_fileRead {
     elif [ $iSize == 0 ]; then
         return $LINENO      #   empty File
     fi
-
-    #   read the file
+    #   perform :: read the file
     s=$(<$pFile)
-
-    #   save
+    #   save & return
     v_LIB_reply_sRc=$s
-
     return ${#s}            #   reply strlen
 }
 
