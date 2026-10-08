@@ -322,7 +322,7 @@ x=4711; f_lib_isNumeric $x; b=$?;   f__echoExpr "?isNumeric" $x $b
 
 #   libTest
 f_lib_menu "Test" $LINENO
-f_lib_test
+f_lib__test
 
 #   functioNamen = null
 #   t:  eof.test

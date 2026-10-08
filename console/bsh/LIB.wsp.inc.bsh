@@ -1186,7 +1186,7 @@ function f_lib_flag__verbose() {
 #   m:  F.lib.test
 #   ===========================================================================
 
-function f_lib_test() {
+function f_lib__test() {
     f__puts "+++ libTest.begin" $v_LIB_color__blue
     f__print "\t"
     f__print "1:red."        $v_LIB_bFalse   $v_LIB_color__red
