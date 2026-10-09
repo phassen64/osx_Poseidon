@@ -1,0 +1,4 @@
+#!/bin/bash
+#   usage:  $   . run.bsh
+echo "runner runner"
+bash r03_runExpert.bsh
