@@ -498,16 +498,21 @@ function f_eval {
     local r=$3
     local x
     local p=${BASH_LINENO[0]}     #   caller.lineNo
-
     if [ $i == 0 ]; then x='true'; else x='false' ; fi
     f_lib_puts "[$p] '$s' : '$r' =: $x"
 }
 
 #   simple
-s='Abc'; r='A';         [[ $s =~ $r ]]; i=$?; f_eval $i $s $r
-s='12a'; r='1';         [[ $s =~ $r ]]; i=$?; f_eval $i $s $r
-s='12a'; r='...';       [[ $s =~ $r ]]; i=$?; f_eval $i $s $r
-s='123'; r='[0-9]+';    [[ $s =~ $r ]]; i=$?; f_eval $i $s $r
+s='Abc'; r='A';         [[ $s =~ $r ]]; i=$?; f_eval $i $s $r   # true
+s='12a'; r='1';         [[ $s =~ $r ]]; i=$?; f_eval $i $s $r   # true
+s='12a'; r='...';       [[ $s =~ $r ]]; i=$?; f_eval $i $s $r   # true
+s='123'; r='[0-9]+';    [[ $s =~ $r ]]; i=$?; f_eval $i $s $r   # true
+s='12a'; r='[0-9]+';    [[ $s =~ $r ]]; i=$?; f_eval $i $s $r   # true
+s='a23'; r='[0-9]+';    [[ $s =~ $r ]]; i=$?; f_eval $i $s $r   # true
+s='a23'; r='[0-9]{3}';  [[ $s =~ $r ]]; i=$?; f_eval $i $s $r   # false
+s='a23'; r='^[0-9]+';   [[ $s =~ $r ]]; i=$?; f_eval $i $s $r   # false
+s='1a3'; r='^[0-9]+';   [[ $s =~ $r ]]; i=$?; f_eval $i $s $r   # true
+s='1a3'; r='^[0-9]+$';  [[ $s =~ $r ]]; i=$?; f_eval $i $s $r   # false
 
 #   more
 s='abcdef'; r="abc?[a-z]+"
