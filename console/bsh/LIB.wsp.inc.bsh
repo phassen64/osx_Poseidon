@@ -1223,6 +1223,14 @@ function f_lib_flag__verbose() {
     fi
 }
 
+#   s:  f.bool
+function f_lib_bEvaluate {
+    #   usage:  $ echo $(F $bVal)
+    local -i b=$1
+    if [ $b == $v_LIB_bTrue ]; then x='true'; else x='false' ; fi
+    echo "$x"
+}
+
 
 #   ===========================================================================
 #   m:  F.lib.test
