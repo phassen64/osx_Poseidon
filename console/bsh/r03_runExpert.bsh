@@ -1,0 +1,303 @@
+#!/bin/bash
+
+#   ***************************************************************************
+#   tutorial BASH 2026  :   "runner"                    ©[mATe64]::[2026-10-09]
+#   ***************************************************************************
+
+#   encoding.UTF8:
+#   !@€ƒ„…†‡ˆ‰Š‹ŒŽ +‘“”•—™š›œžŸ+¡¢£¤¥¦§¨©«¬®°±²³µ¶·¹º»¼½¾¿ÄÖÜÑ×ØÞßäæçîðñôö÷üýþÿ
+
+<<usage
+    Tutorial 2026-10-10
+
+    +   usage:
+            $>. {thisScript} [cOpt]=:'h' [{iStressFator(iSfr)}]=:'1'
+                with:
+            cOpt := { 'h','c','.','+','!'}
+            iSfr := [1..10]
+
+    +   Examples:
+            $> . run h     :    help
+            $> . run c     :    clean temp
+            $> . run .     :    run some file of the tutorial
+            $> . run +     :    1/4
+            $> . run 4     :    run tutorFile ¼ of tutor randomly
+            $> . run !     :    run all TC
+            $> . run . 5   :    run someFile 5 times
+            $> . run 3 3   :    b03 3x
+usage
+
+
+<<hereDoc_content_tutor__run_expert
+    content:
+        p:  p.function
+            m:  f.hlp.hint
+            m:  f.hlp.usage
+            m:  f.hlp.bEvaluate
+        p:  p.body
+            b:  b.include
+            b:  b.header
+            b:  b.main
+            b:  b.footer
+        p:  p.last
+hereDoc_content_tutor__run_expert
+
+#   ===========================================================================
+#   p:  p.function
+#   ===========================================================================
+
+#   m:  f.hlp.hint
+function f_run_hint() {
+    local p_pBash=${BASH_SOURCE[1]}     #   caller.bscp
+    c='$'
+    printf "\t%c $p_pBash h  # get help\n" "$c"
+}
+
+#   m:  f.hlp.usage
+function f_run_usage() {
+    local p_pBash=${BASH_SOURCE[1]}     #   caller.bscp
+    c='$'
+    printf "&&& usage:\n"   "$c"
+    printf "\t%c [$p_pBash] [cOpt]=:'h' [iSfr]=:'1' \n" "$c"
+    printf "\t\tcOpt := { 'h','c','.','+','!'}\n"
+    printf "\t\tiSfr := := [1..10]\n"
+}
+
+
+#   m:  f.hlp.evaluate
+function f_run_bEvaluate {
+    #   usage:  $ echo $(F $bVal)
+    local -i b=$1
+    if [ $b == $v_RUN_bTrue ]; then x='true'; else x='false' ; fi
+    echo "$x"
+}
+
+
+function f_run_matchFiles() {
+    local sRex=$1
+    declare -i i=0
+    v_RUN_iRc=0
+    v_RUN_aRc=()
+    for xFile in `ls`
+    do
+        if [ -f "$xFile" ]; then
+            i+=1
+            if [[ $xFile =~ $sRex ]]; then
+                #   echo "matchX:[$i]:=$xFile"
+                v_RUN_iRc+=1
+                v_RUN_aRc+=( $xFile )
+            fi
+        fi
+    done
+    return $i
+}
+
+#   ===========================================================================
+#   p:  p.body
+#   ===========================================================================
+
+#   fetch parameter
+declare p_cOpt=$1
+declare p_iSfr=$2
+declare p_sScp=$BASH_SOURCE
+
+#   define my local booleans
+declare -i v_RUN_bTrue=100
+declare -i v_RUN_bFalse=199
+
+#   define debug flag
+declare -i v_RUN_flag__bDebug=$v_RUN_bTrue
+
+#   declare else
+declare -i i=0
+declare -i n=0
+declare -x s='?'
+declare -x x='-'
+
+#   declare globals
+declare -i v_RUN_iSrc=-1
+declare -i v_RUN_iObj=-1
+declare -i v_RUN_iRnd=-1
+declare -x v_RUN_sObj='?'   #   single target
+
+#   declare REX
+v_RUN_sRexEx_src='^t[0-9]{2}_[A-Za-z]+\.bsh$'
+v_RUN_sRexEx_log='^t[0-9]{2}_[A-Za-z]+_[0-9]+\.log$'
+v_RUN_sRexEx_lid='^rBS_[A-Za-z0-9]+\.log$'
+
+#   init some vars
+declare sFmt="+%Y-%m-%d %H:%M:%S"
+declare sDtm=$(date "$sFmt")
+printf "### run.{%s} dtm:[%s]\n" "$p_sScp" "$sDtm"
+
+#   my temp var
+declare -i bRun=$v_RUN_bFalse
+declare -i iAnyObj=-1      # src selected
+declare -i bRexOpt=$v_RUN_bFalse
+
+#   check input
+if [ -z $p_cOpt ];
+    then echo "??? no option"; f_run_hint
+elif [ $p_cOpt == 'h' ]; then   f_run_usage
+elif [ $p_cOpt == '?' ]; then   f_run_usage
+elif [ $p_cOpt == '.' ]; then   echo "cOpt==x"; bRun=$v_RUN_bTrue
+elif [ $p_cOpt == '+' ]; then   echo "cOpt==+"; bRun=$v_RUN_bTrue
+elif [ $p_cOpt == '!' ]; then   echo "cOpt==!"; bRun=$v_RUN_bTrue
+else
+    echo "cOpt==#"
+    bRexOpt=$v_RUN_bTrue
+fi
+
+#   show run status
+b2sRc=$(f_run_bEvaluate $bRun)
+if [ $v_RUN_bTrue == $v_RUN_flag__bDebug ]; then
+    echo "### bRunStatus:[$b2sRc]"
+fi
+
+#   quit if no run
+if [ $bRun != $v_RUN_bTrue ]; then
+    printf "=== finish.\n"
+    exit 0
+fi
+
+#   match my sources
+declare -a v_RUN_aRc=()
+declare -i v_RUN_iRc=-1
+f_run_matchFiles $v_RUN_sRexEx_src; iRc=$?
+if [ $v_RUN_bTrue == $v_RUN_flag__bDebug ]; then
+    echo "### reply.iRc:=[$iRc]"
+    echo "### reply.global_Rc:=[$v_RUN_iRc]"
+fi
+
+#   copy matched files  2x
+aSrc=("${v_RUN_aRc[@]}")
+aObj=("${v_RUN_aRc[@]}")
+
+#   shuffle object
+aObj=( $(shuf -e "${aObj[@]}") )
+
+#   calc manual size
+nSrc=${#aSrc[@]}
+nObj=${#aObj[@]}
+if [ $v_RUN_bTrue == $v_RUN_flag__bDebug ]; then
+    echo "### show nSrc:[$nSrc]"
+    echo "### show nObj:[$nObj]"
+fi
+
+#   show aSrc
+if [ $v_RUN_bTrue == $v_RUN_flag__bDebug ]; then
+    printf "\n### show aSrc...\n"
+    i=0
+    for x in "${aSrc[@]}"; do
+        printf "### aSrc[%d] == '%s'\n" $i $x
+        i+=1
+    done
+fi
+
+#   show aObj
+if [ $v_RUN_bTrue == $v_RUN_flag__bDebug ]; then
+    printf "\n### show aObj...\n"
+    i=0
+    for x in "${aObj[@]}"; do
+        printf "### aObj[%d] == '%s'\n" $i $x
+        i+=1
+    done
+fi
+
+#   check input sourceIndex
+if [ $v_RUN_bTrue == $bRexOpt ]; then
+    s=$p_cOpt
+    r='^[0-9]+$'
+    if [[ $s =~ $r ]]; then
+        i=$s
+        if [ $i -gt $nSrc ]; then
+            printf "??? overflow [iAny=%d > iMax=%d]\n" $i $nSrc
+            exit
+        fi
+        v_RUN_iSrc=$i
+    else
+        printf "??? invalid Option:[%s]\n" $p_cOpt
+        exit
+    fi
+fi
+
+#   calc random
+$v_RUN_iRnd=$RANDOM%$nSrc
+if [ $v_RUN_bTrue == $v_RUN_flag__bDebug ]; then
+    echo "### iRandomSource:[$v_RUN_iRnd]"
+fi
+
+
+declare -x xObj='?'
+declare -a aObj; aObj=()
+
+if [ $p_cOpt == '.' ]; then
+
+    i=0
+    for x in $aSrc; do
+        if [ $i == $iRnd ]; then
+            echo "found x==["$x"]"
+            aObj+=("$x")
+            break
+        fi
+        i+=1
+    done
+
+elif [ $p_cOpt == '#' ]; then
+
+    echo "iAnyObj:[$iAnyObj] nSrc:[$nSrc]"
+
+    if [ $iAnyObj -gt $nSrc ]; then
+        printf "??? overflow [iAny=%d > iMax=%d]\n" $iAnyObj $nSrc
+        f_run_usage
+        exit
+    elif [ $iAnyObj -le 0 ]; then
+        printf "??? zeroValue [iAny=%d <= 0]\n" $iAnyObj
+        f_run_usage
+        exit
+    fi
+
+    echo "+++ seek my obj"
+
+    i=1
+    for x in $aSrc; do
+        echo "look x[$i]==["$x"]"
+        if [ $i == $iAnyObj ]; then
+            echo "found x==["$x"]"
+            aObj+=("$x")
+            break
+        fi
+        i+=1
+    done
+
+
+elif [ $p_cOpt == '+' ]; then
+
+    echo "shuffle"
+
+    aObj=$aSrc
+    aObj=( $(shuf -e "${aObj[@]}") )
+
+    i=0
+    for x in $aObj; do
+        echo "look aObj[$i]==["$x"]"
+        i+=1
+    done
+
+fi
+
+declare -p aObj
+
+
+exit
+
+#   seek
+i=0
+n=$nSource
+until [ $i -ge $n ]; do
+    x=${aSource[$i]};
+    printf "[%d/%d]:'%s'\n"  $i $n "$x"
+    let i++
+done
+
+
