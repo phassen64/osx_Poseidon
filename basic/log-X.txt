@@ -777,6 +777,24 @@ $   Bash Ternär Operator
     v_SCP_ext="${v_SCP##*.}"
     v_SCP_nam="$v_SCP_????????.'log'"   # logFile naming
 
+### !date:<2026-10-09>:Fr 
+
++   Visual REGEXP by Laurent Riesterer 
+    is a graphical explorer and designer for regular expressions.
+    http://laurent.riesterer.free.fr/regexp/
+
+    box "pattern" 
+    box "sample"
+
+    regEx $s ~= $r
+
+    Beispiel1:
+        r:pattern = '[a-z]'
+        s:sample  = 'abc'
+        
+
++   besser
+    https://regex101.com/
 
 
     
