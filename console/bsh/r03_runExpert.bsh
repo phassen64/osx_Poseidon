@@ -34,10 +34,14 @@ usage
             m:  f.hlp.hint
             m:  f.hlp.usage
             m:  f.hlp.bEvaluate
+            m:  f.hlp.aMatchFiles
         p:  p.body
             b:  b.include
             b:  b.header
             b:  b.main
+                m:  paramter-fetch
+                m:  run match
+                m:  prepare object-array
             b:  b.footer
         p:  p.last
 hereDoc_content_tutor__run_expert
@@ -78,7 +82,7 @@ function f_run_bEvaluate {
     echo "$x"
 }
 
-
+#   m:  f.hlp.aMatchFiles
 function f_run_matchFiles() {
 
     local p_sRex=$1           #   like: '^t[0-9]{2}_[A-Za-z]+\.bsh$'
@@ -167,7 +171,10 @@ declare -i iSrcIndexSelected=-1
 declare -i bDoEvaluateRexParameter=$v_RUN_bFalse
 declare -i bDoShuffle=$v_RUN_bFalse
 
-#   check input
+#
+#   m:  paramter-fetch
+#
+
 if [ -z $p_cOpt ];
     then echo "??? option::NONE"; f_run_hint
 elif [ $p_cOpt == 'h' ]; then   f_run_usage
@@ -209,8 +216,16 @@ fi
 declare -a v_RUN_aRc=()
 declare -i v_RUN_iRc=-1
 
-f_run_matchFiles $v_RUN_sRexEx_src $bDoShuffle; iRc=$?
+#
+#   m:  run match
+#
 
+f_run_matchFiles \
+        $v_RUN_sRexEx_src \
+    $bDoShuffle
+iRc=$?
+
+#   show
 if [ $v_RUN_bTrue == $v_RUN_flag__bDebug ]; then
 
     printf "### input.bShuffle :[$bDoShuffle]\n"
@@ -229,6 +244,7 @@ fi
 #   copy matched files  2x
 declare -a aSrc=("${v_RUN_aRc[@]}")
 declare -i nSrc=${#aSrc[@]}
+
 if [ $v_RUN_bTrue == $v_RUN_flag__bDebug ]; then
     printf "### show nSrc:[$nSrc]\n"
     i=0
@@ -242,7 +258,10 @@ fi
 #   declare objet
 declare -a aObj=()
 
-#   check input sourceIndex
+#
+#   m:  prepare object-array
+#
+
 if [ $v_RUN_bTrue ==  $bDoEvaluateRexParameter ]; then
 
     echo "=== option::evaluate"
@@ -336,7 +355,7 @@ elif [ $p_cOpt == '_' ]; then
 fi
 
 
-#   show finalize
+#   s:  show finalize
 if [ $v_RUN_bTrue == $v_RUN_flag__bDebug ]; then
     echo "### show finalized : aObj"
     declare -p  aObj
