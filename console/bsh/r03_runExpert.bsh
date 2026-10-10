@@ -74,21 +74,41 @@ function f_run_bEvaluate {
 
 
 function f_run_matchFiles() {
-    local sRex=$1
+
+    local p_sRex=$1           #   like: '^t[0-9]{2}_[A-Za-z]+\.bsh$'
+    local -i p_bOpt=$2        #   doShuffle
+
     declare -i i=0
-    v_RUN_iRc=0
+    declare -a aTmp=()
+
+    #   init globals
+    v_RUN_iRc=-1
     v_RUN_aRc=()
+
+    #   Get files with pattern
     for xFile in `ls`
     do
         if [ -f "$xFile" ]; then
             i+=1
-            if [[ $xFile =~ $sRex ]]; then
-                #   echo "matchX:[$i]:=$xFile"
+            if [[ $xFile =~ $p_sRex ]]; then
                 v_RUN_iRc+=1
-                v_RUN_aRc+=( $xFile )
+                aTmp+=( $xFile )
             fi
         fi
     done
+    declare -p aTmp
+
+    #   shuffle aTmp
+    if [ ! -z $p_bOpt ] && [ $p_bOpt == $v_RUN_bTrue ]; then
+        echo "### F_run_matchFiles:doShuffle"
+        aTmp=( $(shuf -e "${aTmp[@]}") )
+    fi
+
+    #   reply
+    v_RUN_aRc=("${aTmp[@]}")
+
+    #   return
+
     return $i
 }
 
@@ -134,23 +154,24 @@ printf "### run.{%s} dtm:[%s]\n" "$p_sScp" "$sDtm"
 declare -i bRun=$v_RUN_bFalse
 declare -i iAnyObj=-1      # src selected
 declare -i bRexOpt=$v_RUN_bFalse
+declare -i bDoShuffle=$v_RUN_bTrue
 
 #   check input
 if [ -z $p_cOpt ];
     then echo "??? no option"; f_run_hint
 elif [ $p_cOpt == 'h' ]; then   f_run_usage
 elif [ $p_cOpt == '?' ]; then   f_run_usage
-elif [ $p_cOpt == '.' ]; then   echo "cOpt==x"; bRun=$v_RUN_bTrue
-elif [ $p_cOpt == '+' ]; then   echo "cOpt==+"; bRun=$v_RUN_bTrue
-elif [ $p_cOpt == '!' ]; then   echo "cOpt==!"; bRun=$v_RUN_bTrue
+elif [ $p_cOpt == '.' ]; then   bRun=$v_RUN_bTrue
+elif [ $p_cOpt == '+' ]; then   bRun=$v_RUN_bTrue
+elif [ $p_cOpt == '!' ]; then   bRun=$v_RUN_bTrue
 else
-    echo "cOpt==#"
     bRexOpt=$v_RUN_bTrue
 fi
 
 #   show run status
 b2sRc=$(f_run_bEvaluate $bRun)
 if [ $v_RUN_bTrue == $v_RUN_flag__bDebug ]; then
+    echo "### cOpt==#"
     echo "### bRunStatus:[$b2sRc]"
 fi
 
@@ -163,11 +184,26 @@ fi
 #   match my sources
 declare -a v_RUN_aRc=()
 declare -i v_RUN_iRc=-1
-f_run_matchFiles $v_RUN_sRexEx_src; iRc=$?
+
+
+f_run_matchFiles $v_RUN_sRexEx_src $bDoShuffle; iRc=$?
+
 if [ $v_RUN_bTrue == $v_RUN_flag__bDebug ]; then
-    echo "### reply.iRc:=[$iRc]"
-    echo "### reply.global_Rc:=[$v_RUN_iRc]"
+
+    printf "### input.bShuffle :[$bDoShuffle]\n"
+    printf "### reply.iRc:=[$iRc]\n"
+    printf "### reply.global_Rc:=[$v_RUN_iRc]\n"
+    printf "### show aSrc...\n"
+
+    i=0
+    for x in "${v_RUN_aRc[@]}"; do
+        printf "### aRun[%2.2d] == '%s'\n" $i $x
+        i+=1
+    done
+
 fi
+
+exit
 
 #   copy matched files  2x
 aSrc=("${v_RUN_aRc[@]}")
@@ -182,16 +218,6 @@ nObj=${#aObj[@]}
 if [ $v_RUN_bTrue == $v_RUN_flag__bDebug ]; then
     echo "### show nSrc:[$nSrc]"
     echo "### show nObj:[$nObj]"
-fi
-
-#   show aSrc
-if [ $v_RUN_bTrue == $v_RUN_flag__bDebug ]; then
-    printf "\n### show aSrc...\n"
-    i=0
-    for x in "${aSrc[@]}"; do
-        printf "### aSrc[%d] == '%s'\n" $i $x
-        i+=1
-    done
 fi
 
 #   show aObj
@@ -256,6 +282,7 @@ elif [ $p_cOpt == '#' ]; then
         f_run_usage
         exit
     fi
+
 
     echo "+++ seek my obj"
 
