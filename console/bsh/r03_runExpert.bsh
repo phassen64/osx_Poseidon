@@ -122,6 +122,61 @@ function f_run_matchFiles() {
     return $i
 }
 
+
+function f_run_main() {
+
+    #   s:  logFileName
+    local v_SCP=`basename $BASH_SOURCE`
+    local v_SCP_bdy="${v_SCP%.*}"
+    local v_SCP_ext="${v_SCP##*.}"
+
+    local x
+    local s
+    local iRc
+
+    local fLog="$v_FWK_dirScratch/$v_SCP_bdy.log"
+    local xLog
+
+    local iCtr
+    local sDtm; local tDtmStart; local tDtmStopp
+
+    printf -v xLog "&&& logFile:'%s'" "$fLog"
+    printf "$xLog\n"
+
+    #   s:  dateTime.Start
+    sDtm=$(date "$sFmt");   tDtmStart=$(date '+%s.%N')
+
+    #   s:  header
+    printf -v x ">>> runner.BEG *[%d] at:[%s]." "$iCtr" "$sDtm"
+    printf "$x\n"
+    echo "$x" > $fLog
+
+    #   s:  flush.logFileName
+    echo "" >>  $fLog
+    echo "$xLog" >>  $fLog
+
+    #   s:  run
+    #   f_run_script "$aTest" "$iCtr" "$RANDOM" >> $fLog
+    #   iRc=$?
+    iRc=0
+    s="# total_sum_of_eRRoRs := [$iRc]"
+    printf "\t$s\n"
+    echo "$s" >> $fLog
+
+    #   f_run_script "$aTest" "$iCtr" "$RANDOM"
+    #   s:  dateTime.Stopp
+    sDtm=$(date "$sFmt");   tDtmStopp=$(date '+%s.%N')
+
+    #   s:  calc.Time
+    fSec=$(echo "($tDtmStopp-$tDtmStart) / 1" | bc)
+
+    #   s:  footer
+    printf -v x "<<< runner.END *[%d] at:[%s] elapsed:[%s]." "$iCtr" "$sDtm" "$fSec"
+    echo "$x" >> $fLog
+    printf "$x\n"
+
+}
+
 #   ===========================================================================
 #   p:  p.body
 #   ===========================================================================
@@ -361,3 +416,5 @@ if [ $v_RUN_bTrue == $v_RUN_flag__bDebug ]; then
     declare -p  aObj
 fi
 
+#   s:  run main
+f_run_main
