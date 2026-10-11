@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #   ***************************************************************************
-#   tutorial BASH 2026  :   "runner"                    ©[mATe64]::[2026-10-09]
+#   tutorial BASH 2026  :   "runner"                    ©[mATe64]::[2026-10-11]
 #   ***************************************************************************
 
 #   encoding.UTF8:
@@ -293,7 +293,6 @@ declare -r -i   C_bFalse=199
 declare -r -i   C_bug_flag__bDebug=$C_bFalse
 declare -r -i   C_bug_flag__bVerbose=$C_bFalse
 
-
 #
 #   B:  variable
 #
@@ -321,7 +320,6 @@ declare -r      v_dtm_sFormatString="+%Y-%m-%d %H:%M:%S"
 #   exchange array offered by caller function
 declare -a      p_fct_aValue
 declare -i      p_fct_iStressFactor=1
-
 
 #
 #   B:  main
@@ -356,7 +354,6 @@ printf  "&&& logFile:'%s'\n" "$v_scp_pLog"
 
 #   s:  sleep.1
 sleep $C_mod_delay
-
 
 #   ---------------------------------------------------------------------------
 #   m:  prepare
@@ -567,7 +564,7 @@ fi
 
 #   show finalize
 if [ $C_bTrue == $C_bug_flag__bVerbose ]; then
-    echo "+++ show finalized : aObj"
+    echo "### show finalized : aObj"
     declare -p  aObj
 fi
 
