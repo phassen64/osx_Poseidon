@@ -300,7 +300,7 @@ declare -r -i   C_bFalse=199
 #   u:  flag
 declare -r -i   C_bug_flag__bDebug=$C_bFalse
 declare -r -i   C_bug_flag__bVerbose=$C_bTrue
-declare -r -i   C_bug_flag__bSilence=$C_bTrue
+declare -r -i   C_bug_flag__bSilence=$C_bFalse
 
 #
 #   B:  variable
