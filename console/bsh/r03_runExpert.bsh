@@ -283,8 +283,8 @@ declare -r      p_scp_iSfr=$2
 
 #   s:  C.RexExpr
 declare -r -x   C_REX__src='^t[0-9]{2}_[A-Za-z]+\.bsh$'
-declare -r -x   C_REX__log='^t[0-9]{2}_[A-Za-z]+_[0-9]+\.log$'
-declare -r -x   C_REX__lid='^rBS_[A-Za-z0-9]+\.log$'
+#   declare -r -x   C_REX__log='^t[0-9]{2}_[A-Za-z]+_[0-9]+\.log$'
+#   declare -r -x   C_REX__lid='^rBS_[A-Za-z0-9]+\.log$'
 
 #   s:  C.modifier
 declare -r -i   C_mod_iPlusDivisor=4    #   max/4
@@ -300,6 +300,7 @@ declare -r -i   C_bFalse=199
 #   u:  flag
 declare -r -i   C_bug_flag__bDebug=$C_bFalse
 declare -r -i   C_bug_flag__bVerbose=$C_bTrue
+declare -r -i   C_bug_flag__bSilence=$C_bTrue
 
 #
 #   B:  variable
@@ -454,16 +455,6 @@ iRc=$?
 declare -a aSrc=("${v_RUN_aRc[@]}")
 declare -i nSrc=${#aSrc[@]}
 
-if [ $C_bTrue == $C_bug_flag__bDebug ]; then
-    printf "### show nSrc:[$nSrc]\n"
-    i=0
-    for x in "${aSrc[@]}"; do
-        printf "### aSrc[%2.2d] == '%s'\n" $i $x
-        i+=1
-    done
-fi
-
-
 #   declare objet
 declare -a aObj=()
 
@@ -516,7 +507,7 @@ elif [ $p_scp_cOpt == '.' ]; then
     done
 
     if [ $s == '' ]; then
-        echo "??? not found index"
+        printf "??? not found index at:[%d]\n" $LINENO
         f_run_usage
     fi
 
@@ -533,8 +524,7 @@ elif [ $p_scp_cOpt == '+' ]; then
         echo "*** option::'+' ($n)/($nSrc)"
     fi
 
-    aObj=()
-
+    #   copy src into objectArray
     for (( i=0; i < ${n}; i++ ));
     do
         x=${aSrc[$i]}
@@ -563,25 +553,24 @@ fi
 #   s:  P.run.main
 #
 
-#   s:  copy aObj->global - not neede
-declare -i iRnd=$(( 1 + RANDOM % 1000 ))
-
-
 #   s:  run
-f_run_main "$p_fct_iStressFactor" "$iRnd" "${aObj[@]}" >> $v_scp_pLog
-iRc=$?
+if [ $C_bTrue == $C_bug_flag__bSilence ]; then
+    echo "### show silence mode"
+else
 
-#   show separator line
-#   echo "" >> $v_scp_pLog
-#   s=''; c='&'; for((i=0;i<80;i++)); do s+="$c"; done
-#   printf -v SOut "%s\n" $s
-#   echo "$s" >> $v_scp_pLog
+    #   calc random
+    declare -i iRnd=$(( 1 + RANDOM % 1000 ))
 
-#   show result
-s="*** total_sum_of_eRRoRs := [$iRc]"
-printf "\n$s\n"
-echo "$s" >> $v_scp_pLog
+    #   run random
+    f_run_main "$p_fct_iStressFactor" "$iRnd" "${aObj[@]}" >> $v_scp_pLog
+    iRc=$?
 
+    #   show result
+    s="*** total_sum_of_eRRoRs := [$iRc]"
+    printf "\n$s\n"
+    echo "$s" >> $v_scp_pLog
+
+fi
 
 #   ---------------------------------------------------------------------------
 #   m:  footer
