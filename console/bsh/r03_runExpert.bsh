@@ -166,7 +166,7 @@ function f_run_showArray() {
     local -x x
 
     for x in "${a[@]}"; do
-        printf "### a[%2.2d] == '%s'\n" $i $x
+        printf "\ta[%2.2d] == '%s'\n" $i $x
         i+=1
     done
 
@@ -178,28 +178,36 @@ function f_run_showArray() {
 
 function f_run_main {
 
-    #   fetch
+    #   parameter
     local p_nStressMax=("${1}"); shift
     local p_iRnd=("${1}"); shift
     local p_aSrc=("${@}")
+
+    #   locals
+    local -i i=0
+    local -i n=0
+    local -i iFile=0
+    local -i nFile=${#p_aSrc[@]}
+    local  s=$(date)
+    local -x sHashLine
 
     if [ $C_bug_flag__bDebug == $C_bTrue ]; then
         f_run_showArray 'viaMain1' "${p_aSrc[@]}"
     fi
 
-    #   declare
-    declare -i i=0
-    declare -i n=0
-    declare -i iFile=0
-    declare -i nFile=0
 
     #   calc.array FileNumber
-    local -i nFile=${#p_aSrc[@]}
-    echo "### files:=[$nFile]"
+    printf "*** TEST\n"
+    printf "\tDate          :   [$s]\n"
+    printf "\tiRandom       :   [$p_iRnd]\n"
+    printf "\tnFiles        :   [$nFile]\n"
+    printf "\tiStressMax    :   [%d]\n" $p_nStressMax
+    f_run_showArray 'testSet' "${p_aSrc[@]}"
+    printf ".\n"
 
-    #   define my runner.eXitCode [3,...199]
-    local -x sHashLine
+    #   exit code [3,...199]
     local -i iRc=0      # sum of errors
+    local -i iEc=$C_mod_iExpectedExitCode   # show
     local -i iReplyEc=99
 
     #   build sLine
@@ -207,7 +215,7 @@ function f_run_main {
     sHashLine=$s
 
     #   run
-    printf "___ script nFiles:<%d>  iRnd:[%d] :#{%d}\n\n" $nFile $p_iRnd $iEc
+    printf "___ script ecDefault #:{%d}\n\n" $iEc
 
     for (( n=1; n<=$p_nStressMax; n++ )); do
 
@@ -242,9 +250,12 @@ function f_run_main {
 
     done
 
+    #   end-line
     printf "\n%s\n" $sHashLine
     printf "*** ready:total.iRc:<%d>\n" $iRc
     printf "%s\n" $sHashLine
+
+    #   reply noOfErrors
     return $iRc
 }
 
@@ -307,7 +318,6 @@ declare -x      SOut=''     #   printf flush string
 declare -r      v_scp_pLog="$v_FWK_dirScratch/$C_SCP_bdy.log"
 
 #   s:  V.dateTime
-declare         sDtm
 declare         v_dtm_tStart
 declare         v_dtm_tStopp
 declare -r      v_dtm_sFormatString="+%Y-%m-%d %H:%M:%S"
@@ -440,22 +450,6 @@ f_run_matchFiles \
     $bDoShuffle
 iRc=$?
 
-#   show
-if [ $C_bTrue == $C_bug_flag__bDebug ]; then
-
-    printf "### input.bShuffle :[$bDoShuffle]\n"
-    printf "### reply.iRc:=[$iRc]\n"
-    printf "### reply.global_Rc:=[$v_RUN_iRc]\n"
-    printf "### show aSrc...\n"
-
-    i=0
-    for x in "${v_RUN_aRc[@]}"; do
-        printf "### aRun[%2.2d] == '%s'\n" $i $x
-        i+=1
-    done
-
-fi
-
 #   copy matched files  2x
 declare -a aSrc=("${v_RUN_aRc[@]}")
 declare -i nSrc=${#aSrc[@]}
@@ -575,8 +569,15 @@ declare -i iRnd=$(( 1 + RANDOM % 1000 ))
 
 #   s:  run
 f_run_main "$p_fct_iStressFactor" "$iRnd" "${aObj[@]}" >> $v_scp_pLog
-#   f_run_main "$p_fct_iStressFactor" "$iRnd" "${aObj[@]}"
 iRc=$?
+
+#   show separator line
+#   echo "" >> $v_scp_pLog
+#   s=''; c='&'; for((i=0;i<80;i++)); do s+="$c"; done
+#   printf -v SOut "%s\n" $s
+#   echo "$s" >> $v_scp_pLog
+
+#   show result
 s="*** total_sum_of_eRRoRs := [$iRc]"
 printf "\n$s\n"
 echo "$s" >> $v_scp_pLog
