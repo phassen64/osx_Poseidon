@@ -34,6 +34,8 @@ usage
             m:  f.hlp.usage
             m:  f.hlp.bEvaluate
             m:  f.hlp.aMatchFiles
+            m:  f.hlp.aShow
+            m:  f.run.main
         p:  p.body
             B:  constant
                 s:  C.this
@@ -140,21 +142,27 @@ function f_run_matchFiles() {
     return $i
 }
 
+#   m:  f.hlp.aShow
 function f_run_showArray() {
 
-    local p_sInfo=$1    # infoText
+    #   usage : f_run_showArray 'info' "${p_aVal[@]}"
+    #   Source - https://stackoverflow.com/a/1063367
+
+    local p_sInfo=("${1}")
+    shift   # stackShift
+    local p_aValu=("${@}")
+
     local p_sBash=${BASH_SOURCE[1]}     #   caller.source
     local p_sFctn=${FUNCNAME[1]}        #   caller.fctn
     local p_iLine=${BASH_LINENO[0]}     #   caller.lineNo
 
-#   printf "### showArray:[%s][%s][%d]\n" $p_sBash $p_sFctn $p_iLine
     printf "### showArray {'%s'} at:[%s][%d]\n" "$p_sInfo" $p_sFctn $p_iLine
 
     #   fetch input array
-    local -a a=("${p_fct_aValue[@]}")
+    local -a a=("${p_aValu[@]}")
     local -i n=${#a[@]}
 
-    local -i i=0
+    local -i i=1
     local -x x
 
     for x in "${a[@]}"; do
@@ -164,13 +172,83 @@ function f_run_showArray() {
 
 }
 
-function f_run_main() {
+#
+#   m:  f.run.main
+#
 
-    local -i iStress=$1
-    echo "=== runMain.p.iStress:[$iStress]"
-    #   show my array # input aVal
-    f_run_showArray 'selected array'
+function f_run_main {
+
+    #   fetch
+    local p_nStressMax=("${1}"); shift
+    local p_iRnd=("${1}"); shift
+    local p_aSrc=("${@}")
+
+    echo "=== i am in run main:[$p_iMax] rnd:[$p_iRnd]"
+
+    if [ $C_bug_flag__bDebug == $C_bTrue ]; then
+        f_run_showArray 'viaMain1' "${p_aSrc[@]}"
+    fi
+
+    #   declare
+    declare -i i=0
+    declare -i n=0
+    declare -i iFile=0
+    declare -i nFile=0
+
+    #   calc.array FileNumber
+    local -i nFile=${#p_aSrc[@]}
+    echo "### files:=[$nFile]"
+
+    #   define my runner.eXitCode [3,...199]
+    local -i iEc=55
+    local -i iBashReply=0
+    local -x sLine
+    local -i iRc=0
+
+    #   build sLine
+    s=''; c='#'; for((i=0;i<80;i++)); do s+="$c"; done
+    sLine=$s
+
+    #   run
+    printf "___ script nFiles:<%d>  iRnd:[%d] :#{%d}\n" $nFile $p_iRnd $iEc
+
+    for (( n=1; n<=$p_nStressMax; n++ )); do
+
+        printf "\n### stress :: [%3.3d]/[%3.3d]\n" $n $p_nStressMax
+        iFile=0
+
+        for xFile in $p_aSrc
+        do
+            iFile+=1
+
+            s=''; c='#'; for((i=0;i<80;i++)); do s+="$c"; done
+
+            printf "\n%s\n" $sLine
+            printf "*** run:[%2.2d]/[%3.3d]:'%s'\n" $iFile $n  $xFile
+            printf "%s\n\n" $sLine
+
+            #   call script, save eXitCode
+            bash $xFile $iEc;   iBashReply=$?
+
+            #   check reply
+            printf "\n<<< replyOf[%d]:'%s': #{%d}" $n $xFile $iBashReply
+            if [ $iEc == $iBashReply ]
+            then
+                printf ":scpEc==:!OK\n"
+            else
+                printf ":scpEc==:?nok\n"
+                iRc+=1
+            fi
+
+        done
+
+    done
+
+    printf "___ total.iRc:<%d>\n" $iRc
+    return $iRc
 }
+
+
 
 #   ===========================================================================
 #   p:  p.body
@@ -208,7 +286,7 @@ declare -r -i   C_bFalse=199
 
 #   s:  C.debug
 #   u:  flag
-declare -r -i   C_bug_flag__bDebug=$C_bFalse
+declare -r -i   C_bug_flag__bDebug=$C_bTrue
 declare -r -i   C_bug_flag__bVerbose=$C_bTrue
 
 
@@ -238,7 +316,7 @@ declare -r      v_dtm_sFormatString="+%Y-%m-%d %H:%M:%S"
 
 #   exchange array offered by caller function
 declare -a      p_fct_aValue
-declare -i      p_fct_iStressFactor
+declare -i      p_fct_iStressFactor=1
 
 
 #
@@ -424,13 +502,6 @@ if [ $C_bTrue ==  $bDoEvaluateRexParameter ]; then
     #   push
     aObj+=($x)
 
-    #   save
-    xSrcSelected=$x
-    if [ $C_bTrue == $C_bug_flag__bDebug ]; then
-        echo "### index.selected := [$iSrcIndexSelected] : [$x]"
-        echo "### opt.[x] : xSrcSelected:[$xSrcSelected]"
-    fi
-
 elif [ $p_scp_cOpt == '.' ]; then
 
     if [ $C_bTrue == C_bug_flag__bVerbose ]; then
@@ -458,12 +529,6 @@ elif [ $p_scp_cOpt == '.' ]; then
         f_run_usage
     fi
 
-    #   save
-    xSrcSelected=$x
-    if [ $C_bTrue == C_bug_flag__bDebug ]; then
-        echo "### . xSrcSelected:[$xSrcSelected]"
-    fi
-
     #   push
     aObj+=($x)
 
@@ -488,16 +553,10 @@ elif [ $p_scp_cOpt == '+' ]; then
 
 elif [ $p_scp_cOpt == '!' ]; then
 
-    if [ $C_bTrue == $C_bug_flag__bVerbose ]; then
-        echo "*** option::'!'"
-    fi
     aObj=("${aSrc[@]}")
 
 elif [ $p_scp_cOpt == '_' ]; then
 
-    if [ $C_bTrue == $C_bug_flag__bVerbose ]; then
-        echo "*** option::'_'"
-    fi
     aObj=("${aSrc[@]}")
 
 fi
@@ -513,9 +572,15 @@ fi
 #   s:  P.run.main
 #
 
-#   s:  copy aObj->global
+#   s:  copy aObj->global - not neede
 declare -a p_fct_aValue=("${aObj[@]}")
-f_run_main $p_fct_iStressFactor
+declare -i iRnd=$(( 1 + RANDOM % $nSrc ))
+
+
+#   called_function "${variable}" "${array[@]}"
+#   echo "### stressFactor:{$p_fct_iStressFactor}"
+
+f_run_main "$p_fct_iStressFactor" "$RANDOM" "${aObj[@]}"
 
 
 #   ---------------------------------------------------------------------------
