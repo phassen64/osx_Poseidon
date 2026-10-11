@@ -1,0 +1,32 @@
+﻿###############################################################################
+--- !log.Console.Bash
+###############################################################################
+
+
+### !date:<2026-10-09>:Fr
+
++   Visual REGEXP by Laurent Riesterer
+    is a graphical explorer and designer for regular expressions.
+    http://laurent.riesterer.free.fr/regexp/
+
+    box "pattern"
+    box "sample"
+
+    regEx $s ~= $r
+
+    Beispiel1:
+        r:pattern = '[a-z]'
+        s:sample  = 'abc'
+
+
++   besser
+    https://regex101.com/
+
+
+### !date:<2026-10-11>:So
+
++   update
+
+
+
+
