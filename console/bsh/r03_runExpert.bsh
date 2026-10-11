@@ -176,18 +176,12 @@ function f_run_showArray() {
 #   m:  f.run.main
 #
 
-function f_run_script {
+function f_run_main {
 
     #   fetch
     local p_nStressMax=("${1}"); shift
     local p_iRnd=("${1}"); shift
     local p_aSrc=("${@}")
-
-    printf "\n\n"
-    echo "### i am in run main:rnd:[$p_iRnd]"
-
-    echo "### StressMax:=[$p_nStressMax]"
-    echo "### Random:=[$p_iRnd]"
 
     if [ $C_bug_flag__bDebug == $C_bTrue ]; then
         f_run_showArray 'viaMain1' "${p_aSrc[@]}"
@@ -204,51 +198,53 @@ function f_run_script {
     echo "### files:=[$nFile]"
 
     #   define my runner.eXitCode [3,...199]
-    local -i iEc=55
-    local -i iBashReply=99
     local -x sHashLine
-    local -i iRc=0
+    local -i iRc=0      # sum of errors
+    local -i iReplyEc=99
 
     #   build sLine
     s=''; c='#'; for((i=0;i<80;i++)); do s+="$c"; done
     sHashLine=$s
 
     #   run
-    printf "___ script nFiles:<%d>  iRnd:[%d] :#{%d}\n" $nFile $p_iRnd $iEc
+    printf "___ script nFiles:<%d>  iRnd:[%d] :#{%d}\n\n" $nFile $p_iRnd $iEc
 
     for (( n=1; n<=$p_nStressMax; n++ )); do
 
-        printf "\n### stress :: [%3.3d]/[%3.3d]\n" $n $p_nStressMax
-        iFile=0
+        #   printf "\n### stress :: [%3.3d]/[%3.3d]\n" $n $p_nStressMax
 
+        iFile=0
         for xFile in "${p_aSrc[@]}"
         do
             iFile+=1
 
-            s=''; c='#'; for((i=0;i<80;i++)); do s+="$c"; done
-
             printf "\n%s\n" $sHashLine
             printf "*** run:[%2.2d]/[%3.3d]:'%s'\n" $iFile $n  $xFile
-            printf "%s\n\n" $sHashLine
+            printf "%s\n" $sHashLine
 
             #   call script, save eXitCode
-            bash $xFile $iEc;   iBashReply=$?
+            bash $xFile $C_mod_iExpectedExitCode; iReplyEc=$?
 
             #   check reply
-            printf "\n<<< replyOf[%d]:'%s': #{%d}" $n $xFile $iBashReply
-            if [ $iEc == $iBashReply ]
+            printf "<<< replyOf[%d]:'%s': # ec:{%d} " $n $xFile $iReplyEc
+
+            if [ $C_mod_iExpectedExitCode == $iReplyEc ]
             then
-                printf ":scpEc==:!OK\n"
+                printf "== OK\n"
             else
-                printf ":scpEc==:?nok\n"
+                printf "!= [%d]\n" $C_mod_iExpectedExitCode
                 iRc+=1
             fi
+
+            printf ".\n"
 
         done
 
     done
 
-    printf "___ total.iRc:<%d>\n" $iRc
+    printf "\n%s\n" $sHashLine
+    printf "*** ready:total.iRc:<%d>\n" $iRc
+    printf "%s\n" $sHashLine
     return $iRc
 }
 
@@ -280,9 +276,10 @@ declare -r -x   C_REX__log='^t[0-9]{2}_[A-Za-z]+_[0-9]+\.log$'
 declare -r -x   C_REX__lid='^rBS_[A-Za-z0-9]+\.log$'
 
 #   s:  C.modifier
-declare -r -i   C_mod_iPlusDivisor=4      #   max/4
-declare -r -i   C_mod_iStressMax=10       #   stressFactorMax
+declare -r -i   C_mod_iPlusDivisor=4    #   max/4
+declare -r -i   C_mod_iStressMax=10     #   stressFactorMax
 declare -r -i   C_mod_delay=1
+declare -r -i   C_mod_iExpectedExitCode=72      #   expected by caller
 
 #   s:  C.bool
 declare -r -i   C_bTrue=100
@@ -291,7 +288,7 @@ declare -r -i   C_bFalse=199
 #   s:  C.debug
 #   u:  flag
 declare -r -i   C_bug_flag__bDebug=$C_bFalse
-declare -r -i   C_bug_flag__bVerbose=$C_bFalse
+declare -r -i   C_bug_flag__bVerbose=$C_bTrue
 
 #
 #   B:  variable
@@ -318,7 +315,6 @@ declare -r      v_dtm_sFormatString="+%Y-%m-%d %H:%M:%S"
 #   s:  V.parameter_by_function
 
 #   exchange array offered by caller function
-declare -a      p_fct_aValue
 declare -i      p_fct_iStressFactor=1
 
 #
@@ -574,12 +570,12 @@ fi
 #
 
 #   s:  copy aObj->global - not neede
-declare -a p_fct_aValue=("${aObj[@]}")
 declare -i iRnd=$(( 1 + RANDOM % 1000 ))
 
 
 #   s:  run
-f_run_script "$p_fct_iStressFactor" "$iRnd" "${aObj[@]}" >> $v_scp_pLog
+f_run_main "$p_fct_iStressFactor" "$iRnd" "${aObj[@]}" >> $v_scp_pLog
+#   f_run_main "$p_fct_iStressFactor" "$iRnd" "${aObj[@]}"
 iRc=$?
 s="*** total_sum_of_eRRoRs := [$iRc]"
 printf "\n$s\n"

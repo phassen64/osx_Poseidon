@@ -36,12 +36,12 @@ function f_run_script {
     #   define my runner.eXitCode [3,...199]
     local -i iEc=55
     local -i iBashReply=0
-    local -x sLine
+    local -x sHashLine
     local -i iRc=0
 
     #   build sLine
     s=''; c='#'; for((i=0;i<80;i++)); do s+="$c"; done
-    sLine=$s
+    sHashLine=$s
 
     #   run
     printf "___ script nFiles:<%d>  iRnd:[%d] :#{%d}\n" $nFile $p_iRnd $iEc
@@ -54,8 +54,6 @@ function f_run_script {
         for xFile in $p_aSrc
         do
             iFile+=1
-
-            s=''; c='#'; for((i=0;i<80;i++)); do s+="$c"; done
 
             printf "\n%s\n" $sLine
             printf "*** run:[%2.2d]/[%3.3d]:'%s'\n" $iFile $n  $xFile
@@ -92,7 +90,6 @@ function f_run_script {
 
 #   s:  fetch all bash
 aTest=$(echo `ls t*.bsh`)
-#   echo "test: ( $aTest )"
 
 #   s:  fetchDateTime
 declare sFmt="+%Y-%m-%d %H:%M:%S"
@@ -104,8 +101,6 @@ declare -i iRc=0
 declare  x  #   formatStr
 
 #   m:  run
-clear
-#   f_lib_configuration  "1"  # init
 
 #   s:  dateTime.Start
 sDtm=$(date "$sFmt");   tDtmStart=$(date '+%s.%N')
@@ -130,11 +125,10 @@ echo "$xLog" >>  $fLog
 #   s:  run
 f_run_script "$aTest" "$iCtr" "$RANDOM" >> $fLog
 iRc=$?
-s="# total_sum_of_eRRoRs := [$iRc]"
-printf "\t$s\n"
+s="*** total_sum_of_eRRoRs := [$iRc]"
+printf "$s\n"
 echo "$s" >> $fLog
 
-#   f_run_script "$aTest" "$iCtr" "$RANDOM"
 #   s:  dateTime.Stopp
 sDtm=$(date "$sFmt");   tDtmStopp=$(date '+%s.%N')
 
