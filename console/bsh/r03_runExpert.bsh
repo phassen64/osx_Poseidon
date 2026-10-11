@@ -176,14 +176,18 @@ function f_run_showArray() {
 #   m:  f.run.main
 #
 
-function f_run_main {
+function f_run_script {
 
     #   fetch
     local p_nStressMax=("${1}"); shift
     local p_iRnd=("${1}"); shift
     local p_aSrc=("${@}")
 
-    echo "=== i am in run main:[$p_iMax] rnd:[$p_iRnd]"
+    printf "\n\n"
+    echo "### i am in run main:rnd:[$p_iRnd]"
+
+    echo "### StressMax:=[$p_nStressMax]"
+    echo "### Random:=[$p_iRnd]"
 
     if [ $C_bug_flag__bDebug == $C_bTrue ]; then
         f_run_showArray 'viaMain1' "${p_aSrc[@]}"
@@ -201,13 +205,13 @@ function f_run_main {
 
     #   define my runner.eXitCode [3,...199]
     local -i iEc=55
-    local -i iBashReply=0
-    local -x sLine
+    local -i iBashReply=99
+    local -x sHashLine
     local -i iRc=0
 
     #   build sLine
     s=''; c='#'; for((i=0;i<80;i++)); do s+="$c"; done
-    sLine=$s
+    sHashLine=$s
 
     #   run
     printf "___ script nFiles:<%d>  iRnd:[%d] :#{%d}\n" $nFile $p_iRnd $iEc
@@ -217,15 +221,15 @@ function f_run_main {
         printf "\n### stress :: [%3.3d]/[%3.3d]\n" $n $p_nStressMax
         iFile=0
 
-        for xFile in $p_aSrc
+        for xFile in "${p_aSrc[@]}"
         do
             iFile+=1
 
             s=''; c='#'; for((i=0;i<80;i++)); do s+="$c"; done
 
-            printf "\n%s\n" $sLine
+            printf "\n%s\n" $sHashLine
             printf "*** run:[%2.2d]/[%3.3d]:'%s'\n" $iFile $n  $xFile
-            printf "%s\n\n" $sLine
+            printf "%s\n\n" $sHashLine
 
             #   call script, save eXitCode
             bash $xFile $iEc;   iBashReply=$?
@@ -286,8 +290,8 @@ declare -r -i   C_bFalse=199
 
 #   s:  C.debug
 #   u:  flag
-declare -r -i   C_bug_flag__bDebug=$C_bTrue
-declare -r -i   C_bug_flag__bVerbose=$C_bTrue
+declare -r -i   C_bug_flag__bDebug=$C_bFalse
+declare -r -i   C_bug_flag__bVerbose=$C_bFalse
 
 
 #
@@ -574,13 +578,15 @@ fi
 
 #   s:  copy aObj->global - not neede
 declare -a p_fct_aValue=("${aObj[@]}")
-declare -i iRnd=$(( 1 + RANDOM % $nSrc ))
+declare -i iRnd=$(( 1 + RANDOM % 1000 ))
 
 
-#   called_function "${variable}" "${array[@]}"
-#   echo "### stressFactor:{$p_fct_iStressFactor}"
-
-f_run_main "$p_fct_iStressFactor" "$RANDOM" "${aObj[@]}"
+#   s:  run
+f_run_script "$p_fct_iStressFactor" "$iRnd" "${aObj[@]}" >> $v_scp_pLog
+iRc=$?
+s="*** total_sum_of_eRRoRs := [$iRc]"
+printf "\n$s\n"
+echo "$s" >> $v_scp_pLog
 
 
 #   ---------------------------------------------------------------------------
@@ -601,4 +607,4 @@ printf -v SOut "<<< run.{%s} dtm:[%s]:<%s>" "$p_pThis" "$s" "$i"
 echo "$SOut" >> $v_scp_pLog
 
 #   s:  puts:Footer
-printf "\n$SOut\n"
+printf "\n$SOut\n\n"
