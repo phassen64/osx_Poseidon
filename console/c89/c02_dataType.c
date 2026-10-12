@@ -21,8 +21,7 @@
 */
 
 
-#include "i03_tutorC89_types.h"
-#include "i05_tutorC89_library.h"
+#include "i00_tutorC89.h"
 #define   __USE_TUTOR_C89_MAIN
 
 int F_mod_simpleDataType(void)
@@ -478,12 +477,13 @@ int F02_dataType(int p_iEc)
 
 
 
-#ifndef __USE_TUTOR_C89_MAIN
+#ifndef     __USE_TUTOR_C89_MAIN
+#define     __USE_TUTOR_C89_MAIN
 int main(int args, char *argv[])
 {
     int     iEc = atoi(getenv("v_FWK_exitCode"));
     return(F02_dataType(iEc));
 }
-#endif /* __USE_TUTOR__MAIN */
+#endif
 
 
