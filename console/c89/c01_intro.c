@@ -1,11 +1,12 @@
-/*  ######################################################################## */
-/*  01: introduction                                                         */
-/*  ######################################################################## */
+/*  ***************************************************************************
+ *  tutorial.C89  :: "intro"                ©[mATe64]       [2026-10-12]
+ *  ***************************************************************************
 
-/*
     encoding: UTF-8
     !$@€ƒ„…†‡‰ŠŒŽ“”•—™šœžŸ¡¢£¤¥¦§¨©«¬®°±²³µ¶·¹º»¼½¾¿ÑÖØÜÞßäæçîðñôö÷üýþÿ
-*/
+
+ */
+
 
 /*
  *  Die Files dieses Projektes sind compilierbar mit einem C-Compiler
@@ -146,24 +147,55 @@
 
 *   &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& */
 
+/*  m:  include */
+#include "i01_tutorC89_base.h"
+#define __USE_TUTOR_C89__MAIN
 
-#include "c00_tutorC89_1_base.h"
-#define __USE_MAIN_TUTORC89
-
+/*  m:  F.tester */
 int F01_intro(int p_iEc) {
+
+    printf("============================================================\n");
+    printf("[C01]: Hello C89!\n");   /* eine Ausgabe eines Textes */
+    printf("============================================================\n");
 
     /* show compile values */
     printf("--- FILE:%s,DATE={%s-%s}\n",
             __FILE__,
             __DATE__,
             __TIME__);
-    return p_iEc;
 
+    #ifdef  __STDC__    /* not defined in C++ */
+        printf("--- isSTANDARD_C = <%d>\n",__STDC__);
+    #endif
+
+    #ifdef  __cplusplus
+        printf("--- isC++:=YES\n");
+    #else
+        printf("--- isC++:=NO !\n");
+    #endif
+
+    printf("--- COMPILER:");
+    #if defined(_MSC_VER)
+        printf("'_MSC_VER'\n");
+    #elif defined(__GNUC__)
+        printf("'__GNUC__'\n");
+    #elif defined(__BORLANDC__)
+        printf("'__BORLANDC__'\n");
+    #else
+        printf("'??? UNKNOWN'\n");
+    #endif
+
+    /* reply */
+    printf("--- EndOfFile:%s at LineNr:%d \n",__FILE__,__LINE__);
+    return(p_iEc);       /* integer return-Wert */
+                    /* I.d.R. bedeutet '0' kein Fehler */
 }
 
-#ifdef __USE_MAIN_TUTORC89
+
+/*  m:  F.main */
+#ifdef __USE_TUTOR_C89__MAIN
 int main() {
-    printf("hello,World!\n");
+    printf("*** hello,Main!\n");
     int     iEc = atoi(getenv("v_FWK_exitCode"));   /* by user-framework */
     return  F01_intro(iEc);
 }

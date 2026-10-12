@@ -3,16 +3,32 @@
 #   ***************************************************************************
 #   run:[simple]  Tutorial C89 2026        ©[mATe64]           [2026-10-12]
 #   ***************************************************************************
+
 #   usage:
 #       $   bash run_01_simple.bsh
+
+#   remark:
+#       only compile, not run "tutor-library"
+
 #   content:
 #       m:  run.prepare
-#       m:  run.scripts
+#       m:  run.compile
 #   ***************************************************************************
 
 #
 #   m:  prepare
 #
+
+#   s:  const library source
+declare -r C_TUTOR_LIBRARY__SRC='c00_library.c'
+
+#   s:  const library object
+s=$(basename ${C_TUTOR_LIBRARY__SRC})
+s="${s%.*}"             #   Body
+declare -r C_TUTOR_LIBRARY__OBJ="${s}.obj"
+
+#   echo "lib.obj:'$C_TUTOR_LIBRARY__OBJ'"
+#   exit
 
 #   s:  show
 clear
@@ -38,7 +54,7 @@ declare sFmt="+%Y-%m-%d %H:%M:%S"
 declare sDtm
 
 #   ===========================================================================
-#   m:  compile.scripts
+#   m:  compile
 #   ===========================================================================
 
 clear
@@ -52,11 +68,14 @@ declare -i i=0
 for sFile in $a
 do
 
+
+
     declare sNam=$(basename ${sFile})     #   source baseName.src
     declare sExt="${sNam##*.}"            #   extension
     declare sBdy="${sNam%.*}"             #   Body
 
     declare xFile="${sBdy}.exe"        #   new fileName
+    declare oFile="${sBdy}.obj"        #   object
 
     i+=1
 
@@ -65,7 +84,16 @@ do
             $i $sFile $n  $xFile
 
     #   u:  make (compile+link)
-    gcc $sFile -o $xFile
+    #   u:  check library
+    if [ $sFile == "$C_TUTOR_LIBRARY__SRC" ]
+    then
+        printf "&&& continue library!:'%s'\n"  $C_TUTOR_LIBRARY__SRC
+        gcc -c $sFile -o $C_TUTOR_LIBRARY__OBJ
+        continue
+    else
+        gcc -c $sFile -o $oFile                         #   compile only
+        gcc $oFile $C_TUTOR_LIBRARY__OBJ -o $xFile      #   linking
+    fi
 
     #   u:  run
     printf "&&& run![%2.2d]:'%s'\n" $i $xFile
