@@ -513,6 +513,7 @@ s='a23'; r='[0-9]{3}';  [[ $s =~ $r ]]; i=$?; f_eval $i $s $r   # false
 s='a23'; r='^[0-9]+';   [[ $s =~ $r ]]; i=$?; f_eval $i $s $r   # false
 s='1a3'; r='^[0-9]+';   [[ $s =~ $r ]]; i=$?; f_eval $i $s $r   # true
 s='1a3'; r='^[0-9]+$';  [[ $s =~ $r ]]; i=$?; f_eval $i $s $r   # false
+s='123'; r='^[0-9]+$';  [[ $s =~ $r ]]; i=$?; f_eval $i $s $r   # true
 
 #   more
 s='abcdef'; r="abc?[a-z]+"
