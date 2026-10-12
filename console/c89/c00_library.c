@@ -8,6 +8,8 @@
 *  ************************************************************************* */
 
 #include "i02_tutorC89_advanced.h"
+#include "i03_tutorC89_types.h"
+#include "i04_tutorC89_globals.h"
 
 void f_lib_hello() {
     printf("hello Library\n");
@@ -940,6 +942,3 @@ int f_FileSeek(T_FILE fd,long int i_Offset, int i_Origin) {
 #endif
     return(n);
 }
-
-#endif /* INC__TUTOR_LIBRARY */
-#endif /* INC__TUTOR */

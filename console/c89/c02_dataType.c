@@ -21,7 +21,8 @@
 */
 
 
-#include "i05_tutorC89_library.h"    /* eigenes Header-File */
+#include "i03_tutorC89_types.h"
+#include "i05_tutorC89_library.h"
 
 int F_mod_simpleDataType(void)
 {
