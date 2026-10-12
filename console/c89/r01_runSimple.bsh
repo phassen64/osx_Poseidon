@@ -4,7 +4,7 @@
 #   run:[simple]  Tutorial C89 2026        ©[mATe64]           [2026-10-12]
 #   ***************************************************************************
 #   usage:
-#       $   bash [run_01_simple.bsh]
+#       $   bash run_01_simple.bsh
 #   content:
 #       m:  run.prepare
 #       m:  run.scripts
@@ -35,7 +35,7 @@ echo "n==[$n] "
 
 #   s:  fetchDateTime
 declare sFmt="+%Y-%m-%d %H:%M:%S"
-declare sDtm=$(date "$sFmt")
+declare sDtm
 
 #   ===========================================================================
 #   m:  compile.scripts
@@ -43,21 +43,38 @@ declare sDtm=$(date "$sFmt")
 
 clear
 
-printf "BEG simple.compile [%s]\n\n" "$sDtm"
+#   s:  header
+sDtm=$(date "$sFmt")
+s='simple::compile+link+run'; printf "BEG %s [%s]\n\n" $s "$sDtm"
 
 declare -i i=0
-for xFile in $a
+
+for sFile in $a
 do
 
-    sNam=$(basename ${xFile})       #   baseName
-    sExt="${sNam##*.}"              #   extension
-    sBdy="${sNam%.*}"               #   Body
+    declare sNam=$(basename ${sFile})     #   source baseName.src
+    declare sExt="${sNam##*.}"            #   extension
+    declare sBdy="${sNam%.*}"             #   Body
+
+    declare xFile="${sBdy}.exe"        #   new fileName
 
     i+=1
-    #   printf "*** compile:[%2.2d]/[%2.2d]:'%s'\n" $i $n $xFile
-    printf "*** extension [%d]='%s' \n" $i $sBdy
-    #   gcc $xFile
+
+    #   show
+    printf "&&& make[%2.2d]:'%s' of:[%d] into:'%s' \n" \
+            $i $sFile $n  $xFile
+
+    #   compile+link
+    gcc $sFile -o $xFile
+
+    #   run
+    printf "&&& run![%2.2d]:'%s'\n" $i $xFile
+    ./$xFile
+
 done
 
-printf "END simple.compile:[%s]\n\n" "$sDtm"
+#   s:  footer
+printf "\n"
+sDtm=$(date "$sFmt")
+s='simple::compile+link+run'; printf "END %s [%s]\n\n" $s "$sDtm"
 

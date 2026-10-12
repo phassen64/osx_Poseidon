@@ -130,8 +130,15 @@
 /*  &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
 
 *   usage:
-        $>  gcc -c c01_intro.c -o c01_intro.obj
-        $>  gcc c01_intro.obj -o c01_intro.exe
+        *   compile, then link, then run
+        $>  gcc -c c01_intro.c -o c01_intro.obj         *   compiling
+        $>  gcc c01_intro.obj -o c01_intro.exe          *   linking
+        $>  ./c01_intro.exe
+        $<  hello,World!
+
+*   usage:
+        *   compile + link, then run
+        $>  gcc c01_intro.c -o c01_intro.exe            *   compile+link
         $>  ./c01_intro.exe
         $<  hello,World!
 
