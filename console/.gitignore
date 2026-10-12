@@ -1,4 +1,7 @@
 *.jpg
 *.mp3
 *.mp4
+*.obj
 *.out
+*.bin
+*.exe

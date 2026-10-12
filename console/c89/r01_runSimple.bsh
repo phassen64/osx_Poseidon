@@ -1,0 +1,63 @@
+#!/bin/bash
+
+#   ***************************************************************************
+#   run:[simple]  Tutorial C89 2026        ©[mATe64]           [2026-10-12]
+#   ***************************************************************************
+#   usage:
+#       $   bash [run_01_simple.bsh]
+#   content:
+#       m:  run.prepare
+#       m:  run.scripts
+#   ***************************************************************************
+
+#
+#   m:  prepare
+#
+
+#   s:  show
+clear
+declare -i iReply=$RANDOM
+echo "+ run.simple:[$iReply]"
+
+#   s:  fetch all bash
+declare -a a=$(echo `ls c??_*.c`)
+
+#   s:  array size
+declare -i n
+n=${#a[@]}; echo "n1==[$n]" # not works
+
+#   calc manually
+n=0
+for xFile in $a; do
+    n+=1
+done
+echo "n==[$n] "
+
+#   s:  fetchDateTime
+declare sFmt="+%Y-%m-%d %H:%M:%S"
+declare sDtm=$(date "$sFmt")
+
+#   ===========================================================================
+#   m:  compile.scripts
+#   ===========================================================================
+
+clear
+
+printf "BEG simple.compile [%s]\n\n" "$sDtm"
+
+declare -i i=0
+for xFile in $a
+do
+
+    sNam=$(basename ${xFile})       #   baseName
+    sExt="${sNam##*.}"              #   extension
+    sBdy="${sNam%.*}"               #   Body
+
+    i+=1
+    #   printf "*** compile:[%2.2d]/[%2.2d]:'%s'\n" $i $n $xFile
+    printf "*** extension [%d]='%s' \n" $i $sBdy
+    #   gcc $xFile
+done
+
+printf "END simple.compile:[%s]\n\n" "$sDtm"
+

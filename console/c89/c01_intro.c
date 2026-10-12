@@ -1,5 +1,5 @@
 /*  ######################################################################## */
-/*  01: Einleitung                                                           */
+/*  01: introduction                                                         */
 /*  ######################################################################## */
 
 /*
@@ -60,7 +60,7 @@
  *      msVisualStudio8 - cl.exe
 
  *
- *  Quellen f?r das Tutorial:
+ *  Quellen für das Tutorial:
  *  ========================
  *      1)  Programmieren in C - Brian W.Kernighan & Dennis M.Richie, Hanser
  *      2)  C++ kompakt - mitp, Herbert Schildt, 3.Auflage
@@ -126,107 +126,22 @@
  *  FCT:    function
 */
 
-/*  =======================================================
- *  Includes
- *  =======================================================
- */
 
- /* !CRQ-240514:manual set __USE_TUTOR__MAIN
- *  MsVs20XX sollte "__USE_TUTOR__MAIN" setzen
-  */
+/*  &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
 
-#if 0
-    #if defined(_MSC_VER)
-        #define __USE_TUTOR__MAIN
-    #elif defined(__BORLANDC__)
-        #define __USE_TUTOR__MAIN
-    #endif
-#endif
+*   usage:
+        $>  gcc -c c01_intro.c -o c01_intro.obj
+        $>  gcc c01_intro.obj -o c01_intro.exe
+        $>  ./c01_intro.exe
+        $<  hello,World!
 
-#include "c00_tutorC89_1_base.h"    /* eigenes Header-File                */
-
-/*  =======================================================
- *  FUNKTIONEN
- *  =======================================================
- */
-int F01_intro(int);
-
-/*  -------------------------------------------------------
- *  Funktions-Kopf
- *  -------------------------------------------------------
- */
-int F01_intro(int p_iEc)
-{
-
-/*  -------------------------------------------------------
- *  PROGRAMM Body
- *  -------------------------------------------------------
- */
-    printf("============================================================\n");
-    printf("[C01]: Hello C89!\n");   /* eine Ausgabe eines Textes */
-    printf("============================================================\n");
-
-    /* Ausgabe von Werten, die vom PreProcessor (PP)
-     * vor dem Compilier-Vorgang generiert werden
-     */
-    printf("--- FILE:%s,DATE={%s-%s}\n",
-            __FILE__,
-            __DATE__,
-            __TIME__);
-
-    /* PreProcessor Kommandos */
-
-    /*
-     * Ist eine PP-Predefinition
-     * eines C++-Compilers gesetzt ?
-     *
-    */
-
-#ifdef  __STDC__
-    /* not defined in C++ */
-    printf("--- isSTANDARD_C = <%d>\n",__STDC__);
-#endif
-
-#ifdef  __cplusplus
-    printf("--- isC++:=YES\n");
-#else
-    printf("--- isC++:=NO !\n");
-#endif
-
-    printf("--- COMPILER:");
-#if defined(_MSC_VER)
-    printf("'_MSC_VER'\n");
-#elif defined(__GNUC__)
-    printf("'__GNUC__'\n");
-#elif defined(__BORLANDC__)
-    printf("'__BORLANDC__'\n");
-#else
-    printf("'??? UNKNOWN'\n");
-#endif
+*   &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& */
 
 
-/*  -------------------------------------------------------
- *  RETURN
- *  -------------------------------------------------------
- */
-    printf("--- EndOfFile:%s at LineNr:%d \n",__FILE__,__LINE__);
-    return(p_iEc);       /* integer return-Wert */
-                    /* I.d.R. bedeutet '0' kein Fehler */
+#include "c00_tutorC89_1_base.h"
+
+int main() {
+    printf("hello,World!\n");
+    return 100;
 }
 
-#ifndef __USE_TUTOR__MAIN
-int main(int args, char *argv[]) {
-	#ifdef _MSC_VER
-  	  	#define _CRT_SECURE_NO_WARNINGS
-    		#pragma warning( disable : 4996 )
-    #endif
-
-/*  -------------------------------------------------------
- *  Get Environment Variable
- *  -------------------------------------------------------
- */
-    int     iEc = atoi(getenv("v_FWK_iEc"));
-    return  F01_intro(iEc);
-}
-
-#endif

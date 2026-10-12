@@ -1,0 +1,8 @@
+#   me      :   compile & run for hello
+#   usage   :
+#       $   bash <this>
+
+echo "@@@ compile 'HELLO'"
+gcc hello.c
+echo "@@@ run 'HELLO'"
+./a.out
