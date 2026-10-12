@@ -21,7 +21,7 @@ void f_lib_header(const *s) {
 
 
 /*  ======================================================================== */
-int f_VFPRINTF(char *fname, char *format, ...)
+int f_lib_vfprintf(char *fname, char *format, ...)
 /*  ======================================================================== */
 {
     va_list     args;
@@ -48,9 +48,9 @@ int f_VFPRINTF(char *fname, char *format, ...)
 
 /*  ======================================================================== */
 #ifdef __cplusplus
-    int f_VSPRINTF(char *str, const char *format, ...)
+    int f_lib_vsprintf(char *str, const char *format, ...)
 #else
-    int f_VSPRINTF(char *str, char *format, ...)
+    int f_lib_vsprintf(char *str, char *format, ...)
 #endif
 /*  ======================================================================== */
 {
@@ -63,7 +63,7 @@ int f_VFPRINTF(char *fname, char *format, ...)
 }
 
 /*  ======================================================================== */
-int f_dump( char *          s_dataPtr,
+int f_lib_dump( char *          s_dataPtr,
             size_t          z_dataSize,
             char *          file,
             int             line,
@@ -209,7 +209,7 @@ void f_COMPILER(void)
 }
 
 /* ************************************************************************* */
-int f_HEADER(const char *cText, const char *cFile, int iLine)
+int f_lib_header(const char *cText, const char *cFile, int iLine)
 /* ************************************************************************* */
 {
     f_LINE('=');
@@ -626,7 +626,7 @@ void f_sigHandler(int sigNr)
 #endif
 
 /*  ======================================================================== */
-char * f_getTimeStr(char *cTimeStr)
+char * f_lib_getTimeStr(char *cTimeStr)
 /*  ======================================================================== */
 /*  Diese Funktion nutzt <time.h> anstelle von os spezifischen
  *  Include-Dateien

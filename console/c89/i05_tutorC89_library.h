@@ -14,11 +14,11 @@
  *  ======================================================================== */
 
 
-#define F_VPRINT_F(argList)     f_VFPRINTF  argList
-#define F_VPRINT_S(argList)     f_VSPRINTF  argList
-#define F_TIME()                f_getTimeStr(gTimeStr)
+#define F_VPRINT_F(argList)     f_lib_vfprintf  argList
+#define F_VPRINT_S(argList)     f_lib_vsprintf  argList
+#define F_TIME()                f_lib_getTimeStr(gTimeStr)
 
-#define F_DUMP(idStr,mem,size)  f_dump(mem,size,__FILE__,__LINE__,idStr)
+#define F_DUMP(idStr,mem,size)  f_lib_dump(mem,size,__FILE__,__LINE__,idStr)
 
 #if TESTEN
 #define F_TRACE_V(arglist)      SYSEM_TRACE ((C_PFSP_TRACE_DEBUG,\
@@ -50,9 +50,9 @@
  *  m:  F.prototype
  *  ======================================================================== */
 
-int     f_VFPRINTF(char *fname,char *format, ...);
-int     f_VSPRINTF(char *str, char *format, ...);
-int     f_dump(char* mem,int memSize,char* File,int Line,char* idStr);
+int     f_lib_vfprintf(char *fname,char *format, ...);
+int     f_lib_vsprintf(char *str, char *format, ...);
+int     f_lib_dump(char* mem,int memSize,char* File,int Line,char* idStr);
 char *  f_printBits(int n, char *s, int fmtLen);
 char *  f_printBYTE(char *s, int n);
 int     f_getBits(void);
@@ -60,7 +60,7 @@ int     f_copyFile(char *src, char *obj);
 int     f_DayOfYear(int year, int month, int day);
 void    f_putBits(int n);
 int     f_swapBits(int x, int bitnr1, int bitnr2);
-char*   f_getTimeStr(char* cTimeStr);
+char*   f_lib_getTimeStr(char* cTimeStr);
 void     f_anySwap(void* v[], int i, int j);
 void    f_MonthDay(int year, int yearday, int* pmonth, int* pday);
 
