@@ -60,14 +60,14 @@ do
 
     i+=1
 
-    #   show
+    #   u:  show
     printf "&&& make[%2.2d]:'%s' of:[%d] into:'%s' \n" \
             $i $sFile $n  $xFile
 
-    #   compile+link
+    #   u:  make (compile+link)
     gcc $sFile -o $xFile
 
-    #   run
+    #   u:  run
     printf "&&& run![%2.2d]:'%s'\n" $i $xFile
     ./$xFile
 
