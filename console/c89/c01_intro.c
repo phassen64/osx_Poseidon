@@ -141,14 +141,31 @@
         $>  gcc c01_intro.c -o c01_intro.exe            *   compile+link
         $>  ./c01_intro.exe
         $<  hello,World!
+        $>  echo $?
+        $<  100
 
 *   &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& */
 
 
 #include "c00_tutorC89_1_base.h"
+#define __USE_MAIN_TUTORC89
 
+int F01_intro(int p_iEc) {
+
+    /* show compile values */
+    printf("--- FILE:%s,DATE={%s-%s}\n",
+            __FILE__,
+            __DATE__,
+            __TIME__);
+    return p_iEc;
+
+}
+
+#ifdef __USE_MAIN_TUTORC89
 int main() {
     printf("hello,World!\n");
-    return 100;
+    int     iEc = atoi(getenv("v_FWK_exitCode"));   /* by user-framework */
+    return  F01_intro(iEc);
 }
+#endif
 
