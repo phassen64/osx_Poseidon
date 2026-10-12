@@ -1,0 +1,23 @@
+/*  ***************************************************************************
+ *  tutorial.C89  :: "dummy"                    ©[mATe64]       [2026-10-12]
+ *  ***************************************************************************
+    encoding: UTF-8
+    !$@€ƒ„…†‡‰ŠŒŽ“”•—™šœžŸ¡¢£¤¥¦§¨©«¬®°±²³µ¶·¹º»¼½¾¿ÑÖØÜÞßäæçîðñôö÷üýþÿ
+ */
+
+
+/*  m:  I.include */
+#include "i00_tutorC89.h"
+
+/*  m:  F.tester */
+int F12_dummy(int p_iEc) {
+    F_HEADER("Dummy");
+    return(p_iEc);
+}
+
+/*  m:  F.main */
+int main() {
+    int     iEc = atoi(getenv("v_FWK_exitCode"));
+    return  F12_dummy(iEc);
+}
+

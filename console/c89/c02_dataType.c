@@ -23,6 +23,7 @@
 
 #include "i03_tutorC89_types.h"
 #include "i05_tutorC89_library.h"
+#define   __USE_TUTOR_C89_MAIN
 
 int F_mod_simpleDataType(void)
 {
@@ -291,7 +292,7 @@ int F_mod_converter() {
     printf("\ti (octal)       :   %o     \n",i);
     printf("\ti (hexadecimal) :   %x     \n",i);
     printf("\ti (binaer)      :   %s     \n",
-            f_printBits(i,sBuffer,8));
+            f_lib_print_Bit(i,sBuffer,8));
 
     si = -1;
     printf("\tsi  (fmt='d')   :   %d     \n",si);
@@ -477,7 +478,7 @@ int F02_dataType(int p_iEc)
 
 
 
-#ifndef __USE_TUTOR__MAIN
+#ifndef __USE_TUTOR_C89_MAIN
 int main(int args, char *argv[])
 {
     int     iEc = atoi(getenv("v_FWK_exitCode"));

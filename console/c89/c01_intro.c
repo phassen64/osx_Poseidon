@@ -148,7 +148,7 @@
 *   &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& */
 
 /*  m:  include */
-#include "i01_tutorC89_base.h"
+#include "i00_tutorC89.h"
 #define __USE_TUTOR_C89__MAIN
 
 /*  m:  F.tester */

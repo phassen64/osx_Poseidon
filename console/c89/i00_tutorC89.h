@@ -11,6 +11,6 @@
 #include "i03_tutorC89_types.h"
 #include "i04_tutorC89_globals.h"
 #include "i05_tutorC89_library.h"
-
+#include "i06_tutorC89_file.h"
 
 #endif  /*  __USE_TUTOR_C89__INCLUDE_COMMON */

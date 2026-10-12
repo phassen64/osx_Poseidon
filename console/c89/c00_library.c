@@ -7,17 +7,36 @@
 
 *  ************************************************************************* */
 
-#include "i02_tutorC89_advanced.h"
-#include "i03_tutorC89_types.h"
-#include "i04_tutorC89_globals.h"
+#include "i00_tutorC89.h"
 
-void f_lib_hello() {
-    printf("hello Library\n");
-}
+/*  ===========================================================================
+ *  m:  V.globals
+ *  ======================================================================== */
 
-void f_lib_header(const *s) {
-    printf("hello TEST:[%s]\n",s);
-}
+const   double  gC_E    = 2.71828182;    /* 2.718281928459045 */
+const   double  gC_PI   = 3.14159265;    /* 3.141592653589793 */
+const   int     gC_days_per_month[2][13] =
+                {
+                    {0,31,28,31,30,31,30,31,31,30,31,30,31},
+                    {0,31,29,31,30,31,30,31,31,30,31,30,31}
+                };
+
+const   char  * gC_MonthName[] =
+                {
+                    "?MO",
+                    "JAN","FEB","MAR","APR","MAY","JUN",
+                    "JUL","AUG","SEP","OCT","NOV","DEC"
+                };
+
+const   char  * gC_WeekdayName[] =
+                {
+                    "?DY",
+                    "MON","TUE","WED","THU","FRI","SAT","SUN"
+                };
+
+/* globale Variable */
+
+char    gTimeStr[256];
 
 
 /*  ======================================================================== */
@@ -64,7 +83,7 @@ int f_lib_vfprintf(char *fname, char *format, ...)
 
 /*  ======================================================================== */
 int f_lib_dump( char *          s_dataPtr,
-            size_t          z_dataSize,
+            int             z_dataSize,
             char *          file,
             int             line,
             char *          idStr)
@@ -168,7 +187,7 @@ int f_lib_dump( char *          s_dataPtr,
 }
 
 /* ************************************************************************* */
-int f_LINE(const char cText)
+int f_lib_line(const char cText)
 /* ************************************************************************* */
 {
 #define C_DBG_LINE_SIZE 70
@@ -181,7 +200,7 @@ int f_LINE(const char cText)
 }
 
 /* ************************************************************************* */
-void f_COMPILER(void)
+void f_lib_compilerInfo(void)
 /* ************************************************************************* */
 {
     printf("### isC++           :");
@@ -209,21 +228,31 @@ void f_COMPILER(void)
 }
 
 /* ************************************************************************* */
-int f_lib_header(const char *cText, const char *cFile, int iLine)
+void f_lib_header(const char *cText, const char *cFile, int iLine)
 /* ************************************************************************* */
 {
-    f_LINE('=');
+    f_lib_line('=');
     printf("HDR=\"%s\"  SRC=[%s,%d] DATE=[%s;%s]\n",
         cText,cFile,iLine,__DATE__,__TIME__);
-    f_LINE('=');
-    f_COMPILER();
-   return(0);
+    f_lib_line('=');
+    f_lib_compilerInfo();
 }
+
+void f_lib_trace(const char *cText, const char *cFile, int iLine) {
+    printf("&&& %s:[%s;%d]\n", cText, __FILE__, __LINE__);
+}
+void f_lib_menu(const char *cText, const char *cFile, int iLine) {
+    printf("\n&&& menu:%s:[%s;%d]\n\n",cText,__FILE__,__LINE__);
+}
+void f_lib_show(const char *cText, const char *cFile, int iLine) {
+    printf("\n\t&&& %s:[%s;%d]\n\n",cText,__FILE__,__LINE__);
+}
+
 
 #define C_MAX_BIN_BUFFER_SIZE  256
 
 /* ************************************************************************* */
-int f_bin2asc(void *pSRC, void *pOBJ, int iBinSize)
+int f_lib_bin2asc(void *pSRC, void *pOBJ, int iBinSize)
 /* ************************************************************************* */
 /*
     IN :    binSRC      0xA2
@@ -250,7 +279,7 @@ int f_bin2asc(void *pSRC, void *pOBJ, int iBinSize)
 }
 
 /* ************************************************************************* */
-int asc2bin(void *pSRC, void *pOBJ, int iAscSize)
+int f_lib_asc2bin(void *pSRC, void *pOBJ, int iAscSize)
 /* ************************************************************************* */
 /*
     IN :    hexSRC      {0x41 0x32}="A2"
@@ -282,7 +311,7 @@ int asc2bin(void *pSRC, void *pOBJ, int iAscSize)
 }
 
 /*  ======================================================================== */
-char * f_printBits(int n, char *s, int fmtLen)
+char * f_lib_print_Bit(int n, char *s, int fmtLen)
 /*  ======================================================================== */
 {
     /*
@@ -310,7 +339,7 @@ char * f_printBits(int n, char *s, int fmtLen)
 }
 
 /*  ======================================================================== */
-char * f_printBYTE(char *s, int n)
+char * f_lib_print_Byte(char *s, int n)
 /*  ======================================================================== */
 /*  DESC:   Byte ausgeben
  */
@@ -339,7 +368,7 @@ char * f_printBYTE(char *s, int n)
 
 
 /*  ======================================================================== */
-void f_putBits(int n)
+void f_lib_puts_Bit(int n)
 /*  ======================================================================== */
 /*  DESC:    Bit-Muster einer Zahl ausgeben.
  */
@@ -361,7 +390,7 @@ void f_putBits(int n)
 
 
 /*  ======================================================================== */
-int f_getBits(void)
+int f_lib_get_Byte(void)
 /*  ======================================================================== */
 /*
  *  DESC:   Bit-Muster einlesen, eine Zahl ausgeben
@@ -380,7 +409,7 @@ int f_getBits(void)
 
 
 /*  ======================================================================== */
-int f_swapBits( int x, int bitnr1, int bitnr2)
+int f_lib_swapBit( int x, int bitnr1, int bitnr2)
 /*  ======================================================================== */
 /*
  *  DESC:   in data x swap bitnr1 with bitnr2
@@ -409,7 +438,7 @@ int f_swapBits( int x, int bitnr1, int bitnr2)
  */
 
 /*  ======================================================================== */
-int f_DayOfYear(int year, int month, int day)
+int f_lib_dayOfYear(int year, int month, int day)
 /*  ======================================================================== */
 /*
  *  IN:     year, month, day
@@ -429,7 +458,7 @@ int f_DayOfYear(int year, int month, int day)
 
 
 /*  ======================================================================== */
-void f_MonthDay(int year, int yearday, int *pmonth, int *pday)
+void f_lib_monthDay(int year, int yearday, int *pmonth, int *pday)
 /*  ======================================================================== */
 /*
  *  IN: year
@@ -448,7 +477,7 @@ void f_MonthDay(int year, int yearday, int *pmonth, int *pday)
 }
 
 /*  ======================================================================== */
-void f_anySwap(void *v[], int i, int j)
+void f_lib_swapAny(void *v[], int i, int j)
 /*  ======================================================================== */
 /*
  *  DESC:   swap 2 pointers
@@ -461,7 +490,7 @@ void f_anySwap(void *v[], int i, int j)
 }
 
 /*  ======================================================================== */
-int f_cmpDoubleStr(char *s1, char *s2)
+int f_lib_cmpDoubleStr(char *s1, char *s2)
 /*  ======================================================================== */
 /*
  *  DESC:   compare two double strings
@@ -496,7 +525,7 @@ int f_cmpDoubleStr(char *s1, char *s2)
 */
 
 /*  ======================================================================== */
-void f_quickSort(
+void f_lib_quickSort(
         void *  v[],
         int     left,
         int     right,
@@ -505,27 +534,27 @@ void f_quickSort(
 /*  ======================================================================== */
 {
     int     i, last;
-    void    f_anySwap(void *v[], int, int);   /* proto-type inside a fct */
+    void    f_lib_swapAny(void *v[], int, int);   /* proto-type inside a fct */
     if (left >= right)  {
         return;
     }
-    f_anySwap( v,left,((left+right)/2) );
+    f_lib_swapAny( v,left,((left+right)/2) );
     last = left;
     for (i=left+1;i<=right;i++)
     {
         if ((*comp)(v[i],v[left])<0)
         {
-            f_anySwap(v,++last, i);
+            f_lib_swapAny(v,++last, i);
         }
     }
-    f_anySwap(v,left,last);
-    f_quickSort(v,left,last-1,comp);
-    f_quickSort(v,last+1,right,comp);
+    f_lib_swapAny(v,left,last);
+    f_lib_quickSort(v,left,last-1,comp);
+    f_lib_quickSort(v,last+1,right,comp);
 
 }
 
 /*  ======================================================================== */
-int f_copyFile(char *srcFile, char *objFile)
+int f_lib_copyFile(char *srcFile, char *objFile)
 /*  ======================================================================== */
 /*  fopen,fclose,feof,ferror,fgets,fputs,fflush
  */
@@ -826,7 +855,7 @@ USIGN64 f_osGetRealtime__POSIX(void)
  */
 
 /* ========================================================================= */
-T_FILE f_FileOpen(const char *cFile, T_FILE_ACCESS mode) {
+T_FILE f_lib_fileOpen(const char *cFile, T_FILE_ACCESS mode) {
 /* ========================================================================= */
    T_FILE fd;
    F_TRACE("zip_FileOpen");
@@ -847,7 +876,7 @@ T_FILE f_FileOpen(const char *cFile, T_FILE_ACCESS mode) {
 }
 
 /* ========================================================================= */
-int f_FileWrite(T_FILE fd, const void* buffer, int len) {
+int f_lib_fileWrite(T_FILE fd, const void* buffer, int len) {
  /* ========================================================================= */
    int n;
 
@@ -867,7 +896,7 @@ int f_FileWrite(T_FILE fd, const void* buffer, int len) {
 }
 
 /* ========================================================================= */
-int f_FileRead(T_FILE fd, void* bufferPtr, int len) {
+int f_lib_fileRead(T_FILE fd, void* bufferPtr, int len) {
 /* ========================================================================= */
 /* returns data as long as possible
  * rc==0 if error or end of file
@@ -910,14 +939,10 @@ int f_FileRead(T_FILE fd, void* bufferPtr, int len) {
 }
 
 /* ========================================================================= */
-int f_FileClose(T_FILE fd) {
+int f_lib_fileClose(T_FILE fd) {
  /* ========================================================================= */
    int rc;
-#ifdef  __USE_UNIX_FILE_HANDLING
-    rc = close(fd);
-#else
     rc = fclose(fd);     /* rc !=0 */
-#endif
     if (rc != 0) {
         F_TRACE("??? ERR: zip_FileClose");
     }
@@ -925,7 +950,7 @@ int f_FileClose(T_FILE fd) {
 }
 
 /* ========================================================================= */
-int f_FileSeek(T_FILE fd,long int i_Offset, int i_Origin) {
+int f_lib_fileSeek(T_FILE fd,long int i_Offset, int i_Origin) {
  /* ========================================================================= */
 
     int n;
