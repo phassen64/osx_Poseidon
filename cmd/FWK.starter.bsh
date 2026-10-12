@@ -144,10 +144,10 @@ f_ini_hdd_secondaryStorage() {
     #   define my secondary storage
 
     #   hddName
-    d=/dev/disk/by-id/google-d-260922-eros
+    local d=/dev/disk/by-id/google-d-260922-eros
 
     #   UUID
-    i=117f965f-9dd8-418e-92a9-2c3f0a1aaf28
+    local i=117f965f-9dd8-418e-92a9-2c3f0a1aaf28
 
     #   case
     if [ $p_iMode == 1 ]; then
@@ -230,7 +230,7 @@ function f_ini_gui_DE_cinnamon() {
 #   ===========================================================================
 
 function f_env_reboot() {
-    i=3
+    local -i i=3
     echo "doReboot in [$i]" & sleep $i
     sudo reboot
 }
@@ -295,7 +295,7 @@ function f_fwk_clearScreen() {
 #
 
 function f_fwk_alias_get() {
-    s='GET alias...'; echo "$s"; sleep 1
+    local s='GET alias...'; echo "$s"; sleep 1
 	alias| grep +
 }
 
@@ -494,8 +494,8 @@ function f_fwk_isDirectory {
 clear
 
 #   s:  header
-v_DTM=`echo $(date '+%y%m%d|%H%M%S')`
-printf "=== fwk.beg :: {%s}:{%s} \n"   $v_DTM $HOSTNAME
+s=`echo $(date '+%y%m%d|%H%M%S')`
+printf "=== fwk.beg :: {%s}:{%s} \n"   $s $HOSTNAME
 sleep 1
 
 #   show starter of bashRc
@@ -537,9 +537,9 @@ fi
 #   printf "+ path  : {%s} \n" $PATH
 
 #   s:  generate FWK.exit.code
-declare -i r=$RANDOM
-v_FWK_iEc=$r && export v_FWK_iEc
+declare -i v_FWK_iEc=$((100 + (RANDOM % 900))) # 100...999
+export v_FWK_iEc
 
 #   s:  header
-v_DTM=`echo $(date '+%y%m%d|%H%M%S')`
-printf "=== fwk.end::{%s}:{%s} \n"   $v_DTM $v_FWK_iEc
+s=`echo $(date '+%y%m%d|%H%M%S')`
+printf "=== fwk.end::{%s}:{%s} \n"   $s $v_FWK_iEc
