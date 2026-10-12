@@ -538,7 +538,7 @@ fi
 #   printf "+ path  : {%s} \n" $PATH
 
 #   s:  generate FWK.exit.code (new&&old)
-declare -i i=$((100 + (RANDOM % 900))) # 100...999
+declare -i i=$((10 + (RANDOM % 200))) # 10...199
 v_FWK_exitCode=$i
 export v_FWK_exitCode
 
