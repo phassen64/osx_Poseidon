@@ -1,4 +1,24 @@
 #!/bin/bash
+
 #   usage:  $   . run.bsh
-echo "runner runner"
+
+#   show usage
+clear
+printf "@@@ runner::showUsage\n\n"
+sleep 1
 bash r03_runExpert.bsh
+
+#   start using some files
+printf "\n\n@@@ runner::runSome\n\n"
+sleep 1
+bash r03_runExpert.bsh + 1
+
+#   show my logfile
+i=2
+p="$v_FWK_dirScratch/r03_runExpert.log"
+printf "\n\n@@@ runner::showLogFile:[$p]\n\n"
+sleep $i
+cat $p
+
+printf "\n\n@@@ runner::isReady.\n"
+

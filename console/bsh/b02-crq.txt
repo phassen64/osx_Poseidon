@@ -1,7 +1,0 @@
---- crq.txt
-
- # !CRQ-261008:?replies dateTime not string
-
-*   rename text for reserverd bash items
-    error->ERRoR
-    exit->eXit
