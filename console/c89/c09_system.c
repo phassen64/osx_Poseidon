@@ -348,6 +348,7 @@ int F_mod_mallocTest() {
     for(i=0; i<10; i++) {
         ((char*)(pDynBuffer1))[i] = (char)(0x41+i);
     }
+   ((char*)(pDynBuffer1))[i] = 0;
     iNr = i;
     printf("\t malloc()     : <%p>\n",pDynBuffer1);
     printf("\t BUFFER       : <%s>\n",(char *)pDynBuffer1);
@@ -502,8 +503,9 @@ int F_mod_stringMake() {
     char strSRC[] = "ABCDEFGHIJ";
     char strOBJ[40] ;
     char strTMP[40]= "abc";
-    const char*   strSRC_LOCAL = "abc����";
-    const char*   strOBJ_LOCAL = "abc�";
+    const char*   strSRC_LOCAL = "abcdäöüß";
+    const char*   strOBJ_LOCAL = "abcß";
+    const char*   sUmlaute = "!ÄÖÜäöüß";    /*8Zeichen*/
 
     printf("\n&&& menu : stringMake [%s;%d] \n\n",__FILE__,__LINE__);
 
@@ -565,8 +567,11 @@ int F_mod_stringMake() {
      *      s1>s2   => i>0
      */
 
+
+    printf("\tsUmlaute=<%s>\n",sUmlaute);
     printf("\tSRC_LOCAL=<%s>\n",strSRC_LOCAL);
     printf("\tOBJ_LOCAL=<%s>\n",strOBJ_LOCAL);
+
     i = strcoll(strOBJ,strSRC);
     printf("\tstrcoll(obj,src)  : isEQU=<%d>\n",i);
 
@@ -608,12 +613,8 @@ int F_mod_stringTest() {
 /*  int     i; */
     char    strPAT[]       = "ABCDEFGHIJabcdefghij";
     size_t  len;
-    char    strTXT[]       = "Text;mit;verschie-denen#Trenner Zeichen.";
-    char    sTOKEN[]       = ".;#- ";
-#ifdef CRQ240514  /* !CRQ */
-    char    strTXT1[40],
-            strTXT2[40];
-#endif
+//  char    strTXT[]       = "Text;mit;verschie-denen#Trenner Zeichen.";
+//  char    sTOKEN[]       = ".;#- ";
     char    testLine[] = "a+0; Az!";
     char *  pChar = testLine;
 
@@ -914,8 +915,8 @@ int F_mod_limitTest() {
     printf("\tCHAR_MIN    : %d\n",CHAR_MIN);
     printf("\tSCHAR_MAX   : %d\n",SCHAR_MAX);
     printf("\tSCHAR_MIN   : %d\n",SCHAR_MIN);
-    printf("\tINT_MAX     : %ld\n",INT_MAX);
-    printf("\tINT_MIN     : %ld\n",INT_MIN);
+    printf("\tINT_MAX     : %d\n",INT_MAX);
+    printf("\tINT_MIN     : %d\n",INT_MIN);
     printf("\tSHRT_MAX    : %d\n",SHRT_MAX);
     printf("\tSHRT_MIN    : %d\n",SHRT_MIN);
     printf("\tLONG_MAX    : %ld\n",LONG_MAX);

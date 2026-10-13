@@ -365,6 +365,7 @@ int F_mod_fileMake__ASC() {
         printf("\t??? I can't openWrite FILE:'%s!?\n",pFile);
         return -__LINE__;
     }
+    printf("\tFP=<%p>\n",(unsigned char*)fp);
 
     /*  write EyeCat */
     sprintf(cBuffer,"!ASC:240403\n");
@@ -398,7 +399,7 @@ int F_mod_fileMake__ASC() {
 
     /*  close */
     iRc = fclose(fp);
-    printf("\tfClose.ASC(fp=<%p>):  <%d>\n",(unsigned char*)fp,iRc);
+    printf("\tfClose.ASC rc=:<%d>\n",iRc);
 
     return __LINE__;
 }
@@ -468,7 +469,7 @@ int F_mod_fileMake__BIN() {
     assert(fclose(fp) == 0);
 
     /*  show */
-    printf("\tflose.BIN(fp=<%p>):  <%d>\n",(unsigned char*)fp,iRc);
+    printf("\tflose.BIN rc=<%d>\n",iRc);
 
     return __LINE__;
 }
@@ -1086,7 +1087,7 @@ int F_mod_fileHandling() {
 #define F_CHK()   { \
     if ( iRc < 0) { \
         printf("?Code:%d at:[%d]",(iRc),(__LINE__)); \
-        assert(iRc=0);return(-(__LINE__)); } }
+        assert(iRc==0);return(-(__LINE__)); } }
 
 int F08_io(int p_iEc, char* p_dTmp)
 {
