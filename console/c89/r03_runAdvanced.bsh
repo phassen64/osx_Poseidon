@@ -6,6 +6,8 @@
 
 #   description:
 
+#       Build the complete tutorial.C89 and generate Build-LogFile.
+
 #       Compile & linking of all c??_*.c files in the current directory.
 #           Step1:  compile an own tutor c-library
 #           Step2:  compile c-source
@@ -30,9 +32,11 @@
 #           s:  F.compile
 #           s:  F.script
 #       b:  body
-#           s:  header
-#           s:  loop
-#           s:  footer
+#           m:  B.prepare
+#           m:  B.perform
+#               s:  header
+#               s:  loop
+#               s:  footer
 #       b:  lastLine
 
 #   ***************************************************************************
@@ -188,7 +192,7 @@ function f_run_script {
 #   ===========================================================================
 
 #
-#   m:  prepare
+#   m:  B.prepare
 #
 
 #   s:  parameter
@@ -228,7 +232,7 @@ fLog="$v_FWK_dirScratch/$v_SCP_bdy.log"
 #   printf "&&& logFile:'%s'\n" "$fLog"
 
 #
-#   m:  run
+#   m:  B.perform
 #
 
 #   s:  header
@@ -241,31 +245,33 @@ printf -v SOut "&&& logfile:'%s'" "$fLog"
 echo "" >>  $fLog
 echo "$SOut" >>  $fLog
 
-#   s:  F.do
+#   s:  F.doClean
 f_run_clean
+
+#   s:  F.doRun and log
 f_run_script "$aShellArray" "$p_iStress" "$RANDOM" >> $fLog
 iRc=$?
 
-#   build sLine
+#   s:  build sLine
 echo "" >> $fLog
 s=''; c='&'; for((i=0;i<80;i++)); do s+="$c"; done
 printf -v SOut "%s\n" $s
 echo "$s" >> $fLog
 
+#   s:  show logging results
 s="*** total_sum_of_eRRoRs := [$iRc]";  printf "$s\n"
 echo "$s" >> $fLog
 
 #   s:  dateTime.Stopp
 sDtm=$(date "$sFmt");   tDtmStopp=$(date '+%s.%N')
 
-#   s:  calc.Time
+#   s:  calc.elapsed-time
 fSec=$(echo "($tDtmStopp-$tDtmStart) / 1" | bc)
 
 #   s:  footer
 printf -v SOut "<<< runC89.END *[%d] at:[%s] elapsed:[%s]." "$iCtr" "$sDtm" "$fSec"
 echo "$SOut" >> $fLog
 printf "$SOut\n"
-
 
 
 #   b:  lastLine

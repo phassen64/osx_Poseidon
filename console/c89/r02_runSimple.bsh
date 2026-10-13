@@ -5,6 +5,7 @@
 #   ***************************************************************************
 
 #   description:
+#       Build the complete tutorial.C89.
 #       Compile & linking of all c??_*.c files in the current directory.
 #           Step1:  compile an own tutor c-library
 #           Step2:  compile c-source
@@ -22,6 +23,7 @@
 #   remark:
 #       +   Only compile, not run "tutor c-library".
 #       +   Each source has to provide an own main() function.
+#       +   no build logging
 
 #   content:
 #       m:  prepare

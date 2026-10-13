@@ -13,6 +13,9 @@
 #   description:
 #       compile & link & execute input-file <FILE.c>
 
+#   remark:
+#       no logging.
+
 #   content:
 #       m:  function
 #       m:  body
