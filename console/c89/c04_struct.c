@@ -6,7 +6,7 @@
     !$@€ƒ„…†‡‰ŠŒŽ“”•—™šœžŸ¡¢£¤¥¦§¨©«¬®°±²³µ¶·¹º»¼½¾¿ÑÖØÜÞßäæçîðñôö÷üýþÿ
 */
 
-#include    "i00_tutorC89.h"
+#include    "i00_C89_tutor.h"
 
 
 int F04_struct(int p_iEc);
@@ -26,7 +26,7 @@ int F04_struct(int p_iEc) {
     printf("============================================================ \n");
 
     printf("--- compiled:");
-    printf("iEc: =[%d]\n",p_iEc);
+    printf("iEc  :[%d]\n",p_iEc);
     printf("DATETIME=(%s;%s)",__DATE__,__TIME__);
     printf("FILE: =[%s]\n", __FILE__);
 

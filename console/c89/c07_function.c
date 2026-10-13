@@ -29,7 +29,7 @@
  *  ===  KEYWORD:   void
  */
 
-#include "i00_tutorC89.h"
+#include "i00_C89_tutor.h"
 /*  #include    <stdio.h>
  *  #include    <stdlib.h>      * atof() and atoi()
  *  #include    <stdarg.h>      * varg

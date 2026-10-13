@@ -6,11 +6,11 @@
 #ifndef __USE_TUTOR_C89__INCLUDE_COMMON
 #define __USE_TUTOR_C89__INCLUDE_COMMON
 
-#include "i01_tutorC89_base.h"
-#include "i02_tutorC89_compact.h"
-#include "i03_tutorC89_types.h"
-#include "i04_tutorC89_globals.h"
-#include "i05_tutorC89_library.h"
-#include "i06_tutorC89_file.h"
+#include "i01_C89_base.h"
+#include "i02_C89_compact.h"
+#include "i03_C89_types.h"
+#include "i04_C89_globals.h"
+#include "i05_C89_library.h"
+#include "i06_C89_file.h"
 
 #endif  /*  __USE_TUTOR_C89__INCLUDE_COMMON */

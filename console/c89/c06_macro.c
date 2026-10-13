@@ -98,7 +98,7 @@
  * in dem aktuellen Verzeichnis
  */
 
-#include "i00_tutorC89.h"
+#include "i00_C89_tutor.h"
 int F06_macro(int);
 #ifndef __USE_TUTOR_C89__MAIN
 #define __USE_TUTOR_C89__MAIN

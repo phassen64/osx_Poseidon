@@ -20,7 +20,7 @@
  * include of a file
 */
 
-#include "i00_tutorC89.h"
+#include "i00_C89_tutor.h"
 
 int F_mod_simpleDataType(void)
 {

@@ -148,7 +148,7 @@
 *   &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& */
 
 /*  m:  include */
-#include "i00_tutorC89.h"
+#include "i00_C89_tutor.h"
 
 /*  m:  F.tester */
 int F01_intro(int p_iEc) {
