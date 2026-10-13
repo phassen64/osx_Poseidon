@@ -9,10 +9,31 @@
 
 #   ***************************************************************************
 
+#   s:  F.clean
+function f_run_clean() {
+
+    #   declare
+    declare -a aExt=('o' 'obj' 'out' 'exe' 'bin')
+
+    #   clean local
+    for x in "${aExt[@]}"; do
+        f='*.'
+        f+=$x
+        rm -f $f
+    done
+
+    #   clean scratch
+    pushd $v_FWK_dirScratch > /dev/null
+    for x in "${aExt[@]}"; do
+        f='*.'
+        f+=$x
+        rm -f $f
+    done
+    popd > /dev/null
+
+}
+
+#   s:  body
 clear
-rm *.o *.out *.obj *.exe
-
-pushd $v_FWK_dirScratch
-rm *.o *.out *.obj *.exe
-popd
-
+f_run_clean
+echo "&&& ready clean."
