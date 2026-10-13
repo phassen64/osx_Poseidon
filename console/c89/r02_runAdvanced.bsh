@@ -5,11 +5,14 @@
 #   ***************************************************************************
 
 #   description:
+
 #       Compile & linking of all c??_*.c files in the current directory.
 #           Step1:  compile an own tutor c-library
 #           Step2:  compile c-source
 #           Step3:  linking c-source with c-library
 #           Step4:  runs new executable
+#           Step5:  logging
+
 #       The objects and executables are stored in the
 #               [FWK-Scratch-Directory].
 
@@ -21,15 +24,24 @@
 #       +   Each source has to provide an own main() function.
 
 #   content:
-#       m:  prepare
-#       m:  compile
+#       m:  compose
+#       m:  function
+#           s:  F.clean
+#           s:  F.compile
+#           s:  F.script
+#       b:  body
 #           s:  header
 #           s:  loop
 #           s:  footer
-#       m:  lastLine
+#       b:  lastLine
 
 #   ***************************************************************************
 
+#
+#   m:  compose
+#
+
+aShellArray=$(echo `ls c*.c`)
 
 #
 #   m:  function
@@ -188,9 +200,6 @@ elif [ $p_iStress -lt 1 ]; then
 fi
 #   echo "stress:[$p_iStress]"  exit
 
-#   s:  fetch all bash in a ShellArray
-aShellArray=$(echo `ls c*.c`)
-
 #   s:  const library source
 declare -r C_TUTOR_LIBRARY__SRC='c00_library.c'
 
@@ -259,4 +268,4 @@ printf "$SOut\n"
 
 
 
-#   m:  lastLine
+#   b:  lastLine

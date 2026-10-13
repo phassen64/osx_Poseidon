@@ -7,6 +7,9 @@
 #   usage:
 #       $   bash run_<SCP>.bsh <FILE.c>
 
+#   example:
+#       $   bash "r03_runUno.bsh" "c08_io.c"
+
 #   description:
 #       compile & link & execute input-file <FILE.c>
 
