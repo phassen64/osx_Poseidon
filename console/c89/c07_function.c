@@ -35,6 +35,7 @@
  *  #include    <stdarg.h>      * varg
 */
 
+
 /*
  *  ***************************************************************************
  *  2) PROTOTYPEN
@@ -44,13 +45,13 @@
 /*  Prototypen m?ssen in C++, jedoch nicht in C
  *  definiert werden.
  */
-char simplePower1(
+char F_fct_simplePower1(
         float   base,       /* IN:  nur lesender Zugriff */
         int     exponent,   /* IN:  lesend */
         double * result     /* OUT: Ein- und Ausgabe */
                             /* RETURN-WERT:     char */
 );
-double simplePower2(
+double F_fct_simplePower2(
         double   base,       /* IN:  nur lesender Zugriff */
         int     exponent     /* IN:  lesend */
                              /* RETURN-WERT:     double */
@@ -60,23 +61,23 @@ double simplePower2(
  * Wert zur?ck.
  * In anderen Sprachen entspraeche sie einer Prozedur.
  */
-void simplePower3(
+void F_fct_simplePower3(
         float   base,       /* IN:  nur lesender Zugriff */
         int     exponent,    /* IN:  lesend */
         double * result     /* OUT: Ein- und Ausgabe */
                              /* RETURN-WERT:     void */
 );
 
-unsigned int simpleFakultaet(
+unsigned F_fct_simpleFakultaet(
         unsigned int base   /* IN:  int ohne VZ */
        /* R?ckgabe ein char */
 );
 
-int f_varType (const char *buf, int id, ...);
+int F_fct_varType (const char *buf, int id, ...);
 /* !!! PROTO-TYP muss sein bei variabler Parameter-Anzahl ! */
 
 
-double varAdd  (int sumop, ...);
+double F_fct_varAdd  (int sumop, ...);
 
 
 #ifdef  USE__TUTOR_C2CPP
@@ -92,6 +93,9 @@ double varAdd  (int sumop, ...);
      * define gew?hlt werden.
      */
 #endif
+
+
+int F_fct_selfIncrementer(void);
 
 /*
  *  ***************************************************************************
@@ -132,6 +136,18 @@ int F07_function(int p_iEc)
 
 /*
  *  ***************************************************************************
+ *  1) FUNKTIONEN static
+ *  ***************************************************************************
+ */
+    printf("*** [%s;%d]: TEST selfIncrementer \n",__FILE__,__LINE__);
+
+    for(i=1; i<=5; i++) {
+        iValue=F_fct_selfIncrementer();
+        printf("<<< self.inc.value[%d] is:[%d]\n",i,iValue);
+    }
+
+/*
+ *  ***************************************************************************
  *  4) FUNKTIONEN mit Pointern
  *  ***************************************************************************
  */
@@ -147,7 +163,7 @@ int F07_function(int p_iEc)
  *  Call function with ***!NAME:'PARAMETERS'
  */
     printf("*** [%s;%d]: power1::Output Values \n",__FILE__,__LINE__);
-    cRetVal = simplePower1(
+    cRetVal = F_fct_simplePower1(
                     fBase,
                     iExponent,
                     & dResult);
@@ -157,7 +173,7 @@ int F07_function(int p_iEc)
     printf("dResult     : %f\n",dResult);
 
     printf("*** [%s;%d]: power2::Output Values \n",__FILE__,__LINE__);
-    dResult = simplePower2(
+    dResult = F_fct_simplePower2(
                     fBase,
                     iExponent);
     printf("iBase       : %f **\n",fBase);
@@ -165,7 +181,7 @@ int F07_function(int p_iEc)
     printf("dResult     : %f\n",dResult);
 
     printf("*** [%s;%d]: power3::Output Values \n",__FILE__,__LINE__);
-    simplePower3(
+    F_fct_simplePower3(
                     fBase,
                     iExponent,
                     & dResult);
@@ -180,7 +196,7 @@ int F07_function(int p_iEc)
  */
 
     iValue  = iExponent;
-    iValue  = simpleFakultaet(iValue);
+    iValue  = F_fct_simpleFakultaet(iValue);
 
     printf("*** [%s;%d]: fak::Output Value (FAK) \n",__FILE__,__LINE__);
 
@@ -195,11 +211,11 @@ int F07_function(int p_iEc)
  *  ***************************************************************************
  */
 
-    printf("*** [%s;%d]: f_varType \n",__FILE__,__LINE__);
+    printf("*** [%s;%d]: F_fct_varType \n",__FILE__,__LINE__);
 
-    f_varType("*int",1,4711);
-    f_varType("*chr",2, "Zwei",123456789L);
-    f_varType("double",3,1.111,2.222,3.333);
+    F_fct_varType("*int",1,4711);
+    F_fct_varType("*chr",2, "Zwei",123456789L);
+    F_fct_varType("double",3,1.111,2.222,3.333);
 
 /*
  *  ***************************************************************************
@@ -207,9 +223,9 @@ int F07_function(int p_iEc)
  *  ***************************************************************************
  */
 
-    printf("*** [%s;%d]: varAdd \n",__FILE__,__LINE__);
+    printf("*** [%s;%d]: F_fct_varAdd \n",__FILE__,__LINE__);
 
-    dResult = varAdd(3,1.1,2.2,3.3);
+    dResult = F_fct_varAdd(3,1.1,2.2,3.3);
     printf("sum:%f\n",dResult);
 
 /*
@@ -223,7 +239,7 @@ int F07_function(int p_iEc)
     char    (*p_fct)(float bas, int exp, double *res);
     double  resFct;
 #endif
-    p_fct      =  simplePower1;
+    p_fct      =  F_fct_simplePower1;
     (*p_fct)(2.1F,8,&resFct);
     printf("fctPtr=simplePower::2.1 ** 8 = %f\n",resFct);
 
@@ -283,13 +299,25 @@ int F07_function(int p_iEc)
 /*  ######################################################################## */
 
 /*  ======================================================================== */
-    char simplePower1(float base, int exponent, double * pResult)
+int F_fct_selfIncrementer(void)
+/*  ======================================================================== */
+/*  Diese Funktion increment Werte ohne Input
+ */
+{
+    static  int i=100;
+    /*inc*/
+    i+= 1;
+    return(i);
+}
+
+/*  ======================================================================== */
+    char F_fct_simplePower1(float base, int exponent, double * pResult)
                 /* ***!NAME:'ARGUMENTS' of a function */
 /*  ======================================================================== */
 {
     double  sum=1;
     int     i;
-    printf("<<< simplePower1[%d]: base=%f,exp=%i\n",
+    printf("<<< F_fct_simplePower1[%d]: base=%f,exp=%i\n",
                 __LINE__,base,exponent);
 
     if (exponent < 0) { exponent=-exponent;};
@@ -303,7 +331,7 @@ int F07_function(int p_iEc)
     base        = -3;
     exponent    = -11;
     *pResult    = sum;    /* den Wert ?ndern */
-    printf("<<< simplePower1[%d]: base=%f,exp=%i;res=%f\n",
+    printf("<<< F_fct_simplePower1[%d]: base=%f,exp=%i;res=%f\n",
                 __LINE__,base,exponent,*pResult);
     return('A');
 }
@@ -311,19 +339,19 @@ int F07_function(int p_iEc)
 
 #ifdef  C_OLD_STYLE /* not for the C++-Compiler */
 /*  ======================================================================== */
-    double simplePower2(base, exponent)
+    double F_fct_simplePower2(base, exponent)
            double   base;
            int      exponent;    /* *** ALTER C-Stil */
 /*  ======================================================================== */
 #else
 /*  ======================================================================== */
-    double simplePower2(double base, int exponent)
+    double F_fct_simplePower2(double base, int exponent)
 /*  ======================================================================== */
 #endif
 {
     double  sum=1;
     int     i;
-    printf("<<< simplePower2 [%d]: base=%f,exp=%i\n",
+    printf("<<< F_fct_simplePower2 [%d]: base=%f,exp=%i\n",
                 __LINE__,base,exponent);
 
     if (exponent < 0) { exponent=-exponent;};
@@ -340,12 +368,12 @@ int F07_function(int p_iEc)
 }
 
 /*  ======================================================================== */
-    void simplePower3(float base, int exponent, double * pResult)
+    void F_fct_simplePower3(float base, int exponent, double * pResult)
 /*  ======================================================================== */
 {
     double  sum=1;
     int     i;
-    printf("<<< simplePower3[%d]: base=%f,exp=%i;res=%f\n",
+    printf("<<< F_fct_simplePower3[%d]: base=%f,exp=%i;res=%f\n",
                 __LINE__,base,exponent,*pResult);
 
     if (exponent < 0) { exponent=-exponent;};
@@ -359,13 +387,13 @@ int F07_function(int p_iEc)
     base        = -3;
     exponent    = -11;
     *pResult    = sum;    /* den Wert ?ndern */
-    printf("<<< simplePower3[%d]: base=%f,exp=%i;res=%f\n",
+    printf("<<< F_fct_simplePower3[%d]: base=%f,exp=%i;res=%f\n",
                 __LINE__,base,exponent,*pResult);
     return; /* kein Wert bei void Funktionen */
 }
 
 /*  ======================================================================== */
-unsigned int simpleFakultaet(unsigned int base)
+unsigned F_fct_simpleFakultaet(unsigned int base)
 /*  ======================================================================== */
 /*
  *  R E K U R S I V E FUNKTION
@@ -374,14 +402,14 @@ unsigned int simpleFakultaet(unsigned int base)
     if (base <= 1)
         return 1;
     else
-        return simpleFakultaet(base-1) * base;
+        return F_fct_simpleFakultaet(base-1) * base;
 }
 
 
 
 
 /*  ======================================================================== */
-int f_varType(const char *buf, int id, ...)
+int F_fct_varType(const char *buf, int id, ...)
 /*  ======================================================================== */
 /*  Diese Funktion arbeitet mit verschiedenen
  *  Datentypen
@@ -424,7 +452,7 @@ int f_varType(const char *buf, int id, ...)
 
 
 /*  ======================================================================== */
-double varAdd(int num, ...)
+double F_fct_varAdd(int num, ...)
 /*  ======================================================================== */
 /*  Diese Funktion addiert die Double-Werte
  */
