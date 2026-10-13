@@ -1,7 +1,11 @@
 #!/bin/bash
 
+#   ***************************************************************************
+#   run:[legacy]    tutorial.C89 v2026      ©[mATe64]           [2026-10-13]
+#   ***************************************************************************
+
 #
-#   =*= :   make <C>
+#   =*= :   make <C89>
 #
 
 #   url:https://regex101.com/
@@ -10,7 +14,7 @@
 <<  =*=
     DESCRIPTIION: make c
     +   usage: $>. {thisScript} [ <single C-file>  || <opt> ]
-    +   <opt>:={'?','h','c','i','!'}
+    +   <opt>:={'?','h','c',,'!'}
     +   Examples:
         case.1:: $> . make.bsh !            # make all
         case.2:: $> . make.bsh <c-File>     # make only this file
