@@ -16,8 +16,11 @@ int F12_dummy(int p_iEc) {
 }
 
 /*  m:  F.main */
+#ifndef __USE_TUTOR_C89__MAIN
+#define __USE_TUTOR_C89__MAIN
 int main() {
     int     iEc = atoi(getenv("v_FWK_exitCode"));
     return  F12_dummy(iEc);
 }
+#endif
 

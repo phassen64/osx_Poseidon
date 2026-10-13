@@ -5,14 +5,14 @@
 #   ***************************************************************************
 
 #   usage:
-#       $   bash run_02_clean.bsh
+#       $   bash [run~clean].bsh
 
 #   ***************************************************************************
 
 clear
-rm *.o
-rm *.out
-rm *.obj
-rm *.exe
+rm *.o *.out *.obj *.exe
 
+pushd $v_FWK_dirScratch
+rm *.o *.out *.obj *.exe
+popd
 

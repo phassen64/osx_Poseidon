@@ -149,7 +149,6 @@
 
 /*  m:  include */
 #include "i00_tutorC89.h"
-#define __USE_TUTOR_C89__MAIN
 
 /*  m:  F.tester */
 int F01_intro(int p_iEc) {
@@ -193,7 +192,8 @@ int F01_intro(int p_iEc) {
 
 
 /*  m:  F.main */
-#ifdef __USE_TUTOR_C89__MAIN
+#ifndef __USE_TUTOR_C89__MAIN
+#define __USE_TUTOR_C89__MAIN
 int main() {
     printf("*** hello,Main!\n");
     int     iEc = atoi(getenv("v_FWK_exitCode"));   /* by user-framework */

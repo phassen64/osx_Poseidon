@@ -235,7 +235,6 @@ void f_lib_header(const char *cText, const char *cFile, int iLine)
     printf("HDR=\"%s\"  SRC=[%s,%d] DATE=[%s;%s]\n",
         cText,cFile,iLine,__DATE__,__TIME__);
     f_lib_line('=');
-    f_lib_compilerInfo();
 }
 
 void f_lib_trace(const char *cText, const char *cFile, int iLine) {

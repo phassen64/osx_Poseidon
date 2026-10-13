@@ -477,8 +477,8 @@ int F02_dataType(int p_iEc)
 
 
 
-#ifndef     __USE_TUTOR_C89_MAIN
-#define     __USE_TUTOR_C89_MAIN
+#ifndef __USE_TUTOR_C89__MAIN
+#define __USE_TUTOR_C89__MAIN
 int main(int args, char *argv[])
 {
     int     iEc = atoi(getenv("v_FWK_exitCode"));

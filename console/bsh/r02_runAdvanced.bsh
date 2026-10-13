@@ -113,13 +113,13 @@ fLog="$v_FWK_dirScratch/$v_SCP_bdy.log"
 printf "&&& logFile:'%s'\n" "$fLog"
 
 #   s:  header
-printf -v SOut ">>> runner.BEG *[%d] at:[%s]." "$iCtr" "$sDtm"
+printf -v SOut ">>> runBSH.BEG *[%d] at:[%s]." "$iCtr" "$sDtm"
 printf "$SOut\n"
 echo "$SOut" > $fLog
 
 #   s:  flush.logFileName
 echo "" >>  $fLog
-echo "$sOut" >>  $fLog
+echo "$SOut" >>  $fLog
 
 #   s:  run
 f_run_script "$aShellArray" "$iCtr" "$RANDOM" >> $fLog
@@ -142,7 +142,7 @@ sDtm=$(date "$sFmt");   tDtmStopp=$(date '+%s.%N')
 fSec=$(echo "($tDtmStopp-$tDtmStart) / 1" | bc)
 
 #   s:  footer
-printf -v SOut "<<< runner.END *[%d] at:[%s] elapsed:[%s]." "$iCtr" "$sDtm" "$fSec"
+printf -v SOut "<<< runBSH.END *[%d] at:[%s] elapsed:[%s]." "$iCtr" "$sDtm" "$fSec"
 echo "$SOut" >> $fLog
 printf "$SOut\n"
 
