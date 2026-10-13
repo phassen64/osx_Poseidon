@@ -55,7 +55,16 @@ int F04_struct(int p_iEc) {
     } T_REAL;
 
     T_REAL      r1;
-    T_REAL      * p_r1 = &r1;
+    T_REAL      * p = &r1;
+
+    r1.m_dword = 0xa1a2a3a4;
+
+    printf("r1.dw:[%ld]\n", r1.m_dword);
+    printf("r1.ptr:[%p]\n", p);
+
+/*
+    #   T_REAL      * p_r1 = &r1;
+*/
 
     return p_iEc;
 }
