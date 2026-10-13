@@ -182,6 +182,9 @@ function f_run_script {
 #   m:  prepare
 #
 
+#   s:  parameter
+declare -i p_iStress=$1
+
 #   s:  fetch all bash in a ShellArray
 aShellArray=$(echo `ls c*.c`)
 
@@ -217,7 +220,7 @@ fLog="$v_FWK_dirScratch/$v_SCP_bdy.log"
 #
 
 #   s:  header
-printf -v SOut ">>> runC89.BEG *[%d] at:[%s]." "$iCtr" "$sDtm"
+printf -v SOut ">>> runC89.BEG *[%d] at:[%s]." "$p_iStress" "$sDtm"
 printf "$SOut\n"
 echo "$SOut" > $fLog
 
@@ -228,7 +231,7 @@ echo "$SOut" >>  $fLog
 
 #   s:  F.do
 f_run_clean
-f_run_script "$aShellArray" "$iCtr" "$RANDOM" >> $fLog
+f_run_script "$aShellArray" "$p_iStress" "$RANDOM" >> $fLog
 iRc=$?
 
 #   build sLine
