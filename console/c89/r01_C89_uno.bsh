@@ -75,6 +75,7 @@ s='run<uno>::compile+link+run'; printf "BEG %s [%s]\n\n" $s "$sDtm"
 
 declare -i i=0
 declare dTmp=${v_FWK_dirScratch}
+declare sOpt="-Wall -Werror"
 
 #   s:  loop about BASH array
 for sFile in "${aSrc[@]}"
@@ -100,10 +101,11 @@ do
     #   -----------------------------------------------------------------------
     if [ $sFile == "$C_TUTOR_LIBRARY__SRC" ]
     then
-        gcc -c $sFile -o $pLiby
+        gcc $sOpt -c $sFile -o $pLiby
         continue
     else
-        gcc -c $sFile -o $oFile         #   compile only
+
+        gcc $sOpt -c $sFile -o $oFile         #   compile only
         gcc $oFile $pLiby -o $xFile     #   linking
     fi
     #   -----------------------------------------------------------------------

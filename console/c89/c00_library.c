@@ -99,17 +99,21 @@ int f_lib_dump( char *          s_dataPtr,
     int             iLines;
     int             iCharsPerLine;
     int             i,iSize,n,lineNr=0;
+//  char            c='.';
     unsigned char   xByte;
     char            sHexDump[C_DUMP_MAX_LINE_SIZE * 2];
     char            sAscDump[C_DUMP_MAX_LINE_SIZE];
+
 #if defined(_WIN32) || defined(_WIN64)
     int
         zA=sizeof(sAscDump)-2,   /*!CRQ-240515:RAD:char[] vs char* */
         zH=sizeof(sHexDump)-4;   /*!CRQ-240515:RAD:char[] vs char* */
+    char *sA=sAscDump,*sH=sHexDump;
 #else
     char            sBuffer[1024];
+    char            sTmp[2]={C_DUMP_CHAR_LAST,'\0'};
 #endif
-    char            *sA=sAscDump,*sH=sHexDump;
+
 
     iSize=(int)z_dataSize; /*!CRQ-190826*/
     printf("*** dump[%s;%d;'%s']: ptr=<%p>;len=<%d> ***\n",
@@ -138,6 +142,8 @@ int f_lib_dump( char *          s_dataPtr,
         };
         memset(sHexDump,0,sizeof(sHexDump));
         memset(sAscDump,0,sizeof(sAscDump));
+
+
         for(i=0; i < C_DUMP_LINE_SIZE; i++)
         {
             if (i < iCharsPerLine)
@@ -165,8 +171,10 @@ int f_lib_dump( char *          s_dataPtr,
                     snprintf(sHexDump,zH,"%s%c%c",sH,C_DUMP_CHAR_LAST,C_DUMP_CHAR_LAST);
                     snprintf(sAscDump,zA,"%s%c",sA,C_DUMP_CHAR_LAST);
                 #else
-                    sprintf(sHexDump,"%s%c%c",sH,C_DUMP_CHAR_LAST,C_DUMP_CHAR_LAST);
-                    sprintf(sAscDump,"%s%c",sA,C_DUMP_CHAR_LAST);
+                    sTmp[0]=C_DUMP_CHAR_LAST;
+                    strcat(sHexDump,sTmp);
+                    strcat(sHexDump,sTmp);
+                    strcat(sAscDump,sTmp);
                 #endif
             }
             if ( ((i+1)%4 == 0) && ((i+1) !=  C_DUMP_LINE_SIZE) )
@@ -175,8 +183,9 @@ int f_lib_dump( char *          s_dataPtr,
                     snprintf(sHexDump,zH,"%s%c",sH,C_DUMP_DWORD_SEPERATOR);
                     snprintf(sAscDump,zA,"%s%c",sA,C_DUMP_DWORD_SEPERATOR);
                 #else
-                    sprintf(sHexDump,"%s%c",sH,C_DUMP_DWORD_SEPERATOR);
-                    sprintf(sAscDump,"%s%c",sA,C_DUMP_DWORD_SEPERATOR);
+                    sTmp[0]=C_DUMP_DWORD_SEPERATOR;
+                    strcat(sHexDump,sTmp);
+                    strcat(sAscDump,sTmp);
                 #endif
             };
         };
@@ -872,19 +881,20 @@ USIGN64 f_osGetRealtime__POSIX(void)
  */
 
 /* ========================================================================= */
-T_FILE f_lib_fileOpen(char *cFile, T_FILE_ACCESS mode) {
+T_FILE f_lib_fileOpen(char *cFile, T_FILE_ACCESS p_tMode) {
 /* ========================================================================= */
    T_FILE fd;
    F_TRACE("zip_FileOpen");
-#ifdef  __USE_UNIX_FILE_HANDLING
+
+
+#ifdef  __UNIX__
     #define RW_USER (0400 | 0200)  /* creation mode for open() */
-    fd = open(cFile,mode,RW_USER);
+    fd = fopen(cFile,p_tMode,RW_USER);
 #else
-    printf(("*** zip_FileOpen\n"                \
+    printf("*** zip_FileOpen\n"                     \
                 "fileName           :   %s\n"       \
-                "mode               :   %s\n",
-                cFile,mode));
-    fd = fopen(cFile,mode);
+                "mode               :   %s\n",cFile,p_tMode);
+    fd = fopen(cFile,p_tMode);
 #endif
     if (fd == 0) {
         F_TRACE("??? ERR: zip_FileOpen");
@@ -942,8 +952,8 @@ int f_lib_fileRead(T_FILE fd, void* bufferPtr, int len) {
                 i = feof(fd);
             }
             if (i!=0) {
-                printf(("\t strerror(ferror(fp)=<%d>) =: <%s>\n",
-                    i,strerror(i)));
+                printf("\t strerror(ferror(fp)=<%d>) =: <%s>\n",
+                    i,strerror(i));
                 break;
             }
         }
