@@ -53,21 +53,18 @@ function f_run_clean() {
 #   s:  F.compile
 function f_run_compile() {
 
-    local p_sFile=$1
-    local p_iFile=$2
-    local p_nFileMax=$3
-    local p_iEc=$4
+    local -x p_sFile=$1
+    local -i p_iFile=$2        #   current index
+    local -i p_nFile=$3        #   maxFile
+    local -i p_iEc=$4
 
     #   u:  copy
-    local sFile=$p_sFile
-    local -i i=$p_iFile
-    local -i n=$p_nFileMax
 
     #   u:  declare.dScratch
     declare dTmp=${v_FWK_dirScratch}
 
     #   u:  declare.source
-    declare sNam=$(basename ${sFile})       #   source baseName.src
+    declare sNam=$(basename ${p_sFile})     #   source baseName.src
     declare sExt="${sNam##*.}"              #   extension
     declare sBdy="${sNam%.*}"               #   Body
 
@@ -77,27 +74,27 @@ function f_run_compile() {
     declare pLiby="$dTmp/${C_TUTOR_LIBRARY__OBJ}"       #   target library
 
     #   u:  show
-    printf "&&& p1:'%s'\n" $p_sFile
-    printf "&&& make[%d]/[%d]: '%s' => '%s' \n" \
-                $i $n $sFile $xFile
+    #   printf "&&& p1:'%s'\n" $p_sFile
+    printf "&&& make[%d]/[%d] : '%s' \n" \
+                $p_iFile $p_nFile $p_sFile
     export v_EXE=$xFile
 
     #   u:  make (compile+link)
     #   u:  check library
 
-    if [ $sFile == "$C_TUTOR_LIBRARY__SRC" ]
+    if [ $p_sFile == "$C_TUTOR_LIBRARY__SRC" ]
     then
-        gcc -c $sFile -o $pLiby
+        gcc -c $p_sFile -o $pLiby
         printf "&&& return -- is library!:'%s'\n"  $C_TUTOR_LIBRARY__SRC
         return $p_iEc
     else
-        printf "&&& compile:'%s'\n"  $sFile
-        gcc -c $sFile -o $oFile         #   compile only
+        printf "&&& compile:'%s'\n"  $p_sFile
+        gcc -c $p_sFile -o $oFile       #   compile only
         gcc $oFile $pLiby -o $xFile     #   linking
     fi
 
     #   u:  show run
-    printf "&&& run![%2.2d]:'%s'\n" $i $xFile
+    printf "&&& run![%2.2d]:'%s'...\n\n" $i $xFile
 
     #   u:  execute executable stored in a variable
     "$xFile" $p_iEc
@@ -142,7 +139,7 @@ function f_run_script {
 
     for (( n=1; n<=$p_nStressMax; n++ )); do
 
-        printf "\n### stress :: [%3.3d]/[%3.3d]\n" $n $p_nStressMax
+        printf "\n### stress :: [%2.2d]/[%2.2d]\n" $n $p_nStressMax
         iFile=0
 
         for sFile in $p_aShellArray
@@ -150,18 +147,9 @@ function f_run_script {
 
             iFile+=1
 
-            #   u:  declare.src
-            declare sNam=$(basename ${sFile})       #   source baseName.src
-            declare sExt="${sNam##*.}"              #   extension
-            declare sBdy="${sNam%.*}"               #   Body
-
-            #   u:  declare.objects
-            declare oFile="$dTmp/${sBdy}.obj"       #   target filePath.obj
-            declare xFile="$dTmp/${sBdy}.exe"       #   target objectPath.exe
-            declare pLiby="$dTmp/${C_TUTOR_LIBRARY__OBJ}"       #   target library
-
+            #   show run test
             printf "\n%s\n" $sHashLine
-            printf "*** run:[%2.2d]/[%3.3d]:'%s'\n" $iFile $n $sFile
+            printf "*** run:[%2.2d]/[%2.2d]:'%s'\n" $iFile $n $sFile
             printf "%s\n\n" $sHashLine
 
             #   ---------------------------------------------------------------
