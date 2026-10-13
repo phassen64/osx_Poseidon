@@ -1,0 +1,118 @@
+#!/bin/bash
+
+#   ***************************************************************************
+#   run:[uno]   tutorial.C89 v2026          ©[mATe64]           [2026-10-12]
+#   ***************************************************************************
+
+#   usage:
+#       $   bash run_<SCP>.bsh <FILE.c>
+
+#   description:
+#       compile & link & execute input-file <FILE.c>
+
+#   content:
+#       m:  function
+#       m:  body
+#       m:  compile
+#       m:  lastLine
+
+#   ***************************************************************************
+
+#
+#   m:  function
+#
+
+#   s:  F.clean
+function f_run_clean() {
+    pushd $v_FWK_dirScratch > /dev/null
+    declare -a aExt=('o' 'obj' 'out' 'exe' 'bin')
+    for x in "${aExt[@]}"; do
+        f='*.'
+        f+=$x
+        rm -f $f
+    done
+    popd > /dev/null
+}
+
+#
+#   m:  body
+#
+
+#   s:  paramer
+p_sFile=$1
+
+#   s:  const library source
+declare -r C_TUTOR_LIBRARY__SRC='c00_library.c'
+
+#   s:  const library object
+s=$(basename ${C_TUTOR_LIBRARY__SRC})
+s="${s%.*}"             #   Body
+declare -r C_TUTOR_LIBRARY__OBJ="${s}.obj"
+
+#   clean
+clear
+f_run_clean
+
+#   s:  fetch my C-sources - build a BASH-array
+declare -a aSrc
+aSrc+=( $C_TUTOR_LIBRARY__SRC )
+aSrc+=( $p_sFile )
+#   declare -p aSrc
+
+#   only if source
+declare v_INFO="TUTOR-C89-2026" ; export v_INFO
+
+#   s:  header
+declare sFmt="+%Y-%m-%d %H:%M:%S"
+declare sDtm=$(date "$sFmt")
+s='run<uno>::compile+link+run'; printf "BEG %s [%s]\n\n" $s "$sDtm"
+
+declare -i i=0
+declare dTmp=${v_FWK_dirScratch}
+
+#   s:  loop about BASH array
+for sFile in "${aSrc[@]}"
+do
+
+    #   u:  declare.src
+    declare sNam=$(basename ${sFile})       #   source baseName.src
+    declare sExt="${sNam##*.}"              #   extension
+    declare sBdy="${sNam%.*}"               #   Body
+
+    #   u:  declare.objects
+    declare oFile="$dTmp/${sBdy}.obj"       #   target filePath.obj
+    declare xFile="$dTmp/${sBdy}.exe"       #   target objectPath.exe
+    declare pLiby="$dTmp/${C_TUTOR_LIBRARY__OBJ}"       #   target library
+
+    #   u:  show
+    i+=1
+    printf "&&& make[%d]: '%s' \n" $i $sFile
+    export v_EXE=$xFile
+
+    #   -----------------------------------------------------------------------
+    #   u:  make (compile+link)
+    #   -----------------------------------------------------------------------
+    if [ $sFile == "$C_TUTOR_LIBRARY__SRC" ]
+    then
+        gcc -c $sFile -o $pLiby
+        continue
+    else
+        gcc -c $sFile -o $oFile         #   compile only
+        gcc $oFile $pLiby -o $xFile     #   linking
+    fi
+    #   -----------------------------------------------------------------------
+
+    #   u:  show run
+    printf "&&& run![%2.2d]:'%s'\n" $i $xFile
+
+    #   u:  execute executable stored in a variable
+    "$xFile"
+
+done
+
+#   s:  footer
+printf "\n"
+sDtm=$(date "$sFmt")
+s='run<uno>::compile+link+run'; printf "END %s [%s]\n\n" $s "$sDtm"
+
+#   m:  lastLine

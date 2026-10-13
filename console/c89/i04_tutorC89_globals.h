@@ -11,5 +11,9 @@
 extern const double     gC_E;
 extern const double     gC_PI;
 
+
+extern char gTimeStr[256];
+
+
 #endif /* USE_TUTOR_C89__INCLUDE_GLOBAL_DATA */
 

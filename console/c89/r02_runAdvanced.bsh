@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #   ***************************************************************************
-#   run:[simple]  Tutorial.C89 2026        ©[mATe64]           [2026-10-12]
+#   run:[advanced]  tutorial.C89 v2026      ©[mATe64]           [2026-10-12]
 #   ***************************************************************************
 
 #   description:
@@ -14,10 +14,7 @@
 #               [FWK-Scratch-Directory].
 
 #   usage:
-#       $   bash run_01_simple.bsh
-
-#   usage for test:
-#       $   source run_01_simple.bsh
+#       $   bash run_<SCP>.bsh [iStressMax]
 
 #   remark:
 #       +   Only compile, not run "tutor c-library".
@@ -184,6 +181,12 @@ function f_run_script {
 
 #   s:  parameter
 declare -i p_iStress=$1
+if [ -z $p_iStress ]; then
+    p_iStress=1
+elif [ $p_iStress -lt 1 ]; then
+    p_iStress=1
+fi
+#   echo "stress:[$p_iStress]"  exit
 
 #   s:  fetch all bash in a ShellArray
 aShellArray=$(echo `ls c*.c`)

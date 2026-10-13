@@ -9,6 +9,44 @@
 #ifndef __USE_TUTOR_C89__INCLUDE_LIBRARY
 #define __USE_TUTOR_C89__INCLUDE_LIBRARY
 
+
+/*  ===========================================================================
+ *  m:  F.prototype
+ *  ======================================================================  */
+
+
+/*      m:  menu                                                            */
+void    f_lib_header(const char *cText, const char *cFile, int iLine);
+void    f_lib_trace(const char *cText, const char *cFile, int iLine);
+void    f_lib_menu(const char *cText, const char *cFile, int iLine);
+void    f_lib_show(const char *cText, const char *cFile, int iLine);
+void    f_lib_compilerInfo(void);
+
+/*      m:  tools                                                           */
+int     f_lib_vfprintf(char *fname,char *format, ...);
+int     f_lib_vsprintf(char *str, char *format, ...);
+int     f_lib_dump(char* mem,int memSize,char* File,int Line,char* idStr);
+char *  f_lib_print_Bit(int n, char *s, int fmtLen);
+
+/*      m:  File                                                            */
+int     f_lib_copyFile(char *src, char *obj);
+
+/*      m:  Byte                                                            */
+char *  f_lib_putByte(char *s, int n);
+int     f_lib_getByte(void);
+
+/*      m:  bits                                                            */
+void    f_lib_puts_Bit(int n);
+int     f_lib_swapBit(int x, int bitnr1, int bitnr2);
+void    f_lib_swapAny(void* v[], int i, int j);
+int     f_lib_getBits(void);
+
+/*      m:  dateTime                                                        */
+char*   f_lib_getTimeStr(char* cTimeStr);
+int     f_lib_dayOfYear(int year, int month, int day);
+void    f_lib_monthDay(int year, int yearday, int* pmonth, int* pday);
+
+
 /*  ===========================================================================
  *  m:  F.macro
  *  ======================================================================== */
@@ -29,49 +67,12 @@
 
 
 #define F_TRACE(x)  f_lib_trace(x, __FILE__, __LINE__)
-#define F_printf(x) printf x
+//  #define F_printf(x) printf x
 
 
 #define F_HEADER(x)     f_lib_header(x,__FILE__,__LINE__);
 #define F_MENU(x)       f_lib_menu(x,__FILE__,__LINE__)
 #define F_SHOW(x)       f_lib_show(x,__FILE__,__LINE__)
-
-/*  ===========================================================================
- *  m:  F.prototype
- *  ======================================================================  */
-
-
-/*      m:  menu                                                            */
-void    f_lib_header(const char *cText, const char *cFile, int iLine);
-void    f_lib_trace(const char *cText, const char *cFile, int iLine);
-void    f_lib_menu(const char *cText, const char *cFile, int iLine);
-void    f_lib_show(const char *cText, const char *cFile, int iLine);
-void    f_lib_compilerInfo(void);
-
-/*      m:  tools                                                           */
-int     f_lib_vfprintf(char *fname,char *format, ...);
-int     f_lib_vsprintf(char *str, char *format, ...);
-int     f_lib_dump(char* mem,int memSize,char* File,int Line,char* idStr);
-char *  f_lib_print_Bit(int n, char *s, int fmtLen);
-
-
-int     f_lib_copyFile(char *src, char *obj);
-
-/*      m:  Byte                                                            */
-char *  f_lib_putByte(char *s, int n);
-int     f_lib_getByte(void);
-
-/*      m:  bits                                                            */
-void    f_lib_puts_Bit(int n);
-int     f_lib_swapBit(int x, int bitnr1, int bitnr2);
-void    f_lib_swapAny(void* v[], int i, int j);
-int     f_lib_getBits(void);
-
-/*      m:  dateTime                                                        */
-char*   f_lib_getTimeStr(char* cTimeStr);
-int     f_lib_dayOfYear(int year, int month, int day);
-void    f_lib_monthDay(int year, int yearday, int* pmonth, int* pday);
-
 
 
 #endif /*__USE_TUTOR_C89__INCLUDE_MACRO */

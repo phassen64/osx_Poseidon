@@ -12,25 +12,32 @@
 #   s:  F.clean
 function f_run_clean() {
 
-    #   declare
     declare -a aExt=('o' 'obj' 'out' 'exe' 'bin')
+    declare -a aNam=('C08_IO.rec.txt' 'clean.log')
 
-    #   clean local
+    #   clean.local
     for x in "${aExt[@]}"; do
         f='*.'
         f+=$x
         rm -f $f
     done
+    for x in "${aNam[@]}"; do
+        rm -f $f
+    done
 
-    #   clean scratch
+    #   clean.scratch
     pushd $v_FWK_dirScratch > /dev/null
+    #   pwd
     for x in "${aExt[@]}"; do
         f='*.'
         f+=$x
+        rm -f $f
+    done
+    for x in "${aNam[@]}"; do
+        #   echo "x='$x'"
         rm -f $f
     done
     popd > /dev/null
-
 }
 
 #   s:  body

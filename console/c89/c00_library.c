@@ -872,7 +872,7 @@ USIGN64 f_osGetRealtime__POSIX(void)
  */
 
 /* ========================================================================= */
-T_FILE f_lib_fileOpen(const char *cFile, T_FILE_ACCESS mode) {
+T_FILE f_lib_fileOpen(char *cFile, T_FILE_ACCESS mode) {
 /* ========================================================================= */
    T_FILE fd;
    F_TRACE("zip_FileOpen");
@@ -880,7 +880,7 @@ T_FILE f_lib_fileOpen(const char *cFile, T_FILE_ACCESS mode) {
     #define RW_USER (0400 | 0200)  /* creation mode for open() */
     fd = open(cFile,mode,RW_USER);
 #else
-    F_printf(("*** zip_FileOpen\n"                \
+    printf(("*** zip_FileOpen\n"                \
                 "fileName           :   %s\n"       \
                 "mode               :   %s\n",
                 cFile,mode));
@@ -942,7 +942,7 @@ int f_lib_fileRead(T_FILE fd, void* bufferPtr, int len) {
                 i = feof(fd);
             }
             if (i!=0) {
-                F_printf(("\t strerror(ferror(fp)=<%d>) =: <%s>\n",
+                printf(("\t strerror(ferror(fp)=<%d>) =: <%s>\n",
                     i,strerror(i)));
                 break;
             }
