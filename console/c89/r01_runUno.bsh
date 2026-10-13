@@ -114,6 +114,9 @@ do
     #   u:  execute executable stored in a variable
     "$xFile"
 
+    iRc=$?
+    printf "&&& iRc:'%d'\n" $iRc
+
 done
 
 #   s:  footer
@@ -121,4 +124,5 @@ printf "\n"
 sDtm=$(date "$sFmt")
 s='run<uno>::compile+link+run'; printf "END %s [%s]\n\n" $s "$sDtm"
 
+exit $iRc
 #   m:  lastLine
