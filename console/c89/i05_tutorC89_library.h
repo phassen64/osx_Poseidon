@@ -53,12 +53,19 @@ int     f_lib_vfprintf(char *fname,char *format, ...);
 int     f_lib_vsprintf(char *str, char *format, ...);
 int     f_lib_dump(char* mem,int memSize,char* File,int Line,char* idStr);
 char *  f_lib_print_Bit(int n, char *s, int fmtLen);
-char *  f_lib_print_Byte(char *s, int n);
-int     f_lib_get_Byte(void);
+
+
 int     f_lib_copyFile(char *src, char *obj);
+
+/*      m:  Byte                                                            */
+char *  f_lib_putByte(char *s, int n);
+int     f_lib_getByte(void);
+
+/*      m:  bits                                                            */
 void    f_lib_puts_Bit(int n);
 int     f_lib_swapBit(int x, int bitnr1, int bitnr2);
 void    f_lib_swapAny(void* v[], int i, int j);
+int     f_lib_getBits(void);
 
 /*      m:  dateTime                                                        */
 char*   f_lib_getTimeStr(char* cTimeStr);

@@ -310,35 +310,7 @@ int f_lib_asc2bin(void *pSRC, void *pOBJ, int iAscSize)
 }
 
 /*  ======================================================================== */
-char * f_lib_print_Bit(int n, char *s, int fmtLen)
-/*  ======================================================================== */
-{
-    /*
-     *      func:   Print bits
-     *      -IN :   number
-     *      +OUT:   char where to save bit string
-     *      -IN :   size to print
-     */
-    int     i;
-    int     l=sizeof(n)*8;
-    char    c;
-    char   * pc = s;
-    if (fmtLen != 0) {
-        if (fmtLen < l) {
-            l = fmtLen;        /* use parameter, when OK */
-        }
-    }
-    for(i=0; i < l; i++)
-    {
-        c = (char)(((n >> (l-i-1)) & 1) + '0');
-        *pc++ = c;
-    }
-    *pc = '\0';
-    return(s);
-}
-
-/*  ======================================================================== */
-char * f_lib_print_Byte(char *s, int n)
+char * f_lib_putByte(char *s, int n)
 /*  ======================================================================== */
 /*  DESC:   Byte ausgeben
  */
@@ -367,6 +339,53 @@ char * f_lib_print_Byte(char *s, int n)
 
 
 /*  ======================================================================== */
+int f_lib_getByte(void)
+/*  ======================================================================== */
+/*
+ *  DESC:   Byte-Muster einlesen, eine Zahl ausgeben
+*/
+{
+    int     i=0;
+    unsigned char    c;
+    while( ((c=(char)getchar()) == ' ') || (c == '\t') ) {};
+    while( (c == '0') || (c == '1')  )
+    {
+        i = (i << 1) | (c - '0');
+        c = (char)getchar();
+    }
+    return(i);
+}
+
+
+/*  ======================================================================== */
+char * f_lib_print_Bit(int n, char *s, int fmtLen)
+/*  ======================================================================== */
+{
+    /*
+     *      func:   Print bits
+     *      -IN :   number
+     *      +OUT:   char where to save bit string
+     *      -IN :   size to print
+     */
+    int     i;
+    int     l=sizeof(n)*8;
+    char    c;
+    char   * pc = s;
+    if (fmtLen != 0) {
+        if (fmtLen < l) {
+            l = fmtLen;        /* use parameter, when OK */
+        }
+    }
+    for(i=0; i < l; i++)
+    {
+        c = (char)(((n >> (l-i-1)) & 1) + '0');
+        *pc++ = c;
+    }
+    *pc = '\0';
+    return(s);
+}
+
+/*  ======================================================================== */
 void f_lib_puts_Bit(int n)
 /*  ======================================================================== */
 /*  DESC:    Bit-Muster einer Zahl ausgeben.
@@ -389,7 +408,7 @@ void f_lib_puts_Bit(int n)
 
 
 /*  ======================================================================== */
-int f_lib_get_Byte(void)
+int f_lib_getBits(void)
 /*  ======================================================================== */
 /*
  *  DESC:   Bit-Muster einlesen, eine Zahl ausgeben
@@ -405,7 +424,6 @@ int f_lib_get_Byte(void)
     }
     return(i);
 }
-
 
 /*  ======================================================================== */
 int f_lib_swapBit( int x, int bitnr1, int bitnr2)

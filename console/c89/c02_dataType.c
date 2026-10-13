@@ -20,9 +20,7 @@
  * include of a file
 */
 
-
 #include "i00_tutorC89.h"
-#define   __USE_TUTOR_C89_MAIN
 
 int F_mod_simpleDataType(void)
 {
