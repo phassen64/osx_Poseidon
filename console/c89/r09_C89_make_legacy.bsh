@@ -28,7 +28,7 @@ clear
 #   =*= m:  functions
 #
 
-function f_mk_usage() {
+function f_run_usage() {
     s="usage: $>. {'$v_Scp'} <P1> [<P2>]"
     echo $s
     printf "\t  P1:=: [ {File*.$v_sExt_src}  || {'','?','h','c','!'}  ]\n"
@@ -41,51 +41,53 @@ function f_mk_usage() {
     printf "c   :\t clear - remove tmpFiles\n"
 }
 
-function f_mk_isFile() {
+function f_run_isFile() {
     local s='?IsFile'
     local bRc=$v_FALSE
     if [ -f $1 ]; then bRc=$v_TRUE; fi
     return $bRc
 }
 
-function f_mk_remove() {
-    local sRex=$1
-    declare -i i
-    v_iRc=0
-    echo "*** REG used:'$sRex'"
-    for xFile in `ls`
-    do
-        if [ -f "$xFile" ]; then
-            i+=1
-            #   echo "??? file[$i]:$xFile"
-            if [[ $xFile =~ $sRex ]]; then
-                echo "--- rm[$i]:$xFile"
-                rm -f $xFile 2> /dev/null
-                v_iRc+=1
-            fi
-        fi
+function f_run_clean() {
+    pushd $v_FWK_dirScratch > /dev/null
+    declare -a aExt=('o' 'obj' 'out' 'exe' 'bin')
+    for x in "${aExt[@]}"; do
+        f='*.'
+        f+=$x
+        rm -f $f
     done
-    echo "<<< removed:<$v_iRc> files"
-    return $v_iRc
+    popd > /dev/null
 }
 
-function f_mk_compile() {
+function f_run_compile_and_link() {
     #   IN: cNN_name.c
-    #   OUT:cNN.exe
+    #   OUT:cNN_name.obj cNN_name.exe at dirScratch
+    #   using: $dTmp
     local fSrc=$1
-    iPos=5;iLen=3
     local fBdy="${fSrc%.*}"
-    local fExt="${fSrc##*.}"
-#   local fObj=${fSrc:0:3}.$v_sExt_obj
-    local fObj="run_${fBdy}.${v_sExt_obj}"
-    local sExe="gcc"
+    local fObj="${fBdy}.${v_sExt_obj}"
+    local pObj="$dTmp/$fObj"
+    local fExe="${fBdy}.${v_sExt_exe}"
+    local fLib=$C_TUTOR_LIBRARY__OBJ
+    local pLib="$dTmp/$fLib"
+    local pExe="$dTmp/$fExe"
+    local sCpl="gcc"
     local sOpt="-Wall -Werror"
-    local sCmd="$sExe $sOpt $fSrc -o $fObj"
-    echo "--- compile: \$> $sCmd"
-    $sCmd
+    local sTxt="$fSrc"
+    local sDoCompile="$sCpl $sOpt -c $fSrc -o $pObj"
+    local sDoLinking="$sCpl $pObj $pLib -o $pExe"
+    #   run command
+    if [ $C_TUTOR_LIBRARY__SRC == $fSrc ]; then
+        echo "--- compile only: \$> $sTxt"
+        $sDoCompile
+    else
+        echo "--- compile+link: \$> $sTxt"
+        $sDoCompile
+        $sDoLinking
+    fi
 }
 
-function f_mk_matchFiles() {
+function f_run_fetchFiles() {
     local sRex=$1
     local sPut=$2
     declare -i i
@@ -111,21 +113,22 @@ function f_mk_matchFiles() {
 #   do
 #
 
-function f_do_runAll() {
-    sRex='^run_c[0-9]{2}_[A-Za-z]+\.bin$'
-    f_mk_matchFiles $sRex; iRc=$?
+function f_run_runAll() {
+    pushd $dTmp
+    f_run_fetchFiles $C_REX_EXE; iRc=$?
+    popd
     aSrc=("${v_aRc[@]}")
     nSrc=${#aSrc[@]}
     if [ $nSrc == 0 ]; then
-       echo "??? notFound: REX:='$sRex'"
+        echo "??? notFound: REX:='$sRex'"
         return $LINENO
     fi
     for fSrc in "${aSrc[@]}"
     do
         i+=1
         printf "run:[%2.2d]:'%s'...\n" $i $fSrc
-        sleep 1
-        $fSrc
+        #   sleep 1
+        #   $fSrc
     done
     return 0
 }
@@ -134,29 +137,34 @@ function f_do_runAll() {
 
 #   handle my source array
 function f_do_compileAll() {
+    echo "&&& doCompile all"
     aSrc=("${v_aRc[@]}")
     nSrc=${#aSrc[@]}
-    echo "nSrc={$nSrc}"
-    echo "aSrc=${aSrc[@]}"
-    #   compile
+    echo "&&& nSrc={$nSrc}"
+    echo "&&& aSrc=${aSrc[@]}"
     for fSrc in "${aSrc[@]}"
     do
         i+=1
-        f_mk_compile $fSrc ; v_iRc=$?
+        f_run_compile_and_link $fSrc ; v_iRc=$?
     done
+    echo "&&& dObjDir = '$dTmp'"
     return 0
 }
 
 
-
-#   &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+#   &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
 #   =*= m:  body
-#   &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+#   &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
 
 bTrc=$v_TRUE
 bLog=$v_FALSE
-v_Scp=`basename $BASH_SOURCE`
+dTmp=${v_FWK_dirScratch}
 
+
+#   const
+declare -r  C_TUTOR_LIBRARY__SRC='c00_library.c'
+declare -r  C_REX_SRC='^c[0-9]{2}_[A-Za-z]+\.c$'
+declare -r  C_REX_EXE='^c[0-9]{2}_[A-Za-z]+\.exe$'
 
 #   define
 declare -a v_aRc
@@ -166,9 +174,15 @@ declare -i n=0
 declare -a aSrc
 
 #   parameter
-v_sSid='c'      #   script file identifier
+v_sSid='c'          #   script file identifier
 v_sExt_src='c'      #   script file extension
-v_sExt_obj='bin'    #   output extension
+v_sExt_obj='obj'    #   output extensionID
+v_sExt_exe='exe'    #   executable extension
+
+#   Library
+s=$(basename ${C_TUTOR_LIBRARY__SRC})
+s="${s%.*}"             #   Body
+declare -r C_TUTOR_LIBRARY__OBJ="${s}.${v_sExt_obj}"
 
 #
 #   =*= menu
@@ -181,32 +195,21 @@ v_sExt_obj='bin'    #   output extension
 if  [ "$1" == ""  ]     ||
     [ "$1" == '?' ]     ||
     [ "$1" == 'h' ]     ; then
-    f_mk_usage
+    f_run_usage
     exit 0
 
 elif [ "$1" == 'c' ]; then
-    f_mk_remove '^c[0-9]{2}_[A-Za-z]+\.bin$'
-    f_mk_remove '^run_c[0-9]{2}_[A-Za-z]+\.bin$'
-    f_mk_remove '^[cC][0-9]{2}_[A-Za-z]+\.\d{3}\.txt$'
-    f_mk_remove 'TUTOR_FILE_SYS\.d{3}\.txt$'
-    exit 1
-
-elif [ "$1" == 'i' ]; then
-    echo "...show matche info"
-    f_mk_matchFiles '^c[0-9]{2}_[A-Za-z]+\.c$' 'src' ; iRc=$?
-    f_mk_matchFiles '^run_c[0-9]{2}_[A-Za-z]+\.bin$' 'run'; iRc=?
-    echo "iRc=$iRc"
-    f_mk_usage
+    f_run_clean
     exit 1
 
 elif [ "$1" == 'r' ]; then
     echo "*** RUN"
-    f_do_runAll
+    f_run_runAll
     exit 1
 
 elif [ "$1" == '!' ]; then
     #   *** case.c : clean
-    f_mk_matchFiles '^c[0-9]{2}_[A-Za-z]+\.c$'; iRc=$?
+    f_run_fetchFiles '^c[0-9]{2}_[A-Za-z]+\.c$'; iRc=$?
 
 else
     fSrc=$1
@@ -225,4 +228,4 @@ fi
 #   echo compile
 echo "... compile"
 f_do_compileAll; iRc=$?
-echo "<<< END of Make:<$iRc>"
+echo "<<< END of Make reply:<$iRc>"
