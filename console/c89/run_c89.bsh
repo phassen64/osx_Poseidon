@@ -1,0 +1,14 @@
+#!/bin/bash
+
+#   usage:  $   ./run_c89.bsh
+
+#   show usage
+clear
+bash r01_runSimple.bsh
+
+#   start using some files
+
+#   show my logfile
+
+printf "\n\n@@@ runner::isReady.\n"
+

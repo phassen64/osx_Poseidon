@@ -327,7 +327,7 @@ function f_fwk_alias_set(){
     alias +cdtutor='cd $v_FWK_dirTutor && pwd'
     alias +cdb='cd $v_FWK_dirTutor/bsh && pwd'
     alias +cdbl='cd $v_FWK_dirTutor/bsh_legacy && pwd'
-    alias +cdc='cd $v_FWK_dirTutor/c && pwd'
+    alias +cdc='cd $v_FWK_dirTutor/c89 && pwd'
     alias +cdc89='cd $v_FWK_dirTutor/c89 && pwd'
     alias +cdp='cd $v_FWK_dirTutor/pl && pwd'
     alias +cdr='cd $v_FWK_dirTutor/rb && pwd'
@@ -336,6 +336,9 @@ function f_fwk_alias_set(){
     alias +cdz=+cdcpp
     alias +cdw='cd $v_FWK_dirTutor/wps && pwd'
     alias +cdwps=+cdw
+	#   =:= m:run.tutor
+    alias +runB='pushd "$v_FWK_dirTutor/bsh";./run_bsh.bsh;popd'
+    alias +runC='pushd "$v_FWK_dirTutor/c89";./run_c89.bsh;popd'
 	#   =:= m:interpreter
     alias +p='perl'
     alias +r='ruby'
