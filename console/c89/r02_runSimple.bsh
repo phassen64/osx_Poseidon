@@ -89,6 +89,7 @@ sDtm=$(date "$sFmt")
 s='run<simple>::compile+link+run'; printf "BEG %s [%s]\n\n" $s "$sDtm"
 
 declare -i i=0
+declare -i i=iRc
 declare dTmp=${v_FWK_dirScratch}
 
 #   s:  loop about SHELL-array
@@ -115,8 +116,9 @@ do
     #   u:  check library
     if [ $sFile == "$C_TUTOR_LIBRARY__SRC" ]
     then
-        printf "&&& continue library!:'%s'\n"  $C_TUTOR_LIBRARY__SRC
+        printf "&&& continue, is Library!:'%s'\n"  $C_TUTOR_LIBRARY__SRC
         gcc -c $sFile -o $pLiby
+        continue
     else
         gcc -c $sFile -o $oFile         #   compile only
         gcc $oFile $pLiby -o $xFile     #   linking
@@ -127,6 +129,10 @@ do
 
     #   u:  execute executable stored in a variable
     "$xFile"
+
+    #   u:  fetch iRc
+    iRc=$?
+    printf "&&& reply.RC :[%d]\n" $i
 
 done
 

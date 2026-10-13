@@ -241,8 +241,8 @@ int F_mod_sizeOf() {
 
     F_MENU("dataType Size");
 
-    i=sizeof(c);    F_printf(("\tsizeof(char)  :   %d;\n",i)); /*!CRQ*/
-    i=sizeof(i);    printf("\tsizeof(int)         :   %d;\n",i);
+    i=sizeof(c);    printf("\tsizeof(char)      :   %d;\n",i);
+    i=sizeof(i);    printf("\tsizeof(int)       :   %d;\n",i);
     i=sizeof(f);    printf("\tsizeof(float)       :   %d;\n",i);
     i=sizeof(d);    printf("\tsizeof(double)      :   %d;\n",i);
     i=sizeof(l);    printf("\tsizeof(long)        :   %d;\n",i);
