@@ -229,7 +229,9 @@ v_SCP=`basename $BASH_SOURCE`
 v_SCP_bdy="${v_SCP%.*}"
 v_SCP_ext="${v_SCP##*.}"
 fLog="$v_FWK_dirScratch/$v_SCP_bdy.log"
-#   printf "&&& logFile:'%s'\n" "$fLog"
+
+#   s:  F.doClean
+f_run_clean
 
 #
 #   m:  B.perform
@@ -240,13 +242,13 @@ printf -v SOut ">>> runC89.BEG *[%d] at:[%s]." "$p_iStress" "$sDtm"
 printf "$SOut\n"
 echo "$SOut" > $fLog
 
+#   s:  show.logFileName
+printf "&&& logFile:'%s'\n" "$fLog"
+
 #   s:  flush.logFileName
 printf -v SOut "&&& logfile:'%s'" "$fLog"
 echo "" >>  $fLog
 echo "$SOut" >>  $fLog
-
-#   s:  F.doClean
-f_run_clean
 
 #   s:  F.doRun and log
 f_run_script "$aShellArray" "$p_iStress" "$RANDOM" >> $fLog
