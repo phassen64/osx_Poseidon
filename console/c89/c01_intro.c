@@ -163,26 +163,7 @@ int F01_intro(int p_iEc) {
             __DATE__,
             __TIME__);
 
-    #ifdef  __STDC__    /* not defined in C++ */
-        printf("--- isSTANDARD_C = <%d>\n",__STDC__);
-    #endif
-
-    #ifdef  __cplusplus
-        printf("--- isC++:=YES\n");
-    #else
-        printf("--- isC++:=NO !\n");
-    #endif
-
-    printf("--- COMPILER:");
-    #if defined(_MSC_VER)
-        printf("'_MSC_VER'\n");
-    #elif defined(__GNUC__)
-        printf("'__GNUC__'\n");
-    #elif defined(__BORLANDC__)
-        printf("'__BORLANDC__'\n");
-    #else
-        printf("'??? UNKNOWN'\n");
-    #endif
+    f_lib_info();
 
     /* reply */
     printf("--- EndOfFile:%s at LineNr:%d \n",__FILE__,__LINE__);

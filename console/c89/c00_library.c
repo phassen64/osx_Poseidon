@@ -209,24 +209,25 @@ int f_lib_line(const char cText)
 }
 
 /* ************************************************************************* */
-void f_lib_compilerInfo(void)
+void f_lib_info(const char *p_sFile)
 /* ************************************************************************* */
 {
-    printf("### isC++           :");
+    printf("### lib.Info by:[%s]...\n",p_sFile);
+    printf("\t\t:?isC++           :");
     #ifdef  __cplusplus
         printf("'YES'\n");
     #else
         printf("'NO!'\n");
     #endif
 
-    printf("### isSTANDARD_C    :");
+    printf("\t\t:?isSTANDARD_C    :");
     #ifdef  __STDC__
         printf("'YES'\n");
     #else
         printf("'NO!'\n");
     #endif
 
-    printf("### COMPILER        :");
+    printf("\t\t:?whichCompiler :");
     #if defined(_MSC_VER)
         printf("'_MSC_VER'\n");
     #elif defined(__BORLANDC__)
