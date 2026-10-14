@@ -63,6 +63,28 @@ function f_run_clean() {
     popd > /dev/null
 }
 
+function f_run_fetchFiles() {
+    local sRex=$1
+    local sPut=$2
+    declare -i i
+    v_RUN_iRc=0
+    v_RUN_aRc=()
+    for xFile in `ls`
+    do
+        if [ -f "$xFile" ]; then
+            if [[ $xFile =~ $sRex ]]; then
+                i+=1
+                if [ ! -z $sPut ]; then
+                    printf "*** match '%s' : [%2.2d] := '$xFile'\n" $sPut $i
+                fi
+                v_RUN_iRc+=1
+                v_RUN_aRc+=( $xFile )
+            fi
+        fi
+    done
+    return $v_RUN_iRc
+}
+
 function f_run_compile_and_link() {
     #   IN: cNN_name.c
     #   OUT:cNN_name.obj cNN_name.exe at dirScratch
@@ -88,114 +110,92 @@ function f_run_compile_and_link() {
         echo "--- compile+link: \$> $sTxt"
         $sDoCompile
         $sDoLinking
+        v_RUN_aRc+=($pExe)  # store exe
     fi
 }
-
-function f_run_fetchFiles() {
-    local sRex=$1
-    local sPut=$2
-    declare -i i
-    v_iRc=0
-    v_aRc=()
-    for xFile in `ls`
-    do
-        if [ -f "$xFile" ]; then
-            if [[ $xFile =~ $sRex ]]; then
-                i+=1
-                if [ ! -z $sPut ]; then
-                    printf "*** match '%s' : [%2.2d] := '$xFile'\n" $sPut $i
-                fi
-                v_iRc+=1
-                v_aRc+=( $xFile )
-            fi
-        fi
-    done
-    return $v_iRc
-}
-
-#
-#   do
-#
-
-function f_run_runAll() {
-    pushd $dTmp
-    f_run_fetchFiles $C_REX_EXE; iRc=$?
-    popd
-    aSrc=("${v_aRc[@]}")
-    nSrc=${#aSrc[@]}
-    if [ $nSrc == 0 ]; then
-        echo "??? notFound: REX:='$sRex'"
-        return $LINENO
-    fi
-    for fSrc in "${aSrc[@]}"
-    do
-        i+=1
-        printf "run:[%2.2d]:'%s'...\n" $i $fSrc
-        #   sleep 1
-        #   $fSrc
-    done
-    return 0
-}
-
-
 
 #   handle my source array
-function f_do_compileAll() {
+function f_run_doCompileAll() {
+    #   input:v_aRc  - src
+    #   output:v_aRc - exe
     echo "&&& doCompile all"
-    aSrc=("${v_aRc[@]}")
+    aSrc=("${v_RUN_aRc[@]}")
     nSrc=${#aSrc[@]}
     echo "&&& nSrc={$nSrc}"
     echo "&&& aSrc=${aSrc[@]}"
+    i=0
+    v_RUN_aRc=()
     for fSrc in "${aSrc[@]}"
     do
         i+=1
-        f_run_compile_and_link $fSrc ; v_iRc=$?
+        f_run_compile_and_link $fSrc ; v_RUN_iRc=$?     # out: v_aRc
     done
+    echo "&&& iCtr = '$i'"
     echo "&&& dObjDir = '$dTmp'"
+    echo "&&& aObj=${v_RUN_aRc[@]}"
     return 0
 }
 
+#   runAll
+function f_run_doExecuteAll() {
+
+    dExe=$1
+    echo "=== dExe:[$dExe]"
+
+    #   copy into object array
+    for x in "${v_RUN_aRc[@]}"
+    do
+        i+=1
+        pExe="$dExe/$x"
+        printf "execute:[%2.2d]:'%s'\n" $i $pExe
+        sleep 1
+        $pExe
+    done
+
+}
+
+
 
 #   &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
-#   =*= m:  body
+#   m:  body
 #   &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
 
+#   s:  B.modifier
 bTrc=$v_TRUE
 bLog=$v_FALSE
+
+#   s:  B.compose
 dTmp=${v_FWK_dirScratch}
-
-
-#   const
-declare -r  C_TUTOR_LIBRARY__SRC='c00_library.c'
-declare -r  C_REX_SRC='^c[0-9]{2}_[A-Za-z]+\.c$'
-declare -r  C_REX_EXE='^c[0-9]{2}_[A-Za-z]+\.exe$'
-
-#   define
-declare -a v_aRc
-declare -i v_iRc
-declare -i i=0
-declare -i n=0
-declare -a aSrc
-
-#   parameter
 v_sSid='c'          #   script file identifier
 v_sExt_src='c'      #   script file extension
 v_sExt_obj='obj'    #   output extensionID
 v_sExt_exe='exe'    #   executable extension
 
-#   Library
+#   u:  C.Library
 s=$(basename ${C_TUTOR_LIBRARY__SRC})
 s="${s%.*}"             #   Body
 declare -r C_TUTOR_LIBRARY__OBJ="${s}.${v_sExt_obj}"
 
-#
-#   =*= menu
-#
+#   s:  B.const
+declare -r  C_TUTOR_LIBRARY__SRC='c00_library.c'
+declare -r  C_REX_SRC='^c[0-9]{2}_[A-Za-z]+\.c$'
+declare -r  C_REX_EXE='^c[0-9]{2}_[A-Za-z]+\.exe$'
+
+#   s:  B.define
+declare -a v_RUN_aRc
+declare -i v_RUN_iRc
+declare -i i=0
+declare -i n=0
+declare -a aSrc
 
 #
-#   =*= parameter 1
+#   m:  B.main
 #
 
+#   s:  M.header
+s=$(date "+%Y-%m-%d %H:%M:%S"); echo ">>> BEG.make.legacy [$s]"
+
+#   m:  main
 if  [ "$1" == ""  ]     ||
     [ "$1" == '?' ]     ||
     [ "$1" == 'h' ]     ; then
@@ -207,29 +207,33 @@ elif [ "$1" == 'c' ]; then
     exit 1
 
 elif [ "$1" == 'r' ]; then
-    echo "*** RUN"
-    f_run_runAll
-    exit 1
+
+    dExe=$v_FWK_dirScratch
+    echo "&&& run:at[$dTmp]"
+
+    #   fetch at TMP
+    pushd $dExe
+    f_run_fetchFiles '^c[0-9]{2}_[A-Za-z]+\.exe$'; iRc=$?
+    popd
+
+    f_run_doExecuteAll $dExe; iRc=$?
+
+
+elif [ "$1" == 'i' ]; then
+    echo "&&& info src"
+    f_run_fetchFiles '^c[0-9]{2}_[A-Za-z]+\.c$'; iRc=$?
+    aSrc=("${v_RUN_aRc[@]}")
+    nSrc=${#aSrc[@]}
+    echo "&&& nSrc={$nSrc}"
+    echo "&&& aSrc=${aSrc[@]}"
 
 elif [ "$1" == '!' ]; then
-    #   *** case.c : clean
     f_run_fetchFiles '^c[0-9]{2}_[A-Za-z]+\.c$'; iRc=$?
-
+    echo "... compile"
+    f_run_doCompileAll; iRc=$?
 else
-    fSrc=$1
-    if [ ! -f "$fSrc" ] ; then
-        echo "noFile:$fSrc:false"
-        exit 2
-    fi
-    echo "adfToFile:$fSrc"
-    v_aRc+=($fSrc)
+    echo "... error option use['?']"
 fi
 
-#   &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
-#   compiling
-#   &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
-
-#   echo compile
-echo "... compile"
-f_do_compileAll; iRc=$?
-echo "<<< END of Make reply:<$iRc>"
+#   s:  M.footer
+s=$(date "+%Y-%m-%d %H:%M:%S"); echo "<<< END.make.legacy [$s]; reply:<$iRc>"
