@@ -73,7 +73,7 @@ usage
             m:  F.usage
             m:  F.clean
             m:  F.bEvaluate
-            m:  F,Match
+            m:  F.Match
             m:  F.showArray
             m:  F.compile
             m:  F.execute
@@ -95,10 +95,10 @@ usage
             B:  main
                 m:  usage
                 m:  prepare
-                    s:  P.define.tempVariables
                     s:  P.validate.parameter.Option
                     s:  P.validate.parameter.StressCounter
                     s:  P.quit
+                    s:  P.check.library
                 m:  header
                 m:  compile
                     s:  C.fetchAllFiles
@@ -517,16 +517,13 @@ fi
 #   m:  prepare
 #   ---------------------------------------------------------------------------
 
-
-#   s:  P.define.tempVariables
+#
+#   s:  P.validate.parameter.Option
+#
 
 declare -i bDoRun=$C_bFalse
 declare -i bDoEvaluateRexParameter=$C_bFalse
 declare -i bDoShuffle=$C_bFalse
-
-#
-#   s:  P.validate.parameter.Option
-#
 
 if [ -z $p_scp_cOpt ];
     then echo "??? option::NONE"; f_run_hint
@@ -568,7 +565,7 @@ if [ $C_bTrue == $C_bug_flag__bDebug ]; then
 fi
 
 #
-#   s:  P.quit.ifNoRun
+#   s:  P.quit.ifNotRun intended
 #
 
 #   echo "+++ quit?"
@@ -618,19 +615,16 @@ if [ $C_bTrue == $C_bug_flag__bDebug ]; then
     declare -p g_RUN_aSrc
 fi
 
-#   u:  prepare object Array - (add library, first element?)
+#   u:  prepare object Array - is 1 or all of aSrc
 declare -a g_RUN_aObj=()
-#   g_RUN_aObj+=($C_TUTOR_LIBRARY__SRC)
-#   !DBG
-#if  [ $C_bTrue == $C_bug_flag__bDebug ]; then
-#    printf "&&& aObj at:[%d]\n" $LINENO; declare -p g_RUN_aObj; printf "\n"
-#fi
 
 #   ---------------------------------------------------------------------------
 #   m:  evaluate using matched files
 #   ---------------------------------------------------------------------------
 
 if [ $C_bTrue ==  $bDoEvaluateRexParameter ]; then
+
+    #   do  ::  copy aObj := aSrc[i] * only i=p_iIndex
 
     if [ $C_bTrue == $C_bug_flag__bDebug ]; then echo "&&& mode:index"; fi
 
@@ -665,6 +659,8 @@ if [ $C_bTrue ==  $bDoEvaluateRexParameter ]; then
 
 elif [ $p_scp_cOpt == '.' ]; then
 
+    #   do  ::  copy aObj := aSrc[i] * only 1 element i=<RANDOM>
+
     if [ $C_bTrue == $C_bug_flag__bDebug ]; then echo "&&& mode:'.'"; fi
 
     #   random
@@ -697,6 +693,8 @@ elif [ $p_scp_cOpt == '.' ]; then
 
 elif [ $p_scp_cOpt == '+' ]; then
 
+    #   do  ::  copy aObj := aSrc_Shuffled[0...q]; q < n=size(aSrc)
+
     if [ $C_bTrue == $C_bug_flag__bDebug ]; then echo "&&& mode:'+'"; fi
 
     i=0
@@ -707,7 +705,6 @@ elif [ $p_scp_cOpt == '+' ]; then
         echo "### option n=[$n] / g_RUN_nSrc=[$g_RUN_nSrc]"
     fi
 
-    #   copy src into objectArray
     for (( i=0; i < ${n}; i++ )); do
         x=${g_RUN_aSrc[$i]}
         g_RUN_aObj+=($x)
@@ -716,10 +713,14 @@ elif [ $p_scp_cOpt == '+' ]; then
 
 elif [ $p_scp_cOpt == '!' ]; then
 
+    #   do  ::  copy aObj := aSrc_Shuffled
+
     if [ $C_bTrue == $C_bug_flag__bDebug ]; then echo "&&& mode:'!'"; fi
     g_RUN_aObj=("${g_RUN_aSrc[@]}")
 
 elif [ $p_scp_cOpt == '_' ]; then
+
+    #   do  ::  copy aObj := aSrc
 
     if [ $C_bTrue == $C_bug_flag__bDebug ]; then echo "&&& mode:'_'"; fi
     g_RUN_aObj=("${g_RUN_aSrc[@]}")
