@@ -212,6 +212,10 @@ function f_run_compile {
     local -x pLib="$dTmp/${C_TUTOR_LIBRARY__OBJ}"
     local -x xFile
 
+    #   compiler
+    local sCpl="gcc"
+    local sOpt="-Wall -Werror"
+
     #   show input
     #   f_run_showArray 'testSet' "${v_RUN_aRc[@]}"
 
@@ -227,6 +231,9 @@ function f_run_compile {
         local pObj="$dTmp/$sBdy.${C_EXT_obj}"   # pLib is the first
         local pExe="$dTmp/$sBdy.${C_EXT_exe}"
 
+        #   define compile and linking
+        local sDoCompile="$sCpl $sOpt -c $xFile -o $pObj"
+        local sDoLinking="$sCpl $pObj $pLib -o $pExe"
 
         #   compile
         if [ $xFile == $C_TUTOR_LIBRARY__SRC ]
@@ -235,14 +242,14 @@ function f_run_compile {
             if [ $C_bTrue == $C_bug_flag__bVerbose ]; then
                 printf "### compile-Only:'%s'\n" $xFile
             fi
-            gcc -c $xFile -o $pLib          #   compiling
+            $sDoCompile     #   compiling
         else
             #   printf ":Compile+Link\n"
             if [ $C_bTrue == $C_bug_flag__bVerbose ]; then
                 printf "### compile+Link:'%s'\n" $xFile
             fi
-            gcc -c $xFile -o $pObj          #   compiling
-            gcc $pObj $pLib -o $pExe        #   linking
+            $sDoCompile     #   compiling
+            $sDoLinking     #   linking
         fi
 
     done
