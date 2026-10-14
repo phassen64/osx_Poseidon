@@ -35,14 +35,14 @@ clear
 function f_run_usage() {
     s="usage: $>. {'$v_Scp'} <P1> [<P2>]"
     echo $s
-    printf "\t  P1:=: [ {File*.$v_sExt_src}  || {'','?','h','c','!'}  ]\n"
+    printf "\t  P1:=: [ {File*.$v_RUN_sExt_src}  || {'','?','h','c','!'}  ]\n"
     printf "\t  P2:=: {'+'}\n"
-    printf "\t  File*.$v_sExt_src : single compile\n"
-    printf "!   :\t compile all\n";
-    printf "?|h :\t show help\n"
-    printf "i   :\t info files\n"
-    printf "r   :\t run {File*.$v_sExt_obj}\n"
-    printf "c   :\t clear - remove tmpFiles\n"
+    printf "\t  File*.$v_RUN_sExt_src : single compile\n"
+    printf "\t?|h :\t show help\n"
+    printf "\ti   :\t info source files\n"
+    printf "\tc   :\t clear - remove tmpFiles\n"
+    printf "\t!   :\t compile[+link] all files - not execute\n";
+    printf "\t+   :\t execute some of the compiled files \n"
 }
 
 function f_run_isFile() {
@@ -64,53 +64,76 @@ function f_run_clean() {
 }
 
 function f_run_fetchFiles() {
-    local sRex=$1
-    local sPut=$2
-    declare -i i
-    v_RUN_iRc=0
-    v_RUN_aRc=()
+    #   parameter and locals
+    local p_sRex=$1
+    local p_cDoShuffle=$2       # '+' shuffle
+    local -i n=0
+    local -a aSrc=()
+    local -a aTmp=()
+    local  xFile=''
+    #   fetch shellArray
     for xFile in `ls`
     do
         if [ -f "$xFile" ]; then
-            if [[ $xFile =~ $sRex ]]; then
-                i+=1
-                if [ ! -z $sPut ]; then
-                    printf "*** match '%s' : [%2.2d] := '$xFile'\n" $sPut $i
-                fi
-                v_RUN_iRc+=1
-                v_RUN_aRc+=( $xFile )
+            if [[ $xFile =~ $p_sRex ]]; then
+                n+=1
+                aSrc+=($xFile)
             fi
         fi
     done
-    return $v_RUN_iRc
+
+    #   do shuffle and random
+    if [ ! -z $p_cDoShuffle ] && [ $p_cDoShuffle == '+' ]; then
+        aTmp=( $(shuf -e "${aSrc[@]}") )
+        local -i iRnd=$RANDOM%$n
+        aSrc=()
+        #   copy into object
+        for (( i=0; i <= ${iRnd}; i++ ));
+        do
+            x=${aTmp[$i]}
+            aSrc+=($x)
+        done
+    fi
+
+    #   reply
+    v_RUN_aRc=("${aSrc[@]}")
+    return $n
 }
 
 function f_run_compile_and_link() {
     #   IN: cNN_name.c
-    #   OUT:cNN_name.obj cNN_name.exe at dirScratch
-    #   using: $dTmp
-    local fSrc=$1
-    local fBdy="${fSrc%.*}"
-    local fObj="${fBdy}.${v_sExt_obj}"
+    #   OUT:cNN_name.obj cNN_name.exe at dirTemp
+    #   global: dirTemp
+
+    #   input
+    local p_fSrc=$1
+    local dTmp=${v_RUN_dirTemp}
+    local pLib="$dTmp/${C_TUTOR_LIBRARY__OBJ}"
+
+    #   body
+    local fBdy="${p_fSrc%.*}"
+
+    #   pathes
+    local fObj="${fBdy}.${v_RUN_sExt_obj}"
     local pObj="$dTmp/$fObj"
-    local fExe="${fBdy}.${v_sExt_exe}"
-    local fLib=$C_TUTOR_LIBRARY__OBJ
-    local pLib="$dTmp/$fLib"
+    local fExe="${fBdy}.${v_RUN_sExt_exe}"
     local pExe="$dTmp/$fExe"
+
+    #   compiler
     local sCpl="gcc"
     local sOpt="-Wall -Werror"
-    local sTxt="$fSrc"
-    local sDoCompile="$sCpl $sOpt -c $fSrc -o $pObj"
+    local sTxt="$p_fSrc"
+    local sDoCompile="$sCpl $sOpt -c $p_fSrc -o $pObj"
     local sDoLinking="$sCpl $pObj $pLib -o $pExe"
+
     #   run command
-    if [ $C_TUTOR_LIBRARY__SRC == $fSrc ]; then
-        echo "--- compile only: \$> $sTxt"
+    if [ $C_TUTOR_LIBRARY__SRC == "$p_fSrc" ]; then
+        echo "--- compile_only: \$> $sTxt"
         $sDoCompile
     else
         echo "--- compile+link: \$> $sTxt"
         $sDoCompile
         $sDoLinking
-        v_RUN_aRc+=($pExe)  # store exe
     fi
 }
 
@@ -118,72 +141,70 @@ function f_run_compile_and_link() {
 function f_run_doCompileAll() {
     #   input:v_aRc  - src
     #   output:v_aRc - exe
-    echo "&&& doCompile all"
-    aSrc=("${v_RUN_aRc[@]}")
-    nSrc=${#aSrc[@]}
+    echo "&&& beg:F.doCompileAll"
+    nSrc=${#v_RUN_aRc[@]}
     echo "&&& nSrc={$nSrc}"
-    echo "&&& aSrc=${aSrc[@]}"
+    echo "&&& aSrc=${v_RUN_aRc[@]}"
+    echo "&&& dObjDir = '$v_RUN_dirTemp'"
     i=0
-    v_RUN_aRc=()
-    for fSrc in "${aSrc[@]}"
+    for x in "${v_RUN_aRc[@]}"
     do
         i+=1
-        f_run_compile_and_link $fSrc ; v_RUN_iRc=$?     # out: v_aRc
+        #   printf "&&& compile[%2.2d] = '%s'\n" $i $x
+        f_run_compile_and_link $x ; v_RUN_iRc=$?     # out: v_aRc
     done
-    echo "&&& iCtr = '$i'"
-    echo "&&& dObjDir = '$dTmp'"
-    echo "&&& aObj=${v_RUN_aRc[@]}"
+    echo "&&& end:F.doCompileAll  of '$i' files"
     return 0
 }
 
 #   runAll
 function f_run_doExecuteAll() {
-
-    dExe=$1
-    echo "=== dExe:[$dExe]"
-
-    #   copy into object array
+    #   input   :   v_RUN_aRc && p_dExe
+    local p_dExe=$1
+    local pExe=''
+    local nSrc=${#v_RUN_aRc[@]}
+    #   show
+    printf "\n=== show TestBase:[%d]\n" $nSrc
+    declare -p v_RUN_aRc
+    printf "\n"
+    sleep 3
+    #   execute
     for x in "${v_RUN_aRc[@]}"
     do
         i+=1
-        pExe="$dExe/$x"
-        printf "execute:[%2.2d]:'%s'\n" $i $pExe
+        pExe="$p_dExe/$x"
+        printf "=== execute:[%2.2d]:'%s'\n" $i $pExe
         sleep 1
         $pExe
     done
-
 }
-
-
 
 #   &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
 #   m:  body
 #   &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
 
-#   s:  B.modifier
-bTrc=$v_TRUE
-bLog=$v_FALSE
+#   s:  B.globals
+declare -a v_RUN_aRc=()
+declare -i v_RUN_iRc=0
+declare -r v_RUN_dirTemp=${v_FWK_dirScratch}
 
 #   s:  B.compose
-dTmp=${v_FWK_dirScratch}
 v_sSid='c'          #   script file identifier
-v_sExt_src='c'      #   script file extension
-v_sExt_obj='obj'    #   output extensionID
-v_sExt_exe='exe'    #   executable extension
-
-#   u:  C.Library
-s=$(basename ${C_TUTOR_LIBRARY__SRC})
-s="${s%.*}"             #   Body
-declare -r C_TUTOR_LIBRARY__OBJ="${s}.${v_sExt_obj}"
+v_RUN_sExt_src='c'      #   script file extension
+v_RUN_sExt_obj='obj'    #   output extensionID
+v_RUN_sExt_exe='exe'    #   executable extension
 
 #   s:  B.const
 declare -r  C_TUTOR_LIBRARY__SRC='c00_library.c'
 declare -r  C_REX_SRC='^c[0-9]{2}_[A-Za-z]+\.c$'
 declare -r  C_REX_EXE='^c[0-9]{2}_[A-Za-z]+\.exe$'
 
+#   s:  B.Library
+s=$(basename ${C_TUTOR_LIBRARY__SRC})
+s="${s%.*}"             #   Body
+declare -r C_TUTOR_LIBRARY__OBJ="${s}.${v_RUN_sExt_obj}"
+
 #   s:  B.define
-declare -a v_RUN_aRc
-declare -i v_RUN_iRc
 declare -i i=0
 declare -i n=0
 declare -a aSrc
@@ -206,21 +227,7 @@ elif [ "$1" == 'c' ]; then
     f_run_clean
     exit 1
 
-elif [ "$1" == 'r' ]; then
-
-    dExe=$v_FWK_dirScratch
-    echo "&&& run:at[$dTmp]"
-
-    #   fetch at TMP
-    pushd $dExe
-    f_run_fetchFiles '^c[0-9]{2}_[A-Za-z]+\.exe$'; iRc=$?
-    popd
-
-    f_run_doExecuteAll $dExe; iRc=$?
-
-
 elif [ "$1" == 'i' ]; then
-    echo "&&& info src"
     f_run_fetchFiles '^c[0-9]{2}_[A-Za-z]+\.c$'; iRc=$?
     aSrc=("${v_RUN_aRc[@]}")
     nSrc=${#aSrc[@]}
@@ -229,8 +236,20 @@ elif [ "$1" == 'i' ]; then
 
 elif [ "$1" == '!' ]; then
     f_run_fetchFiles '^c[0-9]{2}_[A-Za-z]+\.c$'; iRc=$?
-    echo "... compile"
+    echo "... compile+link only"
     f_run_doCompileAll; iRc=$?
+
+elif [ "$1" == '+' ]; then
+    #   use scratch
+    dExe=$v_RUN_dirTemp
+    #   fetch at TMP
+    pushd $dExe
+    sDoShuffle='+'
+    f_run_fetchFiles '^c[0-9]{2}_[A-Za-z]+\.exe$' $sDoShuffle; iRc=$?
+    popd
+    #   do run
+    f_run_doExecuteAll $dExe; iRc=$?
+
 else
     echo "... error option use['?']"
 fi
