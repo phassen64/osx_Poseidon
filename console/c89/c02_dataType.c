@@ -449,10 +449,7 @@ int F02_dataType(int p_iEc)
 {
 		int iRc = -1;
 
-    printf("=== CTutor::dataType:{%d}\n",p_iEc);
-    printf("\tcompiled:\n");
-    printf("\tDATE=(%s;%s)\n",__DATE__,__TIME__);
-    printf("\tFILE:[%s;%d]\n", __FILE__,__LINE__);
+    f_lib_header("dataType",__FILE__,__LINE__);
 
     /*  subfunction call */
     #ifdef  __cplusplus
@@ -470,7 +467,8 @@ int F02_dataType(int p_iEc)
     iRc = F_mod_constDataType();    printf("\n\tRC.constDT      =: <%d>\n",iRc); F_CHK();
     iRc = F_mod_constMacro();       printf("\n\tRC.constMACRO   =: <%d>\n",iRc); F_CHK();
 
-		return (p_iEc);
+    f_lib_footer("dataType",__FILE__,__LINE__);
+    return (p_iEc);
 }
 
 

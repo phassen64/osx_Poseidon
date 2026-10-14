@@ -1093,18 +1093,7 @@ int F08_io(int p_iEc, char* p_dTmp)
 {
     int iRc;
 
-    F_MENU("MAIN: CTutor::IO");
-
-    printf("\tcompiled:\n");
-    printf("\tDATE=(%s;%s)\n",__DATE__,__TIME__);
-    printf("\tFILE:[%s;%d]\n", __FILE__,__LINE__);
-
-    #ifdef  __cplusplus
-        printf("\t### isC++:=YES\n");
-    #else
-        printf("\t### isC++:=NO !\n");
-    #endif
-
+    f_lib_header("I/O",__FILE__,__LINE__);
 
     /*  copy parameter*/
     g_isIoMode = 1;
@@ -1137,8 +1126,7 @@ int F08_io(int p_iEc, char* p_dTmp)
     iRc = F_mod_fileTemp();     printf("\n\tRC.f.temp       =: <%d>\n",iRc);F_CHK();
     iRc = F_mod_fileHandling(); printf("\n\tRC.f.handling   =: <%d>\n",iRc);F_CHK();
 
-    printf("\n\n\n--- EndOfFile:[%s] at LineNr:[%d] \n",__FILE__,__LINE__);
-
+    f_lib_footer("I/O",__FILE__,__LINE__);
     return(p_iEc);
 
 }   /* end of F */

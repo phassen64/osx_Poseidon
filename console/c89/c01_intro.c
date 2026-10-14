@@ -153,9 +153,7 @@
 /*  m:  F.tester */
 int F01_intro(int p_iEc) {
 
-    printf("============================================================\n");
-    printf("[C01]: Hello C89!\n");   /* eine Ausgabe eines Textes */
-    printf("============================================================\n");
+    f_lib_header("intro",__FILE__,__LINE__);
 
     /* show compile values */
     printf("--- FILE:%s,DATE={%s-%s}\n",
@@ -163,10 +161,10 @@ int F01_intro(int p_iEc) {
             __DATE__,
             __TIME__);
 
-    f_lib_info();
+    f_lib_info(__FILE__,__DATE__,__TIME__);
 
     /* reply */
-    printf("--- EndOfFile:%s at LineNr:%d \n",__FILE__,__LINE__);
+    f_lib_footer("intro",__FILE__,__LINE__);
     return(p_iEc);       /* integer return-Wert */
                     /* I.d.R. bedeutet '0' kein Fehler */
 }

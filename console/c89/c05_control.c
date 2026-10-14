@@ -24,9 +24,7 @@ int F05_control(int p_iEc)
     int     i=7,j=0;
     int     x=4,y=8,z=1;
 
-    printf("============================================================\n");
-    printf("[C05]:  CONTROL structs\n");
-    printf("============================================================\n");
+    f_lib_header("control",__FILE__,__LINE__);
 
     printf("--- FILE:%s,DATE={%s-%s}\n",
             __FILE__,
@@ -238,6 +236,6 @@ l_Next:
  *  ***************************************************************************
  */
 
-    printf("--- EndOfFile:[%s] at LineNr:[%d] \n",__FILE__,__LINE__);
+    f_lib_footer("control",__FILE__,__LINE__);
     return(p_iEc);
 }

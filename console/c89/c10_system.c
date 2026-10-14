@@ -18,26 +18,12 @@
  *  SYSTEM                  : assert, abort, exit, system, signal
  *  ERROR Handling          : strerror, perror and errno
  *  LIMITs                  : CHAR_BIT, FLT_MAX,...
- *  MATHEMATIC              : abs, ceil, div, pow, sin
  */
 
 
 #include "i00_C89_tutor.h"
 
 #define C_FILE_NAME "TUTOR_FILE_SYS"
-
-#if __NOTUSED
-    #include    <stdio.h>       /* IO-funkionen         CPP: <iostream>  */
-    #include    <time.h>        /* localtime():         CPP: <ctime>     */
-    #include    <math.h>        /* mathematische Fktn   CPP <cmath>      */
-    #include    <stdlib.h>      /* diverse, z.B. atof()           */
-    #include    <ctype.h>       /* Macros zum Testen von Zeichen */
-#endif
-
-/* Eigene Includes, die unter '.' gesucht werden
- * Die Header-Datei deaktiviert m?gliche Warnings
- * bei der Windows-Compilierung
-*/
 
 
 /*
@@ -322,12 +308,13 @@ int F_mod_charChange() {
  *  void    free(void* memPtr);
  */
 
-int F_mod_mallocTest() {
+int F_mod_mallocTest(char *p_dTmp) {
 
     printf("\n&&& menu : mallocTest[ %s;%d] \n\n",__FILE__,__LINE__);
 
     int     i;
-    char    cFileName[256];
+    char    sFileName[128];
+    char    pFile[256];
     void    *pDynBuffer1;
     void    *pDynBuffer2;
     void    *pDynBuffer3;
@@ -339,7 +326,9 @@ int F_mod_mallocTest() {
     int     lSize;
     int     iNr;
 
+
     /*  --- malloc */
+
     /*
      *  Der Buffer von 'malloc' ist nicht initialisiert !
      */
@@ -379,12 +368,20 @@ int F_mod_mallocTest() {
     psVal->m_id = 3;
     strcpy(psVal->m_name,"Dritter");
 
+    /* FilePath */
+    strcpy(pFile,p_dTmp);
+    strcat(pFile,"/");
+
     /* save this struct into a bin file */
     printf("... save calloc struct into file\n");
-    strcpy(cFileName,C_FILE_NAME);
-    strcat(cFileName,".001.txt");       /* strcpy,strcat [c09] */
-    fp      = fopen(cFileName,"wb+");   /* fileOpen : write,BINmode */
+    strcpy(sFileName,C_FILE_NAME);
+    strcat(sFileName,".001.txt");       /* strcpy,strcat [c09] */
+    strcat(pFile,sFileName);
+    printf("\tpFile = '%s'\n",pFile);
+
+    fp      = fopen(pFile,"wb+");   /* fileOpen : write,BINmode */
     assert(fp != 0);
+
     lSize = sizeof(struct _sVal);
     printf("\t sizeof(struct) :%d\n",lSize);
     psVal       = (struct   _sVal *)pDynBuffer3;
@@ -393,7 +390,7 @@ int F_mod_mallocTest() {
         fwrite(psVal,sizeof(struct _sVal),1,fp);        /* 1 object */
     }
     assert(fclose(fp) == 0);
-    printf("\t ... written file: %s\n",cFileName);
+    printf("\t ... written file: %s\n",pFile);
 
     /*  free */
     printf("*** free\n");
@@ -951,144 +948,6 @@ int F_mod_limitTest() {
 }
 
 /*
- *  ***************************************************************************
- *  MATHEMATISCHE Funktionen <math.h>
- *  ***************************************************************************
- */
-
-int F_mod_mathTest() {
-
-    int         i;
-    double      dBase,dExp;
-    double      dFrac,dMant;
-    double      dVal1,dVal2;
-    double      dSum;
-    int         iVal1,iVal2;
-    int         iSum;
-    long int    liVal1,liVal2;
-    div_t       tDiv;
-    ldiv_t      l_tDiv;
-
-    printf("\n&&& menu : mathTest [%s;%d] \n\n",__FILE__,__LINE__);
-
-    iVal1    =   -981;
-    iSum    =   abs(iVal1);
-    printf("\tabs()     :: FCT(%d) =: %d\n", iVal1,iSum);
-
-    iVal1   =   13;
-    iVal2   =   3;
-    tDiv    =   div(iVal1,iVal2);
-    printf("\tdiv(x,y)  :: FCT(%d,%d) =: (%d,%d)\n",
-                                iVal1,iVal2,tDiv.quot,tDiv.rem);
-    liVal1  =   1234567890;
-    liVal2  =   91;
-    l_tDiv  =   ldiv(liVal1,liVal2);
-    printf("\tldiv(x,y) :: FCT(%ld,%ld) =: (%ld,%ld)\n",
-                                liVal1,liVal2,l_tDiv.quot,l_tDiv.rem);
-
-    dBase   =   -981.321;
-    dFrac   =   modf(dBase,&dMant);
-    printf("\tmodf()    :: FCT(%f,&d) == (%f,%f) = :%f\n", dBase,dBase,dMant,dFrac);
-
-    dVal1   =   12.125;
-    dSum    =   frexp(dVal1,&i);
-    printf("\tfrexp()   :: FCT(%f,&i)    == (%f,%i) =: %f\n", dVal1,dVal1,i,dSum);
-
-    dBase   =   -981.321;
-    dSum   =   fabs(dBase);
-    printf("\tfabs()    :: FCT(%f) =: (%f)\n", dBase,dSum);
-
-/*  gcc has not ceil etc */
-#if defined(__cplusplus) || defined (_MSC_VER_)
-        printf("\tVERSION:C++ || MSVER'\n");
-#else
-        printf("\tVERSION:gcc\n");
-        return __LINE__;
-#endif
-
-    dBase   =   -981.321;
-    dSum    =   ceil(dBase);
-    printf("\tceil()    :: FCT(%f) =: %f\n", dBase,dSum);
-
-    dBase   =   981.321;
-    dSum    =   ceil(dBase);
-    printf("\tceil()    :: FCT(%f) =: %f\n", dBase,dSum);
-
-    dBase   =   -981.321;
-    dSum    =   floor(dBase);
-    printf("\tfloor()   :: FCT(%f) =: %f\n", dBase,dSum);
-
-    dBase   =   981.321;
-    dSum    =   floor(dBase);
-    printf("\tfloor()   :: FCT(%f) =: %f\n", dBase,dSum);
-
-
-    dVal1   =   12.125;
-    dVal2   =   3.425;
-    dSum    =   fmod(dVal1,dVal2);
-    printf("\tfmod()    :: FCT(%f,%f) =: %f\n", dVal1,dVal2,dSum);
-
-    dBase   =   1.3;
-    dExp    =   4.1;
-    dSum    =   pow(dBase,dExp);
-    printf("\tpow()     :: FCT(%f,%f) =: %f\n", dBase,dExp,dSum);
-
-    dBase   =   100.10;
-    dSum    =   log10(dBase);
-    printf("\tlog10()   :: FCT(%f) =: %f\n", dBase,dSum);
-
-    dBase   =   4.5;
-    dSum    =   exp(dBase);
-    printf("\texp()     :: FCT(%f) =: %f\n", dBase,dSum);
-
-    dBase   =   100.10;
-    dSum    =   log(dBase);
-    printf("\tlog()     :: FCT(%f) =: %f\n", dBase,dSum);
-
-    dBase   =   100.10;
-    dSum    =   sqrt(dBase);
-    printf("\tsqrt()    :: FCT(%f) =: %f\n", dBase,dSum);
-
-    dBase   =   C_PI/2;
-    dSum    =   sin(dBase);
-    printf("\tsin()[RAD]    :: FCT(%f) =: %f\n", dBase,dSum);
-
-    dBase   =   30;
-    dSum    =   cos(dBase);
-    printf("\tcos()[RAD]    :: FCT(%f) =: %f\n", dBase,dSum);
-
-    dBase   =   30;
-    dSum    =   tan(dBase);
-    printf("\ttan()[RAD]    :: FCT(%f) =: %f\n", dBase,dSum);
-
-    dBase   =   0.5;
-    dSum    =   asin(dBase);
-    printf("\tasin()[RAD]   :: FCT(%f) =: %f\n", dBase,dSum);
-
-    dBase   =   0.5;
-    dSum    =   acos(dBase);
-    printf("\tacos()[RAD]   :: FCT(%f) =: %f\n", dBase,dSum);
-
-    dBase   =   0.5;
-    dSum    =   atan(dBase);
-    printf("\tatan()[RAD]   :: FCT(%f) =: %f\n", dBase,dSum);
-
-    dBase   =   C_E/2;
-    dSum    =   sinh(dBase);    /* 0.5 * (e ** x - e ** -x) */
-    printf("\tsinh()[RAD]   :: FCT(%f) =: %f\n", dBase,dSum);
-
-    dBase   =   C_E/2;
-    dSum    =   cosh(dBase);   /* 0.5 * (e ** x + e ** -x) */
-    printf("\tcosh()[RAD]   :: FCT(%f) =: %f\n", dBase,dSum);
-
-    dBase   =   C_E/2;
-    dSum    =   tanh(dBase);
-    printf("\ttanh()[RAD]   :: FCT(%f) =: %f\n", dBase,dSum);
-
-    return __LINE__;
-}
-
-/*
  *  &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
  *  m:body
  *  &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
@@ -1098,22 +957,11 @@ int F_mod_mathTest() {
     if ( iRc < 0) { \
         printf("?Code:%d at:[%d]",(iRc),(__LINE__)); return(iRc); } }
 
-int F09_system(int p_iEc)
+int F10_system(int p_iEc, char* p_dTmp)
 {
     int iRc;
 
-    printf("=== system functions\n");
-
-    printf("\tcompiled:\n");
-    printf("\tDATE=(%s;%s)\n",__DATE__,__TIME__);
-    printf("\tFILE:[%s;%d]\n", __FILE__,__LINE__);
-
-    #ifdef  __cplusplus
-        printf("\t### isC++:=YES\n");
-    #else
-        printf("\t### isC++:=NO !\n");
-    #endif
-
+    f_lib_header("system",__FILE__,__LINE__);
 
     /*  subfunction call */
 
@@ -1123,7 +971,7 @@ int F09_system(int p_iEc)
     iRc = F_mod_random();       printf("\n\tRC.random           =: <%d>\n",iRc); F_CHK();
     iRc = F_mod_charTest();     printf("\n\tRC.charTest         =: <%d>\n",iRc); F_CHK();
     iRc = F_mod_charChange();   printf("\n\tRC.charChange       =: <%d>\n",iRc); F_CHK();
-    iRc = F_mod_mallocTest();   printf("\n\tRC.malloc           =: <%d>\n",iRc); F_CHK();
+    iRc = F_mod_mallocTest(p_dTmp);   printf("\n\tRC.malloc           =: <%d>\n",iRc); F_CHK();
     iRc = F_mod_memoryTest();   printf("\n\tRC.memory           =: <%d>\n",iRc); F_CHK();
     iRc = F_mod_stringMake();   printf("\n\tRC.stringMake       =: <%d>\n",iRc); F_CHK();
     iRc = F_mod_stringTest();   printf("\n\tRC.stringTest       =: <%d>\n",iRc); F_CHK();
@@ -1131,10 +979,9 @@ int F09_system(int p_iEc)
     iRc = F_mod_envTest();      printf("\n\tRC.envTest          =: <%d>\n",iRc); F_CHK();
     iRc = F_mod_errorHandling();printf("\n\tRC.errorHandling    =: <%d>\n",iRc); F_CHK();
     iRc = F_mod_limitTest();    printf("\n\tRC.limitTest        =: <%d>\n",iRc); F_CHK();
-    iRc = F_mod_mathTest();     printf("\n\tRC.mathTest         =: <%d>\n",iRc); F_CHK();
 
 
-    printf("\n\n\n--- EndOfFile:[%s] at LineNr:[%d] \n",__FILE__,__LINE__);
+    f_lib_footer("system",__FILE__,__LINE__);
     return(p_iEc);
 
 } /* main */
@@ -1148,7 +995,8 @@ int F09_system(int p_iEc)
 #ifndef __USE_TUTOR_C89__MAIN
 #define __USE_TUTOR_C89__MAIN
 int main(int args, char *argv[]) {
-    int     iEc = atoi(getenv("v_FWK_exitCode"));
-    return  F09_system(iEc);
+    int     iEc     =   atoi(getenv("v_FWK_exitCode"));
+    char  * dTmp    =   getenv("v_FWK_dirScratch");
+    return  F10_system(iEc,dTmp);
 }
 #endif

@@ -26,15 +26,8 @@
  *  ***************************************************************************
  *  1) HEADER
  *  ***************************************************************************
- *  ===  KEYWORD:   void
  */
-
 #include "i00_C89_tutor.h"
-/*  #include    <stdio.h>
- *  #include    <stdlib.h>      * atof() and atoi()
- *  #include    <stdarg.h>      * varg
-*/
-
 
 /*
  *  ***************************************************************************
@@ -103,6 +96,7 @@ int F_fct_selfIncrementer(void);
  *  ***************************************************************************
  *  === !KEY:   return
  */
+
 int F07_function(int p_iEc)
 {
     char    cRetVal = '?';
@@ -119,18 +113,7 @@ int F07_function(int p_iEc)
     char    *zahl[]= {"1.34","-8.9"};
 #endif
 
-    printf("============================================================ \n");
-    printf("[C07]:  Funktionen\n");
-    printf("============================================================ \n");
-
-    printf("--- compiled:\n");
-    printf("DATE=(%s;%s)",__DATE__,__TIME__);
-    printf("FILE:[%s]\n", __FILE__);
-#ifdef  __cplusplus
-    printf("### isC++:=YES\n");
-#else
-    printf("### isC++:=NO !\n");
-#endif
+    f_lib_header("function",__FILE__,__LINE__);
 
     printf("... I use fBase=%f,iExp=%d\n",fBase,iExponent);
 
@@ -285,7 +268,7 @@ int F07_function(int p_iEc)
 #endif
 
 
-    printf("--- EndOfFile:[%s] at LineNr:[%d] \n",__FILE__,__LINE__);
+    f_lib_footer("function",__FILE__,__LINE__);
     return p_iEc;
     /*
      * Der Return-Wert muss mit dem Type der Definition ?bereinstimmen -

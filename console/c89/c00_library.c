@@ -196,7 +196,7 @@ int f_lib_dump( char *          s_dataPtr,
 }
 
 /* ************************************************************************* */
-int f_lib_line(const char cText)
+void f_lib_line(const char cText)
 /* ************************************************************************* */
 {
 #define C_DBG_LINE_SIZE 70
@@ -205,29 +205,32 @@ int f_lib_line(const char cText)
         printf("%c",cText);
     }
     printf("\n");
-    return(0);
 }
 
 /* ************************************************************************* */
-void f_lib_info(const char *p_sFile)
+void f_lib_info(const char *p_sFile, const char *p_sDate, const char *p_sTime)
 /* ************************************************************************* */
 {
     printf("### lib.Info by:[%s]...\n",p_sFile);
-    printf("\t\t:?isC++           :");
+
+    printf("\t\t:?atDate\t:'%s'\n",p_sDate);
+    printf("\t\t:?atTime\t:'%s'\n",p_sTime);
+
+    printf("\t\t:?isC++\t:");
     #ifdef  __cplusplus
         printf("'YES'\n");
     #else
         printf("'NO!'\n");
     #endif
 
-    printf("\t\t:?isSTANDARD_C    :");
+    printf("\t\t:?isSTANDARD_\t:");
     #ifdef  __STDC__
         printf("'YES'\n");
     #else
         printf("'NO!'\n");
     #endif
 
-    printf("\t\t:?whichCompiler :");
+    printf("\t\t:?whichCompiler\t:");
     #if defined(_MSC_VER)
         printf("'_MSC_VER'\n");
     #elif defined(__BORLANDC__)
@@ -244,7 +247,7 @@ void f_lib_header(const char *cText, const char *cFile, int iLine)
 /* ************************************************************************* */
 {
     f_lib_line('=');
-    printf("HDR=\"%s\"  SRC=[%s,%d] DATE=[%s;%s]\n",
+    printf(">>> HDR:{%s} src:[%s,%d] dtm:[%s;%s]\n",
         cText,cFile,iLine,__DATE__,__TIME__);
     f_lib_line('=');
 }
@@ -259,6 +262,13 @@ void f_lib_show(const char *cText, const char *cFile, int iLine) {
     printf("\n\t&&& %s:[%s;%d]\n\n",cText,__FILE__,__LINE__);
 }
 
+/* ************************************************************************* */
+void f_lib_footer(const char *cText, const char *cFile, int iLine)
+/* ************************************************************************* */
+{
+    printf("<<< FTR:{%s} src:[%s,%d] dtm:[%s;%s].\n",
+        cText,cFile,iLine,__DATE__,__TIME__);
+}
 
 #define C_MAX_BIN_BUFFER_SIZE  256
 

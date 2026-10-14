@@ -21,9 +21,7 @@ int main(int args, char *argv[]) {
 
 int F04_struct(int p_iEc) {
 
-    printf("============================================================ \n");
-    printf("[C04]:  structures\n");
-    printf("============================================================ \n");
+    f_lib_header("structures",__FILE__,__LINE__);
 
     printf("--- compiled:");
     printf("iEc  :[%d]\n",p_iEc);
@@ -62,10 +60,7 @@ int F04_struct(int p_iEc) {
     printf("r1.dw:[%ld]\n", r1.m_dword);
     printf("r1.ptr:[%p]\n", p);
 
-/*
-    #   T_REAL      * p_r1 = &r1;
-*/
-
+    f_lib_footer("structures",__FILE__,__LINE__);
     return p_iEc;
 }
 

@@ -114,13 +114,13 @@ int main(int args, char *argv[]) {
 
 int F06_macro(int p_iEc)
 {
+
 #ifdef __C_NATIVE
     char    *str="ABCDEFGH";        /* no QSTR in C_NATIVE */
     int     i1 = 11, i2 = 12;
 #endif
-    printf("============================================================\n");
-    printf("[C06]:  Der C-PP und seine MACROs\n");
-    printf("============================================================\n");
+
+    f_lib_header("macro",__FILE__,__LINE__);
 
 /*  ------------------------------------------------------------------------ */
 /*  Sinnlose Anweisungen auskommentieren      {#if 0}                        */
@@ -285,7 +285,7 @@ int F06_macro(int p_iEc)
     printf("b)  vars={__LINE__:'%d', __FILE__:'%s'}\n",__LINE__,__FILE__);
 
 /*  ######################################################################## */
-    printf("--- EndOfFile:[%s] at LineNr:[%d] \n",__FILE__,__LINE__);
 
+    f_lib_footer("macro",__FILE__,__LINE__);
     return (p_iEc);
 }

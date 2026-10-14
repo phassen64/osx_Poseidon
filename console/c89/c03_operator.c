@@ -41,19 +41,7 @@ int F03_operator(int p_iEc)
     char        str[10]="ABCDEFGHI";
     char        s1[10],s2[10],s3[10];
 
-    printf("============================================================ \n");
-    printf("[C03]:  Operatoren\n");
-    printf("============================================================ \n");
-
-    printf("--- compiled:");
-    printf("DATETIME=(%s;%s)",__DATE__,__TIME__);
-    printf("FILE:[%s]\n", __FILE__);
-#ifdef  __cplusplus
-    printf("### isC++:=YES\n");
-#else
-    printf("### isC++:=NO !\n");
-#endif
-
+    f_lib_header("operator",__FILE__,__LINE__);
 
  /* EINGABE formatieren (char-> float/double) */
     i1 = (int)d1;
@@ -62,11 +50,7 @@ int F03_operator(int p_iEc)
     i2  = (int)d2;
     printf("y=%f=%d;\n",d2,i2);
 
-    printf("============================================================= \n");
-
-/*
- *  return -__LINE__;
-*/
+    f_lib_line('-');
 
 /*
  *  ***************************************************************************
@@ -460,9 +444,7 @@ int F03_operator(int p_iEc)
  *  ***************************************************************************
  */
 
-    printf("*** [%s;%d]: return-Operator\n",__FILE__,__LINE__);
-    printf("--- EndOfFile:%s at LineNr:%d \n",__FILE__,__LINE__);
-
+    f_lib_footer("operator",__FILE__,__LINE__);
     return p_iEc;
 
 
