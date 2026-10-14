@@ -207,6 +207,13 @@ function f_run_matchFiles() {
         aTmp=( $(shuf -e "${aTmp[@]}") )
     fi
 
+    #   reply - insert 'Ignore at the begin'
+    #   declare -a v_RUN_aRc=()
+    #   v_RUN_aRc+=( $p_sIgnore )
+    #   for xFile in "${aTmp[@]}"; do
+    #       v_RUN_aRc+=($xFile)
+    #   done
+
     #   reply
     v_RUN_aRc=("${aTmp[@]}")
 
@@ -462,7 +469,7 @@ declare -r -i   C_bFalse=199
 #   u:  flag
 declare -r -i   C_bug_flag__bDebug=$C_bFalse
 declare -r -i   C_bug_flag__bVerbose=$C_bTrue
-declare -r -i   C_bug_flag__bSilence=$C_bFalse
+declare -r -i   C_bug_flag__bSilence=$C_bFalse   # testmode
 declare -r -i   C_bug_flag__bLogging=$C_bTrue
 declare -r -i   C_bug_flag__bCompile=$C_bTrue
 declare -r -i   C_bug_flag__bExecute=$C_bTrue
@@ -530,6 +537,7 @@ elif [ $p_scp_cOpt == '_' ]; then   bDoRun=$C_bTrue
 elif [ $p_scp_cOpt == '+' ]; then   bDoRun=$C_bTrue; bDoShuffle=$C_bTrue
 elif [ $p_scp_cOpt == '!' ]; then   bDoRun=$C_bTrue; bDoShuffle=$C_bTrue
 else
+    bDoRun=$C_bTrue;
     bDoEvaluateRexParameter=$C_bTrue
 fi
 
@@ -610,9 +618,13 @@ if [ $C_bTrue == $C_bug_flag__bDebug ]; then
     declare -p g_RUN_aSrc
 fi
 
-#   u:  prepare object Array - add library, first element
+#   u:  prepare object Array - (add library, first element?)
 declare -a g_RUN_aObj=()
-g_RUN_aObj+=($C_TUTOR_LIBRARY__SRC)
+#   g_RUN_aObj+=($C_TUTOR_LIBRARY__SRC)
+#   !DBG
+#if  [ $C_bTrue == $C_bug_flag__bDebug ]; then
+#    printf "&&& aObj at:[%d]\n" $LINENO; declare -p g_RUN_aObj; printf "\n"
+#fi
 
 #   ---------------------------------------------------------------------------
 #   m:  evaluate using matched files
@@ -630,7 +642,7 @@ if [ $C_bTrue ==  $bDoEvaluateRexParameter ]; then
     fi
 
     #   define wanted index and check, example '4' for file: c04
-    declare -i iSrcIndexSelected=$iRc;
+    declare -i iSrcIndexSelected=$p_scp_cOpt;
     if [ $C_bTrue == $C_bug_flag__bDebug ]; then
         echo "### iSrcIndexSelected==[$iSrcIndexSelected]"
     fi
@@ -757,35 +769,50 @@ if [ $C_bTrue == $C_bug_flag__bSilence ]; then
 else
 
     if [ $C_bTrue == $C_bug_flag__bCompile ]; then
-        #   echo "+++ body.compile"
-        f_run_compile "${g_RUN_aObj[@]}"
+
+        echo "+++ body.compile"
+
+        #   manually Copy and Insert Lib as first element
+        #   !CRQ-261014: don't use:: g_RUN_aSrc=("${g_RUN_aSrc[@]:1}")
+
+        declare -a g_RUN_aSrc=()
+        declare -i n=${#g_RUN_aObj[@]}
+        g_RUN_aSrc=()
+        g_RUN_aSrc+=($C_TUTOR_LIBRARY__SRC)
+        for (( i=0; i < ${n}; i++ )); do
+            x=${g_RUN_aObj[$i]}
+            g_RUN_aSrc+=($x)
+        done
+
+        if [ $C_bTrue == $C_bug_flag__bDebug ]; then
+            printf "*** aSrc at:[%d]\n" $LINENO
+            declare -p g_RUN_aSrc
+        fi
+
+        f_run_compile "${g_RUN_aSrc[@]}"
+
     fi
 
     #   s:  X.doExecute
     if [ $C_bTrue == $C_bug_flag__bExecute ]; then
 
-        #   echo "+++ body.execute"
-
-        #   Copy and Shift the first element out
-        #   !CRQ-261014: don't use:: g_RUN_aSrc=("${g_RUN_aSrc[@]:1}")
-        declare -a g_RUN_aSrc=()
-        declare -i n=${#g_RUN_aObj[@]}
-        g_RUN_aSrc=()
-        for (( i=1; i < ${n}; i++ )); do
-            x=${g_RUN_aObj[$i]}
-            g_RUN_aSrc+=($x)
-        done
+        echo "+++ body.execute"
 
         #   u:  X.prepare run
         declare -i iRnd=$(( 1 + RANDOM % 1000 ))
         declare -i iCtr=$p_fct_iStressFactor
 
+        if [ $C_bTrue == $C_bug_flag__bDebug ]; then
+            printf "*** aObj at:[%d]\n" $LINENO
+            declare -p g_RUN_aObj
+        fi
+
         if [ $C_bTrue == $C_bug_flag__bLogging ]; then
             #   echo "+++ body.execute.logging"
-            f_run_execute "$iCtr" "$iRnd" "${g_RUN_aSrc[@]}" >> $v_scp_pLog
+            f_run_execute "$iCtr" "$iRnd" "${g_RUN_aObj[@]}" >> $v_scp_pLog
         else
             #   echo "+++ body.execute.show"
-            f_run_execute "$iCtr" "$iRnd" "${g_RUN_aSrc[@]}"
+            f_run_execute "$iCtr" "$iRnd" "${g_RUN_aObj[@]}"
         fi
 
         #   u:  X.save reply
