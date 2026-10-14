@@ -229,6 +229,8 @@ void f_lib_compilerInfo(void)
     printf("### COMPILER        :");
     #if defined(_MSC_VER)
         printf("'_MSC_VER'\n");
+    #elif defined(__BORLANDC__)
+        printf("'__BORLANDC__'\n");
     #elif defined(__GNUC__)
         printf("'__GNUC__'\n");
     #else
