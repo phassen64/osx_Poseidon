@@ -141,8 +141,9 @@ function f_run_usage() {
 
 #   m:  F.clean
 function f_run_clean() {
+    echo "+++ clean"
     pushd $C_dirTemp > /dev/null
-    declare -a aExt=('o' 'obj' 'out' 'exe' 'bin')
+    declare -a aExt=('o' 'obj' 'out' 'exe' 'bin' 'txt')  # not logging
     for x in "${aExt[@]}"; do
         f='*.'
         f+=$x
@@ -529,6 +530,7 @@ if [ -z $p_scp_cOpt ];
     then echo "??? option::NONE"; f_run_hint
 elif [ $p_scp_cOpt == 'h' ]; then   f_run_usage
 elif [ $p_scp_cOpt == '?' ]; then   f_run_usage
+elif [ $p_scp_cOpt == 'c' ]; then   f_run_clean
 elif [ $p_scp_cOpt == '.' ]; then   bDoRun=$C_bTrue
 elif [ $p_scp_cOpt == '_' ]; then   bDoRun=$C_bTrue
 elif [ $p_scp_cOpt == '+' ]; then   bDoRun=$C_bTrue; bDoShuffle=$C_bTrue
