@@ -123,11 +123,13 @@ int F01_hello(CTutor &m) {
 
     //  =:= USAGE option
     S = "PreProcSymbol:{ ";
-    //  #if __USE_TUTOR__STD_C11
-    //    S += "yes";
-    //  #else
-    //      S += "none";
-    //  #endif
+    #ifdef _MSC_VER
+        #if __USE_TUTOR__STD_C11
+            S += "yes";
+        #else
+            S += "none";
+        #endif
+    #endif
     S += " }";
     printf("\tUSAGE := <%s>\n",S.c_str());
 
