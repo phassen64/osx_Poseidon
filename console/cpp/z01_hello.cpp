@@ -71,7 +71,7 @@
 using namespace std;
 
 //  tutor
-#include "Tutor.h"
+#include "i00_CPP_tutor.h"
 
 int F01_hello(CTutor &m) {
 
