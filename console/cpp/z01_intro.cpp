@@ -1,9 +1,15 @@
-//  ****************************************************************************
-//  TUTORIAL:   C++     :   hello
-//  ****************************************************************************
+/*  ***************************************************************************
+ *  tutorial.CPP  :: "intro"                ©[mATe64]           [2026-10-16]
+ *  **************************************************************************/
 /*
+    encoding: UTF-8
+    !$@€ƒ„…†‡‰ŠŒŽ“”•—™šœžŸ¡¢£¤¥¦§¨©«¬®°±²³µ¶·¹º»¼½¾¿ÑÖØÜÞßäæçîðñôö÷üýþÿ
+
+    environment
+        •   v_FWK_dirScratch
     content:
         •   === hints
+
     keyword handled:
         •   cout
         •   printf
@@ -11,10 +17,7 @@
     url:
         •   https://www.w3schools.com/cpp/
         •   https://cplusplus.com/doc/tutorial/
-    Encoding of this file :
-#   !$@€ƒ„…†‡‰ŠŒŽ“”•—™šœžŸ¡¢£¤¥¦§¨©«¬®°±²³µ¶·¹º»¼½¾¿ÑÖØÜÞßäæçîðñôö÷üýþÿß-------$
-        •   ANSI
-            https://en.wikipedia.org/wiki/Windows-1252
+
             === Encoding chars :
     US Keyboard Symbols :
         `       grave, grave accent, backtick, back quote

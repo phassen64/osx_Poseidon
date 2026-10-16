@@ -2,8 +2,10 @@
 
     Dieses Dokument in :
     •   UTF8        :   https://en.wikipedia.org/wiki/UTF-8
+                        https://www.fileformat.info/info/charset/UTF-8/list.htm
+                        https://blog.stueber.de/posts/utf8/
 
-    codiert wird in :
+    codiert wird NICHT mehr in :
     •   ANSI-1252   :   https://en.wikipedia.org/wiki/Windows-1252
 
 // Write-Output `e[32m###DieserTextistgrün.###`e[0m
@@ -14,8 +16,14 @@
 
 //
 https://www.geeksforgeeks.org/constants-in-c-cpp/#:~:text=As%20the%20name%20suggests%20the,hexadecimal%2C%20character%20constants%2C%20etc.
-
-=== tutorials URL:
+https://de.wikipedia.org/wiki/Unicodeblock_Griechisch_und_Koptisch
+=== encoding UTF8
+    !$@€ƒ„…†‡‰Œ“”•—™αβγδεζηθ¡¢£¤¥¦§¨©«¬®°±²³µ¶·¹º»¼½¾¿ÑØÞ.äöüÄÖÜß.æîðñô÷ýþÿЖЯЮ.$
+    greek:  αβγδεζηθικλμνξοπρστυφχψω.ΓΔΘΛΞΠΣΦXΨΩ
+    money:  $£€¥  ©®
+    math:   ×÷±°
+    lingu:  –.—,…
+    chess:  ♔♕♖♗♘♙ ♚♛♜♝♞♟
 
 url:    https://www.w3schools.com/cpp/
 url:    https://cplusplus.com/doc/tutorial/

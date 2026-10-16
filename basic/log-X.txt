@@ -797,5 +797,15 @@ $   Bash Ternär Operator
     https://regex101.com/
 
 
-    
+### !date:<2026-10-16>:Fr 
 
+=== encoding UTF8
+https://de.wikipedia.org/wiki/Unicodeblock_Griechisch_und_Koptisc    !$@€ƒ„…†‡‰Œ“”•—™ čšŠœžŽŸ¡¢£¤¥¦§¨©«¬®°±²³µ¶·¹º»¼½¾¿ÑØÞ.äöüÄÖÜß.æçîðñô÷ýþÿЖЯЮ$
+    my:     !$@€ƒ„…†‡‰Œ“”•—™ čšŠœžŽŸ¡¢£¤¥¦§¨©«¬®°±²³µ¶
+            ·¹º»¼½¾¿ÑØÞ.äöüÄÖÜß.æçîðñô÷ýþÿЖЯЮ$
+    greek   :   αβγδεζηθικλμνξοπρστυφχψω.ΓΔΘΛΞΠΣΦXΨΩ
+    money   :   $£€¥  ©®
+    physic  :   °⏻⏼⏽⭘⏏⏎  ⏚⏛
+    lingua  :   –.—,…
+    chess   :   ♔♕♖♗♘♙ ♚♛♜♝♞♟
+    math    :   ∀∂∃∅∈√∞∫≈≠≤≥    ×÷± ¼½¾
