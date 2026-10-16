@@ -13,13 +13,14 @@
  *  ======================================================================  */
 
 /*      m:  menu                                                            */
-void    f_lib_header(const char *sText, const char *sFile="?", int iLine=-1);
-void    f_lib_trace(const char *sText,  const char *sFile="?", int iLine=-1);
-void    f_lib_menu(const char *sText,   const char *sFile="?", int iLine=-1);
-void    f_lib_show(const char *sText,   const char *sFile="?", int iLine=-1);
-void    f_lib_footer(const char *cText, const char *cFile="?", int iLine=-1);
+void    f_lib_header(const char *sText,  int iLine=-1, const char *sFile="?");
+void    f_lib_trace(const char *sText,   int iLine=-1, const char *sFile="?");
+void    f_lib_menu(const char *sText,    int iLine=-1, const char *sFile="?");
+void    f_lib_show(const char *sText,    int iLine=-1, const char *sFile="?");
+void    f_lib_footer(const char *cText,  int iLine=-1, const char *cFile="?");
 
-void    f_lib_info(const char *sFile,   const char *sDate, const char* sTime);
+void    f_lib_info( int iLine, const char *sFile,
+                            const char *sDate, const char* sTime);
 void    f_lib_line(const char cChar='=');
 
 /*      m:  tools                                                           */

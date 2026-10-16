@@ -114,13 +114,13 @@ do
     #   -----------------------------------------------------------------------
 
     #   u:  show run
-    printf "&&& run![%2.2d]:'%s'\n" $i $xFile
+    printf "&&& run![%2.2d]:'%s'\n\n" $i $xFile
 
     #   u:  execute executable stored in a variable
     "$xFile"
 
     iRc=$?
-    printf "&&& bash.reply.iRc:'%d'\n" $iRc
+    printf "\n&&& bash.reply.iRc:'%d'\n" $iRc
 
 done
 

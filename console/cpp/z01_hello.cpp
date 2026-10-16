@@ -7,15 +7,17 @@
 #include "i00_CPP_tutor.h"
 
 int F01_hello(int p_iEc) {
-    f_lib_header("Hello",__FILE__,__LINE__);
+    f_lib_header("+",__LINE__,__FILE__);
     printf("hello C++ World!\n");
-    f_lib_footer("Hello");
+
+    f_lib_info( __LINE__, __FILE__, __DATE__, __TIME__);
+
+    f_lib_footer("-",__LINE__);
     return(p_iEc);
 }
 
 int main() {
-//  int  iEc = atoi(getenv("v_FWK_exitStatus"));
-    int  iEc = 77;
+    int  iEc = atoi(getenv("v_FWK_exitStatus"));
     return F01_hello(iEc);
 }
 

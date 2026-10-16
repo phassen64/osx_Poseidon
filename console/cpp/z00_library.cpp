@@ -17,18 +17,18 @@
 //  m:  F.header
 //  ***************************************************************************
 
-void f_lib_header(const char *cText, const char *cFile, int iLine) {
+void f_lib_header(const char *sText, int iLine, const char *sFile) {
     f_lib_line('=');
     printf(">>> HDR:{%s} src:[%s,%d] dtm:[%s;%s]\n",
-        cText,cFile,iLine,__DATE__,__TIME__);
+        sText,sFile,iLine,__DATE__,__TIME__);
     f_lib_line('=');
 }
 
 
-void f_lib_footer(const char *cText, const char *cFile, int iLine)
+void f_lib_footer(const char *sText, int iLine, const char *sFile)
 {
     printf("<<< FTR:{%s} src:[%s,%d] dtm:[%s;%s].\n",
-        cText,cFile,iLine,__DATE__,__TIME__);
+        sText,sFile,iLine,__DATE__,__TIME__);
 }
 
 
@@ -46,25 +46,26 @@ void f_lib_line(const char cText)
     printf("\n");
 }
 
-void f_lib_trace(const char *cText, const char *cFile, int iLine) {
-    printf("&&& %s:[%s;%d]\n", cText, __FILE__, __LINE__);
+void f_lib_trace(const char *sText, int iLine, const char *sFile) {
+    printf("&&& %s:[%s;%d]\n", sText, __FILE__, __LINE__);
 }
-void f_lib_menu(const char *cText, const char *cFile, int iLine) {
-    printf("\n&&& menu:%s:[%s;%d]\n\n",cText,__FILE__,__LINE__);
+void f_lib_menu(const char *sText, int iLine, const char *sFile) {
+    printf("\n&&& menu:%s:[%s;%d]\n\n",sText,__FILE__,__LINE__);
 }
-void f_lib_show(const char *cText, const char *cFile, int iLine) {
-    printf("\n\t&&& %s:[%s;%d]\n\n",cText,__FILE__,__LINE__);
+void f_lib_show(const char *sText, int iLine, const char *sFile) {
+    printf("\n\t&&& %s:[%s;%d]\n\n",sText,__FILE__,__LINE__);
 }
 
 
-void f_lib_info(const char *p_sFile, const char *p_sDate, const char *p_sTime)
+void f_lib_info(int p_iLine, const char *p_sFile,
+                    const char *p_sDate, const char *p_sTime)
 {
-    printf("### lib.Info by:[%s]...\n",p_sFile);
+    printf("### lib.Info by:[%s;%d]...\n",p_sFile,p_iLine);
 
     printf("\t\t:?atDate\t:'%s'\n",p_sDate);
     printf("\t\t:?atTime\t:'%s'\n",p_sTime);
 
-    printf("\t\t:?isC++\t:");
+    printf("\t\t:?isC++\t\t:");
     #ifdef  __cplusplus
         printf("'YES'\n");
     #else
