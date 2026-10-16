@@ -12,6 +12,9 @@
  *  m:  F.prototype
  *  ======================================================================  */
 
+/*      m:  env                                                             */
+void f_lib_getEnv(int & p_iEc, char **p_sDir);
+
 /*      m:  menu                                                            */
 void    f_lib_header(const char *sText,  int iLine=-1, const char *sFile="?");
 void    f_lib_trace(const char *sText,   int iLine=-1, const char *sFile="?");
