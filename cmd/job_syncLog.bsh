@@ -24,6 +24,9 @@ sFmt="+%Y-%m-%d__%H:%M:%S"
 sDtm=$(echo `date $sFmt`)
 sVer='athene1'
 
+#   m:  header
+printf "=== entry v.(%s):[%s]\n" $sVer $sDtm
+
 #
 #   m:  check.Dir
 #
@@ -32,6 +35,7 @@ sVer='athene1'
 dSrc="$HOME/Documents/organizer"
 if [ ! -d $dSrc ]
 then
+    printf "???\t:miss1.dSrc:['%s]'\n" $dSrc
     exit $LINENO
 fi
 
@@ -40,6 +44,7 @@ fi
 dObj="$HOME/VCS/fwk/basic"
 if [ ! -d $dObj ]
 then
+    printf "???\t:miss2.dObj:['%s']\n" $dObj
     exit $LINENO
 fi
 
@@ -47,24 +52,25 @@ fi
 #   m:  check.FilePath
 #
 
-fnam='log-X.txt'
+fNam='log-X.txt'
 
 #   s:  pSrc
 pSrc="$dSrc/$fNam"
 if [ ! -f $pSrc ]; then
+    printf "???\t:miss3.pSrc:['%s']\n" $pSrc
     exit $LINENO
 fi
 
 #   s:  pObj
 pObj="$dObj/$fNam"
 if [ ! -f $pObj ]; then
+    printf "???\t:miss4.pObj:['%s']\n" $pObj
     exit $LINENO
 fi
 
-printf "=== entry v.(%s):[%s]\n" "$sVer" "$sDtm"
-printf "    dirSrc:[%s]\n" "$dSrc"
-printf "    dirObj:[%s]\n" "$dObj"
-printf "    logbook.copy: dirSrc -> dirObj\n"
+printf "\t:dirSrc:[%s]\n" "$dSrc"
+printf "\t:dirObj:[%s]\n" "$dObj"
+printf "\t:logbook.copy: dirSrc -> dirObj\n"
 
 #   perform job
 cp $dSrc/log*.txt $dObj

@@ -809,3 +809,6 @@ https://de.wikipedia.org/wiki/Unicodeblock_Griechisch_und_Koptisc    !$@€ƒ„
     lingua  :   –.—,…
     chess   :   ♔♕♖♗♘♙ ♚♛♜♝♞♟
     math    :   ∀∂∃∅∈√∞∫≈≠≤≥    ×÷± ¼½¾
+
+
+/home/peter/Documents/organizer/
