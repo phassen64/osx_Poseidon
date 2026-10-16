@@ -120,7 +120,7 @@ function f_run_compile_and_link() {
     local pExe="$dTmp/$fExe"
 
     #   compiler
-    local sCpl="gcc"
+    local sCpl=$C_COMPILER
     local sOpt="-Wall -Werror"
     local sTxt="$p_fSrc"
     local sDoCompile="$sCpl $sOpt -c $p_fSrc -o $pObj"
@@ -193,6 +193,9 @@ v_sSid='c'          #   script file identifier
 v_RUN_sExt_src='c'      #   script file extension
 v_RUN_sExt_obj='obj'    #   output extensionID
 v_RUN_sExt_exe='exe'    #   executable extension
+
+#   s:  compiler
+declare -r C_COMPILER='gcc'
 
 #   s:  B.const
 declare -r  C_TUTOR_LIBRARY__SRC='c00_library.c'

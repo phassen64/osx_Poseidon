@@ -1,0 +1,852 @@
+#!/bin/bash
+
+#   ***************************************************************************
+#   run:[expert]    tutorial.C++ v2026      ©[mATe64]           [2026-10-16]
+#   ***************************************************************************
+
+#   encoding.UTF8:
+#   !@€ƒ„…†‡ˆ‰Š‹ŒŽ +‘“”•—™š›œžŸ+¡¢£¤¥¦§¨©«¬®°±²³µ¶·¹º»¼½¾¿ÄÖÜÑ×ØÞßäæçîðñôö÷üýþÿ
+
+#   description:
+#       Build the complete tutorial.C89 and Generate Build-LogFile.
+#       Compile & linking of all z??_*.cpp files in the
+#               ScratchDirectory.
+#           Step1:  compile all files to OBJ files
+#                   Special - compile into c89-TutorLibrary (c00)
+#           Step2:  Link(c01-cMax) to tutor c-library and generate EXE file
+#           Step3:  depending on run command executes
+#                   any 1, all, allRandom, someRandom objects
+#       Execute options:
+#       Execute options:
+#           '_' :   runAll in the order of their namings source[1]..[MAX]
+#           '.' :   run1 EXE    - choose randomly
+#           '!' :   runAll EXE  - choose randomly
+#           '+' :   runSome EXE - choose randomly
+#           '4' :   special index-mode, run specfic source[4]
+#
+#   usage:  $   bash <SCP.bsh> [option]
+
+#   remark: The objects and executables are stored in the
+#           [FWK-Temp-Directory].
+
+#   remark: The first C-source, named c00_*.cpp, is handled as the
+#           c++-TutorLibrary
+#
+#           [FWK-Temp-Directory].
+
+
+#   rem:    don't execute c00*.cpp
+
+<<usage
+    Tutorial 2026-10-16
+
+    +   usage:
+            $ bash {THIS.bsh} [cOpt]||[iIdx] =:'?' [{iStressFator(iSfr)}]=:'1'
+                with:
+            cOpt := { '?','h','c','.','_','+','!'}
+            iIdx := [1..MAX]
+            iSfr := [1..10]
+
+    +   test-base files REX:=[^HEAD][0-9]{2}_[A-Za-z].[TAIL$]
+            C_REX_head  :   first file name letter like 'c'
+            C_REX_tail  :   fileExtension
+
+    +   compile not link 'c00'
+
+    +   Examples:
+            $> . run ?     :    help
+            $> . run h     :    dito
+            $> . run c     :    clean temp
+            $> . run .     :    1x run some file of the tutorial
+            $> . run 3     :    run exact 1x index '3'source[3] * indexMode
+            $> . run _     :    run all files
+            $> . run !     :    run all files but random
+            $> . run +     :    1/q of  all files random
+            $> . run . 2   :    run 1 file 2 times
+usage
+
+
+<<hereDoc_content_tutor__run_expert
+    content:
+        p:  p.function
+            m:  F.hint
+            m:  F.usage
+            m:  F.clean
+            m:  F.bEvaluate
+            m:  F.Match
+            m:  F.showArray
+            m:  F.compile
+            m:  F.execute
+        p:  p.body
+            B:  constant
+                s:  C.this
+                s:  C.scp
+                s:  C.parameter_by_prompt
+                s:  C.RexExpr
+                s:  C.modifier
+                s:  C.bool
+                s:  C.debug
+            B:  variable
+                s:  V.temp
+                s:  V.printf
+                s:  V.logging
+                s:  V.dateTime
+                s:  V.parameter_by_function
+            B:  main
+                m:  usage
+                m:  prepare
+                    s:  P.validate.parameter.Option
+                    s:  P.validate.parameter.StressCounter
+                    s:  P.quit
+                    s:  P.check.library
+                m:  header
+                m:  compile
+                    s:  C.fetchAllFiles
+                    s:  C.doCompile
+                m:  execute
+                    s:  X.evaluate
+                    s:  X.run
+                m:  footer
+        p:  p.last
+hereDoc_content_tutor__run_expert
+
+#   ===========================================================================
+#   p:  p.function
+#   ===========================================================================
+
+#   m:  F.hint
+function f_run_hint() {
+    local p_pBash=${BASH_SOURCE[1]}     #   caller.bscp
+    c='$'
+    printf "\t%c $p_pBash ?  # get help\n" "$c"
+    exit
+}
+
+#   m:  F.usage
+function f_run_usage() {
+    local p_pBash=${BASH_SOURCE[1]}     #   caller.bscp
+    c='$'
+    q=$C_mod_iPlusDivisor
+    printf "&&& usage:\n"   "$c"
+    printf "\t%c [$p_pBash] [cOpt]=:'h' [iSfr]=:'1' \n" "$c"
+    printf "\t\tcOpt := { '?','c','.','_','+','!'}\n"
+    printf "\t\t\t";    printf " . : 1x random\n"
+    printf "\t\t\t";    printf " _ : [1..max]; n=max\n"
+    printf "\t\t\t";    printf " ! : random[1...max]; n=max \n"
+    printf "\t\t\t";    printf " + : random max/%d\n" $q
+    printf "\t\tiSfr := := [1..%d]\n" "$C_mod_iStressMax"
+    exit
+}
+
+
+#   m:  F.clean
+function f_run_clean() {
+    echo "+++ clean"
+    pushd $C_dirTemp > /dev/null
+    declare -a aExt=('o' 'obj' 'out' 'exe' 'bin' 'txt')  # not logging
+    for x in "${aExt[@]}"; do
+        f='*.'
+        f+=$x
+        rm -f $f
+    done
+    popd > /dev/null
+}
+
+#   m:  F.evaluate
+function f_run_bEvaluate {
+    #   usage:  $ echo $(F $bVal)
+    local -i b=$1
+    if [ $b == $C_bTrue ]; then x='true'; else x='false' ; fi
+    echo "$x"
+}
+
+
+#   m:  F.match
+function f_run_matchFiles() {
+
+    #   rex like:'^t[0-9]{2}_[A-Za-z]+\.bsh$'
+    local       p_sRexBeg=$1        #   't'
+    local       p_sRexEnd=$2        #   'bsh'
+    local       p_sIgnore=$3        #   'ignoreFile'
+    local -i    p_bDoShuffle=$4     #    sort&mix
+
+    local -i i=0
+    local -a aTmp=()
+    local s=''
+    local sRex
+
+    #   init globals
+    v_RUN_iRc=0
+    v_RUN_aRc=()
+
+    #   init  rex
+    s='^'
+    s+="$p_sRexBeg"
+    s+='[0-9]{2}_[A-Za-z]+\.'
+    s+="$p_sRexEnd"
+    s+='$'
+    sRex=$s
+    #   echo "+ tryRex := '$sRex'"
+
+    #   Get files with pattern
+    for xFile in `ls`
+    do
+        if [ -f "$xFile" ]; then
+            i+=1
+            if [[ $xFile =~ $sRex ]]; then
+                v_RUN_iRc+=1
+                if [ $xFile !=  $p_sIgnore ]; then
+                    aTmp+=( $xFile )
+                fi
+            fi
+        fi
+    done
+    #   declare -p aTmp
+
+    #   shuffle aTmp
+    if [ ! -z $p_bDoShuffle ] && [ $p_bDoShuffle == $C_bTrue ]; then
+        aTmp=( $(shuf -e "${aTmp[@]}") )
+    fi
+
+    #   reply - insert 'Ignore at the begin'
+    #   declare -a v_RUN_aRc=()
+    #   v_RUN_aRc+=( $p_sIgnore )
+    #   for xFile in "${aTmp[@]}"; do
+    #       v_RUN_aRc+=($xFile)
+    #   done
+
+    #   reply
+    v_RUN_aRc=("${aTmp[@]}")
+
+    #   return sum of found file in current directory
+    return $i
+}
+
+
+#   m:  F.showArray
+function f_run_showArray() {
+
+    #   usage : f~run_showArray 'info' "${p_aVal[@]}"
+    #   Source - https://stackoverflow.com/a/1063367
+
+    local p_sInfo=("${1}")
+    shift   # stackShift
+    local p_aArray2Show=("${@}")
+
+    local p_sBash=${BASH_SOURCE[1]}     #   caller.source
+    local p_sFctn=${FUNCNAME[1]}        #   caller.fctn
+    local p_iLine=${BASH_LINENO[0]}     #   caller.lineNo
+
+    printf "### showArray {'%s'} pos:[%s();%d]\n" "$p_sInfo" $p_sFctn $p_iLine
+
+    #   size of caller array
+    local -i n=${#p_aArray2Show[@]}
+
+    #   loop
+    local -i i=1
+    local x
+    for x in "${p_aArray2Show[@]}"; do
+        printf "\ta[%2.2d] == '%s'\n" $i $x
+        i+=1
+    done
+
+}
+
+#
+#   m:  F.compile
+#
+
+function f_run_compile {
+
+    local p_aSrc=("${@}")   # parametter
+
+    #   locals
+    local -i nSrc=${#p_aSrc[@]}
+    local -x dTmp=$C_dirTemp
+    local -x pLib="$dTmp/${C_TUTOR_LIBRARY__OBJ}"
+    local -x pObj
+    local -x pExe
+    local sCpl="gcc"
+    local sOpt="-Wall -Werror"
+
+
+    #   show input
+    if [ $C_bTrue == $C_bug_flag__bDebug ]; then
+        printf "### F.compile:show input array at:[%d]\n" $LINENO
+    fi
+
+    #   compiler
+    local -i i=0
+    local -x xFile
+
+    for xFile in "${p_aSrc[@]}"
+    do
+        i+=1
+
+        #   define PATH.objects and PATH.executable
+        local sNam=$(basename ${xFile})
+        local sBdy="${sNam%.*}"
+        local pObj="$dTmp/$sBdy.${C_EXT_obj}"   # pLib is the first
+        local pExe="$dTmp/$sBdy.${C_EXT_exe}"
+
+        #   define compile and linking
+        local sDoCompile="$sCpl $sOpt -c $xFile -o $pObj"
+        local sDoLinking="$sCpl $pObj $pLib -o $pExe"
+
+        #   make
+        if [ $C_TUTOR_LIBRARY__SRC == $xFile ]
+        then
+            if [ $C_bTrue == $C_bug_flag__bVerbose ]; then
+                printf "### compile-Only:'%s'\n" $xFile
+            fi
+            $sDoCompile     #   compiling
+        else
+            if [ $C_bTrue == $C_bug_flag__bVerbose ]; then
+                printf "### compile+Link:'%s'\n" $xFile
+            fi
+            $sDoCompile     #   compiling
+            $sDoLinking     #   linking
+        fi
+
+    done
+
+}
+
+#
+#   m:  F.execute
+#
+
+function f_run_execute {
+
+    #   parameter
+    local p_nStressMax=("${1}"); shift
+    local p_iRnd=("${1}"); shift
+    local p_aSrc=("${@}")
+
+    #   locals
+    local -i i=0
+    local -i n=0
+    local -i iFile=0
+    local -i nFile=${#p_aSrc[@]}
+    local  s=$(date)
+    local -x sHashLine
+    local -x dTmp=$C_dirTemp
+    local -x pExe
+
+    local sBdy
+    local sNam
+    local pExe
+
+    #   echo "+++ F.execute"
+
+    #   check
+    if [ 0 == $nFile ]; then
+        printf "??? input parameter aSrc==0 at:[%d]\n" $LINENO
+        exit 1
+    fi
+
+    #   calc.array FileNumber
+    printf "\n*** TEST\n"
+    printf "\tDate          :   [$s]\n"
+    printf "\tiRandom       :   [$p_iRnd]\n"
+    printf "\tnFiles        :   [$nFile]\n"
+    printf "\tiStressMax    :   [%d]\n" $p_nStressMax
+    f_run_showArray 'testSet' "${p_aSrc[@]}"
+    printf ".\n"
+
+    #   exit code [3,...199]
+    local -i iRc=0      # sum of errors
+    local -i iEc=$C_mod_iExpectedExitCode   # show
+    local -i iReplyEc=99
+
+    #   build sLine
+    s=''; c='#'; for((i=0;i<80;i++)); do s+="$c"; done
+    sHashLine=$s
+
+    #   run
+    printf "___ script ecDefault #:{%d}\n\n" $iEc
+
+    for (( n=1; n<=$p_nStressMax; n++ )); do
+
+        #   printf "\n### stress :: [%3.3d]/[%3.3d]\n" $n $p_nStressMax
+
+        iFile=0
+        for xFile in "${p_aSrc[@]}"
+        do
+            iFile+=1
+
+            #   skip tutor
+            if [ $C_TUTOR_LIBRARY__SRC == $xFile ]
+            then
+                continue
+            fi
+
+            printf "\n%s\n" $sHashLine
+            printf "*** run:[%2.2d]/[%2.2d]:'%s'\n" $iFile $n  $xFile
+            printf "%s\n" $sHashLine
+
+            #   call script, save eXitCode
+            sBdy="${xFile%.*}"
+            pExe="$dTmp/$sBdy.${C_EXT_exe}"
+
+            #   printf "+++ doExecute:[$pExe]\n"
+
+            #   ---------------------------------------------------------------
+            $pExe
+            #   ---------------------------------------------------------------
+
+            #   check reply
+            iReplyEc=$?
+            printf "<<< replyOf[%d]:'%s': # ec:{%d} " $n $xFile $iReplyEc
+
+            if [ $C_mod_iExpectedExitCode == $iReplyEc ]
+            then
+                printf "== OK\n"
+            else
+                printf "!= [%d]\n" $C_mod_iExpectedExitCode
+                iRc+=1
+            fi
+
+            printf ".\n"
+
+        done
+
+    done
+
+    #   end-line
+    printf "\n%s\n" $sHashLine
+    printf "*** ready:total.iRc:<%d>\n" $iRc
+    printf "%s\n" $sHashLine
+
+    #   reply noOfErrors
+    return $iRc
+}
+
+
+
+#   ===========================================================================
+#   p:  p.body
+#   ===========================================================================
+
+
+#
+#   B:  constant
+#
+
+#   s:  C.this
+declare -r      p_pThis=$BASH_SOURCE
+
+#   s:  C.fwk
+declare -r      C_dirTemp=$v_FWK_dirTemp
+
+#   s:  C.scp
+declare -r -x   C_SCP=`basename $BASH_SOURCE`
+declare -r -x   C_SCP_bdy="${C_SCP%.*}"
+declare -r -x   C_SCP_ext="${C_SCP##*.}"
+declare -r -x   C_EXT_obj='obj'
+declare -r -x   C_EXT_exe='exe'
+
+#   s:  C.lib
+declare -r C_TUTOR_LIBRARY__SRC='c00_library.c'
+s=$(basename ${C_TUTOR_LIBRARY__SRC})
+s="${s%.*}" # body
+declare -r C_TUTOR_LIBRARY__OBJ="${s}.${C_EXT_obj}"
+
+#   s:  C.RexExpr
+declare -r -x   C_REX_head='c'  # c??...
+declare -r -x   C_REX_tail='c'  # fileExtension
+
+#   s:  C.modifier
+declare -r -i   C_mod_iPlusDivisor=4    #   max/4
+declare -r -i   C_mod_iStressMax=10     #   stressFactorMax
+declare -r -i   C_mod_delay=1
+declare -r -i   C_mod_iExpectedExitCode=$v_FWK_exitStatus #   expected by caller
+
+#   s:  C.bool
+declare -r -i   C_bTrue=100
+declare -r -i   C_bFalse=199
+
+#   s:  C.debug
+#   u:  flag
+declare -r -i   C_bug_flag__bDebug=$C_bFalse
+declare -r -i   C_bug_flag__bVerbose=$C_bTrue
+declare -r -i   C_bug_flag__bSilence=$C_bFalse   # testmode
+declare -r -i   C_bug_flag__bLogging=$C_bTrue
+declare -r -i   C_bug_flag__bCompile=$C_bTrue
+declare -r -i   C_bug_flag__bExecute=$C_bTrue
+
+#
+#   B:  variable
+#
+
+#   s:  C.parameter_by_prompt  (byCaller bash)
+declare -r      p_scp_cOpt=$1
+declare -r      p_scp_iSfr=$2
+
+#   s:  V.temp
+declare -i      i=0
+declare -i      n=0
+declare -x      s='?'
+declare -x      x='-'
+
+#   s:  V.printf
+declare -x      SOut=''     #   printf flush string
+
+#   s:  V.dateTime
+declare         v_dtm_tStart
+declare         v_dtm_tStopp
+declare -r      C_dtm_sFormatString="+%Y-%m-%d %H:%M:%S"
+
+#   s:  V.logging
+declare -r      v_scp_pLog="$C_dirTemp/$C_SCP_bdy.log"
+
+#   s:  V.parameter_by_function
+
+#   exchange array offered by caller function
+declare -i      p_fct_iStressFactor=1
+
+#
+#   B:  main
+#
+
+#   m:  usage
+if [ -z $p_scp_cOpt ] || [ '?' == $p_scp_cOpt ] || [ 'h' == $p_scp_cOpt ]; then
+    f_run_usage; exit
+fi
+
+#   ---------------------------------------------------------------------------
+#   m:  prepare
+#   ---------------------------------------------------------------------------
+
+#
+#   s:  P.validate.parameter.Option
+#
+
+declare -i bDoRun=$C_bFalse
+declare -i bDoEvaluateRexParameter=$C_bFalse
+declare -i bDoShuffle=$C_bFalse
+
+if [ -z $p_scp_cOpt ];
+    then echo "??? option::NONE"; f_run_hint
+elif [ $p_scp_cOpt == 'h' ]; then   f_run_usage
+elif [ $p_scp_cOpt == '?' ]; then   f_run_usage
+elif [ $p_scp_cOpt == 'c' ]; then   f_run_clean
+elif [ $p_scp_cOpt == '.' ]; then   bDoRun=$C_bTrue
+elif [ $p_scp_cOpt == '_' ]; then   bDoRun=$C_bTrue
+elif [ $p_scp_cOpt == '+' ]; then   bDoRun=$C_bTrue; bDoShuffle=$C_bTrue
+elif [ $p_scp_cOpt == '!' ]; then   bDoRun=$C_bTrue; bDoShuffle=$C_bTrue
+else
+    bDoRun=$C_bTrue;
+    bDoEvaluateRexParameter=$C_bTrue
+fi
+
+#
+#   s:  P.validate.parameter.StressCounter
+#
+
+if [ ! -z $p_scp_iSfr ]; then
+    s=$p_scp_iSfr;  r='^[0-9]+$';  [[ $s =~ $r ]]; iRc=$?
+    if [ 0 != $iRc ]; then
+        printf "??? option.stressFactor::is_invalid :[%s]\n" $s
+        f_run_hint
+    fi
+    p_fct_iStressFactor=$p_scp_iSfr
+    if [ $p_fct_iStressFactor -lt 1 ]; then
+        p_fct_iStressFactor=1
+    fi
+    if [ $p_fct_iStressFactor -gt $C_mod_iStressMax ]; then
+        p_fct_iStressFactor=$C_mod_iStressMax
+    fi
+fi
+
+#   show run status
+if [ $C_bTrue == $C_bug_flag__bDebug ]; then
+    echo "### p_fct_iStressFactor:[$p_fct_iStressFactor]"
+    b2sRc=$(f_run_bEvaluate $bDoRun)
+    echo "### bDoRunStatus:[$b2sRc]"
+fi
+
+#
+#   s:  P.quit.ifNotRun intended
+#
+
+#   echo "+++ quit?"
+if [ $bDoRun != $C_bTrue ]; then
+    printf "=== program finished.\n"
+    exit 0
+fi
+
+#
+#   s:  P.check.library
+#
+
+if [ ! -f $C_TUTOR_LIBRARY__SRC ]; then
+    printf "??? library ['%s'] is missing! \n"  $C_TUTOR_LIBRARY__SRC
+    exit 0
+fi
+if [ $C_bTrue == $C_bug_flag__bDebug ]; then
+    echo "### library ['$C_TUTOR_LIBRARY__SRC'] was found."
+fi
+
+#
+#   s:  P.fetchAllFiles without library
+#
+
+#   u:  match my sources
+declare -a v_RUN_aRc=()
+declare -i v_RUN_iRc=-1
+s=$C_TUTOR_LIBRARY__SRC # ignore
+f_run_matchFiles $C_REX_head $C_REX_tail $s $bDoShuffle; iRc=$?
+if [ 0 == $iRc ]; then
+    echo "### match.result.iRc found:[$v_RUN_iRc/$iRc]"
+    printf "??? 0==match.REX:(%s,%s)\n" $C_REX_head $C_REX_tail
+    f_run_hint; exit
+fi
+
+#   u:  show match result
+if [ $C_bTrue == $C_bug_flag__bDebug ]; then
+    echo "### match.result.iRc found:[$v_RUN_iRc/$iRc]"
+    f_run_showArray 'afterFetch' "${v_RUN_aRc[@]}"
+fi
+
+#   u:  copy into srcArray
+declare -a g_RUN_aSrc=("${v_RUN_aRc[@]}")
+declare -i g_RUN_nSrc=${#g_RUN_aSrc[@]}
+if [ $C_bTrue == $C_bug_flag__bDebug ]; then
+    echo "### show g_RUN_aSrc [$g_RUN_nSrc]"
+    declare -p g_RUN_aSrc
+fi
+
+#   u:  prepare object Array - is 1 or all of aSrc
+declare -a g_RUN_aObj=()
+
+#   ---------------------------------------------------------------------------
+#   m:  evaluate using matched files
+#   ---------------------------------------------------------------------------
+
+if [ $C_bTrue ==  $bDoEvaluateRexParameter ]; then
+
+    #   do  ::  copy aObj := aSrc[i] * only i=p_iIndex
+
+    if [ $C_bTrue == $C_bug_flag__bDebug ]; then echo "&&& mode:index"; fi
+
+    #   fetch Option again
+    s=$p_scp_cOpt;  r='^[0-9]+$';  [[ $s =~ $r ]]; iRc=$?
+    if [ 0 != $iRc ]; then
+        printf "??? option::is_invalid :[%s]\n" $p_scp_cOpt
+        f_run_hint; exit
+    fi
+
+    #   define wanted index and check, example '4' for file: c04
+    declare -i iSrcIndexSelected=$p_scp_cOpt;
+    if [ $C_bTrue == $C_bug_flag__bDebug ]; then
+        echo "### iSrcIndexSelected==[$iSrcIndexSelected]"
+    fi
+    if [ $iSrcIndexSelected -le 0 ]; then
+        printf "??? select:[%d] == not possible]\n" $i; exit
+    elif [ $iSrcIndexSelected -gt $g_RUN_nSrc ]; then
+        printf "??? select:[%d] overflow is > max:[%d]\n" $i $n; exit
+    fi
+
+    #   remark: g_RUN_aSrc=('c01','c02',c03',...'c10') n=10; g_RUN_aSrc[1]=>'c02'
+
+    #   fetch 1 less as index
+    i=$iSrcIndexSelected
+    let "i -= 1"
+    x=${g_RUN_aSrc[$i]};  # fetch
+
+    #   push
+    g_RUN_aObj+=($x)
+
+
+elif [ $p_scp_cOpt == '.' ]; then
+
+    #   do  ::  copy aObj := aSrc[i] * only 1 element i=<RANDOM>
+
+    if [ $C_bTrue == $C_bug_flag__bDebug ]; then echo "&&& mode:'.'"; fi
+
+    #   random
+    declare -i iSrcIndexRandom=0;
+    iSrcIndexRandom=$(( RANDOM % $g_RUN_nSrc ))    # 0..n-1
+
+    if [ $C_bTrue == $C_bug_flag__bDebug ]; then
+        printf "### g_RUN_nSrc = :[%d]\n" $g_RUN_nSrc
+        printf "### iRnd = :[%d]\n" $iSrcIndexRandom
+    fi
+
+    #   u:  loop
+    s='?'
+    for (( i=0; i < ${g_RUN_nSrc}; i++ ));
+    do
+        x=${g_RUN_aSrc[$i]}
+        if [ $i == $iSrcIndexRandom ]; then
+            s=$x
+            break
+        fi
+    done
+
+    if [ $s == '?' ]; then
+        printf "??? not found index at:[%d]\n" $LINENO
+        f_run_usage
+    fi
+
+    #   push
+    g_RUN_aObj+=($x)
+
+elif [ $p_scp_cOpt == '+' ]; then
+
+    #   do  ::  copy aObj := aSrc_Shuffled[0...q]; q < n=size(aSrc)
+
+    if [ $C_bTrue == $C_bug_flag__bDebug ]; then echo "&&& mode:'+'"; fi
+
+    i=0
+    declare -i q=$C_mod_iPlusDivisor
+    n=$(($g_RUN_nSrc/$q))
+
+    if [ $C_bTrue == $C_bug_flag__bDebug ]; then
+        echo "### option n=[$n] / g_RUN_nSrc=[$g_RUN_nSrc]"
+    fi
+
+    for (( i=0; i < ${n}; i++ )); do
+        x=${g_RUN_aSrc[$i]}
+        g_RUN_aObj+=($x)
+    done
+
+
+elif [ $p_scp_cOpt == '!' ]; then
+
+    #   do  ::  copy aObj := aSrc_Shuffled
+
+    if [ $C_bTrue == $C_bug_flag__bDebug ]; then echo "&&& mode:'!'"; fi
+    g_RUN_aObj=("${g_RUN_aSrc[@]}")
+
+elif [ $p_scp_cOpt == '_' ]; then
+
+    #   do  ::  copy aObj := aSrc
+
+    if [ $C_bTrue == $C_bug_flag__bDebug ]; then echo "&&& mode:'_'"; fi
+    g_RUN_aObj=("${g_RUN_aSrc[@]}")
+
+fi
+
+#   ---------------------------------------------------------------------------
+#   m:  header
+#   ---------------------------------------------------------------------------
+
+#   s:  save.StartDate
+v_dtm_tStart=$(date '+%s.%N')
+
+#   s:  make:Header
+s=$(date "$C_dtm_sFormatString")
+printf  -v SOut ">>> run.{%s} dtm:[%s]\n" "$p_pThis" "$s"
+
+#   s:  puts:Header
+printf "$SOut\n"
+
+#   s:  putf:Header         && create.logfile
+echo    "$SOut" > $v_scp_pLog
+
+#   s:  puts:LogfileIsCreated
+printf  "&&& logFile:'%s'\n" "$v_scp_pLog"
+
+#   s:  sleep.1
+sleep $C_mod_delay
+
+
+#   s:  show finalize
+if [ $C_bTrue == $C_bug_flag__bVerbose ] || [ $C_bTrue == $C_bug_flag__bDebug ]
+then
+    printf "\n*** show finalized array at:[%d]\n" $LINENO
+    declare -p g_RUN_aObj
+    printf "\n"
+fi
+
+#   ---------------------------------------------------------------------------
+#   m:  execute
+#   ---------------------------------------------------------------------------
+
+if [ $C_bTrue == $C_bug_flag__bSilence ]; then
+
+    printf "### mode:isSilence - not run\n"
+
+else
+
+    if [ $C_bTrue == $C_bug_flag__bCompile ]; then
+
+        echo "+++ body.compile"
+
+        #   manually Copy and Insert Lib as first element
+        #   !CRQ-261014: don't use:: g_RUN_aSrc=("${g_RUN_aSrc[@]:1}")
+
+        declare -a g_RUN_aSrc=()
+        declare -i n=${#g_RUN_aObj[@]}
+        g_RUN_aSrc=()
+        g_RUN_aSrc+=($C_TUTOR_LIBRARY__SRC)
+        for (( i=0; i < ${n}; i++ )); do
+            x=${g_RUN_aObj[$i]}
+            g_RUN_aSrc+=($x)
+        done
+
+        if [ $C_bTrue == $C_bug_flag__bDebug ]; then
+            printf "*** aSrc at:[%d]\n" $LINENO
+            declare -p g_RUN_aSrc
+        fi
+
+        f_run_compile "${g_RUN_aSrc[@]}"
+
+    fi
+
+    #   s:  X.doExecute
+    if [ $C_bTrue == $C_bug_flag__bExecute ]; then
+
+        echo "+++ body.execute"
+
+        #   u:  X.prepare run
+        declare -i iRnd=$(( 1 + RANDOM % 1000 ))
+        declare -i iCtr=$p_fct_iStressFactor
+
+        if [ $C_bTrue == $C_bug_flag__bDebug ]; then
+            printf "*** aObj at:[%d]\n" $LINENO
+            declare -p g_RUN_aObj
+        fi
+
+        if [ $C_bTrue == $C_bug_flag__bLogging ]; then
+            #   echo "+++ body.execute.logging"
+            f_run_execute "$iCtr" "$iRnd" "${g_RUN_aObj[@]}" >> $v_scp_pLog
+        else
+            #   echo "+++ body.execute.show"
+            f_run_execute "$iCtr" "$iRnd" "${g_RUN_aObj[@]}"
+        fi
+
+        #   u:  X.save reply
+        iRc=$?
+
+        #   u:  X.showResult
+        s="*** total_sum_of_eRRoRs := [$iRc]"
+        printf "\n$s\n"
+        echo "$s" >> $v_scp_pLog
+    fi
+
+
+fi
+
+#   ---------------------------------------------------------------------------
+#   m:  footer
+#   ---------------------------------------------------------------------------
+
+#   s:  save.StoppDate
+v_dtm_tStopp=$(date '+%s.%N')
+
+#   s:  calc.ElapsedTime
+i=$(echo "($v_dtm_tStopp-$v_dtm_tStart) / 1" | bc)
+i+=1
+
+#   s:  make:Footer
+s=$(date "$C_dtm_sFormatString")
+printf -v SOut "<<< run.{%s} dtm:[%s]:<%s>" "$p_pThis" "$s" "$i"
+
+#   s:  putf:Footer
+echo "$SOut" >> $v_scp_pLog
+
+#   s:  puts:Footer
+printf "\n$SOut\n\n"

@@ -45,6 +45,7 @@
 #   m:  compose
 #
 
+declare -r C_COMPILER='gcc'
 aShellArray=$(echo `ls c*.c`)
 
 #
@@ -97,13 +98,13 @@ function f_run_compile() {
 
     if [ $p_sFile == "$C_TUTOR_LIBRARY__SRC" ]
     then
-        gcc -c $p_sFile -o $pLiby
+        $C_COMPILER -c $p_sFile -o $pLiby
         printf "&&& return -- is library!:'%s'\n"  $C_TUTOR_LIBRARY__SRC
         return $p_iEc
     else
         printf "&&& compile:'%s'\n"  $p_sFile
-        gcc -c $p_sFile -o $oFile       #   compile only
-        gcc $oFile $pLiby -o $xFile     #   linking
+        $C_COMPILER -c $p_sFile -o $oFile       #   compile only
+        $C_COMPILER $oFile $pLiby -o $xFile     #   linking
     fi
 
     #   u:  show run

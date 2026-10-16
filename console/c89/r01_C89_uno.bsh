@@ -47,6 +47,9 @@ function f_run_clean() {
 #   s:  paramer
 p_sFile=$1
 
+#   s:  compiler
+declare -r C_COMPILER='gcc'
+
 #   s:  const library source
 declare -r C_TUTOR_LIBRARY__SRC='c00_library.c'
 
@@ -101,12 +104,12 @@ do
     #   -----------------------------------------------------------------------
     if [ $sFile == "$C_TUTOR_LIBRARY__SRC" ]
     then
-        gcc $sOpt -c $sFile -o $pLiby
+        $C_COMPILER $sOpt -c $sFile -o $pLiby
         continue
     else
 
-        gcc $sOpt -c $sFile -o $oFile         #   compile only
-        gcc $oFile $pLiby -o $xFile     #   linking
+        $C_COMPILER $sOpt -c $sFile -o $oFile         #   compile only
+        $C_COMPILER $oFile $pLiby -o $xFile     #   linking
     fi
     #   -----------------------------------------------------------------------
 

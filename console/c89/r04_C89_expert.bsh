@@ -266,7 +266,7 @@ function f_run_compile {
     local -x pLib="$dTmp/${C_TUTOR_LIBRARY__OBJ}"
     local -x pObj
     local -x pExe
-    local sCpl="gcc"
+    local sCpl=$C_COMPILER
     local sOpt="-Wall -Werror"
 
 
@@ -435,6 +435,9 @@ function f_run_execute {
 
 #   s:  C.this
 declare -r      p_pThis=$BASH_SOURCE
+
+#   s:  compiler
+declare -r C_COMPILER='gcc'
 
 #   s:  C.fwk
 declare -r      C_dirTemp=$v_FWK_dirTemp
