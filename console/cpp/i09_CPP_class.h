@@ -741,15 +741,24 @@ class CMenu   : public CTrace {
 class CTutor : public CMenu {
 
     private:
-        int  m_iCounter;
+        int     m__iCounter;
+        int     m__iExitStatus;
+        char *  m__sDirScratch;
+        int     m__iRandom;
 
     public:
 
 //      constructor
         CTutor() {
             srand((unsigned int)time(NULL));
-            m_iCounter = 0;
+            m__iCounter     =   0;
+            m__iRandom      =   1000 + rand() % 1000;
+            m__iExitStatus  =   atoi(getenv("v_FWK_exitStatus"));
+            m__sDirScratch  =   getenv("v_FWK_dirScratch");
         }
+
+        int f_getEnv_iExitStatus()      { return m__iExitStatus;}
+        char * f_getEnv_sDirScratch()   { return m__sDirScratch;}
 
         void f_mode_color(bool p_bColor) {
             if (p_bColor) {
@@ -800,11 +809,11 @@ class CTutor : public CMenu {
         int f_iCounter(bool p_bStart = false) {
             int iRc;
             if (p_bStart) {
-                iRc = m_iCounter;
-                m_iCounter  = 0;
+                iRc = m__iCounter;
+                m__iCounter  = 0;
             } else {
-                m_iCounter += 1;
-                iRc  = m_iCounter;
+                m__iCounter += 1;
+                iRc  = m__iCounter;
 
             }
             return iRc;
