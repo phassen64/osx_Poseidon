@@ -29,10 +29,10 @@ sVer='athene1'
 #
 
 #   s:  dSrc
-dSrc="$HOME/Documents/basic"
+dSrc="$HOME/Documents/organizer"
 if [ ! -d $dSrc ]
 then
-    return 99
+    exit $LINENO
 fi
 
 
@@ -40,7 +40,7 @@ fi
 dObj="$HOME/VCS/fwk/basic"
 if [ ! -d $dObj ]
 then
-    return 99
+    exit $LINENO
 fi
 
 #
@@ -52,13 +52,13 @@ fnam='log-X.txt'
 #   s:  pSrc
 pSrc="$dSrc/$fNam"
 if [ ! -f $pSrc ]; then
-    return 99
+    exit $LINENO
 fi
 
 #   s:  pObj
 pObj="$dObj/$fNam"
 if [ ! -f $pObj ]; then
-    return 99
+    exit $LINENO
 fi
 
 printf "=== entry v.(%s):[%s]\n" "$sVer" "$sDtm"
