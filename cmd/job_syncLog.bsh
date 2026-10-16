@@ -68,9 +68,9 @@ if [ ! -f $pObj ]; then
     exit $LINENO
 fi
 
-printf "\t:dirSrc:[%s]\n" "$dSrc"
-printf "\t:dirObj:[%s]\n" "$dObj"
-printf "\t:logbook.copy: dirSrc -> dirObj\n"
+printf "\t:pSrc=['%s']\n" "$pSrc"
+printf "\t:dObj=['%s']\n" "$dObj"
+printf "\t:copy:pSrc->dObj\n"
 
 #   perform job
-cp $dSrc/log*.txt $dObj
+cp $pSrc $dObj
