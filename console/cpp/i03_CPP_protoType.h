@@ -1,19 +1,18 @@
 /*  ****************************************************************************
  *  tutorial.C89  include.protoType           ©[mATe64]           [2026-10-14]
- *  ****************************************************************************
- *  encoding: UTF-8
-    !$@€ƒ„…†‡‰ŠŒŽ“”•—™šœžŸ¡¢£¤¥¦§¨©«¬®°±²³µ¶·¹º»¼½¾¿ÑÖØÜÞßäæçîðñôö÷üýþÿ
-*  ****************************************************************************/
+ *  ***********************************************************************.$.*/
 
-#ifndef __USE_TUTOR_CPP_H__PROTOTYPE
-#define __USE_TUTOR_CPP_H__PROTOTYPE
+//  !$@€ƒ„…†‡‰¡“”•—Ÿ¢£¤¥¦§¨™©®×±«»♔♖♞♟°²³ƒµ¶·¹º¼½¾¿ÄÖÜäöüßæœžîðñôö÷αβγδεΦXΨ.Ω.*
+
+#ifndef __USE_TUTOR_CPP_H__protoType
+#define __USE_TUTOR_CPP_H__protoType
 
 /*  ===========================================================================
  *  m:  F.prototype
  *  ======================================================================  */
 
 /*      m:  env                                                             */
-void f_lib_getEnv(int & p_iEc, char **p_sDir);
+void    f_lib_getEnv(int & p_iEc, char **p_sDir);
 
 /*      m:  menu                                                            */
 void    f_lib_header(const char *sText,  int iLine=-1, const char *sFile="?");
@@ -51,4 +50,4 @@ int     f_lib_dayOfYear(int iYear, int iMonth, int iDay);
 void    f_lib_monthDay(int iYear, int iYearday, int* iPMonth, int* iPDay);
 
 
-#endif /* USE_TUTOR_CPP__INCLUDE__PROTOTYPE */
+#endif /* USE_TUTOR_CPP__INCLUDE__protoType */
