@@ -529,7 +529,7 @@ then
     f_fwk_variable_define
 
     #   update path
-    export PATH="$PATH:$v_FWK_dirCommand"
+    export PATH="$PATH:$v_FWK_dirCommand:."
 
     #   show
     echo "+ fwk : pathUpdate"

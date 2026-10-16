@@ -18,6 +18,7 @@ $PGMNAME="[3]:Operatoren und Statements";
 #  9) for(x,y,z) {...}
 # 10) foreach $v @Liste
 
+use lib '.';
 use p00;    # include + compile von Modul "p00.pm"
 $iEc  = $ENV{v_FWK_exitStatus} + 0;
 

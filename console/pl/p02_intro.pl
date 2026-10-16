@@ -19,8 +19,9 @@
 # ============================================================================
 # INCLUDE PATH for Windows
 # ============================================================================
-# push(@INC,"C:/CMD"); #   $PATH_BIN="C:/BIN"; push(@INC,$PATH_BIN);--err
-#use p00;    # include + compile von Modul "p00.pm"
+
+#   push(@INC,"."); #   $PATH_BIN="C:/BIN"; push(@INC,$PATH_BIN);--err
+#   use p00;    # include + compile von Modul "p00.pm"
 
 # ============================================================================
 # 1) Initialisierungen von Variablen

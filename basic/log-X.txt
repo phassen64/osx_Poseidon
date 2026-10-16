@@ -802,7 +802,7 @@ $   Bash Ternär Operator
 === encoding UTF8
 https://de.wikipedia.org/wiki/Unicodeblock_Griechisch_und_Koptisc    !$@€ƒ„…†‡‰Œ“”•—™ čšŠœžŽŸ¡¢£¤¥¦§¨©«¬®°±²³µ¶·¹º»¼½¾¿ÑØÞ.äöüÄÖÜß.æçîðñô÷ýþÿЖЯЮ$
     my:     !$@€ƒ„…†‡‰Œ“”•—™ čšŠœžŽŸ¡¢£¤¥¦§¨©«¬®°±²³µ¶
-        ·¹º»¼½¾¿ÑØÞ.ÄÖÜäöüß.æçîðñô÷ýþÿЖЯЮ$
+            ·¹º»¼½¾¿ÑØÞ.äöüÄÖÜß.æçîðñô÷ýþÿЖЯЮ$
     greek   :   αβγδεζηθικλμνξοπρστυφχψω.ΓΔΘΛΞΠΣΦXΨΩ
     money   :   $£€¥  ©®
     physic  :   °⏻⏼⏽⭘⏏⏎  ⏚⏛
@@ -827,5 +827,8 @@ https://de.wikipedia.org/wiki/Unicodeblock_Griechisch_und_Koptisc    !$@€ƒ„
     $   sudo apt update && sudo apt full-upgrade -y
         *   update all packages - libOffice as well
 
-    
++   CRQ TutorCpp
+    Steuerzeichen im Logging 
+    File t18 error
+    try z99 none
     
