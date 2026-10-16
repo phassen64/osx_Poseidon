@@ -10,8 +10,8 @@
     #include "i02_CPP_compact.h"
     #include "i03_CPP_protoType.h"
     #include "i04_CPP_globals.h"
-    #include "i05_CPP_synonym.h"
-    #include "i06_CPP_dataType.h"
+    #include "i05_CPP_const.h"
+    #include "i06_CPP_typedef.h"
     #include "i09_CPP_osType.h"
 
 #endif /*I__TUTOR_CPP__compact*/
