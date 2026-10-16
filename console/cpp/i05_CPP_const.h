@@ -36,4 +36,4 @@
 #define C_TUTOR__TAB_SIZE               5
 
 
-#endif /* USE_TUTOR_CPP_H_const */
+#endif /* USE_TUTOR_CPP_H__const */

@@ -111,4 +111,4 @@
 
 
 
-#endif /*USE_TUTOR_CPP__INCLUDE__compact*/
+#endif /*USE_TUTOR_CPP_H__compact*/

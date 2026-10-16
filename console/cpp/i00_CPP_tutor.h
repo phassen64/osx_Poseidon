@@ -3,8 +3,8 @@
  *  ***********************************************************************.$.*/
 //  !$@€ƒ„…†‡‰¡“”•—Ÿ¢£¤¥¦§¨™©®×±«»♔♖♞♟°²³ƒµ¶·¹º¼½¾¿ÄÖÜäöüßæœžîðñôö÷αβγδεΦXΨ.Ω.*
 
-#ifndef __USE_TUTOR_CPP__INCLUDE_COMMON
-#define __USE_TUTOR_CPP__INCLUDE_COMMON
+#ifndef __USE_TUTOR_CPP_H__common
+#define __USE_TUTOR_CPP_H__common
 
     #include "i01_CPP_standard.h"
     #include "i02_CPP_compact.h"
@@ -16,4 +16,4 @@
     #include "i08_CPP_osType.h"
     #include "i09_CPP_class.h"
 
-#endif /*I__TUTOR_CPP__compact*/
+#endif /*I__TUTOR_CPP__common*/

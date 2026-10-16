@@ -38,4 +38,4 @@ const   char  * gC_WeekdayName[] =
 char    gTimeStr[256];
 
 
-#endif /* USE_TUTOR_CPP__INCLUDE__globals */
+#endif /* USE_TUTOR_CPP_H__globals */

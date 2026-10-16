@@ -50,4 +50,4 @@ int     f_lib_dayOfYear(int iYear, int iMonth, int iDay);
 void    f_lib_monthDay(int iYear, int iYearday, int* iPMonth, int* iPDay);
 
 
-#endif /* USE_TUTOR_CPP__INCLUDE__protoType */
+#endif /* USE_TUTOR_CPP_H__protoType */
