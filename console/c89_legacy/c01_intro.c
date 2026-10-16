@@ -228,7 +228,7 @@ int main(int args, char *argv[]) {
  *  Get Environment Variable
  *  -------------------------------------------------------
  */
-    int     iEc = atoi(getenv("v_FWK_exitCode"));
+    int     iEc = atoi(getenv("v_FWK_exitStatus"));
     return  F01_intro(iEc);
 }
 #endif

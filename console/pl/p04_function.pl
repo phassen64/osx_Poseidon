@@ -7,7 +7,7 @@ $PGMNAME="[4]:Packages,Scripts,Funktionen,Variablen";
 # !$@€ƒ„…†‡‰ŠŒŽ“”•—™šœžŸ¡¢£¤¥¦§¨©«¬®°±²³µ¶·¹º»¼½¾¿ÑÖØÜÞßäæçîðñôö÷üýþÿß
 
 use p00;
-$_iEc = $ENV{v_FWK_exitCode} + 0;  # not iEc => reset deletes
+$_iEc = $ENV{v_FWK_exitStatus} + 0;  # not iEc => reset deletes
 
 #  1) Packages - Namensr?ume
 #  2) BEGIN...END in Packages

@@ -321,7 +321,7 @@ function f_bCheckEc($p_iEc = $g_iEc) {
 
     #   test exit code
     if ($bTest) {
-        $env:v_FWK_exitCode    = -(__LINE__)
+        $env:v_FWK_exitStatus    = -(__LINE__)
         $LastExitCode       = -(__LINE__)
     }
 
@@ -382,7 +382,7 @@ $T      = Get-Date -Format 'ddHHmmss'
 
 #   =*=: set exit code
 $g_iEc = Get-random -Minimum 1001 -Maximum 9999 # script exit code
-$env:v_FWK_exitCode = $g_iEc   # EC.env:=EC.scp : exitCode environment
+$env:v_FWK_exitStatus = $g_iEc   # EC.env:=EC.scp : exitCode environment
 
 #   =*=: matches and logId
 $v_REX_src  =  $C_cLanguageId + '??_*.' + $C_sExtensionId_src  # source files

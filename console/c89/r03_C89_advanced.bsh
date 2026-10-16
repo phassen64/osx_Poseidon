@@ -136,7 +136,7 @@ function f_run_script {
     done
 
     #   use exit code
-    local -i iEc=$v_FWK_exitCode
+    local -i iEc=$v_FWK_exitStatus
 
     #   define next
     local -i iBashReply=0

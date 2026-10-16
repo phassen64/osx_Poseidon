@@ -13,7 +13,7 @@ int F05_control(int);
 #ifndef __USE_TUTOR_C89__MAIN
 #define __USE_TUTOR_C89__MAIN
 int main(int args, char *argv[]) {
-    int     iEc = atoi(getenv("v_FWK_exitCode"));
+    int     iEc = atoi(getenv("v_FWK_exitStatus"));
     return  F05_control(iEc);
 }
 #endif

@@ -175,7 +175,7 @@ int F01_intro(int p_iEc) {
 #define __USE_TUTOR_C89__MAIN
 int main() {
     printf("*** hello,Main!\n");
-    int     iEc = atoi(getenv("v_FWK_exitCode"));   /* by user-framework */
+    int     iEc = atoi(getenv("v_FWK_exitStatus"));   /* by user-framework */
     return  F01_intro(iEc);
 }
 #endif

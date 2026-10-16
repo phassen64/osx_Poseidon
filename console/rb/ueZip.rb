@@ -25,7 +25,7 @@
 
     globals :   using Environment-Variables of cmd.exe:
                     TMP             :   DOS temp directory => ENV['TMP']
-                    v_FWK_exitCode     :   default exit value (==%ERRORLEVEL%)
+                    v_FWK_exitStatus     :   default exit value (==%ERRORLEVEL%)
     topics  :
                 +   parsing an UEP-File
                 +   creating UEP-Files
@@ -2342,7 +2342,7 @@ end # F~build
 def F_set_globals()
     #   DES:    set globals {sNow,bVerbose,bColor}
     #   +   EXIT code
-    iExitCode = $m.f_exitCode(ENV['v_FWK_exitCode'].to_i)
+    iExitCode = $m.f_exitCode(ENV['v_FWK_exitStatus'].to_i)
     #   +   Time
     $sNow=$m.f_sNow('%y%m%d%H%M%S')
     #   +   set class pointer to File Opbect

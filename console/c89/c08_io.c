@@ -1139,7 +1139,7 @@ int F08_io(int p_iEc, char* p_dTmp)
 #ifndef __USE_TUTOR_C89__MAIN
 #define __USE_TUTOR_C89__MAIN
 int main(int args, char *argv[]) {
-    int     iEc     = atoi(getenv("v_FWK_exitCode"));
+    int     iEc     = atoi(getenv("v_FWK_exitStatus"));
     char  * dTmp    = getenv("v_FWK_dirScratch");
     printf("+++ dirTmp:%s\n",dTmp);
     return  F08_io(iEc,dTmp);

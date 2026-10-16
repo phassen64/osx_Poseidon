@@ -74,8 +74,8 @@ end
 #   powershell can set:$env:v_COLOR=$true
 
 $iExitCode = C_EXIT_CODE
-if  ENV['v_FWK_exitCode'] != nil
-    $iExitCode=ENV['v_FWK_exitCode'].to_i
+if  ENV['v_FWK_exitStatus'] != nil
+    $iExitCode=ENV['v_FWK_exitStatus'].to_i
 end
 
 if (C_LIB_VERBOSE)

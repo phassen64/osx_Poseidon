@@ -554,14 +554,14 @@ function  f_lib_puts([string] $p_sString, [string] $p_sColor =  $C_sColor_std ) 
 function f_lib_header($p_iLineNr) {
 
     #   IN: $v_arg_sScp
-    #   IN: $env:v_FWK_exitCode
+    #   IN: $env:v_FWK_exitStatus
     #   OUT:$global:v_iLibExitCode
 
     # - s:  save exitCode
-    if ($null -eq $env:v_FWK_exitCode) {
+    if ($null -eq $env:v_FWK_exitStatus) {
         $global:v_iLibExitCode  = $g_iStdExitCode
     } else {
-        $global:v_iLibExitCode  = $env:v_FWK_exitCode
+        $global:v_iLibExitCode  = $env:v_FWK_exitStatus
     }
 
     # - s:  functionName

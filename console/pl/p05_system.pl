@@ -8,7 +8,7 @@ $PGMNAME="[5]:Systemfunktionen";
 # !$@�����������������������������������������������������������������
 
 use p00;
-$iEc  = $ENV{v_FWK_exitCode} + 0;
+$iEc  = $ENV{v_FWK_exitStatus} + 0;
 
 # include + compile von Modul "i01.pm"
 #  1) Datums-Funktionen

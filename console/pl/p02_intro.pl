@@ -29,7 +29,7 @@ $PGMNAME = "[2]:Einfuehrung";  # String-Variable
 $cStr    = $PGMNAME; # Zuweisung: String-Variable := String-Variable
 $i       = 77;       # Numerische-Variable
 $iPtr    = \$i;      # Ptr-Variable
-$iEc     = $ENV{v_FWK_exitCode} + 0;
+$iEc     = $ENV{v_FWK_exitStatus} + 0;
 
 # ============================================================================
 # 2) Ausgabe

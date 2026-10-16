@@ -587,7 +587,7 @@ function f_runMen_header($p_iLineNr)   {
     #   clear allways old errors
     $Error.clear()  # clear all errors
     #   output
-    $i =  $env:v_FWK_exitCode
+    $i =  $env:v_FWK_exitStatus
     $s +=  ":{$i}"
     $s +=  ":{$sDtm}"
 #   $s +=   " at:[$p_iLineNr]`n"
@@ -903,7 +903,7 @@ $script:g_sScratchDir = $d
 #   s:  glob.exitCode
 #
 
-$env:v_FWK_exitCode        =   Get-Random -Minimum 1001 -Maximum 9999
+$env:v_FWK_exitStatus        =   Get-Random -Minimum 1001 -Maximum 9999
 $script:v_iLibExitCode  =   -1138   # return value
 
 #
@@ -1070,7 +1070,7 @@ _info "bRawMode:    <$o_raw>"
 _info "bLogging:    <$o_logging>"
 _info "bAutoName:   <$o_auto>"
 _info "vLogging:    <$v__bLogging>"
-_info "iExitCode:   <$env:v_FWK_exitCode>"
+_info "iExitCode:   <$env:v_FWK_exitStatus>"
 _info "sPath: {$env:path}"
 if ($v__bAutoNaming) {
     $pLog = $global:g_hScratch.m_pLog
@@ -1243,7 +1243,7 @@ for ( $iRun = 1; $iRun -le $v__iRepeat; $iRun ++) {
         }
         finally {
             if ( !$bEc ) {
-                if ($LastExitCode -eq $env:v_FWK_exitCode) {
+                if ($LastExitCode -eq $env:v_FWK_exitStatus) {
                      _puts ";" $C_sColor_accepted
                 } elseif ($LastExitCode -eq 0) {
                     _print ';' ; _puts " ec == 0" $C_sColor_result

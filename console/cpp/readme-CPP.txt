@@ -30,7 +30,7 @@ url:    https://cplusplus.com/doc/tutorial/
 
 
 === compile
-psh>    $env:v_FWK_exitCode=87123
+psh>    $env:v_FWK_exitStatus=87123
 psh>   _cls; _c .\c00_dummy.cpp; .\run.exe x
 
 === Tutor Plan

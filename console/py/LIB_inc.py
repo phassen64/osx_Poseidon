@@ -13,8 +13,8 @@
 #       https://www.tutorialspoint.com/python/index.htm
 
 #   •   using:
-#           Powershell/DOS variable: v_FWK_exitCode
-#           psh$ (gci env:v_FWK_exitCode).Value
+#           Powershell/DOS variable: v_FWK_exitStatus
+#           psh$ (gci env:v_FWK_exitStatus).Value
 
 #
 #   •   file info functions
@@ -90,7 +90,7 @@ C_EC_WARNING = int(3)       # warning
 C_EC_ERROR = int(1)         # standard error - PSH script
 
 try:
-    g_iEc = int(os.environ['v_FWK_exitCode'])
+    g_iEc = int(os.environ['v_FWK_exitStatus'])
 except Exception:
     g_iEc = C_EC_WARNING    # for bash/dos: 0...255
 

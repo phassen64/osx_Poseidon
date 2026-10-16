@@ -82,7 +82,7 @@ g = m.CLib()
 
 #   run header function inside my module
 #   we retrieve the input environment
-#   variable v_FWK_exitCode
+#   variable v_FWK_exitStatus
 #   we call the function with the parameter sTc
 sTc = "tcIntro"
 

@@ -453,7 +453,7 @@ int F_mod_memoryTest() {
     printf("\tmemcpy(obj,src,sizeof(src))     : obj=<%s>\n",memOBJ);
 
     /* ---  void* memmove(void* obj, const void* src, size_t len) */
-    /*      =~ memcpy, jedoch mit Überlappung von memSRC/OBJ */
+    /*      =~ memcpy, jedoch mit ï¿½berlappung von memSRC/OBJ */
     memmove(memOBJ,&(memOBJ[5]),sizeof(memSRC));
     printf("\tmemmove(obj,&obj[5],sizeof(src)): obj=<%s>\n",memOBJ);
 
@@ -487,7 +487,7 @@ int F_mod_memoryTest() {
  *  ***************************************************************************
  *  STRING Funktionen   {strXcpy,strXcat,strXcmp,strLen};X={[n]} <string.h>
  *  ***************************************************************************
- *  ---     DESC:  Strings als ganzes verändern oder vergleichen.
+ *  ---     DESC:  Strings als ganzes verï¿½ndern oder vergleichen.
  *  int     strcpy  (const char *s1, const char *s2);
  *  int     strcmp  (const char *s1, const char *s2);
  *  int     strcat  (const char *s1, const char *s2);
@@ -507,8 +507,8 @@ int F_mod_stringMake() {
     char strSRC[] = "ABCDEFGHIJ";
     char strOBJ[40] ;
     char strTMP[40]= "abc";
-    const char*   strSRC_LOCAL = "abcÄÖÜß";
-    const char*   strOBJ_LOCAL = "abcÄ";
+    const char*   strSRC_LOCAL = "abcï¿½ï¿½ï¿½ï¿½";
+    const char*   strOBJ_LOCAL = "abcï¿½";
 
     printf("\n&&& menu : stringMake [%s;%d] \n\n",__FILE__,__LINE__);
 
@@ -814,7 +814,7 @@ int F_mod_envTest() {
 
 
     /* ---  atexit */
-    /*  springt zur exit function und kehrt zurück
+    /*  springt zur exit function und kehrt zurï¿½ck
         Die Exi-Funktion wird erst nach dem Ende von main
         aufgerufen
         */
@@ -1151,7 +1151,7 @@ int F09_system(int p_iEc)
 
 #ifndef __USE_TUTOR__MAIN
 int main(int args, char *argv[]) {
-    int     iEc = atoi(getenv("v_FWK_exitCode"));
+    int     iEc = atoi(getenv("v_FWK_exitStatus"));
     return  F09_system(iEc);
 }
 #endif

@@ -67,7 +67,7 @@ if not exist %1% (
 
 ::  show my log and exit codes
 echo.
-echo +++ DATETIME={%v_DATETIME%} and EXITCODE={%v_FWK_exitCode%}
+echo +++ DATETIME={%v_DATETIME%} and EXITCODE={%v_FWK_exitStatus%}
 
 @call :f_main
 
@@ -138,8 +138,8 @@ sleep.exe %v_DELAY%
 @set v_COLOR=true
 @color 0F
 ::  define special exit code
-@set v_FWK_exitCode=%v_DATETIME:~-4%
-@set v_FWK_exitCode=%RANDOM%
+@set v_FWK_exitStatus=%v_DATETIME:~-4%
+@set v_FWK_exitStatus=%RANDOM%
 @goto :EOF
 
 :f_setDateTime
@@ -184,12 +184,12 @@ if exist %v_LOG_FILE_PSH% (
 
 :f_erl
 ::  !PHA:Problem
-::  The powerShell-scripts got the correct exitCode(%v_FWK_exitCode%),
+::  The powerShell-scripts got the correct exitCode(%v_FWK_exitStatus%),
 ::      but they are not able to return it like:
-::  PSH> exit ($env:v_FWK_exitCode) ... or
-::  PSH> exit "$env:v_FWK_exitCode"
+::  PSH> exit ($env:v_FWK_exitStatus) ... or
+::  PSH> exit "$env:v_FWK_exitStatus"
 ::  <<<     This BATCH will got only %ERRORLEVEL%:=1
-@if %ERRORLEVEL% == %v_FWK_exitCode% (
+@if %ERRORLEVEL% == %v_FWK_exitStatus% (
     echo !!! ok:retCode:=%ERRORLEVEL%
 ) else (
     @if %ERRORLEVEL% == 1 (

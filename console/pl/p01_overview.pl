@@ -74,6 +74,6 @@ Dokumentation
 # 3) get Environment
 # ============================================================================
 
-$iEc = $ENV{v_FWK_exitCode} + 0;
+$iEc = $ENV{v_FWK_exitStatus} + 0;
 print "iEc: $iEc";
 exit $iEc;

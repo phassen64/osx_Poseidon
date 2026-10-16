@@ -10,13 +10,13 @@
 :f_clrEnv
 @set v_VERBOSE=
 @set v_COLOR=
-@set v_FWK_exitCode=
+@set v_FWK_exitStatus=
 @goto :EOF
 
 :f_setEnv
 @set v_VERBOSE=true
 @set v_COLOR=true
-@set v_FWK_exitCode=79
+@set v_FWK_exitStatus=79
 @set v_EXE=ruby.exe
 @goto :EOF
 

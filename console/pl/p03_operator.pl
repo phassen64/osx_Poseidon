@@ -19,7 +19,7 @@ $PGMNAME="[3]:Operatoren und Statements";
 # 10) foreach $v @Liste
 
 use p00;    # include + compile von Modul "p00.pm"
-$iEc  = $ENV{v_FWK_exitCode} + 0;
+$iEc  = $ENV{v_FWK_exitStatus} + 0;
 
 # ============================================================================
 # 1) Zuweisungs-Operatoren

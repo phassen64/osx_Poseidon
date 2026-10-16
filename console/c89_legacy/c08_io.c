@@ -1078,7 +1078,7 @@ int F08_io(int p_iEc)
 
 #ifndef __USE_TUTOR__MAIN
 int main(int args, char *argv[]) {
-    int     iEc = atoi(getenv("v_FWK_exitCode"));
+    int     iEc = atoi(getenv("v_FWK_exitStatus"));
     return  F08_io(iEc);
 }
 #endif

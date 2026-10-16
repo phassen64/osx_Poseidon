@@ -69,7 +69,7 @@
 
 ::  show my log and exit codes
 echo.
-echo +++ DATETIME={%v_DATETIME%} and EXITCODE={%v_FWK_exitCode%}
+echo +++ DATETIME={%v_DATETIME%} and EXITCODE={%v_FWK_exitStatus%}
 
 @call :f_main
 
@@ -135,8 +135,8 @@ echo +++ DATETIME={%v_DATETIME%} and EXITCODE={%v_FWK_exitCode%}
 @set v_COLOR=true
 @color 0F
 ::  define special exit code
-@set v_FWK_exitCode=%v_DATETIME:~-4%
-@set v_FWK_exitCode=%RANDOM%
+@set v_FWK_exitStatus=%v_DATETIME:~-4%
+@set v_FWK_exitStatus=%RANDOM%
 @goto :EOF
 
 :f_setDateTime
@@ -180,7 +180,7 @@ if exist %v_LOG_FILE_SRC% (
 @goto :EOF
 
 :f_rc_check
-@if %ERRORLEVEL% == %v_FWK_exitCode% (
+@if %ERRORLEVEL% == %v_FWK_exitStatus% (
     echo =!= ok:retCode:={%ERRORLEVEL%}
     @goto :EOF
 )
@@ -209,7 +209,7 @@ Timeout %1%
 :f_info
 @echo *** Info
 @echo vCompiler=%v_COMPILER%
-@echo viEcCode=%v_FWK_exitCode%
+@echo viEcCode=%v_FWK_exitStatus%
 @echo vDateTime=%v_DATETIME%
 @echo vDirLog=%v_DIR_LOG%
 @echo vLogFILE_TC=%v_LOG_FILE_TC%

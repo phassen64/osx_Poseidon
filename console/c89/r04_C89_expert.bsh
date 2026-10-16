@@ -460,7 +460,7 @@ declare -r -x   C_REX_tail='c'  # fileExtension
 declare -r -i   C_mod_iPlusDivisor=4    #   max/4
 declare -r -i   C_mod_iStressMax=10     #   stressFactorMax
 declare -r -i   C_mod_delay=1
-declare -r -i   C_mod_iExpectedExitCode=$v_FWK_exitCode #   expected by caller
+declare -r -i   C_mod_iExpectedExitCode=$v_FWK_exitStatus #   expected by caller
 
 #   s:  C.bool
 declare -r -i   C_bTrue=100

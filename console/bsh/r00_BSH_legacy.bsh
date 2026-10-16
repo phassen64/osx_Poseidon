@@ -111,7 +111,7 @@ function f_run_appendLogFiles() {
     return 0
 }
 
-function f_run_calcExitCode() {
+function f_run_calc_exitStatus() {
     #   avoid exitCode =~lineNo conflict
     #   iEc={min...max} :   error
     #   iEc={0}         :   reserved-error
@@ -242,7 +242,7 @@ v_aLog=()
 v_iEc_min=10                # offset to Ec range
 v_iEc_max=210               # => iEc:={min,...,max} <= 255
 v_iEc_std=100               # used by python
-v_iEc_glb=$v_FWK_exitCode   # global one
+v_iEc_glb=$v_FWK_exitStatus # global one
 f_lib_debug "iEc:'$v_iEc_glb'" $LINENO $bDbg
 
 #   =*= :   any NameID
@@ -290,9 +290,9 @@ f_lib_debug "log.tmp:'$v_LOGFILE_tmp'" $LINENO $bDbg
 f_lib_debug "log.obj:'$v_LOGFILE_obj'" $LINENO $bDbg
 
 #   =*= :   exit code calc and save
-f_run_calcExitCode; v_iEc=$?
-v_FWK_exitCode=$v_iEc      # common input variable for scripts
-f_lib_debug "exitCode:'$v_FWK_exitCode'" $LINENO $bDbg
+f_run_calc_exitStatus; v_iEc=$?
+v_FWK_exitStatus=$v_iEc      # common input variable for scripts
+f_lib_debug "exitCode:'$v_FWK_exitStatus'" $LINENO $bDbg
 
 #   =*= :   match TC Files
 f_run_matchFiles $v_sRexEx_src; iRc=$?
@@ -350,7 +350,7 @@ elif [ "$1" == 'c' ]; then
     exit 2
 elif [ "$1" == 'i' ]; then
     f_lib_trace ${FUNCNAME[0]} $LINENO "info" $bTrc
-    f_lib_puts "*** exitCode:'$v_FWK_exitCode'"
+    f_lib_puts "*** exitCode:'$v_FWK_exitStatus'"
     f_lib_versionShow
     exit 3
 elif [ "$1" == '!' ]; then
