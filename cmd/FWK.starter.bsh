@@ -311,7 +311,7 @@ function f_fwk_alias_set(){
     alias +cdhome='cd $HOME && pwd'
     alias +cdcmd='cd $v_FWK_dirCommand && pwd'
     alias +cdlog='cd $v_FWK_dirLogging && pwd'
-    alias +cdtmp='cd $v_FWK_dirScratch && pwd'
+    alias +cdtmp='cd $v_FWK_dirTemp && pwd'
     alias +cdtemp=+cdtmp
     alias +cdvcs='cd $v_VCS && pwd'
     alias +cdvcs_TS='cd $v_VCS/testSuite && pwd'
@@ -470,8 +470,8 @@ function f_fwk_variable_define () {
     #   scratch == tempDir
     v_DIR=$v_VCS_fwk/temp
     v_DIR=$v_USR_dirDocRoot/temp    # better
-    v_FWK_dirScratch=$v_DIR && export v_FWK_dirScratch
-    v_TMP=$v_FWK_dirScratch && export v_TMP
+    v_FWK_dirTemp=$v_DIR && export v_FWK_dirTemp
+    v_TMP=$v_FWK_dirTemp && export v_TMP
 
     #   loging Dir
     v_DIR=$v_VCS_fwk/logging

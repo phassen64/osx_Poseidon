@@ -77,7 +77,7 @@ declare sDtm
 declare v_INFO="TUTOR-CPP-2026" ; export v_INFO
 
 #   clean
-pushd $v_FWK_dirScratch
+pushd $v_FWK_dirTemp
 rm *.o *.out *.obj *.exe
 popd
 
@@ -93,7 +93,7 @@ s='run<simple>::compile+link+run'; printf "BEG %s [%s]\n\n" $s "$sDtm"
 
 declare -i i=0
 declare -i i=iRc
-declare dTmp=${v_FWK_dirScratch}
+declare dTmp=${v_FWK_dirTemp}
 declare sOpt="-Wall -Werror"
 
 #   s:  loop about SHELL-array

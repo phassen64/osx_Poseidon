@@ -6,7 +6,7 @@
 /*
     environment
         •   v_FWK_exitStatus
-        •   v_FWK_dirScratch
+        •   v_FWK_dirTemp
 
     content:
         •   === hints

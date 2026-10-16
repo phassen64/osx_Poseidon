@@ -539,7 +539,7 @@ class CMenu   : public CTrace {
             char * s        = m__cMenuBuffer;
             char * sLine    = m__cLineBuffer;
             char    sHdrId[C_TUTOR__LINE_SIZE];
-            const   char *sEnv_exit = "v_FWK_exitCode";
+            const   char *sEnv_exit = "v_FWK_exitStatus";
             float   fTime;
             time_t  tTime;
             char    sEcOut[20];
@@ -754,7 +754,7 @@ class CTutor : public CMenu {
             m__iCounter     =   0;
             m__iRandom      =   1000 + rand() % 1000;
             m__iExitStatus  =   atoi(getenv("v_FWK_exitStatus"));
-            m__sDirScratch  =   getenv("v_FWK_dirScratch");
+            m__sDirScratch  =   getenv("v_FWK_dirTemp");
         }
 
         int f_getEnv_iExitStatus()      { return m__iExitStatus;}

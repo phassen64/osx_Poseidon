@@ -437,7 +437,7 @@ function f_run_execute {
 declare -r      p_pThis=$BASH_SOURCE
 
 #   s:  C.fwk
-declare -r      C_dirTemp=$v_FWK_dirScratch
+declare -r      C_dirTemp=$v_FWK_dirTemp
 
 #   s:  C.scp
 declare -r -x   C_SCP=`basename $BASH_SOURCE`

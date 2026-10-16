@@ -15,7 +15,7 @@ bash r03_BSH_expert.bsh + 1
 
 #   show my logfile
 i=2
-p="$v_FWK_dirScratch/r03_BSH_expert.log"
+p="$v_FWK_dirTemp/r03_BSH_expert.log"
 printf "\n\n@@@ runner::showLogFile:[$p]\n\n"
 sleep $i
 cat $p

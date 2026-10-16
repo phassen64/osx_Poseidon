@@ -26,7 +26,7 @@ function f_run_clean() {
     done
 
     #   clean.scratch
-    pushd $v_FWK_dirScratch > /dev/null
+    pushd $v_FWK_dirTemp > /dev/null
     #   pwd
     for x in "${aExt[@]}"; do
         f='*.'

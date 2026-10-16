@@ -20,7 +20,7 @@
 
 void f_lib_getEnv(int & p_iEc, char **p_sDir) {
     p_iEc   =   atoi(getenv("v_FWK_exitStatus"));
-    *p_sDir =   getenv("v_FWK_dirScratch");
+    *p_sDir =   getenv("v_FWK_dirTemp");
 }
 
 //  ***************************************************************************

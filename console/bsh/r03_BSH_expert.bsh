@@ -324,7 +324,7 @@ declare -x      x='-'
 declare -x      SOut=''     #   printf flush string
 
 #   s:  V.logging
-declare -r      v_scp_pLog="$v_FWK_dirScratch/$C_SCP_bdy.log"
+declare -r      v_scp_pLog="$v_FWK_dirTemp/$C_SCP_bdy.log"
 
 #   s:  V.dateTime
 declare         v_dtm_tStart

@@ -8,7 +8,7 @@
 #   https://wiki.ubuntuusers.de/Shell/Bash-Skripting-Guide_f%C3%BCr_Anf%C3%A4nger/
 
 #   input:
-#       •   v_FWK_dirScratch
+#       •   v_FWK_dirTemp
 
 #   remarks:
 #       •   default:no color must be enabled by:lib configuration
@@ -1293,7 +1293,7 @@ declare -x v_LIB_dtmFormatString_hdr="+%Y-%m-%d__%H:%M:%S"
 declare -i v_LIB_log_bUseDtmName=$v_LIB_bFalse  # short Name
 declare -x v_LIB_log_sFileExtension='.log'
 
-declare -x v_LIB_dirScratch=$v_FWK_dirScratch  # by Framework
+declare -x v_LIB_dirScratch=$v_FWK_dirTemp  # by Framework
 declare -x v_LIB_fnm_stdFileExtension='.txt'
 
 #   #   m:  v.menu

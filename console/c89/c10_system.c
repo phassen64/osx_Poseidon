@@ -996,7 +996,7 @@ int F10_system(int p_iEc, char* p_dTmp)
 #define __USE_TUTOR_C89__MAIN
 int main(int args, char *argv[]) {
     int     iEc     =   atoi(getenv("v_FWK_exitStatus"));
-    char  * dTmp    =   getenv("v_FWK_dirScratch");
+    char  * dTmp    =   getenv("v_FWK_dirTemp");
     return  F10_system(iEc,dTmp);
 }
 #endif

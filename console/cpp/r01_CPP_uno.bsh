@@ -33,7 +33,7 @@
 
 #   s:  F.clean
 function f_run_clean() {
-    pushd $v_FWK_dirScratch > /dev/null
+    pushd $v_FWK_dirTemp > /dev/null
     declare -a aExt=('o' 'obj' 'out' 'exe' 'bin')
     for x in "${aExt[@]}"; do
         f='*.'
@@ -77,7 +77,7 @@ declare sDtm=$(date "$sFmt")
 s='run<uno>::compile+link+run'; printf "BEG %s [%s]\n\n" $s "$sDtm"
 
 declare -i i=0
-declare dTmp=${v_FWK_dirScratch}
+declare dTmp=${v_FWK_dirTemp}
 declare sOpt="-Wall -Werror"
 
 #   s:  loop about BASH array

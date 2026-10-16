@@ -53,7 +53,7 @@ function f_run_isFile() {
 }
 
 function f_run_clean() {
-    pushd $v_FWK_dirScratch > /dev/null
+    pushd $v_FWK_dirTemp > /dev/null
     declare -a aExt=('o' 'obj' 'out' 'exe' 'bin')
     for x in "${aExt[@]}"; do
         f='*.'
@@ -186,7 +186,7 @@ function f_run_doExecuteAll() {
 #   s:  B.globals
 declare -a v_RUN_aRc=()
 declare -i v_RUN_iRc=0
-declare -r v_RUN_dirTemp=${v_FWK_dirScratch}
+declare -r v_RUN_dirTemp=${v_FWK_dirTemp}
 
 #   s:  B.compose
 v_sSid='c'          #   script file identifier
