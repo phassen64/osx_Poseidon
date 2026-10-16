@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #   ***************************************************************************
-#   run:[expert]    tutorial.C++ v2026      ©[mATe64]           [2026-10-16]
+#   run:[expert]    tutorial.CPP v2026      ©[mATe64]           [2026-10-16]
 #   ***************************************************************************
 
 #   encoding.UTF8:
@@ -27,15 +27,15 @@
 #   usage:  $   bash <SCP.bsh> [option]
 
 #   remark: The objects and executables are stored in the
-#           [FWK-Temp-Directory].
+#           [FWK-TEMP-Directory].
 
-#   remark: The first C-source, named c00_*.cpp, is handled as the
-#           c++-TutorLibrary
+#   remark: The first C-source, named z00_*.cpp, is handled as the
+#           c89-TutorLibrary
 #
-#           [FWK-Temp-Directory].
+#           [FWK-TEMP-Directory].
 
 
-#   rem:    don't execute c00*.cpp
+#   rem:    don't execute c00*.c
 
 <<usage
     Tutorial 2026-10-16
@@ -266,7 +266,7 @@ function f_run_compile {
     local -x pLib="$dTmp/${C_TUTOR_LIBRARY__OBJ}"
     local -x pObj
     local -x pExe
-    local sCpl="gcc"
+    local sCpl=$C_COMPILER
     local sOpt="-Wall -Werror"
 
 
@@ -436,6 +436,9 @@ function f_run_execute {
 #   s:  C.this
 declare -r      p_pThis=$BASH_SOURCE
 
+#   s:  compiler
+declare -r C_COMPILER='g++'
+
 #   s:  C.fwk
 declare -r      C_dirTemp=$v_FWK_dirTemp
 
@@ -447,14 +450,14 @@ declare -r -x   C_EXT_obj='obj'
 declare -r -x   C_EXT_exe='exe'
 
 #   s:  C.lib
-declare -r C_TUTOR_LIBRARY__SRC='c00_library.c'
+declare -r C_TUTOR_LIBRARY__SRC='z00_library.cpp'
 s=$(basename ${C_TUTOR_LIBRARY__SRC})
 s="${s%.*}" # body
 declare -r C_TUTOR_LIBRARY__OBJ="${s}.${C_EXT_obj}"
 
 #   s:  C.RexExpr
-declare -r -x   C_REX_head='c'  # c??...
-declare -r -x   C_REX_tail='c'  # fileExtension
+declare -r -x   C_REX_head='z'      # z??...
+declare -r -x   C_REX_tail='cpp'    # fileExtension
 
 #   s:  C.modifier
 declare -r -i   C_mod_iPlusDivisor=4    #   max/4
