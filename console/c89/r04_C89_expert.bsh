@@ -27,12 +27,12 @@
 #   usage:  $   bash <SCP.bsh> [option]
 
 #   remark: The objects and executables are stored in the
-#           [FWK-Scratch-Directory].
+#           [FWK-TEMP-Directory].
 
 #   remark: The first C-source, named c00_*.c, is handled as the
 #           c89-TutorLibrary
 #
-#           [FWK-Scratch-Directory].
+#           [FWK-TEMP-Directory].
 
 
 #   rem:    don't execute c00*.c

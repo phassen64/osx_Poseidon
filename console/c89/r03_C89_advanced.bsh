@@ -16,7 +16,7 @@
 #           Step5:  logging
 
 #       The objects and executables are stored in the
-#               [FWK-Scratch-Directory].
+#               [FWK-TEMP-Directory].
 
 #   usage:
 #       $   bash run_<SCP>.bsh [iStressMax]
