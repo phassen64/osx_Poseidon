@@ -1,0 +1,281 @@
+#!/bin/bash
+
+#   ***************************************************************************
+#   run:[advanced]  tutorial.CPP v2026      ©[mATe64]           [2026-10-16]
+#   ***************************************************************************
+
+#   description:
+
+#       Build the complete tutorial.CPP and generate Build-LogFile.
+
+#       Compile & linking of all z??_*.cpp files in the current directory.
+#           Step1:  compile an own tutor c-library
+#           Step2:  compile c++-source
+#           Step3:  linking c++-source with c-library
+#           Step4:  runs new executable
+#           Step5:  logging
+
+#       The objects and executables are stored in the
+#               [FWK-Scratch-Directory].
+
+#   usage:
+#       $   bash run_<SCP>.bsh [iStressMax]
+
+#   remark:
+#       +   Only compile, not run "tutor c-library".
+#       +   Each source has to provide an own main() function.
+
+#   content:
+#       m:  compose
+#       m:  function
+#           s:  F.clean
+#           s:  F.compile
+#           s:  F.script
+#       b:  body
+#           m:  B.prepare
+#           m:  B.perform
+#               s:  header
+#               s:  loop
+#               s:  footer
+#       b:  lastLine
+
+#   ***************************************************************************
+
+#
+#   m:  compose
+#
+
+#   s:  compiler
+declare -r C_COMPILER='g++'
+aShellArray=$(echo `ls z*.cpp`)
+
+#
+#   m:  function
+#
+
+#   s:  F.clean
+function f_run_clean() {
+    pushd $v_FWK_dirScratch > /dev/null
+    declare -a aExt=('o' 'obj' 'out' 'exe' 'bin')
+    for x in "${aExt[@]}"; do
+        f='*.'
+        f+=$x
+        rm -f $f
+    done
+    popd > /dev/null
+}
+
+#   s:  F.compile
+function f_run_compile() {
+
+    local -x p_sFile=$1
+    local -i p_iFile=$2        #   current index
+    local -i p_nFile=$3        #   maxFile
+    local -i p_iEc=$4
+
+    #   u:  copy
+
+    #   u:  declare.dScratch
+    declare dTmp=${v_FWK_dirScratch}
+
+    #   u:  declare.source
+    declare sNam=$(basename ${p_sFile})     #   source baseName.src
+    declare sExt="${sNam##*.}"              #   extension
+    declare sBdy="${sNam%.*}"               #   Body
+
+    #   u:  declare.object
+    declare oFile="$dTmp/${sBdy}.obj"       #   target filePath.obj
+    declare xFile="$dTmp/${sBdy}.exe"       #   target objectPath.exe
+    declare pLiby="$dTmp/${C_TUTOR_LIBRARY__OBJ}"       #   target library
+
+    #   u:  show
+    #   printf "&&& p1:'%s'\n" $p_sFile
+    printf "&&& make[%d]/[%d] : '%s' \n" \
+                $p_iFile $p_nFile $p_sFile
+    export v_EXE=$xFile
+
+    #   u:  make (compile+link)
+    #   u:  check library
+
+    if [ $p_sFile == "$C_TUTOR_LIBRARY__SRC" ]
+    then
+        $C_COMPILER -c $p_sFile -o $pLiby
+        printf "&&& return -- is library!:'%s'\n"  $C_TUTOR_LIBRARY__SRC
+        return $p_iEc
+    else
+        printf "&&& compile:'%s'\n"  $p_sFile
+        $C_COMPILER -c $p_sFile -o $oFile       #   compile only
+        $C_COMPILER $oFile $pLiby -o $xFile     #   linking
+    fi
+
+    #   u:  show run
+    printf "&&& run![%2.2d]:'%s'...\n\n" $i $xFile
+
+    #   u:  execute executable stored in a variable
+    "$xFile" $p_iEc
+
+}
+
+
+#   s:  F.script
+function f_run_script {
+
+    #   fetch
+    local p_aShellArray=$1
+    local p_nStressMax=$2     # stress counter
+    local p_iRnd=$3
+
+    #   declare
+    local -i i=0
+    local -i n=0
+    local -i iFile=0
+    local -i nFile=0
+
+    #   calc.manually shell array
+    nFile=0
+    for xFile in $p_aShellArray; do
+        nFile+=1
+    done
+
+    #   use exit code
+    local -i iEc=$v_FWK_exitStatus
+
+    #   define next
+    local -i iBashReply=0
+    local -x sHashLine
+    local -i iRc=0
+
+    #   build sLine
+    s=''; c='#'; for((i=0;i<80;i++)); do s+="$c"; done
+    sHashLine=$s
+
+    #   run
+    printf "___ script nFiles:<%d>  iRnd:[%d] :#{%d}\n" $nFile $p_iRnd $iEc
+
+    for (( n=1; n<=$p_nStressMax; n++ )); do
+
+        printf "\n### stress :: [%2.2d]/[%2.2d]\n" $n $p_nStressMax
+        iFile=0
+
+        for sFile in $p_aShellArray
+        do
+
+            iFile+=1
+
+            #   show run test
+            printf "\n%s\n" $sHashLine
+            printf "*** run:[%2.2d]/[%2.2d]:'%s'\n" $iFile $n $sFile
+            printf "%s\n\n" $sHashLine
+
+            #   ---------------------------------------------------------------
+            f_run_compile $sFile $iFile $nFile $iEc;   iBashReply=$?
+            #   ---------------------------------------------------------------
+
+            #   check reply
+            printf "\n<<< replyOf[%d]:'%s': #{%d} vs #{%d}" $n $sFile $iEc $iBashReply
+            if [ $iEc == $iBashReply ]
+            then
+                printf ":iEc isOK\n"
+            else
+                printf ":iEc != isRc \n" $iEc $iBashReply
+                iRc+=1
+            fi
+
+        done
+
+    done
+
+    printf "___ total.iRc:<%d>\n" $iRc
+    return $iRc
+}
+
+#   ===========================================================================
+#   b:  body
+#   ===========================================================================
+
+#
+#   m:  B.prepare
+#
+
+#   s:  parameter
+declare -i p_iStress=$1
+if [ -z $p_iStress ]; then
+    p_iStress=1
+elif [ $p_iStress -lt 1 ]; then
+    p_iStress=1
+fi
+#   echo "stress:[$p_iStress]"  exit
+
+#   s:  const library source
+declare -r C_TUTOR_LIBRARY__SRC='z00_library.cpp'
+
+#   s:  const library object
+s=$(basename ${C_TUTOR_LIBRARY__SRC})
+s="${s%.*}"             #   Body
+declare -r C_TUTOR_LIBRARY__OBJ="${s}.obj"
+
+#   s:  fetchDateTime
+declare sFmt="+%Y-%m-%d %H:%M:%S"
+
+#   s:  calculate stressCounter
+declare -i n=1  #   rndMax
+declare -i iCtr=1+$RANDOM%$n
+declare -i iRc=0
+declare  x  #   formatStr
+
+#   s:  dateTime.Start
+sDtm=$(date "$sFmt");   tDtmStart=$(date '+%s.%N')
+
+#   s:  logFileName
+v_SCP=`basename $BASH_SOURCE`
+v_SCP_bdy="${v_SCP%.*}"
+v_SCP_ext="${v_SCP##*.}"
+fLog="$v_FWK_dirScratch/$v_SCP_bdy.log"
+
+#   s:  F.doClean
+f_run_clean
+
+#
+#   m:  B.perform
+#
+
+#   s:  header
+printf -v SOut ">>> runC89.BEG *[%d] at:[%s]." "$p_iStress" "$sDtm"
+printf "$SOut\n"
+echo "$SOut" > $fLog
+
+#   s:  show.logFileName
+printf "&&& logFile:'%s'\n" "$fLog"
+
+#   s:  flush.logFileName
+printf -v SOut "&&& logfile:'%s'" "$fLog"
+echo "" >>  $fLog
+echo "$SOut" >>  $fLog
+
+#   s:  F.doRun and log
+f_run_script "$aShellArray" "$p_iStress" "$RANDOM" >> $fLog
+iRc=$?
+
+#   s:  build sLine
+echo "" >> $fLog
+s=''; c='&'; for((i=0;i<80;i++)); do s+="$c"; done
+printf -v SOut "%s\n" $s
+echo "$s" >> $fLog
+
+#   s:  show logging results
+s="*** total_sum_of_eRRoRs := [$iRc]";  printf "$s\n"
+echo "$s" >> $fLog
+
+#   s:  dateTime.Stopp
+sDtm=$(date "$sFmt");   tDtmStopp=$(date '+%s.%N')
+
+#   s:  calc.elapsed-time
+fSec=$(echo "($tDtmStopp-$tDtmStart) / 1" | bc)
+
+#   s:  footer
+printf -v SOut "<<< runC89.END *[%d] at:[%s] elapsed:[%s]." "$iCtr" "$sDtm" "$fSec"
+echo "$SOut" >> $fLog
+printf "$SOut\n"
+
+
+#   b:  lastLine

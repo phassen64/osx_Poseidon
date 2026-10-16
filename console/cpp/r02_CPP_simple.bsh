@@ -1,0 +1,148 @@
+#!/bin/bash
+
+#   ***************************************************************************
+#   run:[simple]  tutorial.CPP v2026        ©[mATe64]           [2026-10-16]
+#   ***************************************************************************
+
+#   description:
+#       Build the complete tutorial.CPP.
+#       Compile & linking of all z??_*.cpp files in the current directory.
+#           Step1:  compile an own tutor c-library
+#           Step2:  compile c++-source
+#           Step3:  linking c++-source with c-library
+#           Step4:  runs new executable
+#       The objects and executables are stored in the
+#               [FWK-Scratch-Directory].
+
+#   usage:
+#       $   bash run_<SCP>.bsh
+
+#   usage for test:
+#       $   source run_<SCP>.bsh
+
+#   remark:
+#       +   Only compile, not run "tutor c-library".
+#       +   Each source has to provide an own main() function.
+#       +   no build logging
+
+#   content:
+#       m:  prepare
+#       m:  compile
+#           s:  header
+#           s:  loop
+#           s:  footer
+#       m:  lastLine
+
+#   ***************************************************************************
+
+#
+#   m:  prepare
+#
+
+#   s:  compiler
+declare -r C_COMPILER='g++'
+
+#   s:  const library source
+declare -r C_TUTOR_LIBRARY__SRC='z00_library.cpp'
+
+#   s:  const library object
+s=$(basename ${C_TUTOR_LIBRARY__SRC})
+s="${s%.*}"             #   Body
+declare -r C_TUTOR_LIBRARY__OBJ="${s}.obj"
+
+#   s:  show
+clear
+declare -i iReply=$RANDOM
+echo "+ run.simple:[$iReply]"
+
+#   s:  fetch all C-sources
+declare -a aSrc=$(echo `ls z??_*.cpp`)
+
+#   s:  array size
+declare -i n
+n=${#aSrc[@]}; echo "n1==[$n]" # not works
+
+#   calc manually
+n=0
+for xFile in $aSrc; do
+    n+=1
+done
+echo "n==[$n] "
+
+#   s:  fetchDateTime
+declare sFmt="+%Y-%m-%d %H:%M:%S"
+declare sDtm
+
+#   only if source
+declare v_INFO="TUTOR-CPP-2026" ; export v_INFO
+
+#   clean
+pushd $v_FWK_dirScratch
+rm *.o *.out *.obj *.exe
+popd
+
+#   ===========================================================================
+#   m:  compile
+#   ===========================================================================
+
+clear
+
+#   s:  header
+sDtm=$(date "$sFmt")
+s='run<simple>::compile+link+run'; printf "BEG %s [%s]\n\n" $s "$sDtm"
+
+declare -i i=0
+declare -i i=iRc
+declare dTmp=${v_FWK_dirScratch}
+declare sOpt="-Wall -Werror"
+
+#   s:  loop about SHELL-array
+for sFile in $aSrc
+do
+
+    #   u:  declare.src
+    declare sNam=$(basename ${sFile})       #   source baseName.src
+    declare sExt="${sNam##*.}"              #   extension
+    declare sBdy="${sNam%.*}"               #   Body
+
+    #   u:  declare.objects
+    declare oFile="$dTmp/${sBdy}.obj"       #   target filePath.obj
+    declare xFile="$dTmp/${sBdy}.exe"       #   target objectPath.exe
+    declare pLiby="$dTmp/${C_TUTOR_LIBRARY__OBJ}"       #   target library
+
+    #   u:  show
+    i+=1
+    printf "&&& make[%2.2d]:'%s' of:[%d] into:'%s' \n" \
+            $i $sFile $n  $xFile
+    export v_EXE=$xFile
+
+    #   u:  make (compile+link)
+    #   u:  check library
+    if [ $sFile == "$C_TUTOR_LIBRARY__SRC" ]
+    then
+        printf "&&& continue, is Library!:'%s'\n"  $C_TUTOR_LIBRARY__SRC
+        $C_COMPILER $sOpt -c $sFile -o $pLiby
+        continue
+    else
+        $C_COMPILER $sOpt -c $sFile -o $oFile         #   compile only
+        $C_COMPILER $oFile $pLiby -o $xFile     #   linking
+    fi
+
+    #   u:  show run
+    printf "&&& run![%2.2d]:'%s'\n" $i $xFile
+
+    #   u:  execute executable stored in a variable
+    "$xFile"
+
+    #   u:  fetch iRc
+    iRc=$?
+    printf "&&& reply.RC :[%d]\n" $i
+
+done
+
+#   s:  footer
+printf "\n"
+sDtm=$(date "$sFmt")
+s='run<simple>::compile+link+run'; printf "END %s [%s]\n\n" $s "$sDtm"
+
+#   m:  lastLine

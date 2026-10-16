@@ -1,4 +1,4 @@
-=== readme.C
+﻿=== readme.C
 
     Dieses Dokument in :
     •   UTF8        :   https://en.wikipedia.org/wiki/UTF-8

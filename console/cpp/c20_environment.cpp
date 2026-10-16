@@ -38,7 +38,7 @@ int F20_environment(CTutor &m) {
         "COMPUTERNAME",
         "v_FWK_mode_bClear",
         "v_FWK_mode_bVerbose",
-        "v_FWK_exitStatus"
+        "v_FWK_exitCode"
     };
     int         n = 7;
 
