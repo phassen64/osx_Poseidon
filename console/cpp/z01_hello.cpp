@@ -59,8 +59,7 @@
         ?       question mark
 */
 
-#define __USE_TUTOR_CPP_H__globals
-#include "i00_CPP_tutor.h"
+#include "Tutor.h"
 
 int F01_hello(int p_iEc, char *p_sDirTmp) {
 
@@ -76,11 +75,13 @@ int F01_hello(int p_iEc, char *p_sDirTmp) {
     return(p_iEc);
 }
 
+#ifndef __USE_TUTOR__MAIN
 int main() {
     int     iEc;
     char  * psTmp=0;
     f_lib_getEnv(iEc,&psTmp);
     return F01_hello(iEc,psTmp);
 }
+#endif
 
 /*last line*/

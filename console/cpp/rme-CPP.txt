@@ -1,4 +1,4 @@
-=== readme.C++
+﻿=== readme.C++
 //  !$@€ƒ„…†‡‰¡“”•—Ÿ¢£¤¥¦§¨™©®×±«»♔♖♞♟°²³ƒµ¶·¹º¼½¾¿ÄÖÜäöüßæœžîðñôö÷αβγδεΦXΨ.Ω.*
 
     Dieses Dokument in :
@@ -8,6 +8,11 @@
 
     codiert wird NICHT mehr in :
     •   ANSI-1252   :   https://en.wikipedia.org/wiki/Windows-1252
+
+    Das FileFormat bleibt weiterhin:
+        Windows CR+NL
+
+
 
 // Write-Output `e[32m###DieserTextistgrün.###`e[0m
 // Write-Output `e[36m###DieserTextIstBlau.###`e[0m
