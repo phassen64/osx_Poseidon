@@ -80,7 +80,6 @@ int main() {
     int     iEc;
     char  * psTmp=0;
     f_lib_getEnv(iEc,&psTmp);
-
     return F01_hello(iEc,psTmp);
 }
 
