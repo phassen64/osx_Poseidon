@@ -59,7 +59,7 @@
         ?       question mark
 */
 
-#define __USE_TUTOR_CPP_H__GLOBAL
+#define __USE_TUTOR_CPP_H__globals
 #include "i00_CPP_tutor.h"
 
 int F01_hello(int p_iEc, char *p_sDirTmp) {

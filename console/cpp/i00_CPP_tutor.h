@@ -12,6 +12,7 @@
     #include "i04_CPP_globals.h"
     #include "i05_CPP_const.h"
     #include "i06_CPP_typedef.h"
-    #include "i09_CPP_osType.h"
+    #include "i07_CPP_macro.h"
+    #include "i08_CPP_osType.h"
 
 #endif /*I__TUTOR_CPP__compact*/
