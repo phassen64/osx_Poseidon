@@ -543,9 +543,9 @@ fi
 
 #   s:  generate FWK.exit.code (new&&old)
 declare -i i=$((10 + (RANDOM % 200))) # 10...199
-v_FWK_exitCode=$i
-export v_FWK_exitCode
+v_FWK_exitStatus=$i
+export v_FWK_exitStatus
 
 #   s:  header
 s=`echo $(date '+%y%m%d|%H%M%S')`
-printf "=== fwk.end::{%s}:{%s} \n"   $s $v_FWK_exitCode
+printf "=== fwk.end::{%s}:{%s} \n"   $s $v_FWK_exitStatus

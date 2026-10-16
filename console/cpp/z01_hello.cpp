@@ -6,10 +6,17 @@
 //  #include <stdio.h>
 #include "i00_CPP_tutor.h"
 
-int main() {
-    f_lib_header("Hello");
+int F01_hello(int p_iEc) {
+    f_lib_header("Hello",__FILE__,__LINE__);
     printf("hello C++ World!\n");
     f_lib_footer("Hello");
+    return(p_iEc);
+}
+
+int main() {
+//  int  iEc = atoi(getenv("v_FWK_exitStatus"));
+    int  iEc = 77;
+    return F01_hello(iEc);
 }
 
 /*last line*/
