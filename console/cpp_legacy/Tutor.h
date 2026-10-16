@@ -1,4 +1,7 @@
-
+//  ****************************************************************************
+//  TUTORIAL:   C++     :   header file
+//  ****************************************************************************
+//  !$@€ƒ„…†‡‰ŠŒŽ“”•—™šœžŸ¡¢£¤¥¦§¨©«¬®°±²³µ¶·¹º»¼½¾¿ÑÖØÜÞßäæçîðñôö÷üýþÿß-------$
 
 #ifndef I__TUTOR__CPP_H
 #define I__TUTOR__CPP_H
@@ -416,7 +419,7 @@ class CBasic {
             char* s = &m_sBuffer[0];
             //  init my local mem
             memset(s, 0, sizeof(m_sBuffer));
-            //  fetch environment
+            //  fetch environment   
             #if defined(_WIN32) || defined(_WIN64)
                 const char * sEnvVar_usr = {"USERPROFILE"};
                 const char * sEnvVar_scr = {"v_USR_scratch_relPath"};
@@ -869,7 +872,7 @@ class CMenu   : public CTrace {
             char * s        = m__cMenuBuffer;
             char * sLine    = m__cLineBuffer;
             char    sHdrId[C_TUTOR__LINE_SIZE];
-            const   char *sEnv_exit = "v_FWK_exitStatus";
+            const   char *sEnv_exit = "v_FWK_exitCode";
             float   fTime;
             time_t  tTime;
             char    sEcOut[20];
@@ -884,7 +887,7 @@ class CMenu   : public CTrace {
 
             //  === :s  HeaderID
             if (p_bHdr) {   // !CRQ-260630:change
-                strcpy(sHdrId, "=== H:HDR:");
+                strcpy(sHdrId, "=== H:HDR:");  
             } else {
                 strcpy(sHdrId, "=== F:FTR:");
             }

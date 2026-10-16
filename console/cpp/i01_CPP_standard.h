@@ -3,8 +3,8 @@
  *  ***********************************************************************.$.*/
 //  !$@€ƒ„…†‡‰¡“”•—Ÿ¢£¤¥¦§¨™©®×±«»♔♖♞♟°²³ƒµ¶·¹º¼½¾¿ÄÖÜäöüßæœžîðñôö÷αβγδεΦXΨ.Ω.*
 
-#ifndef __USE_TUTOR_CPP__INCLUDE__standard
-#define __USE_TUTOR_CPP__INCLUDE__standard
+#ifndef __USE_TUTOR_CPP_H__standard
+#define __USE_TUTOR_CPP_H__standard
 
 //  ============================================================================
 //  !m: include

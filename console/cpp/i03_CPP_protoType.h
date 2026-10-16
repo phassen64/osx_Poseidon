@@ -5,8 +5,8 @@
     !$@€ƒ„…†‡‰ŠŒŽ“”•—™šœžŸ¡¢£¤¥¦§¨©«¬®°±²³µ¶·¹º»¼½¾¿ÑÖØÜÞßäæçîðñôö÷üýþÿ
 *  ****************************************************************************/
 
-#ifndef __USE_TUTOR_CPP__INCLUDE__PROTOTYPE
-#define __USE_TUTOR_CPP__INCLUDE__PROTOTYPE
+#ifndef __USE_TUTOR_CPP_H__PROTOTYPE
+#define __USE_TUTOR_CPP_H__PROTOTYPE
 
 /*  ===========================================================================
  *  m:  F.prototype

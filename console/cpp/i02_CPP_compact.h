@@ -3,8 +3,8 @@
  *  ***********************************************************************.$.*/
 //  !$@€ƒ„…†‡‰¡“”•—Ÿ¢£¤¥¦§¨™©®×±«»♔♖♞♟°²³ƒµ¶·¹º¼½¾¿ÄÖÜäöüßæœžîðñôö÷αβγδεΦXΨ.Ω.*
 
-#ifndef __USE_TUTOR_CPP__INCLUDE__compact
-#define __USE_TUTOR_CPP__INCLUDE__compact
+#ifndef __USE_TUTOR_CPP_H__compact
+#define __USE_TUTOR_CPP_H__compact
 
 //  ============================================================================
 //  !m: include
@@ -66,17 +66,6 @@
             #define     I_MATH_H
             #define __USE_TUTOR__MATH
                     #include    <cmath>        // sqrt...
-            #ifndef C_TUTOR__PI
-                #define C_TUTOR__E          2.71828182845904523536
-                #define C_TUTOR__LOG2E      1.44269504088896340736
-                #define C_TUTOR__LOG10E     0.434294481903251827651
-                #define C_TUTOR__PI         3.14159265358979323846
-                #define C_TUTOR__PI_2       1.57079632679489661923
-                #define C_TUTOR__PI_4       0.785398163397448309616
-                #define C_TUTOR__LN2        0.693147180559945309417
-                #define C_TUTOR__LN10       2.30258509299404568402
-                #define C_TUTOR__SQRT2      1.41421356237309504880
-            #endif
 #endif  //* STATUS:tested
 
 
