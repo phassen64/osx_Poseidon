@@ -9,7 +9,7 @@
 int main() {
     f_lib_header("Hello");
     printf("hello C++ World!\n");
-    return 100;
+    f_lib_footer("Hello");
 }
 
 /*last line*/
