@@ -4,11 +4,14 @@
 #   run:[uno]   tutorial.CPP v2026          ©[mATe64]           [2026-10-14]
 #   ***************************************************************************
 
+#   encoding
+#   !$@€ƒ„…†‡‰¡“”•—Ÿ¢£¤¥¦§¨™©®×±«»♔♖♞♟°²³µ¶·¹º¼½¾¿ÄÖÜäöüßæŠŒŽšœžçîðñôö÷αβγδεΦ.Ω
+
 #   usage:
 #       $   bash run_<SCP>.bsh <FILE.cpp>
 
 #   example:
-#       $   bash "r03_runUno.bsh" "c01_intro.cpp"
+#       $   bash "r01_runUno.bsh" "z01_intro.cpp"
 
 #   description:
 #       compile & link & execute input-file <FILE.cpp>

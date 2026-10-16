@@ -317,6 +317,7 @@ function f_fwk_alias_set(){
     alias +cdvcs_TS='cd $v_VCS/testSuite && pwd'
 	#   =:= m:cd.user
     alias +cdusr='cd $v_USR_dirDocRoot && pwd'
+    alias +cdimg='cd "$v_USR_dirDocRoot/img" && pwd'
     alias +cdwrk='cd $v_USR_dirWorkshop && pwd'
     alias +cdwrkSrc='cd $v_USR_dirWorkshop/source && pwd'
     alias +cdwrkObj='cd $v_USR_dirWorkshop/object && pwd'

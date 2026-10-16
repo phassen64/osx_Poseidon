@@ -1,4 +1,5 @@
 === readme.C++
+//  !$@€ƒ„…†‡‰¡“”•—Ÿ¢£¤¥¦§¨™©®×±«»♔♖♞♟°²³ƒµ¶·¹º¼½¾¿ÄÖÜäöüßæœžîðñôö÷αβγδεΦXΨ.Ω.*
 
     Dieses Dokument in :
     •   UTF8        :   https://en.wikipedia.org/wiki/UTF-8
