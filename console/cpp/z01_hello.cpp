@@ -3,6 +3,62 @@
  *  ***********************************************************************.$.*/
 //  !$@€ƒ„…†‡‰¡“”•—Ÿ¢£¤¥¦§¨™©®×±«»♔♖♞♟°²³ƒµ¶·¹º¼½¾¿ÄÖÜäöüßæœžîðñôö÷αβγδεΦXΨ.Ω.*
 
+/*
+    environment
+        •   v_FWK_exitStatus
+        •   v_FWK_dirScratch
+
+    content:
+        •   === hints
+
+    keyword handled:
+        •   cout
+        •   printf
+        •   return
+    url:
+        •   https://www.w3schools.com/cpp/
+        •   https://cplusplus.com/doc/tutorial/
+
+            === Encoding chars :
+    US Keyboard Symbols :
+        `       grave, grave accent, backtick, back quote
+        ~       tilde
+        !       exclamation mark, exclamation point, bang
+        @       at, at sign, at symbol
+        #       pound, hash, number
+        $       dollar(s)
+        %       percent, percent sign, parts per 100
+        ^       carat, hat, circumflex, exponent symbol
+        &       and, ampersand
+        *       asterisk
+        (       open parenthesis, left parenthesis
+        )       close parenthesis, right parenthesis
+        ( )     parentheses, round brackets
+        •       hyphen, minus, minus sign, dash
+        _       underscore
+        =       equals, equal sign
+        +       addition, plus sign
+        [ ]     brackets, square brackets
+        [       open bracket
+        ]       close bracket
+        { }     braces, curly brackets
+        {       open brace
+        }       close brace
+        \       backslash, backward slash
+        |       vertical pipe, pipe
+        ;       semicolon
+        :       colon
+        `'      apostrophe, prime, single quote
+        •       quotation mark, double quotes
+        ,       comma
+        .       period, decimal, dot
+        /       slash, forward slash
+        <>      angle brackets
+        <       less than
+        >       greater than
+        ?       question mark
+*/
+
 //  #include <stdio.h>
 #include "i00_CPP_tutor.h"
 
