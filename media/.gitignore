@@ -1,4 +1,7 @@
+*.bmp
+*.gif
 *.jpg
+*.png
 *.mp3
 *.mp4
 *.ico
