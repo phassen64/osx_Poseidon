@@ -1,0 +1,17 @@
+--- rme.GoogleCloudEngine
+
+            
++   Instanz i-260922-eros
+    Zeitpunkt der Erstellung
+        Sept. 22, 2026, 5:03:30 PM UTC+02:00
+    e2-small (2 vCPUs, 2 GB Speicherplatz)
+    hdd:    d-260922-eros	32GB
+            i-260922-eros   24GB boot
+    Schlüssel: kpTrixie
+    Maximale Dauer
+        1 Stunden
+
++   aktuelle IP 
+    35.246.100.13
+    34.89.49.77
+    
