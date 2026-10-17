@@ -90,9 +90,15 @@ function f_ini_dpkg_restore() {
 }
 
 function f_ini_upgrade() {
+    local sMode=$1
     sudo apt-get update
     sudo apt-get list --upgradable
-    sudo apt-get upgrade
+    if [-z $sMode ]
+    then
+        sudo apt-get upgrade
+    else
+        sudo apt-get upgrade && sudo apt-get full-upgdrade -y
+    fi
 }
 
 function f_ini_fireWall() {
