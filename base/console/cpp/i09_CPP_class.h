@@ -90,18 +90,14 @@ class CBasic {
             #if defined(_WIN32) || defined(_WIN64)
                 const char * sEnvVar_usr = {"USERPROFILE"};
                 const char * sEnvVar_scr = {"v_USR_scratch_relPath"};
-                pc = getenv(sEnvVar_usr);
-                strcpy(s, pc);
-                pc = getenv(sEnvVar_scr);
-                strcat(s, pc);
             #else
-                char    sFnm[100];
                 const char * sEnvVar = {"HOME"};
-                pc = getenv(sEnvVar);
-                strcpy(s, pc);
-                strcpy(sFnm, "temp");
-                s = this->f_sJoinPath(s, sFnm);
+                const char * sEnvVar_scr = {"v_USR_scratch_relPath"};
             #endif
+            pc = getenv(sEnvVar);
+            strcpy(s, pc);
+            pc = getenv(sEnvVar_scr);            
+            strcat(s, pc);
             return s;
         }
 
