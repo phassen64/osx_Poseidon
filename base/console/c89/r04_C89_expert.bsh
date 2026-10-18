@@ -186,7 +186,6 @@ function f_run_matchFiles() {
     s+="$p_sRexEnd"
     s+='$'
     sRex=$s
-    #   echo "+ tryRex := '$sRex'"
 
     #   Get files with pattern
     for xFile in `ls`
@@ -207,13 +206,6 @@ function f_run_matchFiles() {
     if [ ! -z $p_bDoShuffle ] && [ $p_bDoShuffle == $C_bTrue ]; then
         aTmp=( $(shuf -e "${aTmp[@]}") )
     fi
-
-    #   reply - insert 'Ignore at the begin'
-    #   declare -a v_RUN_aRc=()
-    #   v_RUN_aRc+=( $p_sIgnore )
-    #   for xFile in "${aTmp[@]}"; do
-    #       v_RUN_aRc+=($xFile)
-    #   done
 
     #   reply
     v_RUN_aRc=("${aTmp[@]}")

@@ -1,10 +1,10 @@
 # !/perl/bin   # Diese Zeile mu� manchmal am Anfang stehen
 
 #   encoding: UTF-8
-# !$@�����������������������������������������������������������������
+#   !$@€ƒ„…†‡‰¡“”•—Ÿ¢£¤¥¦§¨™©®×±«»♔♖♞♟°²³µ¶·¹º¼½¾¿ÄÖÜäöüßæŠŒŽšœžçîðñôö÷αβγδεΦ.Ω
 
 # ############################################################################
-# Tutorial �bersicht
+# Tutorial übersicht
 # ############################################################################
 # Aufruf dieses Perl-Scripts:   >perl -w Name.pl
 # Perl-Source Dateien haben die Endung "*.pl";
@@ -15,8 +15,8 @@
 # verwendet werden.
 # ============================================================================
 
-# 01 : �bersicht
-# 02 : Einf�hrung
+# 01 : Übersicht     
+# 02 : Einführung
 # 03 : Bedingungsanweisungen, Schleifen
 # 04 : Packages, Scripts, Funktionen, Variablen
 # 05 : Systemfunktionen (mathem., convert, listen, regs, str, format)
@@ -47,7 +47,7 @@
 # -S : start PerlScripts by using '$PATH'
 
 # Extension :
-# pl  : �bliche Extension
+# pl  : übliche Extension
 # plx : sonst
 
 printf("..hello Perl !\n");

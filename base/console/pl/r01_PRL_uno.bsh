@@ -1,0 +1,102 @@
+#!/bin/bash
+
+#   ***************************************************************************
+#   run:[uno]           Tutorial Perl 2026      ©[mATe64]       [2026-10-18]
+#   ***************************************************************************
+#   encoding.utf8
+#   !$@€ƒ„…†‡‰¡“”•—Ÿ¢£¤¥¦§¨™©®×±«»♔♖♞♟°²³µ¶·¹º¼½¾¿ÄÖÜäöüßæŠŒŽšœžçîðñôö÷αβγδεΦ.Ω
+
+#   description:
+#       run one single script file, no logging 
+
+#   usage:
+#       $   bash run_<SCP>.bsh <FILE.pl>
+
+#   example:
+#       $   bash "r01_runUno.bsh" "p01_overview.pl"
+
+#   description:
+#       run interpreter input-file <FILE.pl>
+
+#   remark:
+#       no logging.
+
+#   content:
+#       m:  function
+#       m:  body
+#       m:  compile
+#       m:  lastLine
+
+#   ***************************************************************************
+
+#
+#   m:  function
+#
+
+#   s:  F.clean
+function f_run_clean() {
+    pushd $v_FWK_dirTemp > /dev/null
+    declare -a aExt=(
+'out' 'exe' 'bin')
+    for x in "${aExt[@]}"; do
+        f='*.'
+        f+=$x
+        rm -f $f
+    done
+    popd > /dev/null
+}
+
+#
+#   m:  body
+#
+
+#   s:  paramer
+p_sFile=$1
+
+#   s:  compiler
+declare -r C_INTERPRETER='perl'
+
+#   clean
+clear
+f_run_clean
+
+#   s:  fetch sources - build a BASH-array
+declare -a aSrc
+aSrc+=( $p_sFile )
+
+#   only if source
+declare v_INFO="TUTOR-PRL-2026" ; export v_INFO
+
+#   s:  header
+declare sFmt="+%Y-%m-%d %H:%M:%S"
+declare sDtm=$(date "$sFmt")
+s='run<uno>::interpreter+run'; printf "BEG %s [%s]\n\n" $s "$sDtm"
+
+declare -i i=0
+declare dTmp=${v_FWK_dirTemp}
+
+#   s:  loop about BASH array
+for sFile in "${aSrc[@]}"
+do
+
+    #   u:  show
+    i+=1
+    printf "&&& interpreting[%d]: '%s' \n" $i $sFile
+    export v_EXE=$xFile
+
+    #   u:  make (interpreter)
+    $C_INTERPRETER $sFile
+
+    #   u: show return-code
+    declare -I iRc=$?
+    printf "\n&&& bash.reply.iRc:'%d'\n" $iRc
+
+done
+
+#   s:  footer
+printf "\n"
+sDtm=$(date "$sFmt")
+s='run<uno>::interpreter+run'; printf "END %s [%s]\n\n" $s "$sDtm"
+
+exit $iRc
+#   m:  lastLine

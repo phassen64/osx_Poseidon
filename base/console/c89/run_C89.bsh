@@ -4,7 +4,7 @@
 
 #   show usage
 clear
-bash r01_runSimple.bsh
+bash r04_C89_expert.bsh + 1
 
 #   start using some files
 
