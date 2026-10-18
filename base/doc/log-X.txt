@@ -852,4 +852,49 @@ https://de.wikipedia.org/wiki/Unicodeblock_Griechisch_und_Koptisc    !$@€ƒ„
     $   +cdfwk
     $   git pull
 
-+   
++   read git config 
+    $   git config --list
+
++   Add --show-origin to see which configuration file 
+        (system, global, or local) defines each setting:
+    $   git config --list --show-origin
+
+
++   Local (Current repository only: .git/config)
+    $   git config --local --list
+
++   Global (Current system user: ~/.gitconfig or ~/.config/git/config)
+    $   git config --global --list
+
++   System (All users on the machine: /etc/gitconfig)
+    $   git config --system --list
+
+
+
++   To prevent Git from automatically converting line endings 
+    (LF vs. CR+LF) on checkout or commit, 
+        configure the core.autocrlf setting to false.
+
+    Step 1: Change Your Git Configuration
+        Run the following command to disable automatic 
+            line ending conversion for your user profile:
+
+    $   git config --global core.autocrlf false
+    
+    To apply this change only to your current repository, run:
+    $   git config --local core.autocrlf false
+
+
++   To ensure that every developer working on the repository 
+        preserves line endings exactly as written (regardless of their individual global settings), add a .gitattributes file to the root of your repository:
+
+    Create or open the .gitattributes file in the root of your 
+        project directory.
+
+    Add the following line to disable standard text normalization:
+
+    * -text
+
+    $   git add .gitattributes
+    $   git commit -m "Configure Git to leave line endings untouched"
+
