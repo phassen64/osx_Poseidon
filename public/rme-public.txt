@@ -1,0 +1,6 @@
+--- readme
+    osx.public
+
++   no data in repository 
+    but visible
+    
