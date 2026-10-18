@@ -1,2 +1,2 @@
---- who.root
-    repository:osx_Poseidon/root
+--- who
+    osx_Poseidon/workspace
