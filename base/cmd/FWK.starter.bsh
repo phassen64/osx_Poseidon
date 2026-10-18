@@ -542,12 +542,17 @@ function f_fwk_isDirectory {
 
 #   cat c04_struct.c | unix2dos > c04_struct.dos.c
 
-function f_fwk_convert_unix2dos_single {
+function f_fwk_converter_unix2dos__file {
 
     local sSrc=$1
+
+    #   dir/file.c -> file.c    
     local sNam=`basename $sSrc`
+
     local sBdy="${sSrc%.*}"
     local sExt="${sSrc##*.}"
+
+    #   temp file
     local sObj="${sBdy}.dos.$sExt"
 
     #   echo "+ sNam : {$sNam}"
@@ -556,21 +561,31 @@ function f_fwk_convert_unix2dos_single {
     #   echo "+ sObj : {$sObj}"
 
     #   convert and replace    
-    cat $sSrc | unix2dos > $sObj
-    rm -f $sSrc
+    cat $sSrc | unix2dos > $sObj    #   use build-in converter
+    rm -f $sSrc                     #   remove source
     mv $sObj $sSrc
     
 }
 
-function f_fwk_convert_unix2dos_directory {
+function f_fwk_converter_unix2dos {
 
     local p_sExt=$1
     local p_sDir=`pwd` 
-    echo "+ sDir : {$p_sDir}"
+
+    if [ -z $p_sExt ]; then
+        echo "? missing parameter [p_sExt]"
+        echo "! usage: $ bash THIS 'c'"
+        return 1
+    fi  
+    
+    #   show input
     echo "+ sExt : {$p_sExt}"
+    echo "+ sPWD : {$p_sDir}"
 
     #   convert and replace   
     local -i i=0 
+
+    #   converter for all files with fitting file extension
     for xFile in $p_sDir/*; do
         if [ -f $xFile ]; then
             local sExt="${xFile##*.}"
@@ -578,10 +593,11 @@ function f_fwk_convert_unix2dos_directory {
                 i+=1
                 local sNam=`basename $xFile`
                 printf "&&& converter u2d [%2.2d]\t: '%s\n" $i $sNam
-                f_fwk_convert_unix2dos_single $sNam
+                f_fwk_converter_unix2dos__file $sNam
             fi
         fi
     done
+
 }
 
 
