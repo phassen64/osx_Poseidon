@@ -1,8 +1,2 @@
 --- who
-    pid:tron1-d13x-830H
-    pid:tron3-d13x-385H
-    pid:tron3-d13x-430W
-    usr:peter    dir:home
-
-+   updated by tron1:d13x830H
-+   updated by tron3:d13x430W
+    repository:osx_Poseidon
