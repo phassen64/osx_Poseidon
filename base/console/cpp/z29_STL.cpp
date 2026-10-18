@@ -34,7 +34,7 @@ using namespace std;
 
 /*  $ (GoogleGemini) 
     https://gemini.google.com/app/df137f41441ddac5?hl=de
-    !CRQ-261018
+    !CRQ-261018:random_shuffle
         *   std::random_shuffle was deprecated in C++11 
         *   and completely removed in C++17.
 */
