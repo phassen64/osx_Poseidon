@@ -24,7 +24,7 @@
 #           '+' :   runSome EXE - choose randomly
 #           '4' :   special index-mode, run specfic source[4]
 #
-#   usage:  $   bash <SCP.bsh> [option]
+#   usage:  $   bash <SCP.bsh>  [option]
 
 #   remark: The objects and executables are stored in the
 #           [FWK-TEMP-Directory].
