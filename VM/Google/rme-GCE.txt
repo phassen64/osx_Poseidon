@@ -1,0 +1,13 @@
+--- rme.GCE
+
+#   Hier stehen die notwendigen
+    Daten für die genutzen CE.
+
+### !date:<2026-09-22>:Di 
+
+Dieser SSH Key wird mit der
+    Google CE 
+    "i-260922-eros"
+verwendet.
+
+

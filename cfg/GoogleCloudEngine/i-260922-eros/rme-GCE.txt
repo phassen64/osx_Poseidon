@@ -1,8 +1,0 @@
---- rme.GCE
-
-Dieser SSH Key wird mit der
-    Google CE 
-    "i-260922-eros"
-verwendet.
-
-
