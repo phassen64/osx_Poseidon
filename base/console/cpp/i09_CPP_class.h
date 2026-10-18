@@ -369,19 +369,20 @@ class CTrace  : public CVPrint {
         void f_eRRor(const char *p_sText, const char *p_sFile, int p_iLine)
         {
             char *s = m__cTraceBuffer;
+            char sTmp[40]; 
             memset(s,0,sizeof(m__cTraceBuffer));
             int iEc     = errno;
             int cClr = E_COLOR_RED;
             if (iEc != 0) {
                 cClr = E_COLOR_RED;
-                strcpy(s, "??? E==");
-                //  sprintf(s, "%s<%d>",s, iEc);    // !CRQ-261018:sprintf
+                strcpy(sTmp, "??? E==");
+                sprintf(s, "%s<%d>",sTmp, iEc);    // !CRQ-261018:sprintf
             }
             else {
                 cClr = E_COLOR_YELLOW;
-                strcpy(s, "!!! E==0");
+                strcpy(sTmp, "!!! E==0");
             }
-            //  sprintf(s,"%s:\"%s\" [%s;%d]",s,p_sText, p_sFile, p_iLine);/ !CRQ-261018:sprintf
+            sprintf(s,"%s:\"%s\" [%s;%d]",sTmp,p_sText, p_sFile, p_iLine); //!CRQ-261018:sprintf
             f__puts(s,cClr);
         }
         CTrace() {
