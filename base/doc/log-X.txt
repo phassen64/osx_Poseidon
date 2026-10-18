@@ -831,4 +831,19 @@ https://de.wikipedia.org/wiki/Unicodeblock_Griechisch_und_Koptisc    !$@€ƒ„
     Steuerzeichen im Logging 
     File t18 error
     try z99 none
-    
+
+
+### !date:<2026-10-18>:So 
+
++   new fwk mit base & public dir 
+
++   update 
+    vm  : 
+        tron3-d13x-385H, 
+        tron3-d13x-430W, 
+        tron1-d13x-830H 
+        gce-eros
+
++   tutorCpp fix errors 
+    scratchFiles
+    STL shuffle
