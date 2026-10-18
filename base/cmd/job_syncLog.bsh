@@ -22,7 +22,7 @@
 
 sFmt="+%Y-%m-%d__%H:%M:%S"
 sDtm=$(echo `date $sFmt`)
-sVer='athene1'
+sVer='athene-261018'
 
 #   m:  header
 printf "=== entry v.(%s):[%s]\n" $sVer $sDtm

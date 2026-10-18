@@ -518,6 +518,7 @@ printf "+ sta : {%s} \n" $v_STARTER
 #   s:  show.SCP
 v_SCP=`basename $BASH_SOURCE`;    echo "+ scp : {$v_SCP}"
 v_PWD=`pwd`;    echo "+ pwd : {$v_PWD}"
+v_PID='"Oops - I did it again!"';   echo "+ pid : $v_PID"
 
 #   s:  alias define
 f_fwk_alias_set
