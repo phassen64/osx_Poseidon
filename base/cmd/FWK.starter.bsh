@@ -30,7 +30,9 @@
 #       o:  v_RND
 #       o:  v_TMP =: scratch
 #       o:  v_USR_dirDocRoot
+#       o:  v_USR_dirDocRoot
 #       o:  v_USR_dirWorkshop
+#       v_USR_scratch_relPath
 #       o:  v_VCS
 
 #   content:
@@ -473,6 +475,7 @@ function f_fwk_variable_define () {
 
     #   dir.DocRoot
     v_USR_dirDocRoot=$HOME/Documents && export v_USR_dirDocRoot
+
     #   workshop
     v_DIR=$v_USR_dirDocRoot/workshop
     v_USR_dirWorkshop=$v_DIR && export v_USR_dirWorkshop
@@ -495,11 +498,14 @@ function f_fwk_variable_define () {
     v_FWK_dirTutor=$v_DIR && export v_FWK_dirTutor
 
     #   scratch == tempDir
-    v_DIR=$v_VCS_fwk/temp
+    #   a:  via FWK
+    v_DIR=$v_VCS_fwk/tmp
     v_DIR=$v_USR_dirDocRoot/temp    # better
     v_FWK_dirTemp=$v_DIR && export v_FWK_dirTemp
     v_TMP=$v_FWK_dirTemp && export v_TMP
-
+    #   a:  via USR
+    v_USR_scratch_relPath='/Documents/temp' && export v_USR_scratch_relPath
+    
     #   loging Dir
     v_DIR=$v_VCS_fwk/logging
     v_FWK_dirLogging=$v_DIR && export v_FWK_dirLogging
