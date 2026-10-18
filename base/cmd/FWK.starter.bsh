@@ -423,8 +423,14 @@ function f_fwk_interpreter_check() {
 }
 
 function f_fwk_variable_show() {
-    #   echo "f:varShow"
-    printenv | grep "^v_"  | sort
+    #   usage   $   f_fwk_variable_show x 
+    local bAll=$1
+    +cls
+    if [ ! -z $bAll ]; then
+        printenv | sort
+    else 
+        printenv | grep "^v_"  | sort
+    fi
 }
 
 
@@ -512,6 +518,8 @@ function f_fwk_variable_define () {
     v_DIR=$v_VCS_fwk/logging
     v_FWK_dirLogging=$v_DIR && export v_FWK_dirLogging
 
+    #   PERL
+    PERL5LIB="${v_FWK_dirTutor}/pl" && export PERL5LIB
 }
 
 function f_fwk_isFile {

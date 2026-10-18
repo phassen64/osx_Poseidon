@@ -847,3 +847,9 @@ https://de.wikipedia.org/wiki/Unicodeblock_Griechisch_und_Koptisc    !$@€ƒ„
 +   tutorCpp fix errors 
     scratchFiles
     STL shuffle
+    
++   aktuelles git holen 
+    $   +cdfwk
+    $   git pull
+
++   
