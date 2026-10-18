@@ -332,6 +332,7 @@ function f_fwk_alias_set(){
     alias +go='source $v_STARTER'
     alias +start=+go
 	#   =:= m:cd
+    alias +cdfwk='cd $v_FWK && pwd'
     alias +cdhome='cd $HOME && pwd'
     alias +cdcmd='cd $v_FWK_dirCommand && pwd'
     alias +cdlog='cd $v_FWK_dirLogging && pwd'
@@ -484,6 +485,7 @@ function f_fwk_variable_define () {
     v_VCS=$HOME/VCS  && export v_VCS
 
     #   dir.repo.FWK
+    v_FWK=$v_VCS/fwk && export v_FWK
     v_VCS_fwk=$v_VCS/fwk/base && export v_VCS_fwk
 
     #   dir.fwk.cmd
