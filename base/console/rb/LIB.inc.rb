@@ -844,7 +844,7 @@ public
         f__errorHandler(0,p_sText,p_sFile,p_iLine,p_sMethod)
     end # f~warning
 
-    def f_error( p_sText, p_sFile=nil,p_iLine=nil,p_sMethod=nil )
+    def f_eRRor( p_sText, p_sFile=nil,p_iLine=nil,p_sMethod=nil )
         f__errorHandler(-1,p_sText,p_sFile,p_iLine,p_sMethod)
     end # f~error
 

@@ -1519,7 +1519,7 @@ class CMenuHelper(CSys,CLogging):
         self.f_puts("%s" % s,self.C_COLOR_YELLOW)
         return None
 
-    def f_error(self,p_sTxt:str = '?e') -> None:
+    def f_eRRor(self,p_sTxt:str = '?e') -> None:
         s,sFile,sLine,_sFunc = self.f_tLoc()
         s = "<<< b:  ERROR('%s') at:[%s;%s]" % (p_sTxt,sFile,sLine)
         self.f_puts("%s" % s,self.C_COLOR_RED)

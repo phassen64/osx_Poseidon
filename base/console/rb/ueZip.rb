@@ -262,7 +262,7 @@ class CFile
                 $m.f_trc(nil,__LINE__,__method__,"try fRm:<#{p_sFile}>") if C_VERBOSE
                 if (!File.exists?(p_sFile))  # !CRQ-210208:checkExisting
                     s = "?rm with not existing file:'#{p_sFile}'"
-                    $m.f_error(s,__FILE__,__LINE__,__method__) if C_DEBUG
+                    $m.f_eRRor(s,__FILE__,__LINE__,__method__) if C_DEBUG
                     $m.f_warning(s,__FILE__,__LINE__,__method__) # !CRQ-210221:warningOnly
                     return true
                     # return f-alse # noError
@@ -431,7 +431,7 @@ class CFile
 =end
         #   +   check input parameter
         if ( not $m.f_isAlpha(p_sDir[0]) )
-            $m.f_error("?!=Dir[0]!=Alpha",__FILE__,__LINE__,__method__)
+            $m.f_eRRor("?!=Dir[0]!=Alpha",__FILE__,__LINE__,__method__)
             return false
         end
         #   +   handle Dir
@@ -443,7 +443,7 @@ class CFile
             sDir << C_SEP_DIR_UNIX
         end
         if ( not CFile.f__isWindowsDrive?(sDir) )
-            $m.f_error("?sDir:<#{sDir}>!=Drive",__FILE__,__LINE__,__method__)
+            $m.f_eRRor("?sDir:<#{sDir}>!=Drive",__FILE__,__LINE__,__method__)
             return false
         end
         #   +   handle File
@@ -455,7 +455,7 @@ class CFile
             if (not CFile.f__isWindowsDrive?(p_sFile))      # IN: 'c:/' 'peter.txt'
                 if (sFile[0]==C_SEP_DIR_UNIX)
                     if (sFile.length<=1)
-                        $m.f_error("?FnmPth.length<=1",__FILE__,__LINE__,__method__)
+                        $m.f_eRRor("?FnmPth.length<=1",__FILE__,__LINE__,__method__)
                         return false
                     end
                     sFile = sFile[1..-1]
@@ -466,7 +466,7 @@ class CFile
             end
             sFph = CFile.f__sUnixPath(p_sFile)
             if (not (sFph[2] == C_SEP_DIR_UNIX ) )  # "c:'/'svn/peter.txt"
-                $m.f_error("?sFpt:<#{p_sFile}>!=WinFilePath",__FILE__,__LINE__,__method__)
+                $m.f_eRRor("?sFpt:<#{p_sFile}>!=WinFilePath",__FILE__,__LINE__,__method__)
                 return false
             end
         end
@@ -486,7 +486,7 @@ class CFile
             sFnm    = File.basename(sFile)
             sRc     = sDir + sFnm
         else
-            $m.f_error("?<#{p_iMode}>!=0..2",__FILE__,__LINE__,__method__)
+            $m.f_eRRor("?<#{p_iMode}>!=0..2",__FILE__,__LINE__,__method__)
             return false
         end
         #   + return
@@ -511,7 +511,7 @@ class CFile
         $m.f_inf "#{__method__}::FEL==<#{sExt}>"
         #   +   input check
         if ( (! sExt.is_a? String)  )
-            $m.f_error("ext is not aString",__FILE__,__LINE__,__method__)
+            $m.f_eRRor("ext is not aString",__FILE__,__LINE__,__method__)
             return false
         end
         #   +   split?!
@@ -526,7 +526,7 @@ class CFile
             aFEL.compact!
             if (aFEL.size==0)
                 s = "?aFEL==0 of: <'#{sExt}'>"
-                $m.f_error s,__FILE__,__LINE__,__method__
+                $m.f_eRRor s,__FILE__,__LINE__,__method__
                 exit
             end
             $m.f_inf "aExtTmp1:<#{aFEL}>" if C_VERBOSE
@@ -1092,7 +1092,7 @@ class CUedit < CFile
             $m.f_inf("=01: PwdDir:'#{sDir}'")
             bRc,sDir = $m.f_sDir( @sUeditProjectFile )
             if (!bRc)
-                $m.f_error("?prjDirUnknow",nil,__LINE__,__method__)
+                $m.f_eRRor("?prjDirUnknow",nil,__LINE__,__method__)
                 return false
             end
             $m.f_inf("=02: UedDir:'#{sDir}'")
@@ -1282,7 +1282,7 @@ class CUedit < CFile
 
         #   check
         if (iFileExist == 0)
-            $m.f_error("?found no existing Files",__FILE__,__LINE__,__method__)
+            $m.f_eRRor("?found no existing Files",__FILE__,__LINE__,__method__)
             return false
         end
 
@@ -1431,7 +1431,7 @@ class CUedit < CFile
         n = File.size(p_sUepFile)
         $m.f_inf :"+\tFileSize:<'#{n}'>"
         if (n == 0)
-            $m.f_error("?FileSize==0",__FILE__,__LINE__,__method__)
+            $m.f_eRRor("?FileSize==0",__FILE__,__LINE__,__method__)
             return false
         end
 
@@ -1635,7 +1635,7 @@ class CZip < CFile
         $m.f_trc(nil,__LINE__,__method__,"obj:<#{p_sObjZipFilePath}>")  if C_VERBOSE
         sObjDir=f_sDirName(p_sObjZipFilePath)
         if (sObjDir == nil)
-            $m.f_error("?add emptyObjDir",__FILE__,__LINE__,__method__)
+            $m.f_eRRor("?add emptyObjDir",__FILE__,__LINE__,__method__)
             return false
         end
         sObjZip=f_sFileName(p_sObjZipFilePath)
@@ -1959,7 +1959,7 @@ def F_uedParse(p_sUeFilePrj_src,p_sFileListOut_obj)
     p = CUedit.new(p_sUeFilePrj_src)
     bRc,sPrjDir,aPrjLines,aPrjFiles,aPrjGroups=p.f_uep_parse()
     if (!bRc)
-        $m.f_error("?parsing UEP fails",__FILE__,__LINE__,__method__)
+        $m.f_eRRor("?parsing UEP fails",__FILE__,__LINE__,__method__)
         return false
     end
 
@@ -2036,7 +2036,7 @@ def F_zipMake_txt2zip(p_sFileList_src,p_sZipFile_obj)
     bRc,iFiles=p.f_addByFile(aRc,sZipFile)
     $m.f_thm("zipRES",true,__LINE__)
     if (!bRc)
-        $m.f_error("addByFile to:<#{sZipFile}>",__FILE__,__LINE__,__method__)
+        $m.f_eRRor("addByFile to:<#{sZipFile}>",__FILE__,__LINE__,__method__)
         return false
     end
 
@@ -2195,7 +2195,7 @@ def F_zipGet(p_sZipFileId,p_sZipDir)
 
     #   cmd was ok ?
     if (!bCmd)
-        $m.f_error("?NOT valid combinations",__FILE__,__LINE__,__method__)
+        $m.f_eRRor("?NOT valid combinations",__FILE__,__LINE__,__method__)
         return false
     end
 
@@ -2244,18 +2244,18 @@ def F_build()
 
     #   the tree dir must exist
     if (not Dir.exists? $hOpts[:mDir])
-        $m.f_error("?DirExist:<#{$hOpts[:mDir]}>",__FILE__,__LINE__,__method__)
+        $m.f_eRRor("?DirExist:<#{$hOpts[:mDir]}>",__FILE__,__LINE__,__method__)
         exit(-__LINE__)
     end
 
     if (not $hOpts[:mFEL])
-        $m.f_error("?ExtList missing",__FILE__,__LINE__,__method__)
+        $m.f_eRRor("?ExtList missing",__FILE__,__LINE__,__method__)
         exit(-__LINE__)
     end
 
     bRc,aFEL = $pF.f_aFileExtensionList($hOpts[:mFEL])
     if (!bRc)
-        $m.f_error("?I need fileExtensions",__FILE__,__LINE__,__method__)
+        $m.f_eRRor("?I need fileExtensions",__FILE__,__LINE__,__method__)
         exit(-__LINE__)
     end
     $m.f_trc(nil,__LINE__,__method__,"aFEL:<#{aFEL}")
@@ -2263,7 +2263,7 @@ def F_build()
     #   save all files at topDir
     bRc,aRc = $pF.f_dirTree_manager($hOpts[:mDir],aFEL,CFile::C_DIRTREE_CMD_SAVE)
     if (!bRc)
-        $m.f_error("?fails",__FILE__,__LINE__,__method__)
+        $m.f_eRRor("?fails",__FILE__,__LINE__,__method__)
         exit(-__LINE__)
     end
 
@@ -2306,7 +2306,7 @@ def F_build()
         end
     end
     if (!(Dir.exists? sDirObj))
-        $m.f_error("?outputDir of build",__FILE__,__LINE__,__method__)
+        $m.f_eRRor("?outputDir of build",__FILE__,__LINE__,__method__)
         exit(-__LINE__)
     end
 =end
@@ -2324,7 +2324,7 @@ def F_build()
     #   *** write this file to objDir
     bRc,iGroups,iFiles = p.f_uep_build(aRc,sFile)
     if (!bRc)
-        $m.f_error("?writeFiles",__FILE__,__LINE__,__method__)
+        $m.f_eRRor("?writeFiles",__FILE__,__LINE__,__method__)
         exit(-__LINE__)
     end
 
@@ -2533,7 +2533,7 @@ def F_verify_mandatory_args()
     #   arg:---cmd?
     if  (!$hOpts[:mCmd])
         $m.f_trc(nil,__LINE__,__method__,"check parameter 'cmd'")
-        $m.f_error("?ARG: missing:<'cmd'>.",__FILE__,__LINE__,__method__)
+        $m.f_eRRor("?ARG: missing:<'cmd'>.",__FILE__,__LINE__,__method__)
         return false
     end
 
@@ -2561,11 +2561,11 @@ def F_verify_mandatory_args()
             if (CFile.f__bFileExist(sFile))
                 $m.f_trc(nil,__LINE__,__method__,"use UEP:=<#{sFile}>")
             else
-                $m.f_error("UEP:<'#{sFile}'> not exists.",__FILE__,__LINE__,__method__)
+                $m.f_eRRor("UEP:<'#{sFile}'> not exists.",__FILE__,__LINE__,__method__)
                 return false
             end
         else
-            $m.f_error("?ARG: missing mandtory arg:--uep",__FILE__,__LINE__,__method__)
+            $m.f_eRRor("?ARG: missing mandtory arg:--uep",__FILE__,__LINE__,__method__)
             return false
         end
     end
@@ -2577,13 +2577,13 @@ def F_verify_mandatory_args()
         $m.f_inf("arg.DIR1:#{$hOpts[:mDir]}",C_COLOR_CYAN)
         $m.f_inf("arg.DIR2:#{sDir}",C_COLOR_CYAN)
         if (not Dir.exists?(sDir))
-            $m.f_error("?ARG: wrong sSrcDir:<#{sDir}>",__FILE__,__LINE__,__method__)
+            $m.f_eRRor("?ARG: wrong sSrcDir:<#{sDir}>",__FILE__,__LINE__,__method__)
             return false
         end
         $m.f_trc(nil,__LINE__,__method__,"use dir:=<#{sDir}>")
     else
         if ($hOpts[:mCmd] == C_CMD_BUILD)   # need 'DIR' - not auto tempDir
-            $m.f_error("?ARG: arg --dir missing",__FILE__,__LINE__,__method__)
+            $m.f_eRRor("?ARG: arg --dir missing",__FILE__,__LINE__,__method__)
             return false
         else
             $m.f_inf("?arg '--dir' missing, I take tmpDir")
@@ -2606,7 +2606,7 @@ def F_verify_mandatory_args()
         $m.f_trc(nil,__LINE__,__method__,"check:--obj")
         sDir = $hOpts[:mObj]
         if (not Dir.exists?(sDir))
-            $m.f_error("?ARG: wrong sObjDir:<'dir'>",__FILE__,__LINE__,__method__)
+            $m.f_eRRor("?ARG: wrong sObjDir:<'dir'>",__FILE__,__LINE__,__method__)
             return false
         end
 =end
@@ -2663,7 +2663,7 @@ def F_verify_and_use_optional_args()
             C_OPT_OVERWRITE_NEVER
         ]
         if (!aOpts.include?(sMode))
-            $m.f_error("?allowed Opts:<#{aOpts}>",__FILE__,__LINE__,__method__)
+            $m.f_eRRor("?allowed Opts:<#{aOpts}>",__FILE__,__LINE__,__method__)
             return false
         end
         if (sMode == C_OPT_OVERWRITE_INFO)
@@ -2697,7 +2697,7 @@ def F_verify_and_use_optional_args()
             elsif ( sOpt[0] == C_FEL_ID__SEP )
                 bOpt = true
             else
-                $m.f_error("?bOpt:sOpt:='#{sOpt}'",__FILE__,__LINE__,__method__)
+                $m.f_eRRor("?bOpt:sOpt:='#{sOpt}'",__FILE__,__LINE__,__method__)
                 return false
             end
         end
@@ -2724,7 +2724,7 @@ def F_verify_and_use_optional_args()
             C_OPT_UEPTYPE_WRD
         ]
         if (!aType.include?(sType))
-            $m.f_error("?Type :<#{sType}> NOT in: <#{aType}>",__FILE__,__LINE__,__method__)
+            $m.f_eRRor("?Type :<#{sType}> NOT in: <#{aType}>",__FILE__,__LINE__,__method__)
             return false
         end
     else
@@ -2761,7 +2761,7 @@ def F_doCommand
         #   parse project file and print a fileList at Tmp
         bRc = F_uedParse($hOpts[:mUepFile],sFileOut)     # in:ue.prj, out:fileList.out
         if (!bRc)
-            $m.f_error("uedParsing",__FILE__,__LINE__,__method__)
+            $m.f_eRRor("uedParsing",__FILE__,__LINE__,__method__)
             return false
         end
         $m.f_inf("bRc.uedParse.tmp:<#{bRc}>") if C_DEBUG
@@ -2780,7 +2780,7 @@ def F_doCommand
         #   parse project-text file
         bRc,iRc,nRc = F_zipMake_txt2zip(sFileOut,sFileZip)    # in:fileList.out, out:file.zip
         if (!bRc)
-            $m.f_error("?error zipMake",__FILE__,__LINE__,__method__)
+            $m.f_eRRor("?error zipMake",__FILE__,__LINE__,__method__)
             return false
         end
         $m.f_puts "!OK:zipped  files<#{iRc}> into File:<#{sFileZip}> with size:<#{nRc}>"
@@ -2830,7 +2830,7 @@ def F_doCommand
         #   select valid zipFile
         bRc,sZipFile = F_zipGet($hOpts[:mUepFile],$hOpts[:mDir])
         if (!bRc)
-            $m.f_error("I can't zip",__FILE__,__LINE__,__method__)
+            $m.f_eRRor("I can't zip",__FILE__,__LINE__,__method__)
             return false
         end
 
@@ -2838,7 +2838,7 @@ def F_doCommand
         $m.f_trc(nil,__LINE__,__method__,"...zip2txt")
         bRc,sTxtFile = F_zipMake_zip2txt(sZipFile)
         if (!bRc)
-            $m.f_error("main:I can't do zip2Txt",__FILE__,__LINE__,__method__)
+            $m.f_eRRor("main:I can't do zip2Txt",__FILE__,__LINE__,__method__)
             return false
         end
 
@@ -2863,7 +2863,7 @@ def F_doCommand
         F_build()
 
     else
-        $m.f_error("main:unknown command",__FILE__,__LINE__,__method__)
+        $m.f_eRRor("main:unknown command",__FILE__,__LINE__,__method__)
         return false
 
     end # case
