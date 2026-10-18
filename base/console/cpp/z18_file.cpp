@@ -560,8 +560,13 @@ int F18_file(CTutor &m) {
 
     m.f_menu("fileName", __LINE__);
 
+//  =:= s: show scratchDir
+    m.f_subMenu("scratchDir", __LINE__);
+    m.f_text(z, "scratchDir => '%s'", m.f_sScratchDirectory());
+
 //  =:= s:  getFileName TXT
     m.f_subMenu("fileName.TXT", __LINE__);
+
     s = F__getFileName(m,sFileTxt);
     m.f_text(z, "IHX.txt.File => '%s'", s);
     strcpy(sFileTxt,s);
