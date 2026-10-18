@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #  	***************************************************************************
-#   Starter Debian13	dtm :[2026-10-03].vcs
+#   Starter Debian13	dtm :[2026-10-18].vcs
 #  	***************************************************************************
 
 #   encoding.UTF8:
@@ -12,6 +12,9 @@
 #		    bash$>  source $v_STARTER
 #		second call:
 #		    bash$> 	+go
+
+#   history:
+#       2026-10-18  *   vcs move to fwk/base
 
 #   variables.input
 #       i:  v_STARTER       * .bashrc
@@ -460,7 +463,7 @@ function f_fwk_variable_define () {
     v_VCS=$HOME/VCS  && export v_VCS
 
     #   dir.repo.FWK
-    v_VCS_fwk=$v_VCS/fwk && export v_VCS_fwk
+    v_VCS_fwk=$v_VCS/fwk/base && export v_VCS_fwk
 
     #   dir.fwk.cmd
     v_DIR=$v_VCS_fwk/cmd

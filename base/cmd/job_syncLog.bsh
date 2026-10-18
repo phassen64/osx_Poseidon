@@ -1,6 +1,6 @@
 #!/bin/bash
 #  	***************************************************************************
-#   cron.job	    dtm:[2026-10-05].vcs
+#   cron.job	    dtm:[2026-10-18].vcs
 #  	***************************************************************************
 
 #   description:
@@ -15,7 +15,7 @@
 
 
 #   entry inside crontab
-#   */10 * * * * /home/peter/VCS/cmd/jobWorkshop.bsh >>
+#   */10 * * * * /home/peter/VCS/fwk/base/cmd/job_syncLog.bsh >>
 #                   /home/peter/Documents/log/cron.log 2>&1
 
 #  	***************************************************************************
@@ -41,7 +41,7 @@ fi
 
 
 #   s:  dObj
-dObj="$HOME/VCS/fwk/basic"
+dObj="$HOME/VCS/fwk/base/doc"
 if [ ! -d $dObj ]
 then
     printf "???\t:miss2.dObj:['%s']\n" $dObj
