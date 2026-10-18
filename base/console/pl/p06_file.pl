@@ -8,7 +8,7 @@ $PGMNAME="[6]:Files,Verzeichnisse";
 # !$@€ƒ„…†‡‰ŠŒŽ“”•—™šœžŸ¡¢£¤¥¦§¨©«¬®°±²³µ¶·¹º»¼½¾¿ÑÖØÜÞßäæçîðñôö÷üýþÿß
 
 use p00;    # include + compile von Modul "i01.pm"
-$iEc  = $ENV{v_FWK_exitCode} + 0;
+$iEc  = $ENV{v_FWK_exitStatus} + 0;
 goto l;
 # 1) FILE create/open+close
 # 2) FILE write

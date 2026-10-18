@@ -9,7 +9,7 @@ $PGMNAME="[09]:Klassen";
 # !$@€ƒ„…†‡‰ŠŒŽ“”•—™šœžŸ¡¢£¤¥¦§¨©«¬®°±²³µ¶·¹º»¼½¾¿ÑÖØÜÞßäæçîðñôö÷üýþÿß
 
 use p00;
-$iEc  = $ENV{v_FWK_exitCode} + 0;
+$iEc  = $ENV{v_FWK_exitStatus} + 0;
 
 # ---- INHALT:
 #   1) Klassen

@@ -12,7 +12,7 @@
 
 use p00;
 use Symbol;         # abstract file handles
-$iEc = $ENV{v_FWK_exitCode} + 0;
+$iEc = $ENV{v_FWK_exitStatus} + 0;
 
 # ---- INHALT:
 # *****************************************************************************
