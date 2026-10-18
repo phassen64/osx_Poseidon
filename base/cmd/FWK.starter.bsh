@@ -36,6 +36,7 @@
 #   content:
 #       b:  B.function
 #		    •   m:  F.initialize
+#		    •   m:  F.vcs
 #		    •   m:	F.env
 #		    •   m:	F.helper
 #		    •   m:	F.library
@@ -233,6 +234,18 @@ function f_ini_gui_DE_cinnamon() {
     sudo update-alternatives --config x-session-manager
 }
 
+#   ===========================================================================
+#  	m:  F.vcs
+#   ===========================================================================
+
+function f_vcs_get() {
+    sVCS='https://github.com/phassen64/osx_poseidon.git'
+    echo "* git cloning :['$sVCS']"
+    pushd $v_VCS
+    ls
+    git clone "$sVCS"
+    popd
+}
 
 #   ===========================================================================
 #  	m:  F.env
@@ -415,6 +428,11 @@ function f_fwk_variable_show() {
 function f_fwk_environment_show() {
     env | sort
 }
+
+function f_fwk_vcs_getClone() {
+    f_vcs_get
+}
+
 
 #   ===========================================================================
 #  	m:  F.library
