@@ -725,7 +725,7 @@ $<
     Tell VS Code to listen to physical keys (keyCode) rather
         than layout-resolved characters (code).
     Open settings.json in VS Code
-    (Ctrl + Shift + P $\rightarrow$
+    (Ctrl + Shift + P "->"
         Preferences: Open User Settings (JSON)).
         Add or update this line:
 
@@ -736,7 +736,7 @@ $<
     1.  open gui::VsCode
     2.  key:CTRL + key:SHIFT + key:'P'
     3.  goto "Preferences: Open User Settings (JSON)".
-    4.  enter "keyboard.dispatch": "keyCode
+    4.  enter "keyboard.dispatch": "keyCode"
 
 +   VsCode settings.JSON location
     dir:    '/home/peter/.config/Code/User'

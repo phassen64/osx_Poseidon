@@ -1,0 +1,14 @@
+#!/bin/bash
+
+#   usage:  $   ./run_c89.bsh
+
+#   show usage
+clear
+bash r04_PRL_expert.bsh + 1
+
+#   start using some files
+
+#   show my logfile
+
+printf "\n\n@@@ runner::isReady.\n"
+

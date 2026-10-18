@@ -14,6 +14,9 @@
 #   m:  prepare
 #
 
+#   s:  interpreter
+declare -r C_INTERPRETER='perl'
+
 #   s:  show
 clear
 declare -i iReply=$RANDOM
@@ -49,8 +52,9 @@ for xFile in $a
 do
     i+=1
     printf "*** run:[%2.2d]/[%2.2d]:'%s'\n" $i $n $xFile
-    perl $xFile
+    $C_INTERPRETER $xFile
+    printf "\n\n"
 done
 
-printf "END simple.run:[%s]\n\n" "$sDtm"
+printf "\nEND simple.run:[%s]\n\n" "$sDtm"
 

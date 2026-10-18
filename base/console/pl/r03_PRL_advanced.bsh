@@ -60,7 +60,7 @@ function f_run_script {
             printf "%s\n\n" $sHashLine
 
             #   call script, save eXitCode
-            bash $xFile $iEc;   iBashReply=$?
+            $C_INTERPRETER $xFile $iEc;   iBashReply=$?
 
             #   check reply
             printf "\n<<< replyOf[%d]:'%s': #{%d}" $n $xFile $iBashReply
@@ -88,8 +88,11 @@ function f_run_script {
 #   m:  prepare
 #
 
+#   s:  interpreter
+declare -r C_INTERPRETER='perl'
+
 #   s:  fetch all bash in a ShellArray
-aShellArray=$(echo `ls t*.bsh`)
+aShellArray=$(echo `ls p*.pl`)
 
 #   s:  fetchDateTime
 declare sFmt="+%Y-%m-%d %H:%M:%S"
@@ -113,7 +116,7 @@ fLog="$v_FWK_dirTemp/$v_SCP_bdy.log"
 printf "&&& logFile:'%s'\n" "$fLog"
 
 #   s:  header
-printf -v SOut ">>> runBSH.BEG *[%d] at:[%s]." "$iCtr" "$sDtm"
+printf -v SOut ">>> runPRL.BEG *[%d] at:[%s]." "$iCtr" "$sDtm"
 printf "$SOut\n"
 echo "$SOut" > $fLog
 
@@ -142,7 +145,7 @@ sDtm=$(date "$sFmt");   tDtmStopp=$(date '+%s.%N')
 fSec=$(echo "($tDtmStopp-$tDtmStart) / 1" | bc)
 
 #   s:  footer
-printf -v SOut "<<< runBSH.END *[%d] at:[%s] elapsed:[%s]." "$iCtr" "$sDtm" "$fSec"
+printf -v SOut "<<< runPRL.END *[%d] at:[%s] elapsed:[%s]." "$iCtr" "$sDtm" "$fSec"
 echo "$SOut" >> $fLog
 printf "$SOut\n"
 
