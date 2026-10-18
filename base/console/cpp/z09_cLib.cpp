@@ -343,7 +343,7 @@ int F09_cLib(CTutor &m) {
 //
     m.f_subMenu("errno",__LINE__);
     i = errno;  m.f_text(z,"errno =: '%d'",i);
-    m.f_error("TestErrno",__FILE__,__LINE__);
+    m.f_eRRor("TestErrno",__FILE__,__LINE__);
 
     cout << "<<< endOfTest:[" << 77 << "];" << endl;
 
