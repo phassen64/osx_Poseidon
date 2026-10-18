@@ -114,7 +114,7 @@ fi
 
 #   added FWK bash - prior has global
 v_NAM=FWK.starter.bsh
-v_DIR=$HOME/VCS/fwk/cmd
+v_DIR=$HOME/VCS/fwk/root/cmd
 v_STARTER=$v_DIR/$v_NAM
 if [ -f $v_STARTER ]; then
    echo "--- import.global!"
