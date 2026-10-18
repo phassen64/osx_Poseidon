@@ -32,7 +32,19 @@ using namespace std;
 #include <map>              //  STL:Map
 #include <valarray>         //  STL:valArray
 
-
+/*  $ (GoogleGemini) 
+    https://gemini.google.com/app/df137f41441ddac5?hl=de
+    !CRQ-261018
+        *   std::random_shuffle was deprecated in C++11 
+        *   and completely removed in C++17.
+*/
+//  * use instead...   
+#include <iostream>
+#include <vector>
+#include <algorithm> // for std::shuffle
+#include <random>    // for std::mt19937 and std::random_device
+
+
 int F__vector(CTutor &m) {
     int             iEc = m.f_iEc();
     const char*     sHdr =  "STL.vector";
@@ -82,10 +94,23 @@ int F__vector(CTutor &m) {
         std::cout << ' ' << *p;
     }
     cout << endl;
+    
+//  =:= s:  shuffle 
+    m.f_subMenu("shuffle by GoogleGemini", __LINE__);
 
-//  =:= s:  shuffle
-    m.f_subMenu("shuffle", __LINE__);
-    random_shuffle( STL_i.begin(), STL_i.end() );
+    #ifdef __USE_DEPRECATED
+        random_shuffle( STL_i.begin(), STL_i.end() ); // !CRQ-261018
+    #endif 
+
+    // 1. Seed with a real random value if available
+    std::random_device rd;
+
+    // 2. Initialize the Mersenne Twister engine
+    std::mt19937 g(rd());
+
+    // 3. Shuffle the vector
+    std::shuffle(STL_i.begin(), STL_i.end(), g);
+
     m.f_text(z,"after shuffling ...");
     cout << "\t";
     i=0;
