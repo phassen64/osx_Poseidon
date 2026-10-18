@@ -21,4 +21,4 @@
 # For more information see the manual pages of crontab(5) and cron(8)
 # 
 # m h  dom mon dow   command
-* * * * * $HOME/VCS/fwk/base/cmd/job_syncLog.bsh >> $HOME/Documents/log/myCron.log 2>&1
+*/10 * * * * $HOME/VCS/fwk/base/cmd/job_syncLog.bsh >> $HOME/Documents/log/myCron.log 2>&1

@@ -1,0 +1,3 @@
+--- readme vcs::fwk/public/media/ext
+
++   sample for files with a specific file extension
