@@ -702,7 +702,7 @@ class CTrace  : public CVPrint {
             sprintf(s,"--- I:\"%s\"  [%s;%d]", p_sText, p_sFile, p_iLine);
             f__puts(s,E_COLOR_YELLOW_BRHT);
         }
-        void f_error(const char *p_sText, const char *p_sFile, int p_iLine)
+        void f_eRRor(const char *p_sText, const char *p_sFile, int p_iLine)
         {
             char *s = m__cTraceBuffer;
             int iEc     = errno;
