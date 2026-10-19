@@ -225,7 +225,7 @@ class CFile
             if (!File.exist?(p_sFilePath))
                 return false
             end
-            if (Dir.exists?(p_sFilePath))
+            if (Dir.exist?(p_sFilePath))
                 return false
             end
             return true
@@ -391,8 +391,8 @@ class CFile
             return false
         end
         #   extract dirname only if really a dir
-        if (!Dir.exists?(sObj) &&
-            !Dir.exists?(File.dirname(sObj)))
+        if (!Dir.exist?(sObj) &&
+            !Dir.exist?(File.dirname(sObj)))
             $m.f_trc(nil,__LINE__,__method__,"?NoDirAt:<#{sObj}>")
             return false
         end
@@ -583,7 +583,7 @@ class CFile
         #   check mandatory parameter
         #   *   String
         if ((not p_sDir.is_a? String) ||
-            p_sDir==nil || p_sDir.empty? || (not Dir.exists?(p_sDir)) )
+            p_sDir==nil || p_sDir.empty? || (not Dir.exist?(p_sDir)) )
             $m.f_exit("Dir==0",__FILE__,__LINE__,__method__)
             return false
         end
@@ -1707,7 +1707,7 @@ class CZip < CFile
         $m.f_thm("CZip.find",true,__LINE__)
         $m.f_trc(nil,__LINE__,__method__,"sFid:<#{p_sZipFileId}>")
         sDir    =   File.dirname(p_sZipFileId)
-        if (not(Dir.exists?(sDir)))
+        if (not(Dir.exist?(sDir)))
             $m.f_trc(nil,__LINE__,__method__,"?DirNotExist<#{sDir}>")
             return false
         end
@@ -1846,7 +1846,7 @@ class CZip < CFile
 
                     #  =*= 01: makeDir
                     sDir = File.dirname(sFilePath)
-                    if (!Dir.exists?(sDir))
+                    if (!Dir.exist?(sDir))
                         $m.f_trc(nil,__LINE__,__method__,"mkDir:<#{sDir}>")
                         FileUtils.mkdir_p(sDir)
                     end
@@ -2139,7 +2139,7 @@ def F_zipGet(p_sZipFileId,p_sZipDir)
     $m.f_trc(nil,__LINE__,__method__,"arg1:<#{p_sZipFileId}>")
 
     #   if Dir is input, it must be exist!
-    if (p_sZipDir != nil && (!Dir.exists?(p_sZipDir)))
+    if (p_sZipDir != nil && (!Dir.exist?(p_sZipDir)))
         raise $m.f_sprint("?DIR:<#{p_sZipDir}>",C_COLOR_RED)
         return false
     end
@@ -2161,7 +2161,7 @@ def F_zipGet(p_sZipFileId,p_sZipDir)
         bDir = false
         sDir = File.dirname(p_sZipFileId)
         $m.f_trc(nil,__LINE__,__method__,"dir:=<#{sDir}>")
-        if (!Dir.exists?(sDir))
+        if (!Dir.exist?(sDir))
             raise $m.f_sprint("?DIR:<#{sDir}>",C_COLOR_RED)
             return false
         end
@@ -2243,7 +2243,7 @@ def F_build()
     $m.f_inf "FEL:<#{$hOpts[:mFEL]}>"
 
     #   the tree dir must exist
-    if (not Dir.exists? $hOpts[:mDir])
+    if (not Dir.exist? $hOpts[:mDir])
         $m.f_eRRor("?DirExist:<#{$hOpts[:mDir]}>",__FILE__,__LINE__,__method__)
         exit(-__LINE__)
     end
@@ -2298,14 +2298,14 @@ def F_build()
         sDirObj = $hOpts[:mObj]
     else
         sDirObj = $pF.f_sDirName($hOpts[:mUepFile])
-        if ((sDirObj != nil) && (Dir.exists? sDirObj))
+        if ((sDirObj != nil) && (Dir.exist? sDirObj))
             $m.f_inf "uepDir by uepDir"
         else
             sDirObj = $sDirTmp
             $m.f_inf "uepDir by tmpDir"
         end
     end
-    if (!(Dir.exists? sDirObj))
+    if (!(Dir.exist? sDirObj))
         $m.f_eRRor("?outputDir of build",__FILE__,__LINE__,__method__)
         exit(-__LINE__)
     end
@@ -2576,7 +2576,7 @@ def F_verify_mandatory_args()
         sDir = CFile.f__sUnixPath($hOpts[:mDir])
         $m.f_inf("arg.DIR1:#{$hOpts[:mDir]}",C_COLOR_CYAN)
         $m.f_inf("arg.DIR2:#{sDir}",C_COLOR_CYAN)
-        if (not Dir.exists?(sDir))
+        if (not Dir.exist?(sDir))
             $m.f_eRRor("?ARG: wrong sSrcDir:<#{sDir}>",__FILE__,__LINE__,__method__)
             return false
         end
@@ -2605,7 +2605,7 @@ def F_verify_mandatory_args()
         end
         $m.f_trc(nil,__LINE__,__method__,"check:--obj")
         sDir = $hOpts[:mObj]
-        if (not Dir.exists?(sDir))
+        if (not Dir.exist?(sDir))
             $m.f_eRRor("?ARG: wrong sObjDir:<'dir'>",__FILE__,__LINE__,__method__)
             return false
         end
@@ -2644,7 +2644,7 @@ def F_verify_and_use_optional_args()
     if ($hOpts[:mObj])
         #   when we enter an objDir, it must exists
         sDirObj = $hOpts[:mObj]
-        if (not Dir.exists? sDirObj)
+        if (not Dir.exist? sDirObj)
             return false        # !CRQ-190804:check existing objDir
         end
     end

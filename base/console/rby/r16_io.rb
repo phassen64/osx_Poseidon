@@ -273,8 +273,8 @@ $m.f_puts "PWD:<'#{sPwd}'>"
 
 #   exists TMP?
 $m.f_thm("exists?",true,__LINE__)
-$m.f_print "Dir.exists?...:"
-bDir = Dir.exists?(sDirTmp)
+$m.f_print "Dir.exist?...:"
+bDir = Dir.exist?(sDirTmp)
 if (bDir)
     $m.f_puts "'YES'"
 else
@@ -291,7 +291,7 @@ $m.f_puts "dirTmp:<'#{sRc}'>"
 #   mkdir TmpTmp
 $m.f_thm("Dir.new",true,__LINE__)
 sDirNew='TmpTmp'
-if (Dir.exists?(sDirNew) == false)
+if (Dir.exist?(sDirNew) == false)
     begin
         Dir.mkdir(sDirNew)
     rescue StandardError => e
@@ -299,7 +299,7 @@ if (Dir.exists?(sDirNew) == false)
        exit
     end
     $m.f_print "DirNEW.exists?...:"
-    bDir = Dir.exists?(sDirNew)
+    bDir = Dir.exist?(sDirNew)
     if (bDir)
         $m.f_puts "'YES'"
     else

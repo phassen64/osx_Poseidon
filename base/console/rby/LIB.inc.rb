@@ -625,7 +625,7 @@ public
     def f_sDir( p_sFilePath )
         sDir=File.dirname(p_sFilePath)
         #   puts "Dir:#{sDir}"
-        if (!Dir.exists?(sDir))
+        if (!Dir.exist?(sDir))
             return false,sDir
         end
         return true,sDir
