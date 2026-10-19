@@ -56,7 +56,7 @@ function f_ini_helper() {
 	sudo apt-get install bat		# 	:cat
 	sudo apt-get install bc         #   precision calculator language
 	sudo apt-get install curlie		#	:curl
-    sudo apt-get install dos2unix
+    sudo apt-get install dos2unix   #   handles d2u && u2d
 	sudo apt-get install duf		# 	:df
     sudo apt-get install eza		#	:ls
 	sudo apt-get install git
@@ -240,6 +240,15 @@ function f_ini_gui_DE_cinnamon() {
 #  	m:  F.vcs
 #   ===========================================================================
 
+function f_vcs_init() {
+    sVCS='https://github.com/phassen64/osx_poseidon.git'
+    echo "* git cloning :['$sVCS']"
+    pushd $v_VCS
+    ls
+    git clone "$sVCS"
+    popd
+}
+
 function f_vcs_get() {
     sVCS='https://github.com/phassen64/osx_poseidon.git'
     echo "* git cloning :['$sVCS']"
@@ -344,11 +353,7 @@ function f_fwk_alias_set(){
     alias +cdusr='cd $v_USR_dirDocRoot && pwd'
     alias +cdimg='cd "$v_USR_dirDocRoot/img" && pwd'
     alias +cdwrk='cd $v_USR_dirWorkshop && pwd'
-    alias +cdwrkSrc='cd $v_USR_dirWorkshop/source && pwd'
-    alias +cdwrkObj='cd $v_USR_dirWorkshop/object && pwd'
-    alias +cdwrkTmp='cd $v_USR_dirWorkshop/temp && pwd'
-    alias +cdwrkLog='cd $v_USR_dirWorkshop/logg && pwd'
-    alias +cdprj=+cdwrkObj
+    alias +cdpub='cd "$v_FWK/public" && pwd'
 	#   =:= m:cd.tutor
     alias +cdtutor='cd $v_FWK_dirTutor && pwd'
     alias +cdb='cd $v_FWK_dirTutor/bsh && pwd'
@@ -540,62 +545,136 @@ function f_fwk_isDirectory {
 #   ===========================================================================
 
 
-function f_fwk_converter_unix2dos__file {
+function f_fwk_converter_dos2unix__file {
 
-    local sSrc=$1
+    #   get parameter
+    local p_sFile=$1        #   file at local dir
+    local p_sMod=$2         #   {u2d|d2u}    
+    local p_sTry=$3         #   {?,!} 
+
+    #   validate parameter
+    if [ -z $p_sFile ]; then
+        #   printf "? hint: p1.File==zero\n"
+        local s='$ FCT {p_sFile} {p_sMod} [p_sTry=:'!']'
+        printf "! usage :: %s \n" "$s"
+        return 91
+    elif [ ! -f "$p_sFile" ]; then
+        printf "? hint: p1.File!=file \n"
+        return 92
+    elif [ -z $p_sMod ]; then
+        printf "? hint: p2.Mod==zero \n"
+        return 93
+    elif [ 'd2u' != $p_sMod ] && [ 'u2d' != $p_sMod ]; then
+        printf "? hint: p2.Mod={'d2u'|'u2d'} \n"
+        return 94
+    elif [ -z $p_sTry ] || [ '!' != $p_sTry ] ; then
+        p_sTry='?'
+    else
+        p_sTry='!'
+    fi
 
     #   dir/file.c -> file.c    
-    local sNam=`basename $sSrc`
-
-    local sBdy="${sSrc%.*}"
-    local sExt="${sSrc##*.}"
+    local sNam=`basename $p_sFile`
+    local sBdy="${p_sFile%.*}"
+    local sExt="${p_sFile##*.}"
 
     #   temp file
-    local sObj="${sBdy}.dos.$sExt"
+    local sObj="${sBdy}_${p_sMod}.$sExt"
 
-    #   echo "+ sNam : {$sNam}"
-    #   echo "+ sBdy : {$sBdy}"
-    #   echo "+ sExt : {$sExt}"
-    #   echo "+ sObj : {$sObj}"
+    #   show
+    if [ '?' == $p_sTry ]; then
+        printf "! F.cnvrtF(%s) src:'%s' tmp:'%s' \n" $p_sMod $p_sFile $sObj
+        return $v_FWK_bTrue
+    fi
 
-    #   convert and replace    
-    cat $sSrc | unix2dos > $sObj    #   use build-in converter
-    rm -f $sSrc                     #   remove source
-    mv $sObj $sSrc
+    #   doConvert()
+    if [ 'd2u' == $p_sMod ]; then
+        cat $p_sFile | dos2unix > $sObj  
+    elif [ 'u2d' == $p_sMod ]; then
+        cat $p_sFile | unix2dos > $sObj  
+    fi
+        
+    #   remove source 
+    rm -f $p_sFile 
+    
+    #   rename temp file to source file
+    mv $sObj $p_sFile
     
 }
 
-function f_fwk_converter_unix2dos {
 
-    local p_sExt=$1
-    local p_sDir=`pwd` 
+function f_fwk_converter_dos2unix__directory {
 
+    #   get parameter
+    local -x p_sDir=`pwd` 
+    local p_sExt=$1         #   fileNameExtension
+    local p_sMod=$2         #   {u2d|d2u}    
+    local -i p_iTry=$3      #   {0,1,2,3} 
+
+    #   validate parameter
     if [ -z $p_sExt ]; then
-        echo "? missing parameter [p_sExt]"
-        echo "! usage: $ bash THIS 'c'"
-        return 1
-    fi  
-    
-    #   show input
-    echo "+ sExt : {$p_sExt}"
-    echo "+ sPWD : {$p_sDir}"
+        local s='$ FCT {p_sFileNameExt} {p_sMod}'
+        printf "! usage :: %s \n" "$s"
+        return 91
+    elif [ -z $p_sMod ]; then
+        printf "? hint: p2.Mod==zero \n"
+        return 93
+    elif [ 'd2u' != $p_sMod ] && [ 'u2d' != $p_sMod ]; then
+        printf "? hint: p2.Mod={'d2u'|'u2d'} \n"
+        return 94
+    elif [ -z $p_iTry ] || [ 0 -eq $p_iTry ] || [ 3 -lt $p_iTry ] ; then
+        p_iTry=0
+    else
+        p_iTry=$3   # take it
+    fi
 
-    #   convert and replace   
-    local -i i=0 
+    #   show
+    if [ 0 == $p_iTry ]; then
+        printf "! F mod(%s) ext:'%s' try:'%d' \n" $p_sMod $p_sExt $p_iTry
+        return $v_FWK_bTrue
+    fi
+
+    #   prepare internal run parameter
+    local sRun='?'
+    if [ 1 == $p_iTry ]; then
+        sRun='-'
+    elif [ 2 == $p_iTry ]; then
+        sRun='+'
+    elif [ 3 == $p_iTry ]; then
+        sRun='!'
+    fi
 
     #   converter for all files with fitting file extension
+    local -i i=0 
     for xFile in $p_sDir/*; do
         if [ -f $xFile ]; then
             local sExt="${xFile##*.}"
+            #   printf "&&& [%2.2d]\t: '%s\n" $i $xFile
             if [ $sExt == $p_sExt ]; then
                 i+=1
                 local sNam=`basename $xFile`
-                printf "&&& converter u2d [%2.2d]\t: '%s\n" $i $sNam
-                f_fwk_converter_unix2dos__file $sNam
+                if [ 1 -le $p_iTry ]; then
+                    printf "&&& converter.(%s) [%2.2d]\t: '%s\n" \
+                        $p_sMod $i $sNam
+                fi
+                if [ 2 -le $p_iTry ]; then
+                    f_fwk_converter_dos2unix__file $sNam $p_sMod $sRun
+                fi
             fi
         fi
     done
 
+}
+
+
+#   wrapper.1
+function f_fwk_converter_dos2unix() {
+    f_fwk_converter_dos2unix__directory "$1" "d2u" 3
+}
+
+#   wrapper.2
+function f_fwk_converter_unix2dos() {
+    f_fwk_converter_dos2unix__directory "$1" "u2d" 3
 }
 
 
@@ -618,7 +697,7 @@ printf "+ sta : {%s} \n" $v_STARTER
 #   s:  show.SCP
 v_SCP=`basename $BASH_SOURCE`;    echo "+ scp : {$v_SCP}"
 v_PWD=`pwd`;    echo "+ pwd : {$v_PWD}"
-v_PID='"Oops - I did it again!"';   echo "+ pid : $v_PID"
+v_FID='"Oops - I did it again!"';   echo "+ fid : $v_FID"
 
 #   s:  alias define
 f_fwk_alias_set
@@ -627,7 +706,7 @@ f_fwk_alias_set
 if [ -z $v_FWK_path_isUpdated ]
 then
 
-    declare -i v_FWK_bTrue=40     # no export
+    declare -i v_FWK_bTrue=20     # no export
     declare -i v_FWK_bFalse=99
 
     v_FWK_path_isUpdated=$v_FWK_bTrue
