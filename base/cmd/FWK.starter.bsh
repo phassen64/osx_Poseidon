@@ -148,6 +148,7 @@ function f_ini_ruby() {
             sudo gem install python
             sudo gem install rdoc
             sudo gem install rubygems
+            sudo gem install rubyzip
             sudo gem install thor
             sudo gem install zip
         ;;    
@@ -156,7 +157,7 @@ function f_ini_ruby() {
             gem list --local
         ;;
         *)
-            echo "< install:not { 'app' | 'gem' } "
+            echo "< install:not { 'app' | 'gem' | 'GET' | 'tmp' } "
         ;;
     esac
     #   show current version
