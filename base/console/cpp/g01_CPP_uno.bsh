@@ -11,7 +11,7 @@
 #       $   bash run_<SCP>.bsh <FILE.cpp>
 
 #   example:
-#       $   bash "r01_runUno.bsh" "z01_intro.cpp"
+#       $   bash "g01_runUno.bsh" "z01_intro.cpp"
 
 #   description:
 #       compile & link & execute input-file <FILE.cpp>
