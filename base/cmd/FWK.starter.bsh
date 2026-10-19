@@ -526,7 +526,7 @@ function f_fwk_variable_define () {
     v_FWK_dirLogging=$v_DIR && export v_FWK_dirLogging
 
     #   PERL
-    PERL5LIB="${v_FWK_dirTutor}/pl" && export PERL5LIB
+    PERL5LIB="${v_FWK_dirTutor}/prl" && export PERL5LIB
 }
 
 function f_fwk_isFile {
