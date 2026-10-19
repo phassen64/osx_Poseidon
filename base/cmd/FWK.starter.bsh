@@ -28,11 +28,9 @@
 #       o:  v_FWK_dirLogging
 #       o:  v_PWD
 #       o:  v_RND
-#       o:  v_TMP =: scratch
-#       o:  v_USR_dirDocRoot
 #       o:  v_USR_dirDocRoot
 #       o:  v_USR_dirWorkshop
-#       v_USR_scratch_relPath
+#       o:  v_USR_scratch_relPath
 #       o:  v_VCS
 
 #   content:
@@ -42,6 +40,7 @@
 #		    •   m:	F.env
 #		    •   m:	F.helper
 #		    •   m:	F.library
+#		    •   m:	F.tools
 #       b:  B.body
 
 
@@ -540,7 +539,6 @@ function f_fwk_isDirectory {
 #  	m:  F.tools
 #   ===========================================================================
 
-#   cat c04_struct.c | unix2dos > c04_struct.dos.c
 
 function f_fwk_converter_unix2dos__file {
 
