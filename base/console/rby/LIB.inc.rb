@@ -6,6 +6,7 @@
 
 #   261019: File.exist?=>File.exist?   
 #           File.exist? was deprecated in Ruby 2.1.0 and permanently removed in Ruby 3.2.0.
+#   261019: DirTmp for Posix
 
 #   encoding    :   UTF8-noBOM
 #   !$@€ƒ„…†‡‰ŠŒŽ“”•—™šœžŸ¡¢£¤¥¦§¨©«¬®°±²³µ¶·¹º»¼½¾¿ÑÖØÜÞßäæçîðñôö÷üýþÿß
@@ -47,8 +48,8 @@ require 'optparse'      # parse arg options
 if ( g_bOsPosix )
     C_DIR_SEPARATOR =   '/'
     C_STR_COLORED   =   false
-#   C_DIR_TMP       =   ENV['User'] + C_DIR_SEPARATOR + 'Temp'
-    C_DIR_TMP       =   '/var/tmp'
+    # !CRQ-261019:DirTmp
+    C_DIR_TMP       =   ENV['HOME'] + ENV['v_USR_scratch_relPath']  
 else
     C_DIR_SEPARATOR =   '\\'
     C_STR_COLORED   =   true
