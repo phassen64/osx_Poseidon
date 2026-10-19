@@ -1,4 +1,4 @@
-# !/perl/bin   # Diese Zeile mu� manchmal am Anfang stehen
+#!/usr/bin/env perl # Diese Zeile muß manchmal am Anfang stehen
 
 #   encoding: UTF-8
 #   !$@€ƒ„…†‡‰¡“”•—Ÿ¢£¤¥¦§¨™©®×±«»♔♖♞♟°²³µ¶·¹º¼½¾¿ÄÖÜäöüßæŠŒŽšœžçîðñôö÷αβγδεΦ.Ω
@@ -75,5 +75,5 @@ Dokumentation
 # ============================================================================
 
 $iEc = $ENV{v_FWK_exitStatus} + 0;
-print "iEc: $iEc";
+print "iEc: $iEc \n";
 exit $iEc;

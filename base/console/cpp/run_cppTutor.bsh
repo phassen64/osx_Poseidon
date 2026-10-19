@@ -4,7 +4,7 @@
 
 #   show usage
 clear
-bash r04_PRL_expert.bsh + 1
+bash g04_CPP_expert.bsh + 1
 
 #   start using some files
 
