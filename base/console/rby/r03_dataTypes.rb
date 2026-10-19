@@ -52,9 +52,8 @@ bRc = a.is_a? Array ;       $m.f_puts "<#{a}>.is_a? Array    =:\t" + bRc.to_s
 bRc = h.is_a? Hash ;        $m.f_puts "<#{h}>.is_a? Hash     =:\t" + bRc.to_s
 
 #   special for BigNum
-$m.f_thm("BigNum",true)
-bRc = I.is_a? Integer ;  $m.f_puts "is I=<#{I}>.is_a? Integer?  =:\t" + bRc.to_s
-bRc = I.is_a? Bignum ;   $m.f_puts "is I=<#{I}>.is_a? Bignum?  =:\t" + bRc.to_s
+#	bRc = I.is_a? Bignum ;   $m.f_puts "is I=<#{I}>.is_a? Bignum?  =:\t" + bRc.to_s
+#	!CRQ-261019:  I.is_a? Bignum is deprecated; use Integer instead
 
 #   determine variable-class by using    : <x>.class => "<ClassName>"
 $m.f_thm("check types via 'keyword class'")
