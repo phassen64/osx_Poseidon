@@ -4,8 +4,8 @@
 
 #   history:
 
-#   261019: File.exists?=>File.exist?   
-#           File.exists? was deprecated in Ruby 2.1.0 and permanently removed in Ruby 3.2.0.
+#   261019: File.exist?=>File.exist?   
+#           File.exist? was deprecated in Ruby 2.1.0 and permanently removed in Ruby 3.2.0.
 
 #   encoding    :   UTF8-noBOM
 #   !$@€ƒ„…†‡‰ŠŒŽ“”•—™šœžŸ¡¢£¤¥¦§¨©«¬®°±²³µ¶·¹º»¼½¾¿ÑÖØÜÞßäæçîðñôö÷üýþÿß
@@ -463,7 +463,7 @@ private
             s = s.to_s + "\n"
         end
         if ( ($sLogFile == nil) || ($sLogFile.empty?) || 
-             (!File.exist?($sLogFile.to_s)) )       # !CRQ-261019:File.exists?
+             (!File.exist?($sLogFile.to_s)) )       # !CRQ-261019:File.exist?
             return false
         end
         return f__writeF(s,p_sMode,$sLogFile)

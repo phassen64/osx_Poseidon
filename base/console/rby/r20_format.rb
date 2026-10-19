@@ -91,7 +91,7 @@ class CZip < CFileNames
         end
         sPwd=Dir.pwd
         Dir.chdir(p_sDir)
-        File.delete(p_sFile) if File.exists?(p_sFile)
+        File.delete(p_sFile) if File.exist?(p_sFile)
         Dir.chdir(sPwd)
     end
     def f_add(p_sSrcDir,p_sSrcFilePattern,p_sObjDir,p_sObjZip)

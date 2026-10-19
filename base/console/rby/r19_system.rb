@@ -77,7 +77,7 @@ for i in 0..n-1
     end
     x=ARGV[i]
     $m.f_puts "ARGV[#{i}]:<#{x}>"
-    if (bFileOnly && (!File.exists?(x)) )
+    if (bFileOnly && (!File.exist?(x)) )
         bFileOnly=false # not all files - case zen1
     end
 end
@@ -146,7 +146,7 @@ else
         $m.f_puts "Ruby Version:<" + RUBY_VERSION.to_s + ">"
     elsif  ($h[:mFile])
         $m.f_print "FILE:<" + $h[:mFile].to_s + ">"
-        if (File.exists?($h[:mFile]))
+        if (File.exist?($h[:mFile]))
             $m.f_puts("...exists!")
         else
             $m.f_puts "...?not exists."

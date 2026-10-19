@@ -85,7 +85,7 @@ end
 #  check existing file
 $m.f_thm("file exists?",true,__LINE__)
 $m.f_print "?File['#{sFileTxt}'].exists..."
-if (File.exists?(sFileTxt.to_s))
+if (File.exist?(sFileTxt.to_s))
     $m.f_puts " => 'YES!'"
 else
     $m.f_puts " => 'NO!'"

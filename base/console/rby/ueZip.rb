@@ -222,7 +222,7 @@ class CFile
         end # f~sUnixPath
 
         def f__bFileExist(p_sFilePath)
-            if (!File.exists?(p_sFilePath))
+            if (!File.exist?(p_sFilePath))
                 return false
             end
             if (Dir.exists?(p_sFilePath))
@@ -260,7 +260,7 @@ class CFile
             #   https://ruby-doc.org/core-3.0.0/doc/syntax/exceptions_rdoc.html
             begin
                 $m.f_trc(nil,__LINE__,__method__,"try fRm:<#{p_sFile}>") if C_VERBOSE
-                if (!File.exists?(p_sFile))  # !CRQ-210208:checkExisting
+                if (!File.exist?(p_sFile))  # !CRQ-210208:checkExisting
                     s = "?rm with not existing file:'#{p_sFile}'"
                     $m.f_eRRor(s,__FILE__,__LINE__,__method__) if C_DEBUG
                     $m.f_warning(s,__FILE__,__LINE__,__method__) # !CRQ-210221:warningOnly
@@ -378,7 +378,7 @@ class CFile
         if (p_sFilePathSrc == p_sFilePathObj)
             return false
         end
-        if (!File.exists?(p_sFilePathSrc))
+        if (!File.exist?(p_sFilePathSrc))
             return false
         end
         $m.f_trc(nil,__LINE__,__method__,"src:<#{p_sFilePathSrc}>")
@@ -405,7 +405,7 @@ class CFile
         $m.f_inf "#{s}",C_COLOR_RED
         #   copy real
         bRc = CFile.f__cp(sSrc,sObj)
-        if (!bRc || !File.exists?(sObj))
+        if (!bRc || !File.exist?(sObj))
             $m.f_trc(nil,__LINE__,__method__,"?copyFile fails")
             return false
         end
@@ -803,7 +803,7 @@ class CUedit < CFile
     def initialize(p_sFile=C_UED_PROJECT_FILE_DEFAULT)
         @sUeditProjectFile=C_UED_PROJECT_FILE_INIT
         s=f_sFilePath(p_sFile)
-        if (File.exists?(s))
+        if (File.exist?(s))
             @sUeditProjectFile=s
         end
     end
@@ -1075,7 +1075,7 @@ class CUedit < CFile
 
         #   =*= : check ueProjectFile
         $m.f_trc(nil,__LINE__,__method__,"check file:<#{@sUeditProjectFile}>")
-        if (!File.exists?(@sUeditProjectFile))
+        if (!File.exist?(@sUeditProjectFile))
             raise "?File:<#{@sUeditProjectFile}>"
             return false
         end
@@ -1162,7 +1162,7 @@ class CUedit < CFile
         #   =*= : 03: only existing files
         aFileExist = []
         aFileFound.each_with_index do |sFile,iFile|
-            if (File.exists?(sFile))
+            if (File.exist?(sFile))
                 aFileExist.push(sFile) # !CRQ-210219:onlyFilesExisting
             else
                 $m.f_trc(nil,__LINE__,__method__,"???:fileExist[#{iFile}]:'#{sFile}'") if C_DEBUG
@@ -1259,7 +1259,7 @@ class CUedit < CFile
                 next
             end
             iFileFound += 1
-            if (!File.exists?(xFile))
+            if (!File.exist?(xFile))
                 next
             end
             sDir = File.dirname(xFile)
@@ -1479,7 +1479,7 @@ class CUedit < CFile
             end
             iFileEntry += 1
             aFileFound.push xFile
-            if (File.exists?(xFile))
+            if (File.exist?(xFile))
                 aFileExist.push xFile
             end
         } # each files
@@ -1512,7 +1512,7 @@ class CUedit < CFile
         #           Check if file exists, saves them into aExist
         #   INp:    p_sFileTxt
         #   RET:    false||true,p_aFilesFound,p_aFilesExist
-        if (File.exists?(p_sFileTxt) == false)
+        if (File.exist?(p_sFileTxt) == false)
             $m.f_exit("?argError:<#{p_sFileTxt}>",__FILE__,__LINE__,__method__)
             return false
         end
@@ -1553,7 +1553,7 @@ class CUedit < CFile
         #   prepare exsting files
         aFileExist = Array.new
         aFileFound.each_with_index { |sFid,iFid|
-            if (File.exists?(sFid))
+            if (File.exist?(sFid))
                 $m.f_trc(nil,__LINE__,nil,"?F:<#{sFid}>:[#{iFid}]")  if C_DEBUG
                 aFileExist.push sFid
             end
@@ -1661,7 +1661,7 @@ class CZip < CFile
                 $m.f_inf "try add[#{iFile+1}]:'#{sFile}'...",C_COLOR_CYAN,false
                 if (aAdd.include?(sFile))
                     $m.f_inf ":?DOUBLE",C_COLOR_RED     #!CRQ-190805:avoid doubles
-                elsif (File.exists?(sFile))
+                elsif (File.exist?(sFile))
                     xZip.add(sFile,sFile)       # add(logName,phyName)
                     $m.f_inf ":added;"
                     aAdd += [sFile]             # save in add array
@@ -1736,7 +1736,7 @@ class CZip < CFile
                 sFile=xFile
             end
         }
-        if (not(File.exists?(sFile)))
+        if (not(File.exist?(sFile)))
             $m.f_trc(nil,__LINE__,__method__,"?FileNotExists<#{sFile}>")
             return false
         end
@@ -1765,7 +1765,7 @@ class CZip < CFile
         #       iExtracted  :   extracted files
 
         $m.f_thm("parseZip",true,__LINE__)
-        if (!File.exists?(p_sZipFile))
+        if (!File.exist?(p_sZipFile))
             raise $m.f_sprint("?File/DIR:<#{p_sZipFile}>",C_COLOR_RED)
             return false
         end
@@ -2148,7 +2148,7 @@ def F_zipGet(p_sZipFileId,p_sZipDir)
     $m.f_inf "classname:<#{p.f_sClassName}>"
 
     bZipFileExt =   p.f_isZipFileName?(p_sZipFileId)
-    bFileExists =   File.exists?(p_sZipFileId)
+    bFileExists =   File.exist?(p_sZipFileId)
     bCmd = false
 
     #   a) valid filePath as input : "x:\UEZ-1805231708.zip"
