@@ -34,7 +34,7 @@ function f_run_script {
     done
 
     #   define my runner.eXitCode [3,...199]
-    local -i iEc=55
+    local -i iEc=$v_FWK_exitStatus
     local -i iBashReply=0
     local -x sHashLine
     local -i iRc=0
@@ -70,9 +70,9 @@ function f_run_script {
             printf "\n<<< replyOf[%d]:'%s': #{%d}" $n $xFile $iBashReply
             if [ $iEc == $iBashReply ]
             then
-                printf ":scpEc==:!OK\n"
+                printf ":reply==:!OK\n"
             else
-                printf ":scpEc==:?nok\n"
+                printf ":reply==:NOK [%d]!=[%d] \n" $iEc $iBashReply 
                 iRc+=1
             fi
 
