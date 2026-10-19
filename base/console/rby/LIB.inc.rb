@@ -23,15 +23,11 @@ elsif ( s == 'x86_64-linux-gnu' )
 end
 
 #   ----------------------------------------------------------------------------
-#   posix.modules
+#   any.modules
 #   ----------------------------------------------------------------------------
 
-if ( g_bOsPosix )
-else
-    require 'colorize'  #   !CRQ-240425:notInUnix
-    require 'awesome'   #   !CRQ-240425:notInUnix
-end
-
+require 'colorize' 
+require 'awesome'
 
 #   ----------------------------------------------------------------------------
 #   else
@@ -47,7 +43,7 @@ require 'optparse'      # parse arg options
 
 if ( g_bOsPosix )
     C_DIR_SEPARATOR =   '/'
-    C_STR_COLORED   =   false
+    C_STR_COLORED   =   true    # !CRQ-261019:testPosix
     # !CRQ-261019:DirTmp
     C_DIR_TMP       =   ENV['HOME'] + ENV['v_USR_scratch_relPath']  
 else

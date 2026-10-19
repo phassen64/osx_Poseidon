@@ -68,14 +68,12 @@ $m.f_thm("string functions")
 $m.f_thm("function :puts ",true,__LINE__)
 $m.f_puts    "'puts'  Text with inclusive line feed"
 s   =   "Anton"
-p   #puts "%s" % s.m_blue
-puts "%s" % s
+puts "%s" % s.m_blue
 
 $m.f_thm("function :print",true,__LINE__)
 $m.f_put   "'print' Text Normal with no implicit lineFeed\n" # noLineFeed
 s='Peter'
-#   print("#{s}\n".m_blue)
-puts "%s" % s
+print("#{s}\n".m_blue)
 
 $m.f_thm("function: printf : with formats '%'",true,__LINE__)
 i=1;s='Willy'
