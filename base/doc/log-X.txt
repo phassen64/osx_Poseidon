@@ -901,10 +901,14 @@ https://de.wikipedia.org/wiki/Unicodeblock_Griechisch_und_Koptisc    !$@€ƒ„
 
 ### !date:<2026-10-19>:Mo 
 
++   update converter 
+    f_fwk_converter_unix2dos && 
+    f_fwk_converter_dos2unix
+    
 +   remove all BOM's 
 
-# In-place removal on a single file
-sed -i '1s/^\xEF\xBB\xBF//' filename.txt
+    # In-place removal on a single file
+        $   sed -i '1s/^\xEF\xBB\xBF//' filename.txt
 
-# In-place removal on all .txt files in current directory
-sed -i '1s/^\xEF\xBB\xBF//' *.txt
+    # In-place removal on all .txt files in current directory
+        $   sed -i '1s/^\xEF\xBB\xBF//' *.txt

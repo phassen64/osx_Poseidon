@@ -67,7 +67,7 @@ psh>   _cls; _c .\c00_dummy.cpp; .\run.exe x
     21  namespace
     22  template
     26  nameSpace
-
+peter 
 
 
 --- STATUS:inProgress
