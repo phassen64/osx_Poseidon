@@ -593,13 +593,18 @@ function f_fwk_converter_dos2unix__file {
     elif [ 'u2d' == $p_sMod ]; then
         cat $p_sFile | unix2dos > $sObj  
     fi
-        
+
+    #   doRemoveBom  
+    sed -i '1s/^\xEF\xBB\xBF//' $sObj
+
     #   remove source 
     rm -f $p_sFile 
     
     #   rename temp file to source file
     mv $sObj $p_sFile
     
+
+
 }
 
 

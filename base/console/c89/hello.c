@@ -1,4 +1,4 @@
-﻿/*
+/*
     program     :   hello World
     author      :   Brian Kernighan -  "Programming in C"
     date        :   1972
