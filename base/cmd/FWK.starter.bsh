@@ -59,6 +59,7 @@ function f_ini_helper() {
 	sudo apt-get install curlie		#	:curl
     sudo apt-get install dos2unix   #   handles d2u && u2d
 	sudo apt-get install duf		# 	:df
+    sudo apt-get install emacs
     sudo apt-get install eza		#	:ls
 	sudo apt-get install git
 	sudo apt-get install gping		#	graphical :ping

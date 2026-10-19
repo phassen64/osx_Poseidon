@@ -912,3 +912,5 @@ https://de.wikipedia.org/wiki/Unicodeblock_Griechisch_und_Koptisc    !$@€ƒ„
 
     # In-place removal on all .txt files in current directory
         $   sed -i '1s/^\xEF\xBB\xBF//' *.txt
+
++   Code has ALTGR problem
