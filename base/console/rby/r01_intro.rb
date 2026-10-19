@@ -9,7 +9,7 @@ require_relative "TUT.inc" # include a    File
 
 #   import !CRQ-240425:notInUnix
 bUnix = $m.f_os_bIsUnix()
-if (!bUnix) 
+#   if (!bUnix)     # !CRQ-261019:GemUsageIfUnix
     require 'awesome'
     require 'colorize'
     require 'gnuplot'
@@ -23,7 +23,7 @@ if (!bUnix)
     require 'rdoc'
     require 'rubygems'              # !CRQ-220707
     require 'zip'
-end
+#   end
 
 $m.f_hdr("Introduction",__FILE__)
 
