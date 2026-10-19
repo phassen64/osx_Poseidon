@@ -898,3 +898,13 @@ https://de.wikipedia.org/wiki/Unicodeblock_Griechisch_und_Koptisc    !$@€ƒ„
     $   git add .gitattributes
     $   git commit -m "Configure Git to leave line endings untouched"
 
+
+### !date:<2026-10-19>:Mo 
+
++   remove all BOM's 
+
+# In-place removal on a single file
+sed -i '1s/^\xEF\xBB\xBF//' filename.txt
+
+# In-place removal on all .txt files in current directory
+sed -i '1s/^\xEF\xBB\xBF//' *.txt
