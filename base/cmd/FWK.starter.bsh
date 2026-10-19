@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #  	***************************************************************************
-#   Starter Debian13	dtm :[2026-10-18].vcs
+#   Starter Debian13	dtm :[2026-10-19].vcs
 #  	***************************************************************************
 
 #   encoding.UTF8:
@@ -14,7 +14,8 @@
 #		    bash$> 	+go
 
 #   history:
-#       2026-10-18  *   vcs move to fwk/base
+#       261019  *   update converter u2d && d2u && remove all BOMs
+#       261018  *   vcs move to fwk/base
 
 #   variables.input
 #       i:  v_STARTER       * .bashrc
@@ -587,14 +588,14 @@ function f_fwk_converter_dos2unix__file {
         return $v_FWK_bTrue
     fi
 
-    #   doConvert()
+    #   doConvert()         !CRQ-261019:d2u&&u2d
     if [ 'd2u' == $p_sMod ]; then
         cat $p_sFile | dos2unix > $sObj  
     elif [ 'u2d' == $p_sMod ]; then
         cat $p_sFile | unix2dos > $sObj  
     fi
 
-    #   doRemoveBom  
+    #   doRemoveBom     #   !CRQ-261019:BOM
     sed -i '1s/^\xEF\xBB\xBF//' $sObj
 
     #   remove source 
