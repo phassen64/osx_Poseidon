@@ -293,8 +293,8 @@ declare -r      p_scp_cOpt=$1
 declare -r      p_scp_iSfr=$2
 
 #   s:  C.RexExpr
-declare -r -x   C_REX_head='t'
-declare -r -x   C_REX_tail='bsh'
+declare -r -x   C_REX_head='p'
+declare -r -x   C_REX_tail='pl'
 
 #   s:  C.modifier
 declare -r -i   C_mod_iPlusDivisor=4    #   max/4

@@ -60,7 +60,7 @@ function f_run_script {
             printf "%s\n\n" $sHashLine
 
             #   call script, save eXitCode
-            bash $xFile $iEc;   iBashReply=$?
+            $C_INTERPRETER $xFile $iEc;   iBashReply=$?
 
             #   check reply
             printf "\n<<< replyOf[%d]:'%s': #{%d}" $n $xFile $iBashReply
@@ -87,6 +87,9 @@ function f_run_script {
 #
 #   m:  prepare
 #
+
+#   s:  interpreter
+declare -r C_INTERPRETER='bash'
 
 #   s:  fetch all bash in a ShellArray
 aShellArray=$(echo `ls t*.bsh`)

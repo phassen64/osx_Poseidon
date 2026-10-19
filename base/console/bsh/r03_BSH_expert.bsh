@@ -240,7 +240,7 @@ function f_run_main {
             printf "%s\n" $sHashLine
 
             #   call script, save eXitCode
-            bash $xFile $C_mod_iExpectedExitCode; iReplyEc=$?
+            $C_INTERPRETER $xFile $C_mod_iExpectedExitCode; iReplyEc=$?
 
             #   check reply
             printf "<<< replyOf[%d]:'%s': # ec:{%d} " $n $xFile $iReplyEc
@@ -277,6 +277,9 @@ function f_run_main {
 #
 #   B:  constant
 #
+
+#   s:  C.interpreter
+declare -r      C_INTERPRETER='bash'
 
 #   s:  C.this
 declare -r      p_pThis=$BASH_SOURCE
