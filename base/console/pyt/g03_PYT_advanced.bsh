@@ -1,0 +1,157 @@
+#!/bin/bash
+
+#   ***************************************************************************
+#   run:[advanced]      tutorial.Ruby 2026        ©[mATe64]     [2026-10-19]
+#   ***************************************************************************
+#   usage:
+#       $   bash <THIS.bsh>
+#   content:
+#       m:  run.prepare
+#       m:  run.scripts
+#   ***************************************************************************
+
+#   ===========================================================================
+#   b:  script
+#   ===========================================================================
+
+function f_run_script {
+
+    #   fetch
+    local p_aShellArray=$1
+    local p_nStressMax=$2     # stress counter
+    local p_iRnd=$3
+
+    #   declare
+    local -i i=0
+    local -i n=0
+    local -i iFile=0
+    local -i nFile=0
+
+    #   calc.manually shell array
+    nFile=0
+    for xFile in $p_aShellArray; do
+        nFile+=1
+    done
+
+    #   define my runner.eXitCode [3,...199]
+    local -i iEc=$v_FWK_exitStatus
+    local -i iBashReply=0
+    local -x sHashLine
+    local -i iRc=0
+
+    #   build sLine
+    s=''; c='#'; for((i=0;i<80;i++)); do s+="$c"; done
+    sHashLine=$s
+
+    #   run
+    printf "___ script nFiles:<%d>  iRnd:[%d] :#{%d}\n" $nFile $p_iRnd $iEc
+
+    for (( n=1; n<=$p_nStressMax; n++ )); do
+
+        printf "\n### stress :: [%3.3d]/[%3.3d]\n" $n $p_nStressMax
+        iFile=0
+
+        for xFile in $p_aShellArray
+        do
+            iFile+=1
+
+            printf "\n%s\n" $sHashLine
+            printf "*** run:[%2.2d]/[%3.3d]:'%s'\n" $iFile $n  $xFile
+            printf "%s\n\n" $sHashLine
+
+            if [ $C_FILE_BLACK == $xFile ]; then
+                printf "&&& SKIP:[%s]\n" $xFile
+                continue
+            fi
+            #   call script, save eXitCode
+            $C_INTERPRETER $xFile $iEc;   iBashReply=$?
+
+            #   check reply
+            printf "\n<<< replyOf[%d]:'%s': #{%d}" $n $xFile $iBashReply
+            if [ $iEc == $iBashReply ]
+            then
+                printf ":reply==:!OK\n"
+            else
+                printf ":reply==:NOK [%d]!=[%d] \n" $iEc $iBashReply 
+                iRc+=1
+            fi
+
+        done
+
+    done
+
+    printf "___ total.iRc:<%d>\n" $iRc
+    return $iRc
+}
+
+#   ===========================================================================
+#   b:  body
+#   ===========================================================================
+
+#
+#   m:  prepare
+#
+
+#   s:  interpreter
+declare -r C_INTERPRETER='python3'
+declare -r C_FILE_BLACK='y27_package.py'
+
+#   s:  fetch all bash in a ShellArray
+aShellArray=$(echo `ls y*.py`)
+
+#   s:  fetchDateTime
+declare sFmt="+%Y-%m-%d %H:%M:%S"
+
+#   s:  calculate stressCounter
+declare -i n=1  #   rndMax
+declare -i iCtr=1+$RANDOM%$n
+declare -i iRc=0
+declare  x  #   formatStr
+
+#   m:  run
+
+#   s:  dateTime.Start
+sDtm=$(date "$sFmt");   tDtmStart=$(date '+%s.%N')
+
+#   s:  logFileName
+v_SCP=`basename $BASH_SOURCE`
+v_SCP_bdy="${v_SCP%.*}"
+v_SCP_ext="${v_SCP##*.}"
+fLog="$v_FWK_dirTemp/$v_SCP_bdy.log"
+printf "&&& logFile:'%s'\n" "$fLog"
+
+#   s:  header
+printf -v SOut ">>> runPRL.BEG *[%d] at:[%s]." "$iCtr" "$sDtm"
+printf "$SOut\n"
+echo "$SOut" > $fLog
+
+#   s:  flush.logFileName
+echo "" >>  $fLog
+echo "$SOut" >>  $fLog
+
+#   s:  run
+f_run_script "$aShellArray" "$iCtr" "$RANDOM" >> $fLog
+iRc=$?
+
+#   build sLine
+echo "" >> $fLog
+s=''; c='&'; for((i=0;i<80;i++)); do s+="$c"; done
+printf -v SOut "%s\n" $s
+echo "$s" >> $fLog
+
+s="*** total_sum_of_eRRoRs := [$iRc]"
+printf "$s\n"
+echo "$s" >> $fLog
+
+#   s:  dateTime.Stopp
+sDtm=$(date "$sFmt");   tDtmStopp=$(date '+%s.%N')
+
+#   s:  calc.Time
+fSec=$(echo "($tDtmStopp-$tDtmStart) / 1" | bc)
+
+#   s:  footer
+printf -v SOut "<<< runPRL.END *[%d] at:[%s] elapsed:[%s]." "$iCtr" "$sDtm" "$fSec"
+echo "$SOut" >> $fLog
+printf "$SOut\n"
+
+

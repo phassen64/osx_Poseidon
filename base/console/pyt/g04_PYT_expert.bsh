@@ -1,0 +1,613 @@
+#!/bin/bash
+
+#   ***************************************************************************
+#   run:[expert]        tutorial.Ruby 2026      ©[mATe64]       [2026-10-18]
+#   ***************************************************************************
+
+#   encoding.UTF8:
+#   !@€ƒ„…†‡ˆ‰Š‹ŒŽ +‘“”•—™š›œžŸ+¡¢£¤¥¦§¨©«¬®°±²³µ¶·¹º»¼½¾¿ÄÖÜÑ×ØÞßäæçîðñôö÷üýþÿ
+
+#   usage:  $   bash <THIS.bsh> [+] [iStressFactor]=:'1'
+
+<<usage
+    Tutorial 2026-10-19
+
+    +   usage:
+            $>. {thisScript} [cOpt]=:'h' [{iStressFator(iSfr)}]=:'1'
+                with:
+            cOpt := { 'h','c','.','_','+','!'}
+            iSfr := [1..10]
+
+    +   test-base files REX:=[^HEAD][0-9]{2}_[A-Za-z].[TAIL$]
+            C_REX_head  :   't' first file name letter
+            C_REX_tail  :   last letters
+
+    +   Examples:
+            $> . run h     :    help
+            $> . run c     :    clean temp
+            $> . run .     :    1x run some file of the tutorial
+            $> . run _     :    run all files
+            $> . run !     :    run all files but random
+            $> . run +     :    1/q of  all files random
+            $> . run . 2   :    run 1 file 2 times
+usage
+
+
+<<hereDoc_content_tutor__run_expert
+    content:
+        p:  p.function
+            m:  f.hlp.hint
+            m:  f.hlp.usage
+            m:  f.hlp.bEvaluate
+            m:  f.hlp.aMatchFiles
+            m:  f.hlp.aShow
+            m:  f.run.main
+        p:  p.body
+            B:  constant
+                s:  C.this
+                s:  C.scp
+                s:  C.parameter_by_prompt
+                s:  C.RexExpr
+                s:  C.modifier
+                s:  C.bool
+                s:  C.debug
+            B:  variable
+                s:  V.temp
+                s:  V.printf
+                s:  V.logging
+                s:  V.dateTime
+                s:  V.parameter_by_function
+            B:  main
+                m:  usage
+                m:  header
+                m:  prepare
+                    s:  P.define.tempVariables
+                    s:  P.validate.parameter.Option
+                    s:  P.validate.parameter.StressCounter
+                    s:  P.quit
+                    s:  P.evaluate
+                    s:  P.run.main
+                m:  footer
+        p:  p.last
+hereDoc_content_tutor__run_expert
+
+#   ===========================================================================
+#   p:  p.function
+#   ===========================================================================
+
+#   m:  f.hlp.hint
+function f_run_hint() {
+    local p_pBash=${BASH_SOURCE[1]}     #   caller.bscp
+    c='$'
+    printf "\t%c $p_pBash h  # get help\n" "$c"
+    exit
+}
+
+#   m:  f.hlp.usage
+function f_run_usage() {
+    local p_pBash=${BASH_SOURCE[1]}     #   caller.bscp
+    c='$'
+    q=$C_mod_iPlusDivisor
+    printf "&&& usage:\n"   "$c"
+    printf "\t%c [$p_pBash] [cOpt]=:'h' [iSfr]=:'1' \n" "$c"
+    printf "\t\tcOpt := { 'h','c','.','_','+','!'}\n"
+    printf "\t\t\t";    printf " . : 1x random\n"
+    printf "\t\t\t";    printf " _ : [1..max]; n=max\n"
+    printf "\t\t\t";    printf " ! : random[1...max]; n=max \n"
+    printf "\t\t\t";    printf " + : random max/%d\n" $q
+    printf "\t\tiSfr := := [1..%d]\n" "$C_mod_iStressMax"
+    exit
+}
+
+
+#   m:  f.hlp.evaluate
+function f_run_bEvaluate {
+    #   usage:  $ echo $(F $bVal)
+    local -i b=$1
+    if [ $b == $C_bTrue ]; then x='true'; else x='false' ; fi
+    echo "$x"
+}
+
+#   m:  f.hlp.aMatchFiles
+function f_run_matchFiles() {
+    #   rex like:'^t[0-9]{2}_[A-Za-z]+\.bsh$'
+    local       p_sRexBeg=$1        #   't'
+    local       p_sRexEnd=$2        #   'bsh'
+    local -i    p_bDoShuffle=$3     #   sort&mix
+
+    local -i i=0
+    local -a aTmp=()
+    local s=''
+    local sRex
+
+    #   init globals
+    v_RUN_iRc=0
+    v_RUN_aRc=()
+
+    #   init  rex
+    s='^'
+    s+="$p_sRexBeg"
+    s+='[0-9]{2}_[A-Za-z]+\.'
+    s+="$p_sRexEnd"
+    s+='$'
+    sRex=$s
+    #   echo "+ tryRex := '$sRex'"
+
+    #   Get files with pattern
+    for xFile in `ls`
+    do
+        if [ -f "$xFile" ]; then
+            i+=1
+            if [[ $xFile =~ $sRex ]]; then
+                if [ "$xFile" == "$C_FILE_BLACK" ]; then
+                    continue
+                fi                
+                v_RUN_iRc+=1
+                aTmp+=( $xFile )
+            fi
+        fi
+    done
+    #   declare -p aTmp
+
+    #   shuffle aTmp
+    if [ ! -z $p_bDoShuffle ] && [ $p_bDoShuffle == $C_bTrue ]; then
+        aTmp=( $(shuf -e "${aTmp[@]}") )
+    fi
+
+    #   reply
+    v_RUN_aRc=("${aTmp[@]}")
+
+    #   return sum of found file in current directory
+    return $i
+}
+
+
+#   m:  f.hlp.aShow
+function f_run_showArray() {
+
+    #   usage : f~run_showArray 'info' "${p_aVal[@]}"
+    #   Source - https://stackoverflow.com/a/1063367
+
+    local p_sInfo=("${1}")
+    shift   # stackShift
+    local p_aArray2Show=("${@}")
+
+    local p_sBash=${BASH_SOURCE[1]}     #   caller.source
+    local p_sFctn=${FUNCNAME[1]}        #   caller.fctn
+    local p_iLine=${BASH_LINENO[0]}     #   caller.lineNo
+
+    printf "### showArray {'%s'} pos:[%s();%d]\n" "$p_sInfo" $p_sFctn $p_iLine
+
+    #   size of caller array
+    local -i n=${#p_aArray2Show[@]}
+
+    #   loop
+    local -i i=1
+    local x
+    for x in "${p_aArray2Show[@]}"; do
+        printf "\ta[%2.2d] == '%s'\n" $i $x
+        i+=1
+    done
+
+}
+
+#
+#   m:  f.run.main
+#
+
+function f_run_main {
+
+    #   parameter
+    local p_nStressMax=("${1}"); shift
+    local p_iRnd=("${1}"); shift
+    local p_aSrc=("${@}")
+
+    #   locals
+    local -i i=0
+    local -i n=0
+    local -i iFile=0
+    local -i nFile=${#p_aSrc[@]}
+    local  s=$(date)
+    local -x sHashLine
+
+    #   calc.array FileNumber
+    printf "*** TEST\n"
+    printf "\tDate          :   [$s]\n"
+    printf "\tiRandom       :   [$p_iRnd]\n"
+    printf "\tnFiles        :   [$nFile]\n"
+    printf "\tiStressMax    :   [%d]\n" $p_nStressMax
+    f_run_showArray 'testSet' "${p_aSrc[@]}"
+    printf ".\n"
+
+    #   exit code [3,...199]
+    local -i iRc=0      # sum of errors
+    local -i iEc=$C_mod_iExpectedExitCode   # show
+    local -i iReplyEc=99
+
+    #   build sLine
+    s=''; c='#'; for((i=0;i<80;i++)); do s+="$c"; done
+    sHashLine=$s
+
+    #   run
+    printf "___ script ecDefault #:{%d}\n\n" $iEc
+
+    for (( n=1; n<=$p_nStressMax; n++ )); do
+
+        #   printf "\n### stress :: [%3.3d]/[%3.3d]\n" $n $p_nStressMax
+
+        iFile=0
+        for xFile in "${p_aSrc[@]}"
+        do
+            iFile+=1
+
+            printf "\n%s\n" $sHashLine
+            printf "*** run:[%2.2d]/[%2.2d]:'%s'\n" $iFile $n  $xFile
+            printf "%s\n" $sHashLine
+
+            #   call script, save eXitCode
+            $C_INTERPRETER $xFile $C_mod_iExpectedExitCode; iReplyEc=$?
+
+            #   check reply
+            printf "<<< replyOf[%d]:'%s': # ec:{%d} " $n $xFile $iReplyEc
+
+            if [ $C_mod_iExpectedExitCode == $iReplyEc ]
+            then
+                printf "== OK\n"
+            else
+                printf "!= [%d]\n" $C_mod_iExpectedExitCode
+                iRc+=1
+            fi
+
+            printf ".\n"
+
+        done
+
+    done
+
+    #   end-line
+    printf "\n%s\n" $sHashLine
+    printf "*** ready:total.iRc:<%d>\n" $iRc
+    printf "%s\n" $sHashLine
+
+    #   reply noOfErrors
+    return $iRc
+}
+
+
+
+#   ===========================================================================
+#   p:  p.body
+#   ===========================================================================
+
+#
+#   B:  constant
+#
+
+#   s:  C.this
+declare -r      p_pThis=$BASH_SOURCE
+
+#   s:  C.interpreter
+declare -r C_INTERPRETER='python3'
+declare -r C_FILE_BLACK='y27_package.py'
+
+#   s:  C.scp
+declare -r -x   C_SCP=`basename $BASH_SOURCE`
+declare -r -x   C_SCP_bdy="${C_SCP%.*}"
+declare -r -x   C_SCP_ext="${C_SCP##*.}"
+
+#   s:  C.parameter_by_prompt  (byCaller bash)
+declare -r      p_scp_cOpt=$1
+declare -r      p_scp_iSfr=$2
+
+#   s:  C.RexExpr
+declare -r -x   C_REX_head='y'
+declare -r -x   C_REX_tail='py'
+
+#   s:  C.modifier
+declare -r -i   C_mod_iPlusDivisor=4    #   max/4
+declare -r -i   C_mod_iStressMax=10     #   stressFactorMax
+declare -r -i   C_mod_delay=1
+declare -r -i   C_mod_iExpectedExitCode=$v_FWK_exitStatus
+
+#   s:  C.bool
+declare -r -i   C_bTrue=100
+declare -r -i   C_bFalse=199
+
+#   s:  C.debug
+#   u:  flag
+declare -r -i   C_bug_flag__bDebug=$C_bTrue
+declare -r -i   C_bug_flag__bVerbose=$C_bTrue
+declare -r -i   C_bug_flag__bSilence=$C_bFalse
+
+#
+#   B:  variable
+#
+
+#   s:  V.temp
+declare -i      i=0
+declare -i      n=0
+declare -x      s='?'
+declare -x      x='-'
+
+#   s:  V.printf
+declare -x      SOut=''     #   printf flush string
+
+#   s:  V.logging
+declare -r      v_scp_pLog="$v_FWK_dirTemp/$C_SCP_bdy.log"
+
+#   s:  V.dateTime
+declare         v_dtm_tStart
+declare         v_dtm_tStopp
+declare -r      v_dtm_sFormatString="+%Y-%m-%d %H:%M:%S"
+
+#   s:  V.parameter_by_function
+
+#   exchange array offered by caller function
+declare -i      p_fct_iStressFactor=1
+
+#
+#   B:  main
+#
+
+#   m:  usage
+if [ -z $p_scp_cOpt ]
+then
+    f_run_usage
+    exit
+fi
+
+#   ---------------------------------------------------------------------------
+#   m:  header
+#   ---------------------------------------------------------------------------
+
+#   s:  save.StartDate
+v_dtm_tStart=$(date '+%s.%N')
+
+#   s:  make:Header
+s=$(date "$v_dtm_sFormatString")
+printf  -v SOut ">>> run.{%s} dtm:[%s]\n" "$p_pThis" "$s"
+
+#   s:  puts:Header
+printf "$SOut\n"
+
+#   s:  putf:Header         && create.logfile
+echo    "$SOut" > $v_scp_pLog
+
+#   s:  puts:LogfileIsCreated
+printf  "&&& logFile:'%s'\n" "$v_scp_pLog"
+
+#   s:  sleep.1
+sleep $C_mod_delay
+
+#   ---------------------------------------------------------------------------
+#   m:  prepare
+#   ---------------------------------------------------------------------------
+
+#   s:  P.define.tempVariables
+
+declare -i bDoRun=$C_bFalse
+declare -x xSrcSelected='?'
+declare -i iSrcIndexSelected=-1
+declare -i bDoEvaluateRexParameter=$C_bFalse
+declare -i bDoShuffle=$C_bFalse
+
+#
+#   s:  P.validate.parameter.Option
+#
+
+if [ -z $p_scp_cOpt ];
+    then echo "??? option::NONE"; f_run_hint
+elif [ $p_scp_cOpt == 'h' ]; then   f_run_usage
+elif [ $p_scp_cOpt == '?' ]; then   f_run_usage
+elif [ $p_scp_cOpt == '.' ]; then   bDoRun=$C_bTrue
+elif [ $p_scp_cOpt == '_' ]; then   bDoRun=$C_bTrue
+elif [ $p_scp_cOpt == '+' ]; then   bDoRun=$C_bTrue; bDoShuffle=$C_bTrue
+elif [ $p_scp_cOpt == '!' ]; then   bDoRun=$C_bTrue; bDoShuffle=$C_bTrue
+else
+    s=$p_scp_cOpt;  r='^[0-9]+$';  [[ $s =~ $r ]]; iRc=$?
+    if [ 0 == $iRc ]; then
+        iSrcIndexSelected=$p_scp_cOpt
+        bDoEvaluateRexParameter=$C_bTrue
+        bDoRun=$C_bTrue
+        if [ $C_bTrue == $C_bug_flag__bDebug ]; then
+            echo "### iSrcIndexSelected==[$iSrcIndexSelected]"
+        fi
+    else
+        printf "??? option::is_invalid :[%s]\n" $p_scp_cOpt
+        f_run_hint
+    fi
+fi
+
+#
+#   s:  P.validate.parameter.StressCounter
+#
+
+if [ ! -z $p_scp_iSfr ]; then
+    s=$p_scp_iSfr;  r='^[0-9]+$';  [[ $s =~ $r ]]; iRc=$?
+    if [ 0 != $iRc ]; then
+        printf "??? option.stressFactor::is_invalid :[%s]\n" $s
+        f_run_hint
+    fi
+    p_fct_iStressFactor=$p_scp_iSfr
+    if [ $p_fct_iStressFactor -lt 1 ]; then
+        p_fct_iStressFactor=1
+    fi
+    if [ $p_fct_iStressFactor -gt $C_mod_iStressMax ]; then
+        p_fct_iStressFactor=$C_mod_iStressMax
+    fi
+fi
+
+#   show run status
+if [ $C_bTrue == $C_bug_flag__bDebug ]; then
+    echo "### p_fct_iStressFactor:[$p_fct_iStressFactor]"
+    b2sRc=$(f_run_bEvaluate $bDoRun)
+    echo "### bDoRunStatus:[$b2sRc]"
+fi
+
+#
+#   s:  P.quit.ifNoRun
+#
+
+if [ $bDoRun != $C_bTrue ]; then
+    printf "=== program finished.\n"
+    exit 0
+fi
+
+#   match my sources
+declare -a v_RUN_aRc=()
+declare -i v_RUN_iRc=-1
+
+#
+#   s:  P.run.match
+#
+
+#   ------------------------------------------------------------------
+f_run_matchFiles $C_REX_head $C_REX_tail $bDoShuffle;    iRc=$?
+#   ------------------------------------------------------------------
+
+#   show natch result
+if [ $C_bTrue == $C_bug_flag__bDebug ]; then
+    echo "### match.result.iRc found:[$v_RUN_iRc/$iRc]"
+    f_run_showArray 'afterRex' "${v_RUN_aRc[@]}"    #   exit
+fi
+
+#   copy matched files  2x
+declare -a aSrc=("${v_RUN_aRc[@]}")
+declare -i nSrc=${#aSrc[@]}
+
+#   declare objet
+declare -a aObj=()
+
+#
+#   s:  P.evaluate
+#
+
+if [ $C_bTrue ==  $bDoEvaluateRexParameter ]; then
+
+    echo "=== option::evaluate"
+
+    i=$iSrcIndexSelected
+    n=$nSrc
+
+    if [ $iSrcIndexSelected -gt $nSrc ]; then
+        printf "??? option::overflow [iOpt=%d > iMax=%d]\n" $i $n
+        exit
+    fi
+
+    #   use and decrement
+    i=$iSrcIndexSelected
+    let "i -= 1"
+
+    #   fetch
+    x=${aSrc[$i]};
+
+    #   push
+    aObj+=($x)
+
+elif [ $p_scp_cOpt == '.' ]; then
+
+    if [ $C_bTrue == C_bug_flag__bVerbose ]; then
+        echo "*** option:[.]"
+    fi
+
+    declare -i iSrcIndexRandom=$(( 1 + RANDOM % $nSrc ))
+    if [ $C_bTrue == $C_bug_flag__bDebug ]; then
+        echo "### iSrcIndexRandom:[$iSrcIndexRandom] of:[$nSrc]"
+    fi
+
+    i=0
+    s=''
+    for x in "${aSrc[@]}"; do
+        i+=1
+        #   printf "### aSrc[%2.2d] == '%s'\n" $i $x
+        if [ $i == $iSrcIndexRandom ]; then
+            s=$x
+            break
+        fi
+    done
+
+    if [ $s == '' ]; then
+        printf "??? not found index at:[%d]\n" $LINENO
+        f_run_usage
+    fi
+
+    #   push
+    aObj+=($x)
+
+elif [ $p_scp_cOpt == '+' ]; then
+
+    i=0
+    q=$C_mod_iPlusDivisor
+    n=$(($nSrc/$q))
+
+    if [ $C_bTrue == $C_bug_flag__bVerbose ]; then
+        echo "*** option::'+' ($n)/($nSrc)"
+    fi
+
+    #   copy src into objectArray
+    for (( i=0; i < ${n}; i++ ));
+    do
+        x=${aSrc[$i]}
+        aObj+=($x)
+    done
+
+
+elif [ $p_scp_cOpt == '!' ]; then
+
+    aObj=("${aSrc[@]}")
+
+elif [ $p_scp_cOpt == '_' ]; then
+
+    aObj=("${aSrc[@]}")
+
+fi
+
+#   show finalize
+if [ $C_bTrue == $C_bug_flag__bVerbose ]; then
+    echo "### show finalized : aObj"
+    declare -p  aObj
+fi
+
+
+#
+#   s:  P.run.main
+#
+
+#   s:  run
+if [ $C_bTrue == $C_bug_flag__bSilence ]; then
+    echo "### show silence mode"
+else
+
+    #   calc random
+    declare -i iRnd=$(( 1 + RANDOM % 1000 ))
+
+    #   run random
+    f_run_main "$p_fct_iStressFactor" "$iRnd" "${aObj[@]}" >> $v_scp_pLog
+    iRc=$?
+
+    #   show result
+    s="*** total_sum_of_eRRoRs := [$iRc]"
+    printf "\n$s\n"
+    echo "$s" >> $v_scp_pLog
+
+fi
+
+#   ---------------------------------------------------------------------------
+#   m:  footer
+#   ---------------------------------------------------------------------------
+
+#   s:  save.StoppDate
+v_dtm_tStopp=$(date '+%s.%N')
+
+#   s:  calc.ElapsedTime
+i=$(echo "($v_dtm_tStopp-$v_dtm_tStart) / 1" | bc)
+
+#   s:  make:Footer
+s=$(date "$v_dtm_sFormatString")
+printf -v SOut "<<< run.{%s} dtm:[%s]:<%s>" "$p_pThis" "$s" "$i"
+
+#   s:  putf:Footer
+echo "$SOut" >> $v_scp_pLog
+
+#   s:  puts:Footer
+printf "\n$SOut\n\n"
