@@ -122,14 +122,47 @@ function f_ini_xRdp() {
 }
 
 function f_ini_ruby() {
-   	sudo apt-get install ruby
-    # Source - https://stackoverflow.com/a/38927470
-    # Posted by plowman, modified by community. See post 'Timeline' for change history
-    # Retrieved 2026-10-19, License - CC BY-SA 4.0
-    sudo apt-get install ruby-dev
-    sudo apt-get install rubygems-integration
+    local p_sMod=$1
+    case $p_sMod in
+        'app')   
+            echo "< install:app"
+   	        sudo apt-get install ruby
+            sudo apt-get install ruby-dev
+            sudo apt-get install rubygems-integration
+        ;;
+        'tmp')   
+            #   sudo apt-get install ruby_gem fails
+            sudo apt-get install rubocop
+        ;;
+        'gem')
+            echo "< install:gem"
+            sudo gem install awesome_print
+            sudo gem install bundler
+            sudo gem install colorize
+            sudo gem install gnuplot
+            sudo gem install highline
+            sudo gem install json
+            sudo gem install method_source
+            sudo gem install multi_json
+            sudo gem install net-telnet
+            sudo gem install python
+            sudo gem install rdoc
+            sudo gem install rubygems
+            sudo gem install thor
+            sudo gem install zip
+        ;;    
+        'GET')   
+            #   sudo apt-get install ruby_gem fails
+            gem list --local
+        ;;
+        *)
+            echo "< install:not { 'app' | 'gem' } "
+        ;;
+    esac
+    #   show current version
    	ruby --version
 }
+
 
 function f_ini_python() {
 	sudo apt-get update
