@@ -13,7 +13,7 @@
 #       $   bash run_<SCP>.bsh <FILE.pl>
 
 #   example:
-#       $   bash "g01_PRL_uno.bsh" "p01_overview.pl"
+#       $   bash "r01_PRL_uno.bsh" "p01_overview.pl"
 
 #   description:
 #       run interpreter input-file <FILE.pl>
