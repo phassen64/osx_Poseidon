@@ -123,6 +123,11 @@ function f_ini_xRdp() {
 
 function f_ini_ruby() {
    	sudo apt install ruby
+    # Source - https://stackoverflow.com/a/38927470
+    # Posted by plowman, modified by community. See post 'Timeline' for change history
+    # Retrieved 2026-10-19, License - CC BY-SA 4.0
+    sudo apt-get install ruby-dev
+    sudo apt-get install rubygems-integration
    	ruby --version
 }
 
