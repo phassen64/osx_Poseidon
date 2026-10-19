@@ -247,7 +247,7 @@ f_lib_debug "iEc:'$v_iEc_glb'" $LINENO $bDbg
 
 #   =*= :   any NameID
 v_COMPILER='bash'       #   compiler
-v_IDX_sid='b'           #   script-file identifier
+v_IDX_sid='t'           #   script-file identifier
 v_IDX_lid="BSH"         #   run bash main logFile ID
 v_IDX_src=".bsh"
 v_IDX_log=".log"
@@ -464,6 +464,8 @@ while [ $iStressCounter -le $nStressFactor ]; do
     done
     let iStressCounter+=1
 done
+
+
 
 
 s="${v_aLog[@]}";  f_lib_debug "v_aLog:$s" $LINENO $bDbg

@@ -65,11 +65,13 @@ declare -r C_TUTOR_LIBRARY__OBJ="${s}.obj"
 clear
 f_run_clean
 
-#   s:  fetch my C-sources - build a BASH-array
+#   s:  fetch my C-sources - build a BASH-array - dont double library
 declare -a aSrc
 aSrc+=( $C_TUTOR_LIBRARY__SRC )
-aSrc+=( $p_sFile )
-#   declare -p aSrc
+if  [ $C_TUTOR_LIBRARY__SRC != $p_sFile ]
+then
+    aSrc+=( $p_sFile )
+fi
 
 #   only if source
 declare v_INFO="TUTOR-CPP-2026" ; export v_INFO

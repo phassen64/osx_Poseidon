@@ -62,11 +62,13 @@ declare -r C_TUTOR_LIBRARY__OBJ="${s}.obj"
 clear
 f_run_clean
 
-#   s:  fetch my C-sources - build a BASH-array
+#   s:  fetch my C-sources - build a BASH-array - dont double library
 declare -a aSrc
 aSrc+=( $C_TUTOR_LIBRARY__SRC )
-aSrc+=( $p_sFile )
-#   declare -p aSrc
+if  [ $C_TUTOR_LIBRARY__SRC != $p_sFile ]
+then
+    aSrc+=( $p_sFile )
+fi
 
 #   only if source
 declare v_INFO="TUTOR-C89-2026" ; export v_INFO
@@ -93,11 +95,11 @@ do
     declare oFile="$dTmp/${sBdy}.obj"       #   target filePath.obj
     declare xFile="$dTmp/${sBdy}.exe"       #   target objectPath.exe
     declare pLiby="$dTmp/${C_TUTOR_LIBRARY__OBJ}"       #   target library
+    export v_EXE=$xFile
 
     #   u:  show
     i+=1
     printf "&&& make[%d]: '%s' \n" $i $sFile
-    export v_EXE=$xFile
 
     #   -----------------------------------------------------------------------
     #   u:  make (compile+link)
@@ -107,7 +109,6 @@ do
         $C_COMPILER $sOpt -c $sFile -o $pLiby
         continue
     else
-
         $C_COMPILER $sOpt -c $sFile -o $oFile         #   compile only
         $C_COMPILER $oFile $pLiby -o $xFile     #   linking
     fi
