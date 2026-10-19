@@ -16,6 +16,7 @@
 
 #   s:  interpreter
 declare -r C_INTERPRETER='ruby'
+declare -r C_FILE_BLACK='r18_thread.rb'
 
 #   s:  show
 clear
@@ -53,7 +54,7 @@ for xFile in $a
 do
     i+=1
     printf "*** run:[%2.2d]/[%2.2d]:'%s'\n" $i $n $xFile
-    if [ 'r18_thread.rb' == $xFile ]; then
+    if [ $C_FILE_BLACK == $xFile ]; then
         printf "&&& SKIP:[%s]\n" $xFile
         continue
     fi
