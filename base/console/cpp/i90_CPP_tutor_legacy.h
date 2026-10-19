@@ -871,7 +871,7 @@ class CMenu   : public CTrace {
             char * s        = m__cMenuBuffer;
             char * sLine    = m__cLineBuffer;
             char    sHdrId[C_TUTOR__LINE_SIZE];
-            const   char *sEnv_exit = "v_FWK_exitCode";
+            const   char *sEnv_exit = "v_FWK_exitStatus";
             float   fTime;
             time_t  tTime;
             char    sEcOut[20];

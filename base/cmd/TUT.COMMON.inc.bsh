@@ -147,7 +147,7 @@ function f__chkRc() {
         #   meaning: has used external Ec
         f_lib_print "=== OK:iEc=<$iEc>" $iNL $v_COL_ID_green
         return $v_TRUE
-    elif [ $iRc == $v_FWK_exitCode ]; then
+    elif [ $iRc == $v_FWK_exitStatus ]; then
         #   meaning: standard old return code
         f_lib_print "=!= iRc<$iRc>==iEc.glb" $iNL $v_COL_ID_blue
         return $v_TRUE
