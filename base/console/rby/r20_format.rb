@@ -108,7 +108,8 @@ class CZip < CFileNames
         Dir.chdir(p_sSrcDir)
         aDir = Dir.glob(p_sSrcFilePattern)
         #   puts aDir
-        Zip::File.open(p_sObjZip, Zip::File::CREATE) { |xZip|
+#       Zip::File.open(p_sObjZip, Zip::File::CREATE) { |xZip|
+        Zip::File.open(p_sObjZip, create:true) { |xZip|      # !CRQ-261019:omit CREATE
             aDir.each { |xFile|
                 xZip.add(xFile,xFile)     # add(logName,phyName)
             }

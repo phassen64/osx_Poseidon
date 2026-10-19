@@ -1,4 +1,3 @@
-#!/usr/bin/ruby
 =begin
     constants   :   ConstantDefinition    - first letter big
     pseudo      :
