@@ -26,6 +26,7 @@
 
 #   === :header
 import LIB_inc as m;    g = m.CLib();   sTc = "tcStatement"
+import math     #   !CRQ-261021:used for eval
 g.f_header(sTc)
 
 #
@@ -103,15 +104,15 @@ x = "i+1"
 y = eval(x)
 g.f_text("eval1(%d,%s) => (%s)" % (i,x,y))
 
-F = "sqrt(x)"                                           # formula
+F = "math.sqrt(x)"      #   formula     # !CRQ-261021:math
 g.f_text("myFormula =: 'y=%s'" % (F))
 for x in (81, 100,3136):
     y = round(eval(F))      # F(81); F(100), F(3136)
     g.f_text("y(%d) => (y=%f)" % (x,y))
 
 #   s:  exec
-g.f_menuS1("exec")
-P = 'y=sqrt(x); g.f_text("y(%d) => %s" % (x,y));'   # myProgram
+g.f_menuS1("exec")  # !CRQ-261021:math
+P = 'y=math.sqrt(x); g.f_text("y(%d) => %s" % (x,y));'   # myProgram
 g.f_text("PROGRAM =: 'P=%s'" % (P))
 for _x in (81, 100,3136):
     exec(P)          # return 9.0; 10.0; 56.0
