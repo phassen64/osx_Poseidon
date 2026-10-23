@@ -17,10 +17,7 @@
 #   url:    https://docs.python.org/3/tutorial/
 #   url:    https://www.w3schools.com/python/default.asp
 
-import msvcrt
-import os
 import time
-
 
 #   ===========================================================================
 #   m:  output
@@ -77,15 +74,44 @@ s = "\t:run3"; print("%s" % s)
 
 
 #   ===========================================================================
-#   m:  input <windows>
+#   m:  input
 #   ===========================================================================
 
 #   url: https://thelearninglifetime.com/index.php/python-input-with-timeout/
 
 print("=*=  menu: input")
 
+# !CRQ-261021:IO key
+# The msvcrt module is built exclusively into the Windows version of Python. 
+# If import msvcrt fails with a ModuleNotFoundError: No module named 'msvcrt', 
+# it almost always means you are running Python on Linux or 
+#  macOS (including WSL — Windows Subsystem for Linux), 
+# where the module does not exist.
 
-if os.name == 'posix': print("<<< I leave os!=Windows"); exit()
+import sys
+
+if sys.platform == "win32":
+    import os
+    import msvcrt
+
+    def f_get_key():
+        return msvcrt.getch().decode("utf-8")
+else:
+    import sys
+    import termios
+    import tty
+
+    def f_get_key():
+        fd = sys.stdin.fileno()
+        old_settings = termios.tcgetattr(fd)
+        try:
+            tty.setraw(sys.stdin.fileno())
+            ch = sys.stdin.read(1)
+        finally:
+            termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
+        return ch
+
+#   if os.name == 'posix': print("<<< I leave os!=Windows"); exit()
 
 
 sRc = ''
@@ -93,7 +119,7 @@ iWaitTime = 5
 print("\t>>> Enter any text in <%s> seconds" % (iWaitTime))
 tDtm = time.time()
 while (time.time() - tDtm < iWaitTime):
-    if msvcrt.kbhit():
+    if f_get_key():
         sRc = input()
         break
 if sRc:
