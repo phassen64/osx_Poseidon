@@ -149,7 +149,7 @@ fLog="$v_FWK_dirTemp/$v_SCP_bdy.log"
 printf "&&& logFile:'%s'\n" "$fLog"
 
 #   s:  header
-printf -v SOut ">>> runPRL.BEG *[%d] at:[%s]." "$iCtr" "$sDtm"
+printf -v SOut ">>> runPYT.BEG *[%d] at:[%s]." "$iCtr" "$sDtm"
 printf "$SOut\n"
 echo "$SOut" > $fLog
 
@@ -179,7 +179,7 @@ sDtm=$(date "$sFmt");   tDtmStopp=$(date '+%s.%N')
 fSec=$(echo "($tDtmStopp-$tDtmStart) / 1" | bc)
 
 #   s:  footer
-printf -v SOut "<<< runPRL.END *[%d] at:[%s] elapsed:[%s]." "$iCtr" "$sDtm" "$fSec"
+printf -v SOut "<<< runPYT.END *[%d] at:[%s] elapsed:[%s]." "$iCtr" "$sDtm" "$fSec"
 echo "$SOut" >> $fLog
 printf "$SOut\n"
 
