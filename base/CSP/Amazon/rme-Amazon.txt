@@ -1,0 +1,13 @@
+--- rme.Amazon 
+
+Compute
+Amazon Elastic Compute Cloud (EC2)
+
+
++   AWS.login
+    url:    https://aws.amazon.com/console/
+    eml:    <@pluto>=:"pluto64@e-mail.de"
+    pwd:    <!surf>=:"!Silversurfer2022"
+
+
+
