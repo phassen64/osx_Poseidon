@@ -106,10 +106,6 @@ function f_run_script {
 #   s:  interpreter
 declare -r C_INTERPRETER='python3'
 
-#   declare -r C_FILE_BLACK1='y02_io.py'
-#   declare -r C_FILE_BLACK2='y27_package.py'
-
-
 #   s:  define blackList
 declare -a aBlackList=( 'y02_io.py' \
                         'y11_convert_dataType.py' \

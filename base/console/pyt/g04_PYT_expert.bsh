@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #   ***************************************************************************
-#   run:[expert]        tutorial.Ruby 2026      ©[mATe64]       [2026-10-18]
+#   run:[expert]        tutorial.Python 2026      ©[mATe64]       [2026-10-24]
 #   ***************************************************************************
 
 #   encoding.UTF8:
@@ -10,7 +10,7 @@
 #   usage:  $   bash <THIS.bsh> [+] [iStressFactor]=:'1'
 
 <<usage
-    Tutorial 2026-10-19
+    Tutorial 2026-10-24
 
     +   usage:
             $>. {thisScript} [cOpt]=:'h' [{iStressFator(iSfr)}]=:'1'
@@ -139,9 +139,20 @@ function f_run_matchFiles() {
         if [ -f "$xFile" ]; then
             i+=1
             if [[ $xFile =~ $sRex ]]; then
-                if [ "$xFile" == "$C_FILE_BLACK" ]; then
+                #   isFileInBlackList?
+                sBlack='-'
+                for xBlack in "${aBlackList[@]}"
+                do
+                    #   printf "?isBlack '%s':'%s'\n" $xBlack $xFile
+                    if [ $xBlack == $xFile ]; then
+                        sBlack='!'
+                        break
+                    fi
+                done
+                if [ $sBlack == '!' ]; then
+                    #   echo "<<< BREAK.isBlackFile"
                     continue
-                fi                
+                fi
                 v_RUN_iRc+=1
                 aTmp+=( $xFile )
             fi
@@ -286,9 +297,23 @@ function f_run_main {
 #   s:  C.this
 declare -r      p_pThis=$BASH_SOURCE
 
-#   s:  C.interpreter
+#   s:  interpreter
 declare -r C_INTERPRETER='python3'
-declare -r C_FILE_BLACK='y27_package.py'
+
+#   s:  define blackList
+declare -a aBlackList=( 'y02_io.py' \
+                        'y11_convert_dataType.py' \
+                        'y18_array.py' \
+                        'y27_package.py' \
+                        'y32_unitTest.py' \
+                        'y32_unitTest_m1.py' \
+                        'y32_unitTest_m2.py' \
+                        'y32_unitTest_m3.py' \
+                        'y33_os.py' \
+                        'y42_stdLib.py' \
+                        'y46_argParse.py' \
+                        'y59_shutil.py')
+
 
 #   s:  C.scp
 declare -r -x   C_SCP=`basename $BASH_SOURCE`
