@@ -15,7 +15,7 @@
 #
 #       Der Aufruf kann durch
 #               os.system
-#       Aber dadurch f?hrt die
+#       Aber dadurch führt die
 #           Abfrage _~name_~ == "_~main_~" bringt nicht
 #           zur Unterscheidung, ob der
 #           Aufruf direkt oder indirekt erfolgte.

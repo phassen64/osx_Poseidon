@@ -921,7 +921,12 @@ https://de.wikipedia.org/wiki/Unicodeblock_Griechisch_und_Koptisc    !$@€ƒ„
 
 ### !date:<2026-10-24>:Sa
     
+*   try
+    $   git config --global credential.helper manager
 
-$   git config --global credential.helper manager
+?   Wo steht git global ?
+    <   $HOME/.gitconfig
 
-$   git config --global --edit
+*   Editieren von Git Global
+    $   git config --global --edit
+
