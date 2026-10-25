@@ -60,7 +60,11 @@ g.f_header(sTc,True)
 #   m:  define
 #   ============================================================================
 
+#   https://www.geeksforgeeks.org/python/python-arrays/
+
 g.f_menu("define")
+
+#   typecode array
 
 #   integer array
 ai = array('i', [1, -2, 3, +4, 5])
@@ -75,24 +79,6 @@ g.f_menuS1("ar Float")
 g.f_text("af => %s" % (af))
 g.f_text("check tYpe(af) : %s" % (type(af)))
 g.f_text("check lEn(af)  : %s"  % (len(af)))
-
-#   char array
-# ac = array('c', ['a'])
-# => ValueError: bad typecode (must be b, B, u, h, H, i, I, l, L, q, Q, f or d)
-
-#   unsigned array
-# au = array('u', u'hello \u2641')
-g.f_menuS1("ar UniCode")
-l  = [u"firstUni",u"second"]
-au = array('u',l[1])
-# s  = u"hello"
-# au = array('u',s)
-# g.f_text("check type(au) : %s" % (type(au)))
-g.f_text("check lEn(au)  : %s"  % (len(au)))
-g.f_print("show uniCodeStr=[")
-for e in au:
-    g.f_print(e)
-g.f_print("]")
 
 #   ============================================================================
 #   m:  access
