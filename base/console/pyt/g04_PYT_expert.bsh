@@ -263,9 +263,9 @@ function f_run_main {
 
             if [ $C_mod_iExpectedExitCode == $iReplyEc ]
             then
-                printf "== OK\n"
+                printf "==: OK.\n"
             else
-                printf "!= [%d]\n" $C_mod_iExpectedExitCode
+                printf "!=: NOK [%d]\n" $C_mod_iExpectedExitCode
                 iRc+=1
             fi
 
@@ -302,17 +302,14 @@ declare -r C_INTERPRETER='python3'
 
 #   s:  define blackList
 declare -a aBlackList=( 'y02_io.py' \
-                        'y11_convert_dataType.py' \
-                        'y18_array.py' \
+                        'y10_module_m1.py' \
                         'y27_package.py' \
                         'y32_unitTest.py' \
                         'y32_unitTest_m1.py' \
                         'y32_unitTest_m2.py' \
                         'y32_unitTest_m3.py' \
-                        'y33_os.py' \
-                        'y42_stdLib.py' \
-                        'y46_argParse.py' \
-                        'y59_shutil.py')
+                        'y45_getOpt.py' \
+                        'y46_argParse.py')
 
 
 #   s:  C.scp
