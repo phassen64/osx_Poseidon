@@ -53,12 +53,17 @@ h = {"red":"rot","green":"gruen","blue":"blau"}
 g.f_text("hash h:=<%s>" % (h))
 
 #   module:array
-aI      = array('i', [1, 2, -3])
-aS      = array('u', ['g','r','e','e','k'])         # unicode
-g.f_text("ai    := <%s>" % (aI))
-g.f_text("as    := <%s>" % (aS))
+aI  = array('i', [1, 2, -3])
+s='greek'   #   array('utf-8', ['g','r','e','e','k'])
+aS_encode   = array('B',s.encode('utf-8'))  # !CRQ-261025
+aS_decode   = aS_encode.tobytes().decode('utf-8')
 
-#   quit()
+g.f_text("ai        := <%s>" % (aI))
+g.f_text("aS.enc    := <%s>" % (aS_encode))
+g.f_text("aS.dec    := <%s>" % (aS_decode))
+
+#   for later
+aS = aS_decode 
 
 #   ===========================================================================
 #   m:  convert
