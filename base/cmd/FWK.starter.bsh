@@ -425,6 +425,7 @@ function f_fwk_alias_set(){
     alias +p='perl'
     alias +r='ruby'
     alias +y='python3'
+    alias +w='pwsh'
 	#   =:= m:interpreter.python
     alias python='python3'
 	#   =:= m:clr
