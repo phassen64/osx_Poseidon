@@ -118,8 +118,8 @@ declare -a aBlackList=( 'y02_io.py' \
                         'y46_argParse.py' \
                         'y47_py2py.py' \
                         'y52_timing.py' \
-                        'y52_timing_m1.py' \
-                        'y59_shutil.py')
+                        'y52_timing_m1.py'
+                        )
 
 #   s:  fetch all bash in a ShellArray
 aShellArray=$(echo `ls y*.py`)
