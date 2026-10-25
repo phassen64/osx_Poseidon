@@ -17,7 +17,9 @@
 #   url:    https://docs.python.org/3/tutorial/
 #   url:    https://www.w3schools.com/python/default.asp
 
-import time
+import LIB_inc as m
+import math
+#   from datetime import datetime
 
 #   ===========================================================================
 #   m:  output
@@ -58,7 +60,6 @@ print("ist da!")
 #   output with newline '\n'
 print("Thomas\n",end="")
 print("ist am Ende!")
-
 
 print("=*=  menu: print.ChangeTabsize")
 
@@ -106,10 +107,12 @@ else:
         old_settings = termios.tcgetattr(fd)
         try:
             tty.setraw(sys.stdin.fileno())
-            ch = sys.stdin.read(1)
+            cRc = sys.stdin.read(1) # is blocing
+            #   NOK sRc = sys.stdin.readline()
+            #   cRc = sRc[0] 
         finally:
             termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
-        return ch
+        return cRc
 
 #   if os.name == 'posix': print("<<< I leave os!=Windows"); exit()
 
@@ -117,14 +120,33 @@ else:
 sRc = ''
 iWaitTime = 5
 print("\t>>> Enter any text in <%s> seconds" % (iWaitTime))
-tDtm = time.time()
-while (time.time() - tDtm < iWaitTime):
+
+#   fetch time stamp
+tNow = datetime.now()
+tBeg = tNow
+print("Time.beg : [%s]" % tNow)
+
+while (True):
+    
+    #   calc current time
+    tNow = datetime.now()
+    print("Time.now : [%s]" % tNow)
+
+    #   calc difference
+    fSub = (tBeg - tNow).total_seconds()
+    iSub = math.trunc(fSub)
+    if (iSub > iWaitTime):
+        break
+    print("Time.dif =[%d] " % iSub)
+
+    #   calc readKey
     if f_get_key():
         sRc = input()
         break
+
 if sRc:
     print("\t<<< The input is :'" + sRc + "'")
 else:
     print("\t<<< No input.")
 
-#   end
+#   end.of.code
