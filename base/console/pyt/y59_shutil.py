@@ -90,7 +90,7 @@ g.f_test_bFileMake(hMajor['m_pBin'],2,256,False)
 
 #   add docFile 2 Major
 dPwd        =       g.f_sPwd()
-sFileDoc    =       m.g_sTutorReadmeFile
+sFileDoc    =       m.g_sVcsReadmeFile
 hMajor['m_pDoc']   =   g.f_sJoinFilePath(dPwd,sFileDoc)
 pFileDoc    =   hMajor['m_pDoc']
 g.f_text("pDoc : '%s'" % pFileDoc)

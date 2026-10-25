@@ -116,7 +116,7 @@ declare -a aBlackList=( 'y02_io.py' \
                         'y32_unitTest_m1.py' \
                         'y32_unitTest_m2.py' \
                         'y32_unitTest_m3.py' \
-                        'y33_os.py' \
+#                       'y33_os.py' \
                         'y42_stdLib.py' \
                         'y45_getOpt.py' \
                         'y46_argParse.py' \
