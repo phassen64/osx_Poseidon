@@ -109,15 +109,11 @@ declare -r C_INTERPRETER='python3'
 #   s:  define blackList
 declare -a aBlackList=( 'y02_io.py' \
                         'y10_module_m1.py' \
-#                       'y11_convert_dataType.py' \
-#                       'y18_array.py' \
                         'y27_package.py' \
                         'y32_unitTest.py' \
                         'y32_unitTest_m1.py' \
                         'y32_unitTest_m2.py' \
                         'y32_unitTest_m3.py' \
-#                       'y33_os.py' \
-                        'y42_stdLib.py' \
                         'y45_getOpt.py' \
                         'y46_argParse.py' \
                         'y47_py2py.py' \
