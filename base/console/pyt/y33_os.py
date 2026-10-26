@@ -82,7 +82,7 @@ g.f_test_bFileMake(hMajor['m_pBin'],2,256,False)
 
 #   add docFile 2 Major
 dPwd        =       g.f_sPwd()
-sFileDoc    =       m.g_sTutorReadmeFile
+sFileDoc    =       m.g_sVcsReadmeFile
 hMajor['m_pDoc']   =   g.f_sJoinFilePath(dPwd,sFileDoc)
 pFileDoc    =   hMajor['m_pDoc']
 g.f_text("pDoc : '%s'" % pFileDoc)
@@ -168,6 +168,7 @@ g.f_text("x.getenv('%s') =: '%s'" % (v,s))
 #   s:  X.environ     https://www.geeksforgeeks.org/python-os-environ-object/
 #
 
+
 g.f_menuS1("os:{environ}")
 if bOsPosix:
     v = 'NAME'
@@ -175,9 +176,8 @@ else:
     v = 'USERNAME'
 
 #   osCall via a list
-s = os.environ[v]
-g.f_text("x.environ[%s] =: '%s'" % (v,s))
-
+s = os.environ.get(v)   # !CRQ-261025
+g.f_text("x.environ('%s') =: '%s'" % (v,s))
 
 #
 #   s:  X.system      https://www.w3schools.com/python/ref_os_system.asp
@@ -486,6 +486,7 @@ assert (True is bRc)
 
 g.f_menuS1("os:{path.getsize}")
 
+g.f_text("pDoc2 : '%s'" % pFileDoc)
 iRc = os.path.getsize(pFileDoc)
 g.f_text("fileSize ('%s') =: '%d' Bytes" % (sFileDoc,iRc))
 assert (iRc > 10)
@@ -721,8 +722,8 @@ assert (fRc > 1550000000.0)
 #
 
 if bOsPosix:
-    fRc = os.path.getcTime(sFile)           #   access time
-    g.f_text("f.getTime_c  => %f"   % fRc)  #   retun float
+    fRc = os.path.getctime(sFile)           #   access time
+    g.f_text("f.getTime_c  => %f"   % fRc)  #   return float
     assert (fRc > 1550000000.0)
 
 

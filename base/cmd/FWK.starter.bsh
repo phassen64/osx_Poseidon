@@ -166,11 +166,21 @@ function f_ini_ruby() {
 
 
 function f_ini_python() {
-	sudo apt-get update
-	sudo apt-get install python3 python3-pip python3-venv -y
-	python3 --version
-	pip3 --version
+    local sMod=$1
+    if [ '+' == $sMod ]; then
+        #   pip3 install numpy
+        printf "install python.module :{'numpy'} \n"
+        sudo apt-get install python3-numpy
+        printf "install python.module :{'numba'} \n"
+        sudo apt-get install python3-numba
+    else 
+	    sudo apt-get update
+	    sudo apt-get install python3 python3-pip python3-venv -y
+	    python3 --version
+	    pip3 --version
+    fi    
 }
+
 
 function f_ini_pwsh() {
 
@@ -415,6 +425,7 @@ function f_fwk_alias_set(){
     alias +p='perl'
     alias +r='ruby'
     alias +y='python3'
+    alias +w='pwsh'
 	#   =:= m:interpreter.python
     alias python='python3'
 	#   =:= m:clr

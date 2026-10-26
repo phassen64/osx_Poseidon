@@ -65,7 +65,7 @@ declare -a aSrc
 aSrc+=( $p_sFile )
 
 #   only if source
-declare v_INFO="TUTOR-PRL-2026" ; export v_INFO
+declare v_INFO="TUTOR-PYT-2026" ; export v_INFO
 
 #   s:  header
 declare sFmt="+%Y-%m-%d %H:%M:%S"

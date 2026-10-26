@@ -71,7 +71,7 @@ g_sId       = "240125"        # date of Lib 2020-08-12 bis heute
 g_bLogging  = True
 
 #   m:  doc
-g_sTutorReadmeFile   =   "Readme-PY.txt"
+g_sVcsReadmeFile   =   "README.md"    # !CRQ-261025:use STD
 
 #   environment variables
 g_bMode_batch   = 'v_mode_bBat'

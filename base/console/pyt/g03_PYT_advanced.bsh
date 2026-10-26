@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #   ***************************************************************************
-#   run:[advanced]      tutorial.Ruby 2026        ©[mATe64]     [2026-10-19]
+#   run:[advanced]      tutorial.Python 2026        ©[mATe64]   [2026-10-24]
 #   ***************************************************************************
 #   usage:
 #       $   bash <THIS.bsh>
@@ -81,9 +81,9 @@ function f_run_script {
             printf "\n<<< replyOf[%d]:'%s': #{%d}" $n $xFile $iBashReply
             if [ $iEc == $iBashReply ]
             then
-                printf ":reply==:!OK\n"
+                printf ":reply==:[+OK] \n"
             else
-                printf ":reply==:NOK [%d]!=[%d] \n" $iEc $iBashReply 
+                printf ":reply==:[NOK]::[%d]!=[%d] \n" $iEc $iBashReply 
                 iRc+=1
             fi
 
@@ -106,23 +106,20 @@ function f_run_script {
 #   s:  interpreter
 declare -r C_INTERPRETER='python3'
 
-#   declare -r C_FILE_BLACK1='y02_io.py'
-#   declare -r C_FILE_BLACK2='y27_package.py'
-
-
 #   s:  define blackList
 declare -a aBlackList=( 'y02_io.py' \
-                        'y11_convert_dataType.py' \
-                        'y18_array.py' \
+                        'y10_module_m1.py' \
                         'y27_package.py' \
                         'y32_unitTest.py' \
                         'y32_unitTest_m1.py' \
                         'y32_unitTest_m2.py' \
                         'y32_unitTest_m3.py' \
-                        'y33_os.py' \
-                        'y42_stdLib.py' \
+                        'y45_getOpt.py' \
                         'y46_argParse.py' \
-                        'y59_shutil.py')
+                        'y47_py2py.py' \
+                        'y52_timing.py' \
+                        'y52_timing_m1.py'
+                        )
 
 #   s:  fetch all bash in a ShellArray
 aShellArray=$(echo `ls y*.py`)
@@ -149,7 +146,7 @@ fLog="$v_FWK_dirTemp/$v_SCP_bdy.log"
 printf "&&& logFile:'%s'\n" "$fLog"
 
 #   s:  header
-printf -v SOut ">>> runPRL.BEG *[%d] at:[%s]." "$iCtr" "$sDtm"
+printf -v SOut ">>> runPYT.BEG *[%d] at:[%s]." "$iCtr" "$sDtm"
 printf "$SOut\n"
 echo "$SOut" > $fLog
 
@@ -179,7 +176,7 @@ sDtm=$(date "$sFmt");   tDtmStopp=$(date '+%s.%N')
 fSec=$(echo "($tDtmStopp-$tDtmStart) / 1" | bc)
 
 #   s:  footer
-printf -v SOut "<<< runPRL.END *[%d] at:[%s] elapsed:[%s]." "$iCtr" "$sDtm" "$fSec"
+printf -v SOut "<<< runPYT.END *[%d] at:[%s] elapsed:[%s]." "$iCtr" "$sDtm" "$fSec"
 echo "$SOut" >> $fLog
 printf "$SOut\n"
 
