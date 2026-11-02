@@ -1,0 +1,1645 @@
+>>> runWPS.BEG *[1] at:[2026-11-01 18:18:53].
+
+>>> runWPS.BEG *[1] at:[2026-11-01 18:18:53].
+___ script nFiles:<22>  iRnd:[15639] :#{58}
+
+### stress :: [001]/[001]
+
+################################################################################
+*** run:[01]/[001]:'w00_dummy.ps1'
+################################################################################
+
+&&& SKIP:[w00_dummy.ps1]
+
+################################################################################
+*** run:[02]/[001]:'w01_intro.ps1'
+################################################################################
+
+=== h:	BEG:'w01_intro.ps1':<261101_181854>:{58} at:[78]
+	by:[isPosix]
+
+=== :   PSH intro
+        m:  comment
+        m:  output
+        m:  run.myFunction
+        m:  show.thisScriptInfo
+        m:  show.thisScriptParameter
+        m:  variable
+        m:  EnvironmentVariable write&&read
+        m:  show.debugInfo
+        m:  show.logFile
+
+The psh tutorial 2024
+	written by Peter.
+
+helloWorld
+--- continue in <1>
+.;
+
+--- m:  m01:showScp at:[172]
+	show some script data
+    s:  s01:member :[177]
+        scp.Drv:{/}
+        scp.Dir:{/home/peter/VCS/fwk/base/console/wps}
+        scp.Pth:{/home/peter/VCS/fwk/base/console/wps/w01_intro.ps1}
+        scp.Nam:{w01_intro.ps1}
+        scp.Ext:{.ps1}
+    u:  u01:lib version :[185]
+        dtmLib   :   {2026-11-01 16:31:35}
+
+--- m:  m02:parameter at:[194]
+    s:  s01:directly :[197]
+        para.sScp       :{w01_intro.ps1}
+        para.bVerbose   :{False}
+        para.bColor     :{True}
+    s:  s02:via function :[203]
+        scpPara:{scp:{w01_intro.ps1};log:{-1};clr:{True};vbs:{False}}
+
+--- m:  m03:variable at:[212]
+    s:  s01:define :[219]
+        x: <123>
+        i: <1>
+        s: <peter>
+        b: <True>
+        a: <1 a>
+    s:  s02:checkDataType :[239]
+        type(x)     :   'int'
+        isBoolean   :   {True}
+        isInt       :   {1}
+        isArray     :   {1 a}
+        isString    :   {peter}
+    s:  s03:show.environmentVariable :[251]
+        $env:v_test_sVal=: <WpsTutorial:261101> 	:[262]
+
+--- m:  m04:showDebugInfo at:[273]
+        debug.__LINE__:{275}
+        debug.__FILE__:{/home/peter/VCS/fwk/base/console/wps/w01_intro.ps1}
+        debug.__FUNCTION__:{w01_intro.ps1}
+
+--- m:  m05:logging at:[286]
+        mode.logMode:<-1>
+
+--- m:  m06:executionPolicy at:[299]
+        ExecutionPolicy := <Unrestricted>
+
+
+--- m:  m07:color at:[311]
+    s:  s01:standard :[316]
+color[1] = I am {'DarkGreen'}.
+color[2] = I am {'DarkYellow'}.
+color[3] = I am {'DarkCyan'}.
+color[4] = I am {'DarkMagenta'}.
+color[5] = I am {'DarkRed'}.
+color[6] = I am {'DarkBlue'}.
+color[7] = I am {'Green'}.
+color[8] = I am {'Yellow'}.
+color[9] = I am {'Cyan'}.
+color[10] = I am {'Magenta'}.
+color[11] = I am {'Red'}.
+color[12] = I am {'Blue'}.
+    s:  s02:system :[328]
+color[1] = Black|color[2] = DarkBlue|color[3] = DarkGreen|color[4] = DarkCyan|color[5] = DarkRed|color[6] = DarkMagenta|color[7] = DarkYellow|color[8] = Gray|color[9] = DarkGray|color[10] = Blue|color[11] = Green|color[12] = Cyan|color[13] = Red|color[14] = Magenta|color[15] = Yellow|color[16] = White| on Black
+color[17] = Black|color[18] = DarkBlue|color[19] = DarkGreen|color[20] = DarkCyan|color[21] = DarkRed|color[22] = DarkMagenta|color[23] = DarkYellow|color[24] = Gray|color[25] = DarkGray|color[26] = Blue|color[27] = Green|color[28] = Cyan|color[29] = Red|color[30] = Magenta|color[31] = Yellow|color[32] = White| on DarkBlue
+color[33] = Black|color[34] = DarkBlue|color[35] = DarkGreen|color[36] = DarkCyan|color[37] = DarkRed|color[38] = DarkMagenta|color[39] = DarkYellow|color[40] = Gray|color[41] = DarkGray|color[42] = Blue|color[43] = Green|color[44] = Cyan|color[45] = Red|color[46] = Magenta|color[47] = Yellow|color[48] = White| on DarkGreen
+color[49] = Black|color[50] = DarkBlue|color[51] = DarkGreen|color[52] = DarkCyan|color[53] = DarkRed|color[54] = DarkMagenta|color[55] = DarkYellow|color[56] = Gray|color[57] = DarkGray|color[58] = Blue|color[59] = Green|color[60] = Cyan|color[61] = Red|color[62] = Magenta|color[63] = Yellow|color[64] = White| on DarkCyan
+color[65] = Black|color[66] = DarkBlue|color[67] = DarkGreen|color[68] = DarkCyan|color[69] = DarkRed|color[70] = DarkMagenta|color[71] = DarkYellow|color[72] = Gray|color[73] = DarkGray|color[74] = Blue|color[75] = Green|color[76] = Cyan|color[77] = Red|color[78] = Magenta|color[79] = Yellow|color[80] = White| on DarkRed
+color[81] = Black|color[82] = DarkBlue|color[83] = DarkGreen|color[84] = DarkCyan|color[85] = DarkRed|color[86] = DarkMagenta|color[87] = DarkYellow|color[88] = Gray|color[89] = DarkGray|color[90] = Blue|color[91] = Green|color[92] = Cyan|color[93] = Red|color[94] = Magenta|color[95] = Yellow|color[96] = White| on DarkMagenta
+color[97] = Black|color[98] = DarkBlue|color[99] = DarkGreen|color[100] = DarkCyan|color[101] = DarkRed|color[102] = DarkMagenta|color[103] = DarkYellow|color[104] = Gray|color[105] = DarkGray|color[106] = Blue|color[107] = Green|color[108] = Cyan|color[109] = Red|color[110] = Magenta|color[111] = Yellow|color[112] = White| on DarkYellow
+color[113] = Black|color[114] = DarkBlue|color[115] = DarkGreen|color[116] = DarkCyan|color[117] = DarkRed|color[118] = DarkMagenta|color[119] = DarkYellow|color[120] = Gray|color[121] = DarkGray|color[122] = Blue|color[123] = Green|color[124] = Cyan|color[125] = Red|color[126] = Magenta|color[127] = Yellow|color[128] = White| on Gray
+color[129] = Black|color[130] = DarkBlue|color[131] = DarkGreen|color[132] = DarkCyan|color[133] = DarkRed|color[134] = DarkMagenta|color[135] = DarkYellow|color[136] = Gray|color[137] = DarkGray|color[138] = Blue|color[139] = Green|color[140] = Cyan|color[141] = Red|color[142] = Magenta|color[143] = Yellow|color[144] = White| on DarkGray
+color[145] = Black|color[146] = DarkBlue|color[147] = DarkGreen|color[148] = DarkCyan|color[149] = DarkRed|color[150] = DarkMagenta|color[151] = DarkYellow|color[152] = Gray|color[153] = DarkGray|color[154] = Blue|color[155] = Green|color[156] = Cyan|color[157] = Red|color[158] = Magenta|color[159] = Yellow|color[160] = White| on Blue
+color[161] = Black|color[162] = DarkBlue|color[163] = DarkGreen|color[164] = DarkCyan|color[165] = DarkRed|color[166] = DarkMagenta|color[167] = DarkYellow|color[168] = Gray|color[169] = DarkGray|color[170] = Blue|color[171] = Green|color[172] = Cyan|color[173] = Red|color[174] = Magenta|color[175] = Yellow|color[176] = White| on Green
+color[177] = Black|color[178] = DarkBlue|color[179] = DarkGreen|color[180] = DarkCyan|color[181] = DarkRed|color[182] = DarkMagenta|color[183] = DarkYellow|color[184] = Gray|color[185] = DarkGray|color[186] = Blue|color[187] = Green|color[188] = Cyan|color[189] = Red|color[190] = Magenta|color[191] = Yellow|color[192] = White| on Cyan
+color[193] = Black|color[194] = DarkBlue|color[195] = DarkGreen|color[196] = DarkCyan|color[197] = DarkRed|color[198] = DarkMagenta|color[199] = DarkYellow|color[200] = Gray|color[201] = DarkGray|color[202] = Blue|color[203] = Green|color[204] = Cyan|color[205] = Red|color[206] = Magenta|color[207] = Yellow|color[208] = White| on Red
+color[209] = Black|color[210] = DarkBlue|color[211] = DarkGreen|color[212] = DarkCyan|color[213] = DarkRed|color[214] = DarkMagenta|color[215] = DarkYellow|color[216] = Gray|color[217] = DarkGray|color[218] = Blue|color[219] = Green|color[220] = Cyan|color[221] = Red|color[222] = Magenta|color[223] = Yellow|color[224] = White| on Magenta
+color[225] = Black|color[226] = DarkBlue|color[227] = DarkGreen|color[228] = DarkCyan|color[229] = DarkRed|color[230] = DarkMagenta|color[231] = DarkYellow|color[232] = Gray|color[233] = DarkGray|color[234] = Blue|color[235] = Green|color[236] = Cyan|color[237] = Red|color[238] = Magenta|color[239] = Yellow|color[240] = White| on Yellow
+color[241] = Black|color[242] = DarkBlue|color[243] = DarkGreen|color[244] = DarkCyan|color[245] = DarkRed|color[246] = DarkMagenta|color[247] = DarkYellow|color[248] = Gray|color[249] = DarkGray|color[250] = Blue|color[251] = Green|color[252] = Cyan|color[253] = Red|color[254] = Magenta|color[255] = Yellow|color[256] = White| on White
+
+=== h:	END: <'w01_intro.ps1'>:{58}::{1} at:[345]
+
+
+<<< replyOf[1]:'w01_intro.ps1': #{58}:reply==:[+OK] 
+
+################################################################################
+*** run:[03]/[001]:'w02_dataType.ps1'
+################################################################################
+
+=== h:	BEG:'w02_dataType.ps1':<261101_181856>:{58} at:[42]
+	by:[isPosix]
+
+=== :   PSH DataTypes
+        m:  bool
+        m:  string
+        m:  char
+        m:  byte
+        m:  int
+        m:  long(int64)
+        m:  float(single) && double
+        m:  decimal
+        m:  array
+        m:  hashtable
+        m:  DateTime
+        m:  Object
+
+--- m:  m01:bool at:[69]
+        b =: <True>
+        b2 =: <False>
+        type('True') =: 'bool'
+        ?isBool('True') =: <True>
+
+--- m:  m02:string at:[85]
+	My Text is : 'peter'
+        s = 'Harvey'
+        type('Harvey') =: 'string'
+        ?isString('Harvey') =: <True>
+        Len('Harvey') =: 6
+    <<	s1:<Peter ist älter als: <$i> Jahre.>
+    <<	s2:<Peter ist jünger als: <45> Jahre.>
+
+--- m:  m03:char at:[120]
+        c =: '1'
+        c =: '!' 	:[124]
+        c =: '$'
+        c =: 'A'
+        type('A') =: 'char'
+        ?isChar('A') =: <True>
+        concat('a','b') =: a & b 	:[136]
+
+--- m:  m04:byte at:[142]
+        y =: '33'
+        type('33') =: 'byte'
+        ?isByte('A') =: <True>
+        yMax =: <255>
+        yMin =: <0>
+
+--- m:  m05:integer at:[159]
+        i =: <123>
+        type('123') =: 'int'
+        ?isInt('123') =: <True>
+        iMax =: <2147483647>
+        iMin =: <-2147483648>
+        hex2dec(0x40) =: <64>
+        bin2dec('10101111') =: <175>
+        bin2hexStr(1102234580) =: <41B2C3D4>$
+
+--- m:  m06:long at:[194]
+        l   =: <-1234567890>
+        i64 =: <987654321>
+        type.l('-1234567890') =: 'long'
+        type.i('987654321') =: 'long'
+        ?isLong('-1234567890') =: <True>
+        ?isInt64('987654321') =: <True>
+        lMax =: <9223372036854775807>
+        lMin =: <-9223372036854775808>
+
+--- m:  m07:float(single) && double at:[217]
+        g =: <9.321>
+        f =: <6.2812>
+        d =: <3.1415>
+        g.type('9.321') =: 'float'
+        f.type('6.2812') =: 'float'
+        d.type('3.1415') =: 'double'
+        ?isSingle('g')    =: <True>
+        ?isFloat('6.2812')    =: <True>
+        ?isDouble('d')    =: <True>
+        f.max =: <3.402823E+38>
+        f.min =: <-3.402823E+38>
+        d.max =: <1.79769313486232E+308>
+        d.min =: <-1.79769313486232E+308>
+
+--- m:  m08:decimal at:[247]
+        d =: <123>
+        type('123') =: 'decimal'
+        ?isDecimal('123') =: <True>
+        dMax =: <79228162514264337593543950335>
+        dMin =: <-79228162514264337593543950335>
+        d =: <-123456789.987654>
+
+--- m:  m09:array
+        array.simple := 'US DE EN FR SP RU' 	:[274]
+        a.type('US DE EN FR SP RU')  =: 'System.Object[]'
+        ?isArray('a') =: <True>
+        array.explic := 'LAS BAR MUC' 	:[282]
+    <<	a[0] =:  'LAS'
+    <<	a[2] =:  'MUC'
+        iLen(<LAS BAR MUC>) => <3>
+        array.added := 'Harvey' 	:[296]
+
+--- m:  m10:hash
+        h.type('System.Collections.Hashtable')  =: 'hashtable'
+        ?isHash('h') =: <True>
+        hCity['Washington'] => 'Olympia'
+        h['surName'] => 'peter'
+
+--- m:  m11:DateTime
+    <<	DTM := '11/01/2026 18:18:56'
+        dtm.type      =: 'datetime'
+        ?isDtm('dtm') =: <True>
+        takeMyBirthday
+    <<	DTM := '07/09/1964 09:45:15' => '1964-07-09 09:45:15'
+
+--- m:  m12:object
+        p.type      =: 'CTmp'
+        ?isObj(p)   =: <True>
+
+=== h:	END: <'w02_dataType.ps1'>:{58}::{0} at:[374]
+
+
+<<< replyOf[1]:'w02_dataType.ps1': #{58}:reply==:[+OK] 
+
+################################################################################
+*** run:[04]/[001]:'w03_operator.ps1'
+################################################################################
+
+=== h:	BEG:'w03_operator.ps1':<261101_181857>:{58} at:[50]
+	by:[isPosix]
+
+=== :   PSH operator
+        •   m:  isType          ty:any
+        •   m:  logical         ty:bool
+        •   m:  arithmetic      ty:int
+        •   m:  assignment      ty:int
+        •   m:  incrementer     ty:int
+        •   m:  compare         ty:int
+        •   m:  bitwise         ty:int
+        •   m:  like            ty:string
+        •   m:  contains        ty:array
+        •   m:  inArray         ty:array
+
+--- m:  m01:isType at:[86]
+    <<	using s=<peter>; i=<9>; a=<1 b 3>; h=<System.Collections.Hashtable>
+        x := <True> -is [bool] = True 	:[101]
+        x := <peter> -is [string] = True 	:[102]
+        x := <9> -is [int] = True 	:[103]
+        x := <1 b 3> -is [array] = True 	:[104]
+        x := <9.321> -is [single] = True 	:[105]
+        x := <System.Collections.Hashtable> -is [hashtable] = True 	:[106]
+        x := <11/01/2026 18:18:57> -is [DateTime] = True 	:[107]
+        x := <peter> -isNot [int] = True 	:[111]
+
+--- m:  m02:logical at:[117]
+    <<	using a=<False>; b=<True>
+        x := <False> -and <True>   = False 	:[126]
+        x := <False> -or  <True>   = True 	:[127]
+        x := <False> -xor <True>   = True 	:[128]
+        x := -not <False>        = True 	:[129]
+        x := -not <True>        = False 	:[130]
+
+--- m:  m03:arithmetic at:[141]
+    <<	using max=<16>; i=<9>; j=<0>; k=<8>
+        x := <9> + <0> = 9 	:[144]
+        x := <9> - <0> = 9 	:[145]
+        x := <9> * <0> = 0 	:[146]
+    s:  s01:modulo :[153]
+        x := <8> mod <9> = 8 	:[158]
+        x := <0> mod <8> = 0 	:[161]
+
+--- m:  m04:assignment at:[171]
+    <<	using i=<9>; j=<0>; k=<8>
+        x:  = i:9 = 9 	:[174]
+        x: += j:0 = 9 	:[175]
+        x: -= k:8 = 1 	:[176]
+        x: *= i:9 = 9 	:[177]
+
+--- m:  m05:incrementer at:[188]
+    <<	using max=<16>; i=<9>; j=<0>; k=<8>
+        i:<9>++ := <10> 	:[194]
+        j:<0>-- := <-1> 	:[195]
+
+--- m:  m06:compare at:[204]
+    <<	using i=<9>; j=<0>
+        x := <9> -eq <0> = False 	:[207]
+        x := <9> -ge <0> = True 	:[208]
+        x := <9> -gt <0> = True 	:[209]
+        x := <9> -le <0> = False 	:[210]
+        x := <9> -lt <0> = False 	:[211]
+        x := <9> -ne <0> = True 	:[212]
+
+--- m:  m07:biwise at:[218]
+    <<	using a=<1001>=9; b=<0000>=0
+        x := <1001> -band <0000> = 0000 	:[227]
+        x := <1001> -bor  <0000> = 1001 	:[231]
+        x := <1001> -bxor  <0000> = 1001 	:[235]
+        x := -bnot <1001>  = 0110 	:[239]
+
+--- m:  m08:like at:[251]
+    <<	using s=<peter>
+        s -like <Peter> = True 	:[258]
+        s -like <p*> = True 	:[259]
+        s -like <p?t?R> = True 	:[260]
+        s -like <a*> = False 	:[261]
+        s -clike <Peter> = False 	:[264]
+        s -clike <p*> = True 	:[265]
+        s -ilike <Peter> = True 	:[268]
+        s -ilike <p*> = True 	:[269]
+        s -notLike <Peter> = False 	:[272]
+        s -notLike <p*> = False 	:[273]
+        s -cNotLike <p?t?R> = True 	:[276]
+        s -cNotLike <a*> = True 	:[277]
+        s -iNotLike <p?t?R> = False 	:[280]
+        s -iNotLike <a*> = True 	:[281]
+
+--- m:  m09:contains at:[294]
+    <<	using a=<a b c>
+        <a b c> -contains <A> = True 	:[302]
+        <a b c> -contains <c> = True 	:[303]
+        <a b c> -contains <1> = False 	:[304]
+        <a b c> -contains <B> = True 	:[305]
+        <a b c> -notContains <+> = True 	:[308]
+        <a b c> -notContains <a> = False 	:[309]
+        <a b c> -cContains <A> = False 	:[312]
+        <a b c> -cContains <b> = True 	:[313]
+        <a b c> -cNotContains <A> = True 	:[316]
+        <a b c> -cNotContains <b> = False 	:[317]
+        <a b c> -iContains <a> = True 	:[320]
+        <a b c> -iContains <1> = False 	:[321]
+        <a b c> -iNotContains <a> = False 	:[324]
+        <a b c> -iNotContains <1> = True 	:[325]
+
+--- m:  m10:inArray at:[334]
+        x := <apple> -in <apple Banana orange> = True 	:[341]
+        x := <strawberry> -in <apple Banana orange> = False 	:[345]
+        x := <banana> -in <apple Banana orange> = True 	:[349]
+        x := <banana> -in <apple Banana orange> = False 	:[353]
+        x := <cherry> -notIn <apple Banana orange> = True 	:[358]
+
+=== h:	END: <'w03_operator.ps1'>:{58}::{1} at:[364]
+
+
+<<< replyOf[1]:'w03_operator.ps1': #{58}:reply==:[+OK] 
+
+################################################################################
+*** run:[05]/[001]:'w04_condition.ps1'
+################################################################################
+
+=== h:	BEG:'w04_condition.ps1':<261101_181859>:{58} at:[44]
+	by:[isPosix]
+
+=== :   PSH DataTypes
+        m:  if
+            s:  if.only
+            s:  if-else
+            s:  if-else-elseif
+        m:  switch
+            s:  switch.simple
+            s:  switch.true
+            s:  switch.contains
+            s:  switch.wildcard
+            s:  switch.wildcard_with_case
+
+--- m:  m01:if at:[68]
+        &&& using i   = <1>
+        &&& using max = <5>
+    s:  s01:ifOnly :[78]
+        YES: i is greater than 0
+    s:  s02:if-else :[85]
+        NOT: i is NOT greater 1
+    s:  s03:if-else-elseif :[94]
+        YES: i > 5
+
+--- m:  m02:switch at:[109]
+        &&& using  c='x'
+    s:  s01:simple :[118]
+    <<	found.iRc = <2>
+    s:  s02:switch.true :[131]
+        &&& looking for :'B'
+    <<	result.true:<A|B>
+    s:  s03:switch.contains :[154]
+        &&& using char again :'B'
+    <<	result.contains:<A|B>
+    s:  s04:switch.wildcard :[174]
+        &&& using star: 'ElvIs'
+    <<	result.star('ElvIs') =: 1
+    s:  s05:switch.wildcard.CASE :[198]
+        &&& using again star :'ElvIs'
+    <<	result.star('ElvIs') =: 1
+
+=== h:	END: <'w04_condition.ps1'>:{58}::{0} at:[214]
+
+
+<<< replyOf[1]:'w04_condition.ps1': #{58}:reply==:[+OK] 
+
+################################################################################
+*** run:[06]/[001]:'w05_looping.ps1'
+################################################################################
+
+=== h:	BEG:'w05_looping.ps1':<261101_181900>:{58} at:[39]
+	by:[isPosix]
+
+=== :   PSH looping
+        m:  for.loop
+        m:  while
+        m:  do...while
+        m:  foreach
+
+;
+&&& using max          = <8>
+&&& using nSampleSize  = <7>
+&&& using nBreak  = <5>
+
+--- m:  m01:for at:[66]
+        for[0]: '7'
+        for[1]: '96'
+        for[2]: '82'
+        for[3]: '97'
+        for[4]: '68'
+        for[5]: '23'
+        for[6]: '69'
+    s:  s01:for.break:<5> :[77]
+        for.break[0]: '76'
+        for.break[1]: '26'
+        for.break[2]: '45'
+        for.break[3]: '30'
+        for.break[4]: '7'
+        for.break[5]: '5'
+    s:  s02:for.continue:<5> :[91]
+        for.break[0]: '6'
+        for.break[1]: '72'
+        for.break[2]: '83'
+        for.break[3]: '40'
+        for.break[4]: '56'
+        for.break[6]: '21'
+
+--- m:  m02:while at:[105]
+        while[0]: '43'
+        while[1]: '30'
+        while[2]: '18'
+        while[3]: '80'
+        while[4]: '88'
+        while[5]: '70'
+        while[6]: '2'
+
+--- m:  m03:do...while at:[118]
+        doWhile[0]: '76'
+        doWhile[1]: '1'
+        doWhile[2]: '84'
+        doWhile[3]: '96'
+        doWhile[4]: '5'
+        doWhile[5]: '26'
+        doWhile[6]: '68'
+
+--- m:  m04:foreach at:[134]
+        foreach[0]: '46'
+        foreach[1]: '28'
+        foreach[2]: '49'
+        foreach[3]: '94'
+        foreach[4]: '18'
+        foreach[5]: '4'
+        foreach[6]: '65'
+
+=== h:	END: <'w05_looping.ps1'>:{58}::{0} at:[152]
+
+
+<<< replyOf[1]:'w05_looping.ps1': #{58}:reply==:[+OK] 
+
+################################################################################
+*** run:[07]/[001]:'w06_function.ps1'
+################################################################################
+
+&&& SKIP:[w06_function.ps1]
+
+################################################################################
+*** run:[08]/[001]:'w07_class.ps1'
+################################################################################
+
+=== h:	BEG:'w07_class.ps1':<261101_181901>:{58} at:[34]
+	by:[isPosix]
+
+=== :   PSH class
+        m:  define : class and object
+        m:  hidden
+        m:  static
+        m:  derivation
+
+--- m:  m01:define at:[59]
+        name:{Peter} 	:[73]
+        number:{123} 	:[74]
+        type(X) =: 'CSpot' 	:[77]
+        len(X) =: '1' 	:[78]
+    s:  s01:AllMemberOfObject :[84]
+        elem [0] : 'bool Equals(System.Object obj)'
+        elem [1] : 'int GetHashCode()'
+        elem [2] : 'type GetType()'
+        elem [3] : 'string ToString()'
+        elem [4] : 'int m_iNumber {get;set;}'
+        elem [5] : 'string m_sName {get;set;}'
+    s:  s02:Object.property :[93]
+        property [0] : 'int m_iNumber {get;set;}'
+        property [1] : 'string m_sName {get;set;}'
+    s:  s03:MethodsOfObject :[103]
+        method [0] : 'bool Equals(System.Object obj)'
+        method [1] : 'int GetHashCode()'
+        method [2] : 'type GetType()'
+        method [3] : 'string ToString()'
+
+--- m:  m02:constructor at:[117]
+        p.ctr   :   <1>
+        p.name  :   <Peter>
+        p.dtm   :   <07/09/1964 09:45:30>
+
+--- m:  m03:hidden at:[146]
+        Name:'Audi'
+        snr.direct:<0> 	:[172]
+        snr.viaMethod:<12345> 	:[176]
+        snr.viaMethod2:<4711> 	:[181]
+
+--- m:  m04:static at:[188]
+        dtm.lib:<11/01/2026 16:19:23> 	:[203]
+        static.attr:<11/01/2026 18:19:01> 	:[207]
+        static.meth:<7177> 	:[211]
+
+--- m:  m05:derivation at:[218]
+        alive:[True] 	:[235]
+        speed:[5.6] 	:[236]
+
+--- m:  m06:libTest at:[243]
+        hello I am inside a class
+        cls.info.ctr := <1>
+        cls.info.scp := </home/peter/VCS/fwk/base/console/wps/w07_class.ps1>
+        cls.info.dtm := <07/09/1964 09:45:30>
+
+=== h:	END: <'w07_class.ps1'>:{58}::{0} at:[260]
+
+
+<<< replyOf[1]:'w07_class.ps1': #{58}:reply==:[+OK] 
+
+################################################################################
+*** run:[09]/[001]:'w08_array.ps1'
+################################################################################
+
+=== h:	BEG:'w08_array.ps1':<261101_181901>:{58} at:[51]
+	by:[isPosix]
+
+=== :   PSH array
+        m:  define
+        m:  init        : $a = @()
+        m:  add         : $a += $x
+        m:  remove
+        m:  compare     : $a -contains $x && $x -in $a
+        m:  copy        : $b = $a
+        m:  range       : $a = $i..$n
+        m:  slicing     : $b = $a[$i..$n]
+        m:  reverse     : $b = $a[($a.Length - 1)..0]
+        m:  select      : Select-Object {-Index|-First|-Last|-Skip|-SkipLast} $n1
+        m:  uniq        : $b = $a | Select-Object -Unique
+        m:  sort        : $b = $a | Sort-Object
+        m:  shuffle     : $b = Sort-Object {Get-Random}
+
+--- m:  m01:define at:[82]
+        a := [harvey 15 True 2.35 System.Object[] 04/01/2009 15:00:00]
+        isArray := <True>
+        a.length := <6>
+        show array member
+        a[0] =: <harvey>
+        a[1] =: <15>
+        a[2] =: <True>
+        a[3] =: <2.35>
+        a[4] =: <a b c>
+        a[5] =: <04/01/2009 15:00:00>
+        acess array member {LAST}
+        a[5] =: <04/01/2009 15:00:00>
+
+--- m:  m02:init at:[116]
+        empty array 	:[119]
+        a =: <>
+
+--- m:  m03:add at:[127]
+        a += <'peter'> =: <peter>
+        a += <'4711'> =: <peter 4711>
+        a += <'False'> =: <peter 4711 False>
+
+--- m:  m04:remove at:[150]
+        a = <red yellow green>
+        a | where -ne <'green'> := <red yellow>
+        a = <red yellow green> 	:[158]
+        a.Removed = <red yellow> 	:[159]
+
+--- m:  m05:compare at:[166]
+        a = <red yellow green>
+    s:  s01:compare.contains :[172]
+        a -contains <Yellow> := <True>
+        a -contains <blue> := <False>
+    s:  s02:compare.in :[177]
+        a -in <Yellow> := <True>
+        a -notIn <blue> := <True>
+    s:  s03:compare.array :[182]
+        A:<1 2 3 4 5>; B:<4 5 6 7 8>; C:<5 4 3 2 1>
+    u:  u01:compare.array :[191]
+        cmd: Where-Object
+        x := difference(A,B) =: <1 2 3> => <False>
+        x := difference(A,C) =: <> => <True>
+    u:  u02:compare.array.Compare-Object :[207]
+        cmd: Compare-Object
+        x := compareObject(A,B) =: <   > => <False>
+        x := compareObject(A,C) =: <> => <True>
+
+--- m:  m06:copy at:[226]
+        a = <1 2 3 4 5>
+        b = <1 2 3 4 5 blue>
+
+--- m:  m07:range at:[238]
+        a = <1 2 3 4 5>
+        a = <a b c d e f g h>
+
+--- m:  m08:slicing at:[256]
+        a = <1 2 3 4 5 6 7 8 9 10>
+        b = <6 7 8>
+        c = <1 3 4 5 10>
+
+--- m:  m09:reverse at:[274]
+        a := <a b c d e f g h>
+        a.reverse := <h g f e d c b a>
+
+--- m:  m10:select at:[289]
+        a := <1 2 3 4 5 6 7 8 9 10>
+        n1,n2,n3 := <2>,<8>,<2>
+    s:  s01:Index :[303]
+        index <2> =: <3>
+        index <8> =: <9>
+        index <2> =: <3>
+    s:  s02:First :[320]
+        first <2> =: <1 2>
+        first <8> =: <1 2 3 4 5 6 7 8>
+        first <2> =: <1 2>
+    s:  s03:Last :[333]
+        last <2> =: <9 10>
+        last <8> =: <3 4 5 6 7 8 9 10>
+        last <2> =: <9 10>
+    s:  s04:Skip :[347]
+        skip <2> =: <3 4 5 6 7 8 9 10>
+        skip <8> =: <9 10>
+        skip <2> =: <3 4 5 6 7 8 9 10>
+    s:  s05:SkipLast :[361]
+        skipLast <2> =: <1 2 3 4 5 6 7 8>
+        skipLast <8> =: <1 2>
+        skipLast <2> =: <1 2 3 4 5 6 7 8>
+
+--- m:  m11:uniq at:[377]
+        a = <1 5 3 2 3 3 3 4 2 5> (10)
+        a.uniq = <1 5 3 2 4> (5)
+
+--- m:  m12:sort at:[393]
+        a = <1 151 97 111 72 835 286 741 845 172>
+    s:  s01:sort.ascending :[407]
+        a.sorted.asc = <1 72 97 111 151 172 286 741 835 845>
+    s:  s02:sort.descending :[416]
+        a.sorted.des = <845 835 741 286 172 151 111 97 72 1>
+    s:  s03:sort.uniq :[425]
+        a = <8 3 6 4 3 6 2 9 4 1> (10)
+        a.sorted.uniq = <1 2 3 4 6 8 9> (7)
+
+--- m:  m13:shuffle at:[443]
+        a             =   <1 2 3 4 6 8 9>
+        a.shuffled    =   <2 8 1 9 3 6 4>
+
+=== h:	END: <'w08_array.ps1'>:{58}::{0} at:[455]
+
+
+<<< replyOf[1]:'w08_array.ps1': #{58}:reply==:[+OK] 
+
+################################################################################
+*** run:[10]/[001]:'w09_hashtable.ps1'
+################################################################################
+
+=== h:	BEG:'w09_hashtable.ps1':<261101_181902>:{58} at:[72]
+	by:[isPosix]
+
+=== :   PSH hashtable
+        m:  define
+        m:  show
+        m:  init    : =@{}
+        m:  add     : .Add(,)
+        m:  remove  : .Remove()
+        m:  count   : hashSize
+        m:  ordered hash
+        m:  output formatted
+
+--- m:  m01:define at:[99]
+        define.hCity at:[107]
+        h { 1/3 } =: Germany => Berlin
+        h { 2/3 } =: USA => Washington
+        h { 3/3 } =: France => Paris
+        define.hCelebrity at:[114]
+        h { 1/3 } =: Movie => JeffBridges
+        h { 2/3 } =: Pop => BritneySpears
+        h { 3/3 } =: Soccer => DiegoMaradonna
+    s:  s01:define.typed :[122]
+        typed at:[129]
+        h { 1/4 } =: m_iVal => 123
+        h { 2/4 } =: m_fVal => 47.11
+        h { 3/4 } =: m_bVal => True
+        h { 4/4 } =: m_sVal => ok
+    s:  s02:define.ordered.Person :[135]
+        h.Person.Ordered at:[145]
+        h { 1/5 } =: name => peter
+        h { 2/5 } =: certification => 1974 1980 1985 1997 2016
+        h { 3/5 } =: smart => True
+        h { 4/5 } =: bodySize => 1.67
+        h { 5/5 } =: age => 60
+    s:  s03:show.string :[155]
+    s:  s04:directly :[159]
+        immediately by name
+
+[32;1mName                          [0m[32;1m Value[0m
+[32;1m----                          [0m [32;1m-----[0m
+Germany                        Berlin
+USA                            Washington
+France                         Paris
+    s:  s05:show.keyOnly :[175]
+        h.Keys
+        key [1] : Germany
+        key [2] : USA
+        key [3] : France
+    s:  s06:valueOnly :[189]
+        h.Values
+        value [1] : Berlin
+        value [2] : Washington
+        value [3] : Paris
+    s:  s07:enumerator :[203]
+        h.getEnumerator()
+        elem[1/3] : Germany => Berlin
+        elem[2/3] : USA => Washington
+        elem[3/3] : France => Paris
+    s:  s08:show HASH with foreach-Object :[219]
+        City
+        [1/3]:: <Germany> => <Berlin>
+        [2/3]:: <USA> => <Washington>
+        [3/3]:: <France> => <Paris>
+    s:  s09:show HASH with % :[234]
+        Celebrity
+        [1/3]:: <Movie> => <JeffBridges>
+        [2/3]:: <Pop> => <BritneySpears>
+        [3/3]:: <Soccer> => <DiegoMaradonna>
+
+--- m:  m02:init at:[249]
+        h:=<System.Collections.Hashtable> * empty
+        type(h) =: 'hashtable'
+        ?isHashtable(h) =: <True>
+
+--- m:  m03:add at:[267]
+        City.now at:[269]
+        h { 1/3 } =: Germany => Berlin
+        h { 2/3 } =: USA => Washington
+        h { 3/3 } =: France => Paris
+    u:  u01:add_directly :[272]
+        add h(k,v) = h('Russia','Moscow')
+        City.added:<Russia> at:[275]
+        h { 1/4 } =: Germany => Berlin
+        h { 2/4 } =: Russia => Moscow
+        h { 3/4 } =: USA => Washington
+        h { 4/4 } =: France => Paris
+    u:  u02:add_by_method :[278]
+        add h(k,v) = h('GreatBritain','London')
+        City.added:<GreatBritain> at:[283]
+        h { 1/5 } =: Germany => Berlin
+        h { 2/5 } =: GreatBritain => London
+        h { 3/5 } =: Russia => Moscow
+        h { 4/5 } =: USA => Washington
+        h { 5/5 } =: France => Paris
+        add h(k,v) = h('China','Peking')
+        City.added:<China> at:[288]
+        h { 1/6 } =: GreatBritain => London
+        h { 2/6 } =: China => Peking
+        h { 3/6 } =: USA => Washington
+        h { 4/6 } =: France => Paris
+        h { 5/6 } =: Russia => Moscow
+        h { 6/6 } =: Germany => Berlin
+
+--- m:  m04:remove at:[294]
+        City.now at:[295]
+        h { 1/6 } =: GreatBritain => London
+        h { 2/6 } =: China => Peking
+        h { 3/6 } =: USA => Washington
+        h { 4/6 } =: France => Paris
+        h { 5/6 } =: Russia => Moscow
+        h { 6/6 } =: Germany => Berlin
+        City.removed:<Germany> at:[298]
+        h { 1/5 } =: GreatBritain => London
+        h { 2/5 } =: China => Peking
+        h { 3/5 } =: USA => Washington
+        h { 4/5 } =: France => Paris
+        h { 5/5 } =: Russia => Moscow
+
+--- m:  m05:count at:[304]
+        hCity.Len : <5>
+        hPerson.Len : <5>
+        hCelebrity.Len : <3>
+
+--- m:  m06:ordered hash at:[314]
+        h.NoOrder at:[318]
+        h { 1/4 } =: d => 4
+        h { 2/4 } =: a => 1
+        h { 3/4 } =: c => 3
+        h { 4/4 } =: b => 2
+        h.Ordered at:[322]
+        h { 1/4 } =: a => 1
+        h { 2/4 } =: b => 2
+        h { 3/4 } =: c => 3
+        h { 4/4 } =: d => 4
+        type(h) =: 'ordered'
+        ?isOrdered(h) =: <True>
+
+--- m:  m07:output-formatted at:[347]
+
+
+    s:  s01:sorted :[350]
+
+
+        define
+        hNumber
+        h { 1/8 } =: key_2 => 118
+        h { 2/8 } =: key_0 => 136
+        h { 3/8 } =: key_5 => 133
+        h { 4/8 } =: key_6 => 278
+        h { 5/8 } =: key_7 => 356
+        h { 6/8 } =: key_4 => 505
+        h { 7/8 } =: key_3 => 593
+        h { 8/8 } =: key_1 => 950
+        sorted
+        [1/8] : key_2 : 118
+        [2/8] : key_5 : 133
+        [3/8] : key_0 : 136
+        [4/8] : key_6 : 278
+        [5/8] : key_7 : 356
+        [6/8] : key_4 : 505
+        [7/8] : key_3 : 593
+        [8/8] : key_1 : 950
+
+
+    s:  s02:format :[395]
+    u:  u01:format table :[415]
+
+
+[32;1mName                          [0m[32;1m Value[0m
+[32;1m----                          [0m [32;1m-----[0m
+Dog                            Spot
+Fish                           Nimo
+Rabbit                         Harvey
+Bird                           Putzi
+Hamster                        Whiskers
+Cats                           Frisky
+
+    u:  u02:format list :[422]
+
+[32;1mName  : [0mDog
+[32;1mValue : [0mSpot
+
+[32;1mName  : [0mFish
+[32;1mValue : [0mNimo
+
+[32;1mName  : [0mRabbit
+[32;1mValue : [0mHarvey
+
+[32;1mName  : [0mBird
+[32;1mValue : [0mPutzi
+
+[32;1mName  : [0mHamster
+[32;1mValue : [0mWhiskers
+
+[32;1mName  : [0mCats
+[32;1mValue : [0mFrisky
+
+
+=== h:	END: <'w09_hashtable.ps1'>:{58}::{0} at:[429]
+
+
+<<< replyOf[1]:'w09_hashtable.ps1': #{58}:reply==:[+OK] 
+
+################################################################################
+*** run:[11]/[001]:'w10_string.ps1'
+################################################################################
+
+=== h:	BEG:'w10_string.ps1':<261101_181903>:{58} at:[51]
+	by:[isPosix]
+
+=== :   PSH string
+        m:  init            [string] $s =$null
+        m:  define          $s = 'x' ; $s = "x"
+        m:  property        $s.Length
+        m:  change          $s = $s1 + $s2
+        m:  access          $s[0..2]
+        m:  compare         -eq -gt -lt -like
+        m:  method          trim,index,replace...
+
+--- m:  m01:init at:[79]
+        peter
+
+--- m:  m02:define at:[91]
+    s:  s01:single-quoted :[94]
+        We get no number <$i> with single-quoted-strings.
+    s:  s02:double-quoted :[100]
+        Double quoted-strings evaluate <8> number.
+    s:  s03:hereString :[106]
+        HERE-string with single quote
+        BEGIN of HERE
+            This is a singleQuoted-HERE-String.
+            Second Line.
+            Third Line.
+        END of HERE
+    s:  s04:multiplicator :[120]
+        string <x> * <10> =: 'xxxxxxxxxx' 	:[126]
+
+--- m:  m03:property.length at:[132]
+        length of string 'xxxxxxxxxx' is : <10>
+    s:  s01:merge :[146]
+        x:=<"$s1$s2">	=> <ABC123>
+    s:  s02:concatenation :[156]
+        concat('Adam','Eve') =: Adam & Eve 	:[162]
+    s:  s03:append :[168]
+        peter and Harvey
+
+--- m:  m04:access at:[180]
+        using s = 'ABCDEFGHIJ'
+    s:  s01:access.single :[188]
+        c:='ABCDEFGHIJ'[0] 	=> <A>
+        c:='ABCDEFGHIJ'[3] 	=> <D>
+        c:='ABCDEFGHIJ'[10] 	=> <>
+        c:='ABCDEFGHIJ'[-1] 	=> <J>
+        c:='ABCDEFGHIJ'[-3] 	=> <H>
+        c:='ABCDEFGHIJ'[-10] 	=> <A>
+    s:  s02:access.slice :[205]
+        'ABCDEFGHIJ'[0..2] = <A B C>
+        'ABCDEFGHIJ'[3..7] = <D E F G H>
+        'ABCDEFGHIJ'[2..0] = <C B A>
+        'ABCDEFGHIJ'[2..6] = <C D E F G>
+        'ABCDEFGHIJ'[1..-1] = <B A J>
+        'ABCDEFGHIJ'[-1..1] = <J A B>
+        'ABCDEFGHIJ'[-8..-4] = <C D E F G>
+        'ABCDEFGHIJ'[-4..-8] = <G F E D C>
+        $s.GetType() => <string>
+        $x.GetType() => <System.Object[]>
+        convert$x::CharObjectArray => String =: <GFEDC>
+
+--- m:  m05:compare at:[244]
+    s:  s01:compare-operator =:'-[c|i]<Op>={eq,lt,gt}' :[250]
+        using s='ABC' t='abc'
+        x := <ABC> -eq <abc>   =: True
+        x := <ABC> -cEq <abc>  =: False
+        x := <ABC> -iEq <abc>  =: True
+        x := <ABC> -le <abc>   =: False
+        x := <ABC> -gt <abc>   =: False
+        x := <ABC> -gt <ab>    =: True
+    s:  s02:like  {-[c|i][not]like} :[276]
+        using s = 'peter'
+        -like
+        s -like <Peter> = True 	:[283]
+        s -like <p*> = True 	:[284]
+        s -like <p?t?R> = True 	:[285]
+        s -like <a*> = False 	:[286]
+        s -like <P[aeiou]t[aeiou]r> = True 	:[290]
+        -cLike
+        s -cLike <Peter> = False 	:[294]
+        s -like <p*> = True 	:[295]
+        s -like <p?t?R> = False 	:[296]
+        s -like <a*> = False 	:[297]
+        -iLike
+        s -iLike <Peter> = True 	:[301]
+        s -like <p*> = True 	:[302]
+        s -like <p?t?R> = True 	:[303]
+        s -like <a*> = False 	:[304]
+        -notLike
+        s -notLike <Peter> = False 	:[308]
+        s -notLike <p*> = False 	:[309]
+        s -notLike <p?t?R> = False 	:[310]
+        s -notLike <a*> = True 	:[311]
+        -cNotLike
+        s -cNotLike <Peter> = True 	:[315]
+        s -cNotLike <p*> = False 	:[316]
+        s -cNotLike <p?t?R> = True 	:[317]
+        s -cNotLike <a*> = True 	:[318]
+    s:  s03:match {-[c|i][not]match} :[325]
+        using s = 'peter'
+        -match
+        s -match <[a-z]> = True 	:[332]
+        s -match <p?t?r> = True 	:[333]
+        s -match <\w> = True 	:[334]
+
+--- m:  m06:method at:[340]
+        using s = ' Michael. '
+    s:  s01:upper-lower :[349]
+        s.ToUpper =  < MICHAEL. > 	:[350]
+        s.ToLower =  < michael. > 	:[352]
+    s:  s02:trim :[359]
+        s.Trim = <Michael.> 	:[362]
+        s.TrimStart = <Michael. > 	:[364]
+        s.TrimEnd = < Michael.> 	:[366]
+    s:  s03:replace :[373]
+        s.Replace(<space>,<blank>) = <Michael.> 	:[377]
+        s.Replace(A,x) = < Michael. > 	:[382]
+        s.Replace(a,x) = < Michxel. > 	:[387]
+        using s = 'ABxCDExFGH'
+        s.Replace(x,.) = <AB.CDE.FGH> 	:[394]
+    s:  s04:index :[401]
+        using s = 'ABxCDExFGH'
+    u:  u01:indexOf :[406]
+        x := 'ABxCDExFGH'.IndexOf('A')	=> <0>
+        x := 'ABxCDExFGH'.IndexOf('a')	=> <-1>
+        x := 'ABxCDExFGH'.IndexOf('x')	=> <2>
+        x := 'ABxCDExFGH'.IndexOf('G')	=> <8>
+        x := 'ABxCDExFGH'.IndexOf('$')	=> <-1>
+    u:  u02:lastIndexOf :[421]
+        x := 'ABxCDExFGH'.LastIndexOf('A')	=> <0>
+        x := 'ABxCDExFGH'.LastIndexOf('x')	=> <6>
+        x := 'ABxCDExFGH'.LastIndexOf('G')	=> <8>
+    s:  s05:cutter :[437]
+        using s = 'ABCDEFGHIJ'
+    u:  u01:subString :[443]
+        x := 'ABCDEFGHIJ'.SubString(3) 	=> <'DEFGHIJ'>
+    u:  u02:remove :[449]
+        x := 'ABCDEFGHIJ'.Remove(3) 	=> <'ABC'>
+    s:  s06:chopper :[457]
+        using sDay =
+Montag;Dienstag;
+Mittwoch;Donnerstag;Freitag;
+Samstag;Sonntag
+        using sMonth =
+Januar;Februar;
+März;April;Mai;Juni;Juli;August;September;Oktober;November;Dezember
+    u:  u01:chop :[476]
+        sDay.chopped = <Montag;Dienstag;Mittwoch;Donnerstag;Freitag;Samstag;Sonntag>
+    u:  u02:chomp :[483]
+        sMonth.chomped = <Januar;Februar;
+März;April;Mai;Juni;Juli;August;September;Oktober;November;Dezember>
+    s:  s07:split :[496]
+        using s = 'alpha,beta,gamma,delta,epsilon' 	:[504]
+        s.split(',') => <alpha beta gamma delta epsilon> 	:[509]
+        ?isArray('a') =: <True>
+        a.length = <5> 	:[518]
+        a[3] = 'delta' 	:[524]
+        using s = 'anton bert cleo daphne' 	:[531]
+        s.split(' ') => <anton bert cleo daphne> 	:[534]
+        a[0] = 'anton' 	:[537]
+    s:  s08:join :[546]
+        len(apple banana organge) => <3> 	:[552]
+        join(a) => <apple;banana;organge>[20] 	:[557]
+
+=== h:	END: <'w10_string.ps1'>:{58}::{0} at:[563]
+
+
+<<< replyOf[1]:'w10_string.ps1': #{58}:reply==:[+OK] 
+
+################################################################################
+*** run:[12]/[001]:'w11_regExpr.ps1'
+################################################################################
+
+&&& SKIP:[w11_regExpr.ps1]
+
+################################################################################
+*** run:[13]/[001]:'w12_integer.ps1'
+################################################################################
+
+=== h:	BEG:'w12_integer.ps1':<261101_181904>:{58} at:[63]
+	by:[isPosix]
+
+=== :   PSH integer
+        m:  define          : dec,hex,bin
+        m:  int.limit       : i16,i32,i64,u16,u32,u64,byte,decimal,single
+        m:  int.operator    : arithmetic,assignment,...
+        m:  converter       : i2s,s2i
+        m:  formatter       : method, operator
+
+--- m:  m01:define at:[86]
+        dec:<41394> 	:[89]
+        hex.4142 :<41394> 	:[92]
+        bin.1010000110110010:<-24142> 	:[96]
+
+--- m:  m02:int.limit at:[104]
+    s:  s01:limit.int :[110]
+        [int]::MaxValue<2147483647> 	:[113]
+        [int]::MinValue<-2147483648> 	:[114]
+        [int16]::MaxValue<32767> 	:[117]
+        [int16]::MinValue<-32768> 	:[118]
+        [int32]::MaxValue<2147483647> 	:[121]
+        [int32]::MinValue<-2147483648> 	:[122]
+        [int64]::MaxValue<9223372036854775807> 	:[125]
+        [int64]::MinValue<-9223372036854775808> 	:[126]
+    s:  s02:limit.uint :[133]
+        [uint]::MaxValue<4294967295> 	:[138]
+        [uint]::MinValue<0> 	:[139]
+        [uint16]::MaxValue<65535> 	:[143]
+        [uint16]::MinValue<0> 	:[144]
+        [unt32]::MaxValue<4294967295> 	:[147]
+        [unt32]::MinValue<0> 	:[148]
+        [unt64]::MaxValue<18446744073709551615> 	:[151]
+        [unt64]::MinValue<0> 	:[152]
+    s:  s03:limit.byte :[158]
+        [byte]::MaxValue<255> 	:[161]
+        [byte]::MinValue<0> 	:[162]
+    s:  s04:limit.decimal :[168]
+        [decimal]::MaxValue<79228162514264337593543950335> 	:[170]
+        [decimal]::MinValue<-79228162514264337593543950335> 	:[171]
+    s:  s05:limit.single :[177]
+        [single]::MaxValue<3.402823E+38> 	:[179]
+        [single]::MinValue<-3.402823E+38> 	:[180]
+
+--- m:  m03:integer.operator at:[192]
+        using max=<16>; i=<10>; j=<3>; k=<6>
+    s:  s01:arithmetic :[199]
+        x := <10> + <3> = 13 	:[200]
+        x := <10> - <3> = 7 	:[201]
+        x := <10> * <3> = 30 	:[202]
+        x := <10> / <3> = 3.33333333333333 *int2double* 	:[210]
+    u:  u01:modulo :[214]
+        x := <10> mod <3> = 1 	:[216]
+        x := <6> mod <10> = 6 	:[219]
+        x := <3> mod <6> = 3 	:[222]
+    u:  u02:division :[227]
+        x := <10> div <3> = 3 	:[229]
+        x := <6> div <10> = 0 	:[232]
+        x := <3> div <6> = 0 	:[235]
+    s:  s02:assignment :[244]
+        x:  = i:10 = 10 	:[246]
+        x: += j:3 = 13 	:[247]
+        x: -= k:6 = 7 	:[248]
+        x: *= i:10 = 70 	:[249]
+        x: /= j:3 = 23.3333333333333 *int2double* 	:[257]
+    s:  s03:incrementer :[266]
+        using i=<10>; j=<3>
+        i:<10>++ := <11> 	:[271]
+        j:<3>-- := <2> 	:[272]
+        i:++<11> := <12> 	:[275]
+        j:--<2> := <1> 	:[276]
+    s:  s04:compare :[282]
+        using i=<12>; j=<1>
+        x := <12> -eq <1> = False 	:[285]
+        x := <12> -ge <1> = True 	:[286]
+        x := <12> -gt <1> = True 	:[287]
+        x := <12> -le <1> = False 	:[288]
+        x := <12> -lt <1> = False 	:[289]
+        x := <12> -ne <1> = True 	:[290]
+    s:  s05:biwise :[296]
+        using i=<12>; j=<1>
+        using a=<1100>=12; b=<0001>=1
+        x := <1100> -band <0001> = 0000 	:[306]
+        x := <1100> -bor  <0001> = 1101 	:[310]
+        x := <1100> -bxor  <0001> = 1101 	:[314]
+        x := -bnot <1100>  = 0011 	:[318]
+
+--- m:  m04:converter.i<=>s at:[325]
+        using i=<'41394'>
+    s:  s01:convert.i2s(<int>,base) :[335]
+        x: i2s(<41394>,<2>) 	 =: <1010000110110010>  	:[343]
+        x: i2s(<41394>,<8>) 	 =: <120662>  	:[350]
+        x: i2s(<41394>,<10>) 	 =: <41394>  	:[357]
+        x: i2s(<41394>,<16>) 	 =: <a1b2>  	:[364]
+    s:  s02:convert.s2i(<string>,<base>) :[372]
+        x: s2i(<1010000110110010>,<2>) 	 =: <41394>  	:[380]
+        x: s2i(<120662>,<8>) 	 =: <41394>  	:[388]
+        x: s2i(<41394>,<10>) 	 =: <41394>  	:[395]
+        x: s2i(<a1b2>,<16>) 	 =: <41394>  	:[402]
+
+--- m:  m05:formatter at:[410]
+        using i=<'41394'>
+        using g=<'123.456'>
+    s:  s01:format.method :[423]
+        x: format(<41394>,<{0:b20}>) 	 =: <00001010000110110010>  	:[430]
+        x: format(<41394>,<{0:d}>) 	 =: <41394>  	:[438]
+        x: format(<41394>,<{0:d8}>) 	 =: <00041394>  	:[445]
+        x: format(<41394>,<{0:x}>) 	 =: <a1b2>  	:[452]
+        x: format(<41394>,<{0:x8}>) 	 =: <0000a1b2>  	:[459]
+        x: format(<41394>,<{0:X4}>) 	 =: <A1B2>  	:[466]
+        x: format(<41394>,<{0:f8}>) 	 =: <123.45600000>  	:[474]
+    s:  s02:format.operator :[481]
+        x: <{0:d}> -f <41394> 	 =: <41394>  	:[487]
+        x: <{0:x}> -f <41394> 	 =: <a1b2>  	:[494]
+        x: <{0:b}> -f <41394> 	 =: <1010000110110010>  	:[502]
+        cSep:=['.'] 	:[514]
+        x: <{0:f2}> -f <123.456> 	 =: <123.46>  	:[515]
+        x: <{0:yyyy}-{0:MM}-{0:dd} && {0:hh}:{0:mm}:{0:ss}> -f <DTM>
+		 =: <2026-11-01 && 06:19:04>  	:[522]
+
+=== h:	END: <'w12_integer.ps1'>:{58}::{0} at:[530]
+
+
+<<< replyOf[1]:'w12_integer.ps1': #{58}:reply==:[+OK] 
+
+################################################################################
+*** run:[14]/[001]:'w13_math.ps1'
+################################################################################
+
+=== h:	BEG:'w13_math.ps1':<261101_181905>:{58} at:[89]
+	by:[isPosix]
+
+=== :   PSH math
+        m:  value
+        m:  rounding
+        m:  exponentation
+        m:  trigometry
+        m:  sign
+        m:  extreme
+        m:  misc
+
+--- m:  m01:value at:[123]
+        E	 == 2.718282 	:[127]
+        PI	 == 3.141593 	:[131]
+        Tau	 == 6.283185 	:[136]
+
+--- m:  m02:rounding at:[143]
+        math::round(1.2345678)	 == 1 	:[149]
+        math::round(1.2345678,3)	 == 1.235 	:[154]
+        math::truncate(1.2345678)	 == 1 	:[158]
+        lib::truncate(1.2395654,2)	 == 1.23 	:[164]
+        math::floor(1.2395654)	 == 1 	:[168]
+        math::ceiling(1.2395654)	 == 2 	:[172]
+
+--- m:  m03:expontation at:[178]
+        math::pow(2,3)	 == 8 	:[186]
+        math::sqrt(100.1)	 =~ 10.004999 	:[191]
+        math::exp(2)	 =~ 7.389056 	:[196]
+        math::log(2)	 =~ 0.693147 	:[200]
+        math::log10(1000)	 == 3 	:[206]
+        math::log2(32)	 == 5 	:[213]
+
+--- m:  m04:trigometry  at:[220]
+        math::sin(1.5707963267949)	 == 1 	:[225]
+        math::cos(1.5707963267949)	 == 0 	:[228]
+        math::tan(0.785398163397448)	 == 1 	:[232]
+        math::asin(1)	 == 1.570796 	:[237]
+        math::acos(1)	 == 0 	:[242]
+        math::atan(1)	 == 0.785398 	:[247]
+
+--- m:  m05:misc at:[253]
+        math::sign(-100.123)	 == -1 	:[260]
+        math::abs(-100.123)	 == 100.123 	:[264]
+
+--- m:  m06:maxMin at:[270]
+        math::max(-100.123,89.1)	 == 89.1 	:[274]
+        math::min(-100.123,89.1)	 == -100.123 	:[278]
+        math::maxMagnitude(-100.123,89.1)	 == -100.123 	:[287]
+        math::minMagnitude(-100.123,89.1)	 == 89.1 	:[291]
+
+--- m:  m07:misc at:[299]
+        math::equals(3.14159265358979,3.14159265358979)	 == 1 	:[307]
+
+=== h:	END: <'w13_math.ps1'>:{58}::{0} at:[313]
+
+
+<<< replyOf[1]:'w13_math.ps1': #{58}:reply==:[+OK] 
+
+################################################################################
+*** run:[15]/[001]:'w14_dateTime.ps1'
+################################################################################
+
+=== h:	BEG:'w14_dateTime.ps1':<261101_181905>:{58} at:[57]
+	by:[isPosix]
+
+=== :   PSH dateTime
+        m:  define
+        m:  timer
+
+--- m:  m01:define.DateTime at:[77]
+        dtm = <11/01/2026 18:19:05> 	:[81]
+        dtm = <Sunday 11/01/2026 18:19 +01> 	:[85]
+        dtm.unix = <01/01/1970 01:00:00> 	:[92]
+        dtm.unix = <01/01/2020 01:00:00> 	:[96]
+        dtm ('yyMMdd_HHmmss') : <261101_181905> 	:[102]
+        dtm ('yyyy-MM-dd_HH:mm:ss') : <2026-11-01_18:19:05> 	:[108]
+        dtm.parse ('Nov-1985-26 1930') 	:[116]
+        dtm.parseExact ('640907-090000') 	:[125]
+        dtm DayOfYear =: <305> 	:[129]
+        dtm leapDayYear<1964> =: <True> 	:[135]
+        dtm leapDayYear<2024> =: <True> 	:[139]
+
+--- m:  m02:timer at:[145]
+        runDelay 	:[150]
+--- continue in <1>
+.;
+        runTime:<1> 	:[163]
+
+=== h:	END: <'w14_dateTime.ps1'>:{58}::{1} at:[170]
+
+
+<<< replyOf[1]:'w14_dateTime.ps1': #{58}:reply==:[+OK] 
+
+################################################################################
+*** run:[16]/[001]:'w15_io.ps1'
+################################################################################
+
+=== h:	BEG:'w15_io.ps1':<261101_181907>:{58} at:[87]
+	by:[isPosix]
+
+=== :   PSH file
+        m:  define Buffer
+        m:  TextFile     : Create|Write|Read
+        m:  BinaryFile   : Create|Write|Read
+        m:  FileHandling : Copy|Remove|Rename|Move
+    <<	dirTestCreated:</home/peter/Documents/temp/w15>:<True>
+
+--- m:  m01:define buffer at:[122]
+        bufferTXT.created:<8>
+        bufferBIN.created:<8>
+
+--- m:  m02:TextFile at:[142]
+    s:  s01:create.TXT :[148]
+        fileCreated:</home/peter/Documents/temp/w15/alpha.txt>:<True>
+    s:  s02:write.TXT :[159]
+        using encoding: <'utf8'>
+        written rec=<8> len=<112> into: </home/peter/Documents/temp/w15/alpha.txt>
+    s:  s03:read.TXT :[192]
+        read rec=<8> of file:</home/peter/Documents/temp/w15/alpha.txt>
+        fileSize = <120>
+        fileSizeKB = <0>
+
+--- m:  m03:BinaryFile at:[210]
+    s:  s01:create.BIN :[217]
+        fileCreated:</home/peter/Documents/temp/w15/beta.txt>:<True>
+    s:  s02:write.BIN :[231]
+        binBuffer.len=<8>
+        written file.BIN size:<8> name:</home/peter/Documents/temp/w15/beta.txt>
+
+--- m:  m04:read.BIN at:[248]
+        read.BIN.len=<8> of:</home/peter/Documents/temp/w15/beta.txt>
+        read:[0]: < A1 > (H)
+        read:[1]: < 97 > (H)
+        read:[2]: < 19 > (H)
+        read:[3]: < EE > (H)
+        read:[4]: < 10 > (H)
+        read:[5]: < 8E > (H)
+        read:[6]: < 36 > (H)
+        read:[7]: < FB > (H)
+
+--- m:  m05:FileHandling at:[271]
+    s:  s01:copyFile :[277]
+        copy </home/peter/Documents/temp/w15/alpha.txt> => </home/peter/Documents/temp/w15/gamma.txt>
+--- continue in <1>
+.;
+        fileSize(/home/peter/Documents/temp/w15/gamma.txt) = <120>
+    s:  s02:removeFile :[302]
+        remove </home/peter/Documents/temp/w15/delta.txt>
+--- continue in <1>
+.;
+    s:  s03:renameFile :[312]
+        rename </home/peter/Documents/temp/w15/beta.txt> => </home/peter/Documents/temp/w15/delta.txt>
+--- continue in <1>
+.;
+        fileSize(/home/peter/Documents/temp/w15/delta.txt) = <8>
+    s:  s04:moveFile :[328]
+        copy_for_move </home/peter/Documents/temp/w15/alpha.txt> => </home/peter/Documents/temp/w15/epsilon.txt>
+--- continue in <1>
+.;
+        move </home/peter/Documents/temp/w15/epsilon.txt> => </home/peter/Documents/temp/w15>
+--- continue in <1>
+.;
+
+=== h:	END: <'w15_io.ps1'>:{58}::{5} at:[350]
+
+
+<<< replyOf[1]:'w15_io.ps1': #{58}:reply==:[+OK] 
+
+################################################################################
+*** run:[17]/[001]:'w16_csv.ps1'
+################################################################################
+
+=== h:	BEG:'w16_csv.ps1':<261101_181913>:{58} at:[81]
+	by:[isPosix]
+
+=== :   PSH csv
+        m:  csv.write
+        m:  csv.read
+
+--- m:  m01:csv.write at:[118]
+    <<	hPerson at:[67]
+    <<	h { 1/5 } =: m_sName => peter
+    <<	h { 2/5 } =: m_bSex => True
+    <<	h { 3/5 } =: m_fSize => 1.67
+    <<	h { 4/5 } =: m_iAge => 34
+    <<	h { 5/5 } =: m_iZip => 90489
+    <<	hPerson at:[67]
+    <<	h { 1/5 } =: m_sName => harvey
+    <<	h { 2/5 } =: m_bSex => True
+    <<	h { 3/5 } =: m_fSize => 0.35
+    <<	h { 4/5 } =: m_iAge => 48
+    <<	h { 5/5 } =: m_iZip => 21262
+    <<	hPerson at:[67]
+    <<	h { 1/5 } =: m_sName => britney
+    <<	h { 2/5 } =: m_bSex => False
+    <<	h { 3/5 } =: m_fSize => 1.65
+    <<	h { 4/5 } =: m_iAge => 84
+    <<	h { 5/5 } =: m_iZip => 10100
+    <<	hPerson at:[67]
+    <<	h { 1/5 } =: m_sName => mary
+    <<	h { 2/5 } =: m_bSex => False
+    <<	h { 3/5 } =: m_fSize => 1.91
+    <<	h { 4/5 } =: m_iAge => 31
+    <<	h { 5/5 } =: m_iZip => 44123
+    <<	hPerson at:[67]
+    <<	h { 1/5 } =: m_sName => mike
+    <<	h { 2/5 } =: m_bSex => False
+    <<	h { 3/5 } =: m_fSize => 1.8
+    <<	h { 4/5 } =: m_iAge => 2
+    <<	h { 5/5 } =: m_iZip => 937484
+    <<	fileSize(/home/peter/Documents/temp/w16_theta.csv) =: <225>
+
+--- m:  m02:csv.read at:[152]
+        row:[1]	 : <peter> : <True> : <1.67> : <34> : <90489> 
+
+        row:[2]	 : <harvey> : <True> : <0.35> : <48> : <21262> 
+
+        row:[3]	 : <britney> : <False> : <1.65> : <84> : <10100> 
+
+        row:[4]	 : <mary> : <False> : <1.91> : <31> : <44123> 
+
+        row:[5]	 : <mike> : <False> : <1.8> : <2> : <937484> 
+
+
+=== h:	END: <'w16_csv.ps1'>:{58}::{0} at:[182]
+
+
+<<< replyOf[1]:'w16_csv.ps1': #{58}:reply==:[+OK] 
+
+################################################################################
+*** run:[18]/[001]:'w17_process.ps1'
+################################################################################
+
+&&& SKIP:[w17_process.ps1]
+
+################################################################################
+*** run:[19]/[001]:'w18_dummy.ps1'
+################################################################################
+
+=== h:	BEG:'w18_dummy.ps1':<261101_181914>:{58} at:[34]
+	by:[isPosix]
+
+=== :   PSH dummy
+        m:  dummy
+** created TestDir:</home/peter/Documents/temp/w18>
+
+=== h:	END: <'w18_dummy.ps1'>:{58}::{0} at:[54]
+
+
+<<< replyOf[1]:'w18_dummy.ps1': #{58}:reply==:[+OK] 
+
+################################################################################
+*** run:[20]/[001]:'w19_system.ps1'
+################################################################################
+
+=== h:	BEG:'w19_system.ps1':<261101_181914>:{58} at:[46]
+	by:[isPosix]
+
+=== :   PSH system
+        m:  variable.automatic
+        m:  variable.preference
+        m:  get.command
+        m:  get.module
+
+--- m:  m01:variable.Automatic at:[66]
+    <<	$$ 	 =: <  >
+    <<	$? 	 =: < True >
+    <<	$^ 	 =: <  >
+    <<	$_ 	 =: <  >
+    <<	$args 	 =: < 58 >
+    <<	$ConsoleFileName 	 =: <  >
+    <<	$EnabledExperimentalFeatures 	 =: <  >
+    <<	$Error 	 =: <  >
+    <<	$Event 	 =: <  >
+    <<	$EventArgs 	 =: <  >
+    <<	$EventSubscriber 	 =: <  >
+    <<	$ExecutionContext 	 =: < System.Management.Automation.EngineIntrinsics >
+    <<	$false 	 =: < False >
+    <<	$foreach:<>
+    <<	$HOME 	 =: < /home/peter >
+    <<	$Host 	 =: < System.Management.Automation.Internal.Host.InternalHost >
+    <<	$input 	 =: <  >
+    <<	$IsCoreCLR 	 =: < True >
+    <<	$IsLinux 	 =: < True >
+    <<	$IsMacOS 	 =: < False >
+    <<	$IsWindows 	 =: < False >
+    <<	$LASTEXITCODE 	 =: <  >
+    <<	$Matches 	 =: <  >
+    <<	$MyInvocation 	 =: < System.Management.Automation.InvocationInfo >
+    <<	$NestedPromptLevel 	 =: < 0 >
+    <<	$null 	 =: <  >
+    <<	$PID 	 =: < 22517 >
+    <<	$PROFILE 	 =: < /home/peter/.config/powershell/Microsoft.PowerShell_profile.ps1 >
+    <<	$PSBoundParameters 	 =: < System.Management.Automation.PSBoundParametersDictionary >
+    <<	$PSCmdlet 	 =: <  >
+    <<	$PSCommandPath 	 =: < /home/peter/VCS/fwk/base/console/wps/w19_system.ps1 >
+    <<	$PSCulture 	 =: < en-GB >
+    <<	$PSDebugContext 	 =: <  >
+    <<	$PSEdition 	 =: < Core >
+    <<	$PSHOME 	 =: < /opt/microsoft/powershell/7-lts >
+    <<	$PSItem 	 =: <  >
+    <<	$PSScriptRoot 	 =: < /home/peter/VCS/fwk/base/console/wps >
+    <<	$PSSenderInfo 	 =: <  >
+    <<	$PSUICulture 	 =: < en-GB >
+    <<	$PSVersionTable 	 =: < System.Management.Automation.PSVersionHashTable >
+    <<	$PWD 	 =: < /home/peter/VCS/fwk/base/console/wps >
+    <<	$Sender 	 =: <  >
+    <<	$ShellId 	 =: < Microsoft.PowerShell >
+    <<	$StackTrace 	 =: <  >
+    <<	$switch 	 =: <  >
+    <<	$this 	 =: <  >
+    <<	$true 	 =: < True >
+
+--- m:  m02:variable.Preference at:[123]
+    <<	$ConfirmPreference 	 =: < High >
+    <<	$DebugPreference 	 =: < SilentlyContinue >
+    <<	$ErrorActionPreference 	 =: < Continue >
+    <<	$ErrorView 	 =: < ConciseView >
+    <<	$FormatEnumerationLimit 	 =: < 4 >
+    <<	$InformationPreference 	 =: < SilentlyContinue >
+    <<	$LogCommandHealthEvent 	 =: <  >
+    <<	$LogCommandLifecycleEvent 	 =: <  >
+    <<	$LogEngineHealthEvent 	 =: <  >
+    <<	$LogEngineLifecycleEvent 	 =: <  >
+    <<	$LogProviderLifecycleEvent 	 =: <  >
+    <<	$LogProviderHealthEvent 	 =: <  >
+    <<	$MaximumAliasCount 	 =: <  >
+    <<	$MaximumDriveCount 	 =: <  >
+    <<	$MaximumErrorCount 	 =: <  >
+    <<	$MaximumFunctionCount 	 =: <  >
+    <<	$MaximumHistoryCount 	 =: < 4096 >
+    <<	$MaximumVariableCount 	 =: <  >
+    <<	$OFS 	 =: <  >
+    <<	$OutputEncoding 	 =: < System.Text.UTF8Encoding+UTF8EncodingSealed >
+    <<	$ProgressPreference 	 =: < Continue >
+    <<	$PSDefaultParameterValues 	 =: < System.Management.Automation.DefaultParameterDictionary >
+    <<	$PSEmailServer 	 =: <  >
+    <<	$PSModuleAutoLoadingPreference 	 =: <  >
+    <<	$PSNativeCommandArgumentPassing 	 =: < Standard >
+    <<	$PSNativeCommandUseErrorActionPreference 	 =: < False >
+    <<	$PSSessionApplicationName 	 =: < wsman >
+    <<	$PSSessionConfigurationName 	 =: < http://schemas.microsoft.com/powershell/Microsoft.PowerShell >
+    <<	$PSSessionOption 	 =: < System.Management.Automation.Remoting.PSSessionOption >
+    <<	$PSStyle 	 =: < System.Management.Automation.PSStyle >
+    <<	$Transcript 	 =: <  >
+    <<	$VerbosePreference 	 =: < SilentlyContinue >
+    <<	$WarningPreference 	 =: < Continue >
+    <<	$WhatIfPreference 	 =: < False >
+
+--- m:  m03:Get-Command at:[164]
+    <<	pCmd.Len     : <356>
+    <<	pCmd.Count   : <356>
+    <<	p.parts  :  <18>
+    <<	command[18] : <f_lib_directoryCreate>
+    <<	command[36] : <f_lib_isType_byte>
+    <<	command[54] : <f_lib_menu>
+    <<	command[72] : <Get-CredsFromCredentialProvider>
+    <<	command[90] : <Set-PSRepository>
+    <<	command[108] : <Clear-Variable>
+    <<	command[126] : <Debug-Job>
+    <<	command[144] : <Export-PSSession>
+    <<	command[162] : <Get-Date>
+    <<	command[180] : <Get-Member>
+    <<	command[198] : <Get-Random>
+    <<	command[216] : <Import-PackageProvider>
+    <<	command[234] : <New-Alias>
+    <<	command[252] : <Out-Default>
+    <<	command[270] : <Remove-Item>
+    <<	command[288] : <Select-Object>
+    <<	command[306] : <Set-PSResourceRepository>
+    <<	command[324] : <Test-Connection>
+    <<	command[342] : <Update-PSScriptFileInfo>
+
+--- m:  m04:Get-Module at:[189]
+    <<	pMod.Len     : <2>
+    <<	pMod.Count   : <2>
+    <<	module[1] : <Microsoft.PowerShell.Management>
+    <<	module[2] : <Microsoft.PowerShell.Utility>
+
+--- m:  m05:Get-Alias at:[210]
+    <<	pAli.Len     : <123>
+    <<	pAli.Count   : <123>
+    <<	p.parts  :  <6>
+    <<	alias[6] : <assert>
+    <<	alias[12] : <cli>
+    <<	alias[18] : <cvpa>
+    <<	alias[24] : <echo>
+    <<	alias[30] : <fc>
+    <<	alias[36] : <gal>
+    <<	alias[42] : <gcs>
+    <<	alias[48] : <gl>
+    <<	alias[54] : <group>
+    <<	alias[60] : <history>
+    <<	alias[66] : <ipal>
+    <<	alias[72] : <measure>
+    <<	alias[78] : <ni>
+    <<	alias[84] : <print>
+    <<	alias[90] : <rcjb>
+    <<	alias[96] : <rjb>
+    <<	alias[102] : <rv>
+    <<	alias[108] : <scb>
+    <<	alias[114] : <sls>
+    <<	alias[120] : <trace>
+
+=== h:	END: <'w19_system.ps1'>:{58}::{0} at:[235]
+
+
+<<< replyOf[1]:'w19_system.ps1': #{58}:reply==:[+OK] 
+
+################################################################################
+*** run:[21]/[001]:'w20_misc.ps1'
+################################################################################
+
+&&& SKIP:[w20_misc.ps1]
+
+################################################################################
+*** run:[22]/[001]:'w21_invoke.ps1'
+################################################################################
+
+&&& SKIP:[w21_invoke.ps1]
+___ total.iRc:<0>
+
+&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+*** total_sum_of_eRRoRs := [0]
+<<< runWPS.END *[1] at:[2026-11-01 18:19:15] elapsed:[21].

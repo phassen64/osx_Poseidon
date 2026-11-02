@@ -1,0 +1,390 @@
+>>> run.{p04_WPS_expert.bsh} dtm:[2026-11-01 18:24:28]
+
+*** TEST
+	Date          :   [Sun  1 Nov 18:24:29 CET 2026]
+	iRandom       :   [761]
+	nFiles        :   [4]
+	iStressMax    :   [1]
+### showArray {'testSet'} pos:[f_run_main();230]
+	a[01] == 'w15_io.ps1'
+	a[02] == 'w08_array.ps1'
+	a[03] == 'w12_integer.ps1'
+	a[04] == 'w14_dateTime.ps1'
+.
+___ script ecDefault #:{58}
+
+
+################################################################################
+*** run:[01]/[01]:'w15_io.ps1'
+################################################################################
+=== h:	BEG:'w15_io.ps1':<261101_182430>:{58} at:[87]
+	by:[isPosix]
+
+=== :   PSH file
+        m:  define Buffer
+        m:  TextFile     : Create|Write|Read
+        m:  BinaryFile   : Create|Write|Read
+        m:  FileHandling : Copy|Remove|Rename|Move
+    <<	dirTestCreated:</home/peter/Documents/temp/w15>:<True>
+
+--- m:  m01:define buffer at:[122]
+        bufferTXT.created:<8>
+        bufferBIN.created:<8>
+
+--- m:  m02:TextFile at:[142]
+    s:  s01:create.TXT :[148]
+        fileCreated:</home/peter/Documents/temp/w15/alpha.txt>:<True>
+    s:  s02:write.TXT :[159]
+        using encoding: <'ascii'>
+        written rec=<8> len=<112> into: </home/peter/Documents/temp/w15/alpha.txt>
+    s:  s03:read.TXT :[192]
+        read rec=<8> of file:</home/peter/Documents/temp/w15/alpha.txt>
+        fileSize = <120>
+        fileSizeKB = <0>
+
+--- m:  m03:BinaryFile at:[210]
+    s:  s01:create.BIN :[217]
+        fileCreated:</home/peter/Documents/temp/w15/beta.txt>:<True>
+    s:  s02:write.BIN :[231]
+        binBuffer.len=<8>
+        written file.BIN size:<8> name:</home/peter/Documents/temp/w15/beta.txt>
+
+--- m:  m04:read.BIN at:[248]
+        read.BIN.len=<8> of:</home/peter/Documents/temp/w15/beta.txt>
+        read:[0]: < 7A > (H)
+        read:[1]: < CB > (H)
+        read:[2]: < DA > (H)
+        read:[3]: < 0F > (H)
+        read:[4]: < C0 > (H)
+        read:[5]: < 34 > (H)
+        read:[6]: < 20 > (H)
+        read:[7]: < 95 > (H)
+
+--- m:  m05:FileHandling at:[271]
+    s:  s01:copyFile :[277]
+        copy </home/peter/Documents/temp/w15/alpha.txt> => </home/peter/Documents/temp/w15/gamma.txt>
+--- continue in <1>
+.;
+        fileSize(/home/peter/Documents/temp/w15/gamma.txt) = <120>
+    s:  s02:removeFile :[302]
+        remove </home/peter/Documents/temp/w15/delta.txt>
+--- continue in <1>
+.;
+    s:  s03:renameFile :[312]
+        rename </home/peter/Documents/temp/w15/beta.txt> => </home/peter/Documents/temp/w15/delta.txt>
+--- continue in <1>
+.;
+        fileSize(/home/peter/Documents/temp/w15/delta.txt) = <8>
+    s:  s04:moveFile :[328]
+        copy_for_move </home/peter/Documents/temp/w15/alpha.txt> => </home/peter/Documents/temp/w15/epsilon.txt>
+--- continue in <1>
+.;
+        move </home/peter/Documents/temp/w15/epsilon.txt> => </home/peter/Documents/temp/w15>
+--- continue in <1>
+.;
+
+=== h:	END: <'w15_io.ps1'>:{58}::{5} at:[350]
+
+<<< replyOf[1]:'w15_io.ps1': # ec:{58} ==: OK.
+.
+
+################################################################################
+*** run:[02]/[01]:'w08_array.ps1'
+################################################################################
+=== h:	BEG:'w08_array.ps1':<261101_182436>:{58} at:[51]
+	by:[isPosix]
+
+=== :   PSH array
+        m:  define
+        m:  init        : $a = @()
+        m:  add         : $a += $x
+        m:  remove
+        m:  compare     : $a -contains $x && $x -in $a
+        m:  copy        : $b = $a
+        m:  range       : $a = $i..$n
+        m:  slicing     : $b = $a[$i..$n]
+        m:  reverse     : $b = $a[($a.Length - 1)..0]
+        m:  select      : Select-Object {-Index|-First|-Last|-Skip|-SkipLast} $n1
+        m:  uniq        : $b = $a | Select-Object -Unique
+        m:  sort        : $b = $a | Sort-Object
+        m:  shuffle     : $b = Sort-Object {Get-Random}
+
+--- m:  m01:define at:[82]
+        a := [harvey 15 True 2.35 System.Object[] 04/01/2009 15:00:00]
+        isArray := <True>
+        a.length := <6>
+        show array member
+        a[0] =: <harvey>
+        a[1] =: <15>
+        a[2] =: <True>
+        a[3] =: <2.35>
+        a[4] =: <a b c>
+        a[5] =: <04/01/2009 15:00:00>
+        acess array member {LAST}
+        a[5] =: <04/01/2009 15:00:00>
+
+--- m:  m02:init at:[116]
+        empty array 	:[119]
+        a =: <>
+
+--- m:  m03:add at:[127]
+        a += <'peter'> =: <peter>
+        a += <'4711'> =: <peter 4711>
+        a += <'False'> =: <peter 4711 False>
+
+--- m:  m04:remove at:[150]
+        a = <red yellow green>
+        a | where -ne <'green'> := <red yellow>
+        a = <red yellow green> 	:[158]
+        a.Removed = <red yellow> 	:[159]
+
+--- m:  m05:compare at:[166]
+        a = <red yellow green>
+    s:  s01:compare.contains :[172]
+        a -contains <Yellow> := <True>
+        a -contains <blue> := <False>
+    s:  s02:compare.in :[177]
+        a -in <Yellow> := <True>
+        a -notIn <blue> := <True>
+    s:  s03:compare.array :[182]
+        A:<1 2 3 4 5>; B:<4 5 6 7 8>; C:<5 4 3 2 1>
+    u:  u01:compare.array :[191]
+        cmd: Where-Object
+        x := difference(A,B) =: <1 2 3> => <False>
+        x := difference(A,C) =: <> => <True>
+    u:  u02:compare.array.Compare-Object :[207]
+        cmd: Compare-Object
+        x := compareObject(A,B) =: <   > => <False>
+        x := compareObject(A,C) =: <> => <True>
+
+--- m:  m06:copy at:[226]
+        a = <1 2 3 4 5>
+        b = <1 2 3 4 5 blue>
+
+--- m:  m07:range at:[238]
+        a = <1 2 3 4 5>
+        a = <a b c d e f g h>
+
+--- m:  m08:slicing at:[256]
+        a = <1 2 3 4 5 6 7 8 9 10>
+        b = <6 7 8>
+        c = <1 3 4 5 10>
+
+--- m:  m09:reverse at:[274]
+        a := <a b c d e f g h>
+        a.reverse := <h g f e d c b a>
+
+--- m:  m10:select at:[289]
+        a := <1 2 3 4 5 6 7 8 9 10>
+        n1,n2,n3 := <4>,<1>,<1>
+    s:  s01:Index :[303]
+        index <4> =: <5>
+        index <1> =: <2>
+        index <1> =: <2>
+    s:  s02:First :[320]
+        first <4> =: <1 2 3 4>
+        first <1> =: <1>
+        first <1> =: <1>
+    s:  s03:Last :[333]
+        last <4> =: <7 8 9 10>
+        last <1> =: <10>
+        last <1> =: <10>
+    s:  s04:Skip :[347]
+        skip <4> =: <5 6 7 8 9 10>
+        skip <1> =: <2 3 4 5 6 7 8 9 10>
+        skip <1> =: <2 3 4 5 6 7 8 9 10>
+    s:  s05:SkipLast :[361]
+        skipLast <4> =: <1 2 3 4 5 6>
+        skipLast <1> =: <1 2 3 4 5 6 7 8 9>
+        skipLast <1> =: <1 2 3 4 5 6 7 8 9>
+
+--- m:  m11:uniq at:[377]
+        a = <1 5 3 2 3 3 3 4 2 5> (10)
+        a.uniq = <1 5 3 2 4> (5)
+
+--- m:  m12:sort at:[393]
+        a = <117 695 789 335 465 967 400 975 232 267>
+    s:  s01:sort.ascending :[407]
+        a.sorted.asc = <117 232 267 335 400 465 695 789 967 975>
+    s:  s02:sort.descending :[416]
+        a.sorted.des = <975 967 789 695 465 400 335 267 232 117>
+    s:  s03:sort.uniq :[425]
+        a = <7 0 0 6 7 2 1 9 9 3> (10)
+        a.sorted.uniq = <0 1 2 3 6 7 9> (7)
+
+--- m:  m13:shuffle at:[443]
+        a             =   <0 1 2 3 6 7 9>
+        a.shuffled    =   <6 2 9 7 3 0 1>
+
+=== h:	END: <'w08_array.ps1'>:{58}::{0} at:[455]
+
+<<< replyOf[1]:'w08_array.ps1': # ec:{58} ==: OK.
+.
+
+################################################################################
+*** run:[03]/[01]:'w12_integer.ps1'
+################################################################################
+=== h:	BEG:'w12_integer.ps1':<261101_182437>:{58} at:[63]
+	by:[isPosix]
+
+=== :   PSH integer
+        m:  define          : dec,hex,bin
+        m:  int.limit       : i16,i32,i64,u16,u32,u64,byte,decimal,single
+        m:  int.operator    : arithmetic,assignment,...
+        m:  converter       : i2s,s2i
+        m:  formatter       : method, operator
+
+--- m:  m01:define at:[86]
+        dec:<41394> 	:[89]
+        hex.4142 :<41394> 	:[92]
+        bin.1010000110110010:<-24142> 	:[96]
+
+--- m:  m02:int.limit at:[104]
+    s:  s01:limit.int :[110]
+        [int]::MaxValue<2147483647> 	:[113]
+        [int]::MinValue<-2147483648> 	:[114]
+        [int16]::MaxValue<32767> 	:[117]
+        [int16]::MinValue<-32768> 	:[118]
+        [int32]::MaxValue<2147483647> 	:[121]
+        [int32]::MinValue<-2147483648> 	:[122]
+        [int64]::MaxValue<9223372036854775807> 	:[125]
+        [int64]::MinValue<-9223372036854775808> 	:[126]
+    s:  s02:limit.uint :[133]
+        [uint]::MaxValue<4294967295> 	:[138]
+        [uint]::MinValue<0> 	:[139]
+        [uint16]::MaxValue<65535> 	:[143]
+        [uint16]::MinValue<0> 	:[144]
+        [unt32]::MaxValue<4294967295> 	:[147]
+        [unt32]::MinValue<0> 	:[148]
+        [unt64]::MaxValue<18446744073709551615> 	:[151]
+        [unt64]::MinValue<0> 	:[152]
+    s:  s03:limit.byte :[158]
+        [byte]::MaxValue<255> 	:[161]
+        [byte]::MinValue<0> 	:[162]
+    s:  s04:limit.decimal :[168]
+        [decimal]::MaxValue<79228162514264337593543950335> 	:[170]
+        [decimal]::MinValue<-79228162514264337593543950335> 	:[171]
+    s:  s05:limit.single :[177]
+        [single]::MaxValue<3.402823E+38> 	:[179]
+        [single]::MinValue<-3.402823E+38> 	:[180]
+
+--- m:  m03:integer.operator at:[192]
+        using max=<16>; i=<5>; j=<15>; k=<15>
+    s:  s01:arithmetic :[199]
+        x := <5> + <15> = 20 	:[200]
+        x := <5> - <15> = -10 	:[201]
+        x := <5> * <15> = 75 	:[202]
+        x := <5> / <15> = 0.333333333333333 *int2double* 	:[210]
+    u:  u01:modulo :[214]
+        x := <5> mod <15> = 5 	:[216]
+        x := <15> mod <5> = 0 	:[219]
+        x := <15> mod <15> = 0 	:[222]
+    u:  u02:division :[227]
+        x := <5> div <15> = 0 	:[229]
+        x := <15> div <5> = 3 	:[232]
+        x := <15> div <15> = 1 	:[235]
+    s:  s02:assignment :[244]
+        x:  = i:5 = 5 	:[246]
+        x: += j:15 = 20 	:[247]
+        x: -= k:15 = 5 	:[248]
+        x: *= i:5 = 25 	:[249]
+        x: /= j:15 = 1.66666666666667 *int2double* 	:[257]
+    s:  s03:incrementer :[266]
+        using i=<5>; j=<15>
+        i:<5>++ := <6> 	:[271]
+        j:<15>-- := <14> 	:[272]
+        i:++<6> := <7> 	:[275]
+        j:--<14> := <13> 	:[276]
+    s:  s04:compare :[282]
+        using i=<7>; j=<13>
+        x := <7> -eq <13> = False 	:[285]
+        x := <7> -ge <13> = False 	:[286]
+        x := <7> -gt <13> = False 	:[287]
+        x := <7> -le <13> = True 	:[288]
+        x := <7> -lt <13> = True 	:[289]
+        x := <7> -ne <13> = True 	:[290]
+    s:  s05:biwise :[296]
+        using i=<7>; j=<13>
+        using a=<0111>=7; b=<1101>=13
+        x := <0111> -band <1101> = 0101 	:[306]
+        x := <0111> -bor  <1101> = 1111 	:[310]
+        x := <0111> -bxor  <1101> = 1010 	:[314]
+        x := -bnot <0111>  = 1000 	:[318]
+
+--- m:  m04:converter.i<=>s at:[325]
+        using i=<'41394'>
+    s:  s01:convert.i2s(<int>,base) :[335]
+        x: i2s(<41394>,<2>) 	 =: <1010000110110010>  	:[343]
+        x: i2s(<41394>,<8>) 	 =: <120662>  	:[350]
+        x: i2s(<41394>,<10>) 	 =: <41394>  	:[357]
+        x: i2s(<41394>,<16>) 	 =: <a1b2>  	:[364]
+    s:  s02:convert.s2i(<string>,<base>) :[372]
+        x: s2i(<1010000110110010>,<2>) 	 =: <41394>  	:[380]
+        x: s2i(<120662>,<8>) 	 =: <41394>  	:[388]
+        x: s2i(<41394>,<10>) 	 =: <41394>  	:[395]
+        x: s2i(<a1b2>,<16>) 	 =: <41394>  	:[402]
+
+--- m:  m05:formatter at:[410]
+        using i=<'41394'>
+        using g=<'123.456'>
+    s:  s01:format.method :[423]
+        x: format(<41394>,<{0:b20}>) 	 =: <00001010000110110010>  	:[430]
+        x: format(<41394>,<{0:d}>) 	 =: <41394>  	:[438]
+        x: format(<41394>,<{0:d8}>) 	 =: <00041394>  	:[445]
+        x: format(<41394>,<{0:x}>) 	 =: <a1b2>  	:[452]
+        x: format(<41394>,<{0:x8}>) 	 =: <0000a1b2>  	:[459]
+        x: format(<41394>,<{0:X4}>) 	 =: <A1B2>  	:[466]
+        x: format(<41394>,<{0:f8}>) 	 =: <123.45600000>  	:[474]
+    s:  s02:format.operator :[481]
+        x: <{0:d}> -f <41394> 	 =: <41394>  	:[487]
+        x: <{0:x}> -f <41394> 	 =: <a1b2>  	:[494]
+        x: <{0:b}> -f <41394> 	 =: <1010000110110010>  	:[502]
+        cSep:=['.'] 	:[514]
+        x: <{0:f2}> -f <123.456> 	 =: <123.46>  	:[515]
+        x: <{0:yyyy}-{0:MM}-{0:dd} && {0:hh}:{0:mm}:{0:ss}> -f <DTM>
+		 =: <2026-11-01 && 06:24:37>  	:[522]
+
+=== h:	END: <'w12_integer.ps1'>:{58}::{0} at:[530]
+
+<<< replyOf[1]:'w12_integer.ps1': # ec:{58} ==: OK.
+.
+
+################################################################################
+*** run:[04]/[01]:'w14_dateTime.ps1'
+################################################################################
+=== h:	BEG:'w14_dateTime.ps1':<261101_182438>:{58} at:[57]
+	by:[isPosix]
+
+=== :   PSH dateTime
+        m:  define
+        m:  timer
+
+--- m:  m01:define.DateTime at:[77]
+        dtm = <11/01/2026 18:24:38> 	:[81]
+        dtm = <Sunday 11/01/2026 18:24 +01> 	:[85]
+        dtm.unix = <01/01/1970 01:00:00> 	:[92]
+        dtm.unix = <01/01/2020 01:00:00> 	:[96]
+        dtm ('yyMMdd_HHmmss') : <261101_182438> 	:[102]
+        dtm ('yyyy-MM-dd_HH:mm:ss') : <2026-11-01_18:24:38> 	:[108]
+        dtm.parse ('Nov-1985-26 1930') 	:[116]
+        dtm.parseExact ('640907-090000') 	:[125]
+        dtm DayOfYear =: <305> 	:[129]
+        dtm leapDayYear<1964> =: <True> 	:[135]
+        dtm leapDayYear<2024> =: <True> 	:[139]
+
+--- m:  m02:timer at:[145]
+        runDelay 	:[150]
+--- continue in <1>
+.;
+        runTime:<1> 	:[163]
+
+=== h:	END: <'w14_dateTime.ps1'>:{58}::{1} at:[170]
+
+<<< replyOf[1]:'w14_dateTime.ps1': # ec:{58} ==: OK.
+.
+
+################################################################################
+*** ready:total.iRc:<0>
+################################################################################
+*** total_sum_of_eRRoRs := [0]
+<<< run.{p04_WPS_expert.bsh} dtm:[2026-11-01 18:24:39]:<11>
