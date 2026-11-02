@@ -148,7 +148,11 @@ text ("add($i,$j) =: $iRc") (__LINE__)
 f_lib_menu("switch")(__LINE__)
 
 function f_sUser([switch] $o_upper) {
-    $s = $env:UserName
+    if ($windir -is [string ]) {  # !CRQ-261102:UserName
+        $s = $env:UserName
+    } else {
+        $s = $env:USER  # try Unix
+    } 
     if ($o_upper) {
         $s = $s.ToUpper()
     }

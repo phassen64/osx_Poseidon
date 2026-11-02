@@ -115,8 +115,8 @@ declare -r C_INTERPRETER='pwsh'
 #   s:  define blackList
 declare -a aBlackList=(\
     'w00_dummy.ps1' \
-    'w06_function.ps1' \
-    'w11_regExpr.ps1' \
+#   'w06_function.ps1' \
+#   'w11_regExpr.ps1' \
     'w17_process.ps1' \
     'w20_misc.ps1' \ 
     'w21_invoke.ps1'
