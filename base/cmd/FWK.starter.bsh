@@ -572,7 +572,7 @@ function f_fwk_variable_define () {
     v_USR_scratch_relPath='/Documents/temp' && export v_USR_scratch_relPath
     
     #   loging Dir
-    v_DIR=$v_VCS_fwk/logging
+    v_DIR=$v_VCS/fwk/public/logging
     v_FWK_dirLogging=$v_DIR && export v_FWK_dirLogging
 
     #   PERL
