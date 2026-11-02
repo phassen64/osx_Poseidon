@@ -259,13 +259,13 @@ function f_run_main {
             $C_INTERPRETER $xFile $C_mod_iExpectedExitCode; iReplyEc=$?
 
             #   check reply
-            printf "<<< replyOf[%d]:'%s': # ec:{%d} " $n $xFile $iReplyEc
+            printf "<<< replyOf[%d]:'%s': ec:{%d} ==:" $n $xFile $iReplyEc
 
             if [ $C_mod_iExpectedExitCode == $iReplyEc ]
             then
-                printf "==: OK.\n"
+                printf "{YES.}\n"
             else
-                printf "!=: NOK [%d]\n" $C_mod_iExpectedExitCode
+                printf "{NOP:[%d]}\n" $C_mod_iExpectedExitCode
                 iRc+=1
             fi
 
