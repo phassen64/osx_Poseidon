@@ -141,7 +141,7 @@ function f_run_matchFiles() {
             if [[ $xFile =~ $sRex ]]; then
                 #   isFileInBlackList?
                 sBlack='-'
-                for xBlack in "${aBlackList[@]}"
+                for xBlack in "${C_aBlackList[@]}"
                 do
                     #   printf "?isBlack '%s':'%s'\n" $xBlack $xFile
                     if [ $xBlack == $xFile ]; then
@@ -297,20 +297,25 @@ function f_run_main {
 #   s:  C.this
 declare -r      p_pThis=$BASH_SOURCE
 
-#   s:  interpreter
+#   s:  C.interpreter
 declare -r C_INTERPRETER='python3'
 
-#   s:  define blackList
-declare -a aBlackList=( 'y02_io.py' \
-                        'y10_module_m1.py' \
-                        'y27_package.py' \
-                        'y32_unitTest.py' \
-                        'y32_unitTest_m1.py' \
-                        'y32_unitTest_m2.py' \
-                        'y32_unitTest_m3.py' \
-                        'y45_getOpt.py' \
-                        'y46_argParse.py')
-
+#   s:  C.blackList
+declare -a C_aBlackList=( \
+                'y02_io.py' \
+                'y10_module_m1.py' \
+                'y24_function.py' \
+                'y27_package.py' \
+                'y32_unitTest.py' \
+                'y32_unitTest_m1.py' \
+                'y32_unitTest_m2.py' \
+                'y32_unitTest_m3.py' \
+                'y45_getOpt.py' \
+                'y46_argParse.py' \
+                'y47_py2py.py' \
+                'y52_timing.py' \
+                'y52_timing_m1.py'
+)
 
 #   s:  C.scp
 declare -r -x   C_SCP=`basename $BASH_SOURCE`

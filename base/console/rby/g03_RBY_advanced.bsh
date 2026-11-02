@@ -80,7 +80,7 @@ function f_run_script {
             $C_INTERPRETER $xFile $iEc;   iBashReply=$?
 
             #   check reply
-            printf "\n<<< replyOf[%d]:'%s' ==:" $n $xFile
+            printf "\n<<< reply [%d]:'%s' ==:" $iFile $xFile
             if [ $iEc == $iBashReply ]
             then
                 printf "{*true}"

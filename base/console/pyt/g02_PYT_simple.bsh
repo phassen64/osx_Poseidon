@@ -14,9 +14,25 @@
 #   m:  prepare
 #
 
-#   s:  interpreter
+#   s:  C.interpreter
 declare -r C_INTERPRETER='python3'
-declare -r C_FILE_BLACK='y27_package.py'
+
+#   s:  C.blackList
+declare -a C_aBlackList=( \
+                'y02_io.py' \
+                'y10_module_m1.py' \
+                'y24_function.py' \
+                'y27_package.py' \
+                'y32_unitTest.py' \
+                'y32_unitTest_m1.py' \
+                'y32_unitTest_m2.py' \
+                'y32_unitTest_m3.py' \
+                'y45_getOpt.py' \
+                'y46_argParse.py' \
+                'y47_py2py.py' \
+                'y52_timing.py' \
+                'y52_timing_m1.py'
+)
 
 #   s:  show
 clear
@@ -52,15 +68,30 @@ declare -i i=0
 
 for xFile in $a
 do
+
     i+=1
     printf "*** run:[%2.2d]/[%2.2d]:'%s'\n" $i $n $xFile
-    if [ $C_FILE_BLACK == $xFile ]; then
+
+    #   isFileInBlackList?
+    sBlack='-'
+    for xBlack in "${C_aBlackList[@]}"
+    do
+        if [ "$xBlack" == "$xFile" ]; then
+            sBlack='!'
+            break
+        fi
+    done
+    if [ "$sBlack" == '!' ]; then
         printf "&&& SKIP:[%s]\n" $xFile
         continue
     fi
+
+    #   run
     $C_INTERPRETER $xFile
     printf "\n\n"
+
 done
+
 
 printf "\nEND simple.run:[%s]\n\n" "$sDtm"
 

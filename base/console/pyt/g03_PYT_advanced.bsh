@@ -61,16 +61,15 @@ function f_run_script {
 
             #   isFileInBlackList?
             sBlack='-'
-            for xBlack in "${aBlackList[@]}"
+            for xBlack in "${C_aBlackList[@]}"
             do
-                #   printf "?isBlack '%s':'%s'\n" $xBlack $xFile
-                if [ $xBlack == $xFile ]; then
+                if [ "$xBlack" == "$xFile" ]; then
                     sBlack='!'
                     break
                 fi
             done
-            if [ $sBlack == '!' ]; then
-                #   echo "<<< BREAK.isBlackFile"
+            if [ "$sBlack" == '!' ]; then
+                printf "&&& SKIP:[%s]\n" $xFile
                 continue
             fi
             
@@ -78,14 +77,15 @@ function f_run_script {
             $C_INTERPRETER $xFile $iEc;   iBashReply=$?
 
             #   check reply
-            printf "\n<<< replyOf[%d]:'%s': #{%d}" $n $xFile $iBashReply
+            printf "\n<<< reply [%d]:'%s' ==:" $iFile $xFile
             if [ $iEc == $iBashReply ]
             then
-                printf ":reply==:[+OK] \n"
+                printf "{*true}"
             else
-                printf ":reply==:[NOK]::[%d]!=[%d] \n" $iEc $iBashReply 
+                printf "{false}:[%d]<>[%d]}" $iEc $iBashReply
                 iRc+=1
             fi
+            printf ".\n"
 
         done
 
@@ -103,26 +103,28 @@ function f_run_script {
 #   m:  prepare
 #
 
-#   s:  interpreter
+#   s:  C.interpreter
 declare -r C_INTERPRETER='python3'
 
-#   s:  define blackList
-declare -a aBlackList=( 'y02_io.py' \
-                        'y10_module_m1.py' \
-                        'y27_package.py' \
-                        'y32_unitTest.py' \
-                        'y32_unitTest_m1.py' \
-                        'y32_unitTest_m2.py' \
-                        'y32_unitTest_m3.py' \
-                        'y45_getOpt.py' \
-                        'y46_argParse.py' \
-                        'y47_py2py.py' \
-                        'y52_timing.py' \
-                        'y52_timing_m1.py'
-                        )
-
-#   s:  fetch all bash in a ShellArray
+#   s:  D.sourceList
 aShellArray=$(echo `ls y*.py`)
+
+#   s:  C.blackList
+declare -a C_C_aBlackList=( \
+                'y02_io.py' \
+                'y10_module_m1.py' \
+                'y24_function.py' \
+                'y27_package.py' \
+                'y32_unitTest.py' \
+                'y32_unitTest_m1.py' \
+                'y32_unitTest_m2.py' \
+                'y32_unitTest_m3.py' \
+                'y45_getOpt.py' \
+                'y46_argParse.py' \
+                'y47_py2py.py' \
+                'y52_timing.py' \
+                'y52_timing_m1.py'
+)
 
 #   s:  fetchDateTime
 declare sFmt="+%Y-%m-%d %H:%M:%S"
