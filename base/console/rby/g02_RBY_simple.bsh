@@ -27,7 +27,7 @@ clear
 declare -i iReply=$RANDOM
 echo "+ run.simple:[$iReply]"
 
-#   s:  fetch all sources
+#   s:  D.sourceList
 aShellArray=$(echo `ls r*.rb`)
 
 #   s:  array size

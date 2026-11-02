@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #   ***************************************************************************
-#   run:[expert]        tutorial.Python 2026      ©[mATe64]       [2026-10-24]
+#   run:[expert]    tutorial.Python 2026    ©[mATe64]   [2026-10-24]
 #   ***************************************************************************
 
 #   encoding.UTF8:
@@ -139,18 +139,15 @@ function f_run_matchFiles() {
         if [ -f "$xFile" ]; then
             i+=1
             if [[ $xFile =~ $sRex ]]; then
-                #   isFileInBlackList?
                 sBlack='-'
                 for xBlack in "${C_aBlackList[@]}"
                 do
-                    #   printf "?isBlack '%s':'%s'\n" $xBlack $xFile
-                    if [ $xBlack == $xFile ]; then
+                    if [ "$xBlack" == "$xFile" ]; then
                         sBlack='!'
                         break
                     fi
                 done
-                if [ $sBlack == '!' ]; then
-                    #   echo "<<< BREAK.isBlackFile"
+                if [ "$sBlack" == '!' ]; then
                     continue
                 fi
                 v_RUN_iRc+=1
@@ -259,16 +256,14 @@ function f_run_main {
             $C_INTERPRETER $xFile $C_mod_iExpectedExitCode; iReplyEc=$?
 
             #   check reply
-            printf "<<< replyOf[%d]:'%s': # ec:{%d} " $n $xFile $iReplyEc
-
+            printf "<<< reply [%d]:'%s' ==:" $iFile $xFile
             if [ $C_mod_iExpectedExitCode == $iReplyEc ]
             then
-                printf "==: OK.\n"
+                printf "{*true}"
             else
-                printf "!=: NOK [%d]\n" $C_mod_iExpectedExitCode
+                printf "{false}:[%d]<>[%d]}" $C_mod_iExpectedExitCode $iReplyEc
                 iRc+=1
             fi
-
             printf ".\n"
 
         done

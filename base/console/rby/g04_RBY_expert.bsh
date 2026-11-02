@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #   ***************************************************************************
-#   run:[expert]        tutorial.Ruby 2026      ©[mATe64]       [2026-10-18]
+#   run:[expert]    tutorial.Ruby 2026      ©[mATe64]   [2026-10-18]
 #   ***************************************************************************
 
 #   encoding.UTF8:
@@ -257,7 +257,6 @@ function f_run_main {
 
             #   check reply
             printf "<<< reply [%d]:'%s' ==:" $iFile $xFile
-
             if [ $C_mod_iExpectedExitCode == $iReplyEc ]
             then
                 printf "{*true}"
@@ -265,7 +264,6 @@ function f_run_main {
                 printf "{false}:[%d]<>[%d]}" $C_mod_iExpectedExitCode $iReplyEc
                 iRc+=1
             fi
-
             printf ".\n"
 
         done

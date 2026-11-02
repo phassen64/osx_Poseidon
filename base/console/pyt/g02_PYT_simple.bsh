@@ -39,15 +39,15 @@ clear
 declare -i iReply=$RANDOM
 echo "+ run.simple:[$iReply]"
 
-#   s:  fetch all ruby scripts in a ShellArray
-a=$(echo `ls y*.py`)
+#   s:  D.sourceList
+aShellArray=$(echo `ls y*.py`)
 
 #   s:  array size
 declare -i n
-n=${#a[@]}; echo "n1==[$n]" # not works
+n=${#aShellArray[@]}; echo "n1==[$n]" # not works
 #   calc manually
 n=0
-for xFile in $a; do
+for xFile in $aShellArray; do
     n+=1
 done
 echo "n==[$n] "
@@ -66,7 +66,7 @@ printf "BEG simple.run:[%s]\n\n" "$sDtm"
 
 declare -i i=0
 
-for xFile in $a
+for xFile in $aShellArray
 do
 
     i+=1
