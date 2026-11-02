@@ -144,18 +144,15 @@ function f_run_matchFiles() {
         if [ -f "$xFile" ]; then
             i+=1
             if [[ $xFile =~ $sRex ]]; then
-                #   isFileInBlackList?
                 sBlack='-'
                 for xBlack in "${aBlackList[@]}"
                 do
-                    #   printf "?isBlack '%s':'%s'\n" $xBlack $xFile
                     if [ "$xBlack" == "$xFile" ]; then
                         sBlack='!'
                         break
                     fi
                 done
                 if [ "$sBlack" == '!' ]; then
-                    #   printf "&&& SKIP[%d] :[%s]\n" $i $xFile
                     continue
                 fi
                 v_RUN_iRc+=1
@@ -270,8 +267,7 @@ function f_run_main {
             then
                 printf "{*true}"
             else
-                printf "{false}:[%d]<>[%d]}" \
-                    $C_mod_iExpectedExitCode $iReplyEc
+                printf "{false}:[%d]<>[%d]}" $C_mod_iExpectedExitCode $iReplyEc
                 iRc+=1
             fi
 

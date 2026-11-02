@@ -59,20 +59,30 @@ function f_run_script {
             printf "*** run:[%2.2d]/[%3.3d]:'%s'\n" $iFile $n  $xFile
             printf "%s\n\n" $sHashLine
 
-            if [ $C_FILE_BLACK == $xFile ]; then
+            #   isFileInBlackList?
+            sBlack='-'
+            for xBlack in "${aBlackList[@]}"
+            do
+                if [ "$xBlack" == "$xFile" ]; then
+                    sBlack='!'
+                    break
+                fi
+            done
+            if [ "$sBlack" == '!' ]; then
                 printf "&&& SKIP:[%s]\n" $xFile
                 continue
             fi
+
             #   call script, save eXitCode
             $C_INTERPRETER $xFile $iEc;   iBashReply=$?
 
             #   check reply
-            printf "\n<<< replyOf[%d]:'%s': #{%d}" $n $xFile $iBashReply
+            printf "\n<<< replyOf[%d]:'%s': #{%d} ==:" $n $xFile $iBashReply
             if [ $iEc == $iBashReply ]
             then
-                printf ":reply==:!OK\n"
+                printf "{*OK} \n"
             else
-                printf ":reply==:NOK [%d]!=[%d] \n" $iEc $iBashReply 
+                printf "{NOK}:[%d]<>[%d]}" $iEc $iBashReply
                 iRc+=1
             fi
 
@@ -94,7 +104,11 @@ function f_run_script {
 
 #   s:  interpreter
 declare -r C_INTERPRETER='ruby'
-declare -r C_FILE_BLACK='r18_thread.rb'
+
+#   s:  define blackList
+declare -a aBlackList=(\
+    'r18_thread.rb' \
+)
 
 #   s:  fetch all bash in a ShellArray
 aShellArray=$(echo `ls r*.rb`)

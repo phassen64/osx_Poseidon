@@ -139,9 +139,17 @@ function f_run_matchFiles() {
         if [ -f "$xFile" ]; then
             i+=1
             if [[ $xFile =~ $sRex ]]; then
-                if [ "$xFile" == "$C_FILE_BLACK" ]; then
+                sBlack='-'
+                for xBlack in "${aBlackList[@]}"
+                do
+                    if [ "$xBlack" == "$xFile" ]; then
+                        sBlack='!'
+                        break
+                    fi
+                done
+                if [ "$sBlack" == '!' ]; then
                     continue
-                fi                
+                fi
                 v_RUN_iRc+=1
                 aTmp+=( $xFile )
             fi
@@ -248,13 +256,13 @@ function f_run_main {
             $C_INTERPRETER $xFile $C_mod_iExpectedExitCode; iReplyEc=$?
 
             #   check reply
-            printf "<<< replyOf[%d]:'%s': # ec:{%d} " $n $xFile $iReplyEc
+            printf "<<< replyOf[%d]:'%s': # ec:{%d} ==:" $n $xFile $iReplyEc
 
             if [ $C_mod_iExpectedExitCode == $iReplyEc ]
             then
-                printf "== OK\n"
+                printf "{*true}"
             else
-                printf "!= [%d]\n" $C_mod_iExpectedExitCode
+                printf "{false}:[%d]<>[%d]}" $C_mod_iExpectedExitCode $iReplyEc
                 iRc+=1
             fi
 
@@ -288,7 +296,11 @@ declare -r      p_pThis=$BASH_SOURCE
 
 #   s:  C.interpreter
 declare -r C_INTERPRETER='ruby'
-declare -r C_FILE_BLACK='r18_thread.rb'
+
+#   s:  define blackList
+declare -a aBlackList=(\
+    'r18_thread.rb' \
+)
 
 #   s:  C.scp
 declare -r -x   C_SCP=`basename $BASH_SOURCE`
