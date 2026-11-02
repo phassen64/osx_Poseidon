@@ -263,9 +263,9 @@ function f_run_main {
 
             if [ $C_mod_iExpectedExitCode == $iReplyEc ]
             then
-                printf "{YES.}\n"
+                printf "{YEAH}\n"
             else
-                printf "{NOP:[%d]}\n" $C_mod_iExpectedExitCode
+                printf "{NOPE}:[%d]}\n" $C_mod_iExpectedExitCode
                 iRc+=1
             fi
 
