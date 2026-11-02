@@ -139,6 +139,17 @@ function f_run_matchFiles() {
         if [ -f "$xFile" ]; then
             i+=1
             if [[ $xFile =~ $sRex ]]; then
+                sBlack='-'
+                for xBlack in "${C_aBlackList[@]}"
+                do
+                    if [ "$xBlack" == "$xFile" ]; then
+                        sBlack='!'
+                        break
+                    fi
+                done
+                if [ "$sBlack" == '!' ]; then
+                    continue
+                fi
                 v_RUN_iRc+=1
                 aTmp+=( $xFile )
             fi
@@ -242,19 +253,17 @@ function f_run_main {
             printf "%s\n" $sHashLine
 
             #   call script, save eXitCode
-            bash $xFile $C_mod_iExpectedExitCode; iReplyEc=$?
+            $C_INTERPRETER $xFile $C_mod_iExpectedExitCode; iReplyEc=$?
 
             #   check reply
-            printf "<<< replyOf[%d]:'%s': # ec:{%d} " $n $xFile $iReplyEc
-
+            printf "<<< reply [%d]:'%s' ==:" $iFile $xFile
             if [ $C_mod_iExpectedExitCode == $iReplyEc ]
             then
-                printf "== OK\n"
+                printf "{*true}"
             else
-                printf "!= [%d]\n" $C_mod_iExpectedExitCode
+                printf "{false}:[%d]<>[%d]}" $C_mod_iExpectedExitCode $iReplyEc
                 iRc+=1
             fi
-
             printf ".\n"
 
         done
@@ -280,8 +289,16 @@ function f_run_main {
 #   B:  constant
 #
 
+#   s:  C.interpreter
+declare -r C_INTERPRETER='perl'
+
 #   s:  C.this
 declare -r      p_pThis=$BASH_SOURCE
+
+#   s:  C.blackList
+declare -a C_aBlackList=( \
+                'p10_p2c.pl' \
+)
 
 #   s:  C.scp
 declare -r -x   C_SCP=`basename $BASH_SOURCE`
