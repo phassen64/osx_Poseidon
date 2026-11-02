@@ -1,0 +1,537 @@
+#!/bin/bash
+#   ***************************************************************************
+#   tutorial BASH 2026  :   "regExpr"                   ©[mATe64]::[2026-10-08]
+#   ***************************************************************************
+#   encoding.UTF8:
+#   !@€ƒ„…†‡ˆ‰Š‹ŒŽ +‘“”•—™š›œžŸ+¡¢£¤¥¦§¨©«¬®°±²³µ¶·¹º»¼½¾¿ÄÖÜÑ×ØÞßäæçîðñôö÷üýþÿ
+
+#   usage   :   bash$>  bash <SCP.bsh>
+
+
+<< hereDoc_content_tutor__regExpr
+    content:
+        p:  p.function
+        p:  p.body
+            b:  b.include
+            b:  b.header
+            b:  b.main
+            •   m:  R.grep
+                •   s:  grep.file
+                •   s:  grep.piping
+            •   m:  R.tr
+                •   s:  option [:lower:][:upper:]
+                •   s:  option [:space:]
+                •   s:  option [-s]
+                •   s:  option [-c]
+                •   s:  option [-d]
+                •   s:  option [-cd]
+            •   m:  R.sed
+                •   s:  sed.replace.1x
+                •   s:  sed.replace.all
+                •   s:  sed.replace.InAFile
+            •   m:  R.awk
+            •   m:  R.rex =~
+            b:  b.footer
+        p:  p.last
+hereDoc_content_tutor__regExpr
+
+
+<< hereDoc_UNIX_tools
+
+    •   grep    "global regular expression print"
+
+                https://de.wikipedia.org/wiki/Grep
+
+        $ grep [Optionen] Suchstring [Datei(en)]
+
+        grep ist ein Programm,
+                das unter den Betriebssystemen Unix und Unix-Derivaten
+                der Suche und Filterung definierter Zeichenketten aus
+            Dateien oder Datenströmen dient.
+
+        Es wurde ursprünglich von Ken Thompson entwickelt,[1]
+                    erschien erstmals als Teil von Version 6 AT&T UNIX und ist POSIX.1-konform
+
+        Der Begriff grep steht für global/regular expression/print[2][3]
+                oder auch für :
+            "global search for a regular expression and print out matched lines",
+
+    •   egrep   "extended grep"
+
+        egrep ist wie grep, nur mit dem Unterschied,
+                    daß man auch +, ?, | und ()
+                als Regular Expression nutzen kannst.
+
+        egrep ist nichts anderes als ein grep -E.
+                Auf vielen Maschinen ist egrep sogar nur ein Link auf grep.
+
+        Ausserdem ist egrep "deprecated",
+            weswegen du lieber zum grep -E greifen solltest.
+
+    •   tr  "translate"
+
+            https://de.wikipedia.org/wiki/Tr_(Unix)
+
+        tr ist ein Unix-Kommando,
+            dessen Name eine Abkürzung für translate (deutsch: übersetzen) ist,
+            das bestimmte Zeichen aus einem Datenstrom ersetzt oder entfernt.
+
+        Das Werkzeug liest den Datenstrom der Standardeingabe,
+            schreibt auf die Standardausgabe und benötigt
+            je nach Modus ein (Löschen und Komprimieren) oder zwei (Ersetzen) Argumente.
+
+        Sollen Zeichen ersetzt werden,
+            werden zwei Argumente benötigt, zuerst die zu ersetzenden Zeichen,
+        im zweiten die neuen.
+
+
+    •   sed     "stream editor"
+
+                https://de.wikipedia.org/wiki/Sed_(Unix)
+
+        sed steht für Stream EDitor und ist ein Unix-Werkzeug,
+            mit dem Text-Datenströme bearbeitet werden können.
+            Der Datenstrom kann auch aus einer Datei gelesen werden.
+
+        Im Gegensatz zu einem Texteditor wird die Ursprungsdatei aber nicht verändert.
+
+        Im Gegensatz zu einem interaktiven Texteditor,
+            wie etwa dem vi,
+        wird sed mittels eines Skripts gesteuert.
+
+        Der sed-Befehlssatz orientiert sich an jenem des
+            zeilenorientierten Texteditors 'ed'.
+
+        Dabei werden für die Text-Durchmusterung laut der
+            POSIX-Spezifikation eine bestimmte Abart der Regular Expressions,
+            sogenannte (POSIX-) Basic Regular Expressions (BRE) verwendet.
+
+        Auch wenn der Sprachumfang von sed ziemlich limitiert
+            und spezialisiert erscheint,
+        so handelt es sich doch um eine Turing-vollständige Sprache.
+
+        Beweisen kann man die Turing-Vollständigkeit,
+            indem man eine Turing-Maschine mittels sed programmiert[2][3]
+        oder indem man mit sed einen Interpreter für eine andere,
+            Turing-vollständige Sprache schreibt.[4]
+
+        Folglich konnten und wurden sogar Spiele wie Sokoban oder
+            Arkanoid und andere anspruchsvolle Programme wie Debugger mit sed geschrieben.[5]
+
+
+    •   awk     <akronym>
+
+                "https://de.wikipedia.org/wiki/Awk"
+
+        Tool from:
+            'A'lfred V. Aho, Peter J. 'W'einberger and Brian W. 'K'ernighan
+
+        awk ist eine Programmiersprache (Skriptsprache) zur Bearbeitung
+            und Auswertung strukturierter Textdaten,
+                beispielsweise CSV-Dateien.
+        Der zugehörige Interpreter war eines der ersten Werkzeuge,
+            das in der Version 3 von Unix erschien;
+                es wird auch heute noch vielfach zusammen mit sed in Shell-Skripten eingesetzt,
+            um Daten zu bearbeiten, umzuformen oder auszuwerten.
+
+        Der Name "awk" ist aus den Anfangsbuchstaben der Nachnamen ihrer drei Autoren
+                Alfred V. Aho,
+                Peter J. Weinberger und
+                Brian W. Kernighan
+        zusammengesetzt.
+
+        Wine Version von awk ist heute in fast jedem Unix-System,
+            das historisch auf UNIX zurückzuführen ist,
+
+        sowie in jeder Linux-Distribution zu finden.
+
+        Ein vergleichbares Programm ist aber auch für fast
+            alle anderen Betriebssysteme verfügbar.
+
+        Die Sprache arbeitet fast ausschließlich mit
+            dem Datentyp Zeichenkette (englisch string).
+
+        Daneben sind assoziative Arrays (d. h. mit Zeichenketten indizierte Arrays,
+            auch Hashs genannt) und reguläre Ausdrücke grundlegende Bestandteile der Sprache.
+
+        Die Leistungsfähigkeit, Kompaktheit,
+            aber auch die Beschränkungen der awk- und sed-Skripte
+        regten Larry Wall zur Entwicklung
+            der Sprache Perl an.
+
+
+hereDoc_UNIX_tools
+
+
+#   p:  p.function
+
+function f_uni_generateFile() {
+
+    local pFile=$1
+    local sDtm=$(date)
+
+    echo "Star Database" > $pFile
+    echo "+++ created [$sDtm]" >> $pFile
+
+    echo "1, Justin Timberlake, Title 545, Price \$6.30" >> $pFile
+    echo "2, Taylor Swift, Title 723, Price \$7.90"      >> $pFile
+    echo "3, Mick Jagger, Title 610, Price \$7.90"       >> $pFile
+    echo "4, Lady Gaga, Title 118, Price \$6.30"         >> $pFile
+    echo "5, Johnny Cash, Title 482, Price \$6.50"       >> $pFile
+    echo "6, Elvis Presley, Title 335, Price \$6.30"     >> $pFile
+    echo "7, John Lennon, Title 271, Price \$7.90"       >> $pFile
+    echo "8, Britney Spears, Title 852, Price \$5.85"    >> $pFile
+
+    return 31
+}
+
+
+#   p:  p.body
+
+#   b:  b.include
+source LIB.wsp.inc.bsh
+if [ "$1" == "" ]; then f_lib_configuration '+'; fi
+declare -i z_iReply_iEc=$1
+
+#   b:  b.header
+f_lib_header $z_iReply_iEc
+
+#   b:  b.main
+
+#   prepare, get FileName
+
+pFile=$(f_lib_file_getsomeName 'grep' "$v_LIB_dirScratch" '.log' '-')
+f_lib_puts "get fileName:'$pFile'"
+
+pFile_sed=$(f_lib_file_getsomeName 'sed' "$v_LIB_dirScratch" '.log' '-')
+f_lib_puts "get fileName:'$pFile_sed'"
+
+#   generate
+f_uni_generateFile $pFile; iRc=$?
+f_lib_puts "iRc = [$iRc]\n"     # 31
+
+
+#   ===========================================================================
+#   m:  R.grep
+#   ===========================================================================
+
+#   m:  menu
+f_lib_menu "R.grep"
+
+#
+#   s:  grep.file
+#
+
+f_lib_menuS1 'grep.file'
+f_lib_puts "\nusing file '$pFile'\n"
+
+#   Option:'--' None
+f_lib_menuS2 'option :{//} NONE'
+
+#   ok
+x='Ju'
+y=$(grep $x $pFile);
+f_lib_puts "grep('$x') => '$y'"         #   ::  Justin Timberlake...
+
+#   nOK
+x='TA'
+y=$(grep $x $pFile)
+f_lib_puts "grep('$x') => '$y'"         #   ::  <> * empty
+
+#   Option:'-i' : case-in-sensitive
+f_lib_menuS2 'option :{-i}'
+
+x='TA'
+y=$(grep -i $x $pFile)
+f_lib_puts "grep -i ('$x') => '$y'"     #   ::  Taylor Swift...
+
+x='OH'
+y=$(grep -i $x $pFile)
+f_lib_puts "grep -i ('$x') => '$y'"     #   ::  Johnny Cash && John Lennon
+
+#   Option:'-w' : word
+f_lib_menuS2 'option :{-w}'
+
+x='Mick';   y=$(grep -w $x $pFile)
+f_lib_puts "grep -w '$x' => '$y'"       #   ::   Mick Jagger
+
+x='Presley';   y=$(grep -w $x $pFile)
+f_lib_puts "grep -w '$x' => '$y'"       #   ::   Elvis Presley
+
+#   Option:-c count
+f_lib_menuS2 'option :{-c}'
+
+x='Title';  y=$(grep -c $x $pFile)
+f_lib_puts "grep -c '$x' => '$y'"       #   ::  8
+
+x='$7.90';  y=$(grep -c $x $pFile)
+f_lib_puts "grep -c '$x' => '$y'"       #   ::  3
+
+#   Option:-n show line number
+f_lib_menuS2 'option :{-n}'
+x='Br';   y=$(grep -n $x $pFile)
+f_lib_puts "grep -n '$x' => '$y'"
+#   replies
+#   '10:8, Britney Spears, Title 852, Price $5.85'
+#       aber nur 10 ist die ZeilenNummer !
+
+echo ""
+
+#
+#   s:  grep.piping
+#
+f_lib_menuS1 'grep.piping'
+echo ""
+
+function f_tmp_grepRc {
+    local sInfo="$1"
+    local sRc=$2
+    local bRc=$v_LIB_bFalse
+    if [ $sRc ] ; then
+        bRc=$v_LIB_bTrue
+    fi
+    if [ $bRc == $v_LIB_bTrue ]; then
+        f_lib_puts "$sInfo =>: true" $v_LIB_color__blue
+    else
+        f_lib_puts "$sInfo =>: false" $v_LIB_color__red
+    fi
+}
+
+#   u:  grep.pipe.simple
+f_lib_menuS2 'simple'
+
+#   simple
+t='abc'; r='[a-z]'; y=$(echo $t | grep "$r")            # true
+f_tmp_grepRc "grep('$r','$t') :[$LINENO]" $y
+
+#   option:{-E} vs egrep: egrep:=grep -E
+
+#   extended REGEX with : '^' '$' '+'
+t='abcde'; r='^[a-z]+$'; y=$(echo $t | grep -E "$r")    # true
+f_tmp_grepRc "grep -E('$r','$t') :[$LINENO]" $y
+
+t='abcdef'; r='^[a-z]+$'; y=$(echo $t | egrep "$r")     # true
+f_tmp_grepRc "egrep('$r','$t') :[$LINENO]" $y
+
+#   option:{-i}
+
+t='abcDef'; r='^[a-z]+$'; y=$(echo $t | egrep "$r")     # false
+f_tmp_grepRc "egrep ('$r','$t') :[$LINENO]" $y
+
+t='abcDef'; r='^[a-z]+$'; y=$(echo $t | egrep -i "$r")  # true
+f_tmp_grepRc "egrep -i ('$r','$t') :[$LINENO]" $y
+
+#   option:{-w}
+
+t='abcx def ghi abcP'; r='abc'; y=$(echo $t | egrep -w "$r")  # false
+f_tmp_grepRc "egrep -w ('$r','$t') :[$LINENO]" $y
+
+t='abcx def ghi abc'; r='abc'; y=$(echo $t | egrep -w "$r")  # true
+f_tmp_grepRc "egrep -w ('$r','$t') :[$LINENO]" $y
+
+#   option:{-n}
+
+t='abcx def ghi abc'; r='a'; y=$(echo $t | egrep -n "$r")
+f_tmp_grepRc "egrep -w ('$r','$t') :[$LINENO]" $y
+n=${y:0:1}
+f_lib_puts "n.Rc:=<$n>" # number of found patterns  # 1
+
+
+#   ===========================================================================
+#   m:  R.tr
+#   ===========================================================================
+
+#   m:  menu
+f_lib_menu "R.tr"
+
+#   $> tr [option] stringValue1 [stringValue2]
+
+#   option and stringValue2 are optional for tr command.
+#   You can use -c, -s and -d option with tr command to do different types of tasks.
+
+#
+#   s:  option [:lower:][:upper:]
+#
+
+f_lib_menuS1 "[:lower:][:upper:]"; echo ""
+x='abcdEFGH'
+
+s=$(echo $x | tr [:lower:] [:upper:])    #   => ABCDEFGH
+f_lib_text $s
+
+s=$(echo $x | tr [:upper:] [:lower:])    #   => abcdefgh
+f_lib_text $s
+
+#
+#   s:  option [:space:]
+#
+
+f_lib_menuS1 '[:space:]'
+echo "Welcome To Malboro." | tr [:space:] '\n'
+
+#
+#   s:  option [-s]    : substitute
+#
+
+f_lib_menuS1 '[-s]'
+
+#   tr command uses �s option for
+#   search and replace any string from a text.
+#   In the following example, space (� �) is replaced by tab (�\t�).
+
+
+#   translate space to TAB
+echo "BASH Programming" | tr -s ' ' '\t'
+
+
+#   translate 'A' to 'x'
+echo "ABCDEFGHABCDEFGHABCDEFGH" | tr -s 'A' 'x'
+
+#
+#   s:  option [-c]     : replace don't matches
+#
+
+echo ""
+f_lib_menuS1 'option:-c'
+
+#   replace char
+#   tr command can be used with -c option to replace
+#   those characters with the second character that don't match with
+#   the first character value.
+#   In the following example,
+#       tr #command is used to search those characters in
+#       the string "abc" that don't match with the #character �b�
+#       and replace them by �x�.
+#   The output is �xbxxxx'.
+#   Four characters are #converted here. These are ,�a�,�c�,and �\n�.
+
+echo "abc\n" | tr -c 'b' 'x'
+echo -e "\n"                    # xbxxxx
+
+#
+#   s:  option [-d]    : delete
+#
+
+f_lib_menuS1 '[-d]'
+
+echo "ABCDEFGHABCDEFGHABCDEFGH" | tr -d 'A'
+
+#
+#  s:   option [-cd]   : change+delete
+#
+
+f_lib_menuS1 'option:-cd'
+
+#   remove all non-digits
+echo "Phone No: 985634854" | tr -cd '0-9'   # 985634854
+echo -e "\n"
+
+#   remove all non-alpha
+echo "Phone No: 985634854" | tr -cd 'A-Z'   # => PN
+echo -e "\n"
+
+
+#   ===========================================================================
+#   m:  R.sed
+#   ===========================================================================
+
+<<  -*-:sed
+    $> sed s/<pattern>/<replacement>/<flags>
+    There are four types of substitutions:
+    'g':    replace all occurrences.
+    <A number>, the occurrence number for the new text that you want to substitute.
+    'p'         : print the original content.
+    'w file'    : means write the results to a file.
+-*-:sed
+
+#   change the price
+f_lib_menu "sed"
+
+f_lib_puts "text replace\n"
+s="Welcome to Like Geeks page"
+
+#   s:  sed.replace.1x
+y=$(echo $s | sed 's/e/x/')
+f_lib_puts "sed 's/e/x/'"   $v_LIB_color__blue
+f_lib_text "$y"
+#   Wxlcome to Like Geeks page
+
+#   s:  sed.replace.all
+y=$(echo $s | sed 's/e/x/g')
+f_lib_puts "sed 's/e/x/g'"  $v_LIB_color__blue
+f_lib_text "$y"
+#   Wxlcomx to Likx Gxxks pagx
+
+#   s:  sed.replace.InAFile
+f_lib_puts 'handle a file' $v_LIB_color__blue
+
+#   sed replace raises all prices from:$6.30 to:$9.95
+sed 's/6.30/9.95/' $pFile > $pFile_sed
+echo "+++ created file:'$pFile_sed'"
+
+
+#   ===========================================================================
+#   m:  R.awk
+#   ===========================================================================
+
+f_lib_menu "awk"
+
+f_lib_puts 'show file' $v_LIB_color__blue
+awk -F':' '{ print $1 }' $pFile
+
+f_lib_text 'show systemdate'
+echo|awk '{ system("date")}'
+
+
+
+#   ===========================================================================
+#   m:  R.rex =~
+#   ===========================================================================
+
+#   url:    https://regex101.com/
+
+f_lib_menu "REX"
+
+function f_eval {
+    local i=$1
+    local s=$2
+    local r=$3
+    local x
+    local p=${BASH_LINENO[0]}     #   caller.lineNo
+    if [ $i == 0 ]; then x='true'; else x='false' ; fi
+    f_lib_puts "[$p] '$s' : '$r' =: $x"
+}
+
+#   simple
+s='Abc'; r='A';         [[ $s =~ $r ]]; i=$?; f_eval $i $s $r   # true
+s='12a'; r='1';         [[ $s =~ $r ]]; i=$?; f_eval $i $s $r   # true
+s='12a'; r='...';       [[ $s =~ $r ]]; i=$?; f_eval $i $s $r   # true
+s='123'; r='[0-9]+';    [[ $s =~ $r ]]; i=$?; f_eval $i $s $r   # true
+s='12a'; r='[0-9]+';    [[ $s =~ $r ]]; i=$?; f_eval $i $s $r   # true
+s='a23'; r='[0-9]+';    [[ $s =~ $r ]]; i=$?; f_eval $i $s $r   # true
+s='a23'; r='[0-9]{3}';  [[ $s =~ $r ]]; i=$?; f_eval $i $s $r   # false
+s='a23'; r='^[0-9]+';   [[ $s =~ $r ]]; i=$?; f_eval $i $s $r   # false
+s='1a3'; r='^[0-9]+';   [[ $s =~ $r ]]; i=$?; f_eval $i $s $r   # true
+s='1a3'; r='^[0-9]+$';  [[ $s =~ $r ]]; i=$?; f_eval $i $s $r   # false
+s='123'; r='^[0-9]+$';  [[ $s =~ $r ]]; i=$?; f_eval $i $s $r   # true
+
+#   more
+s='abcdef'; r="abc?[a-z]+"
+[[ $s =~ $r ]]; i=$?; f_eval $i $s $r
+
+s='56789'; r='[0-9]{5}'; [[ $s =~ $r ]]
+i=$?; f_eval $i $s $r
+
+#   files
+s='a12_name.bin'; sExt='bin'; r="^a[0-9]{2}_[a-z]+\.$sExt\$"
+[[ $s =~ $r ]]; i=$?; f_eval $i $s $r
+
+s='runMe_12345678.bin'; sExt='bin'; r="^runMe_[0-9]{8}\.$sExt\$"
+[[ $s =~ $r ]]; i=$?; f_eval $i $s $r
+
+
+
+#   b:  b.footer
+f_lib_footer 0
+
+#   p:  p.last

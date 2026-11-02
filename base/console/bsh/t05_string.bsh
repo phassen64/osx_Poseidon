@@ -1,0 +1,304 @@
+#!/bin/bash
+#   ***************************************************************************
+#   tutorial BASH 2026  :   "string"                    ©[mATe64]::[2026-10-07]
+#   ***************************************************************************
+#   encoding.UTF8:
+#   !@€ƒ„…†‡ˆ‰Š‹ŒŽ +‘“”•—™š›œžŸ+¡¢£¤¥¦§¨©«¬®°±²³µ¶·¹º»¼½¾¿ÄÖÜÑ×ØÞßäæçîðñôö÷üýþÿ
+
+#   description:    string compare
+
+#   usage       :   $   bash t05_string
+
+#   !url        :   https://www.w3schools.com/bash/
+
+
+<< hereDoc_content_tutor__string
+    content:
+        b:  B.body
+            b:  b.include
+            b:  f.header
+            b:  f.main
+            •   m:  S.definition
+            •   m:  S.length
+            •   m:  S.compare
+                •   s:  c.compare ==
+                •   s:  c.compare !=
+                •   s:  c.compare -z
+            •   m:  S.concatenate
+                •   s:  t.append s+=t
+                •   s:  t.sequence s=s1s2
+                •   s:  t.include s="s1s2"
+            •   m:  S.split by IFS
+            •   m:  S.cut (simple slice)
+            •   m:  S.splice
+            b:  f.footer
+        b:  B.last
+hereDoc_content_tutor__string
+
+#   b:  B.body
+
+#   m:  b.include
+source LIB.wsp.inc.bsh
+if [ "$1" == "" ]; then f_lib_configuration '+' '-'; fi
+declare -i z_iReply_iEc=$1
+
+declare s
+declare t
+declare x
+declare y
+
+#   b:  F.header
+f_lib_header $z_iReply_iEc;    z_iEc=$1
+
+#   b:  f.main
+
+#   ===========================================================================
+#   m:  S.definition
+#   ===========================================================================
+
+#   m:  F.menu
+f_lib_menu "S.definition"
+
+#   s:  m.simple.string
+f_lib_menuS1 "simple '...' strings"
+
+#   immediately definition with '...' and usage
+x='ABCDEFGHIJ'
+y='peter'
+f_lib_puts 'STRING1:$x:$y'   # "STRING1:$x:$y"
+
+f_lib_menuS1 'evaluated-strings:"..." '
+f_lib_puts "STRING2:$x:$y"   # "STRING2:ABCDEFGHIJ:peter"
+
+#   ===========================================================================
+#   m:  S.length
+#   ===========================================================================
+
+#   m:  F.menu
+f_lib_menu "S.length"
+
+s='ABCDEFGHIJ'
+f_lib_puts "using string: s='$s'" $v_LIB_color__blue
+
+#   u:  intro
+#   calc length immediately
+
+l=${#s}
+
+#   show
+f_lib_text "length(s) =: [$l]"   # 10
+
+#   u:  try expression
+f_lib_puts 'try expr' $v_LIB_color__blue
+x=`expr "$s"`
+f_lib_text "s =: [$x]"          # ABCD..IJ
+
+#   u:  using.formula
+f_lib_puts 'using:`expr $str`' $v_LIB_color__blue
+l=`expr "$s" : '.*'`
+f_lib_text "length(s) =: [$l]"   # 10
+
+#   u:  elseString
+s='LaSamba'
+f_lib_puts "using string: s='$s'" $v_LIB_color__blue
+
+#   u:  using.formula again
+l=`expr "$s" : '.*'`
+f_lib_text "length(s) =: [$l]"   # 7
+
+
+
+#   ===========================================================================
+#   m:  S.compare
+#   ===========================================================================
+
+#   m:  F.menu
+f_lib_menu "S.compare"
+
+#   input variables
+s1="Zeus"
+s2="Zeus"
+s3="Zeus and Hera"
+s4="ZEUS"
+
+#   show
+f_lib_puts "s1:'$s1'"    $v_LIB_color__blue
+f_lib_puts "s2:'$s2'"    $v_LIB_color__blue
+f_lib_puts "s3:'$s3'"    $v_LIB_color__blue
+f_lib_puts "s4:'$s4'"    $v_LIB_color__blue
+f_lib_puts "."
+
+#
+#   s:  c.compare ==
+#
+
+f_lib_menuS1 "compare.operator '=='"
+
+#   test
+
+t1="compare: s1==s2"
+if [ "$s1" == "$s2" ];
+    then f_lib_text "$t1:TRUE"
+    else f_lib_text "$t1:FALSE"
+fi  # true
+
+t1="compare: s1==s3"
+if [ "$s1" == "$s3" ]
+    then f_lib_text "$t1:TRUE"
+    else f_lib_text "$t1:FALSE"
+fi  # false
+
+t1="compare: s1==s3"
+if [ "$s1" == "$s3" ]
+    then f_lib_text "$t1:TRUE"
+    else f_lib_text "$t1:FALSE"
+fi  # false - case sensitive
+
+
+#
+#   s:  c.compare !=
+#
+
+f_lib_menuS1 "compare.operator '!='"
+
+t1="compare: s1!=s3"
+
+if [ "$s1" != "$s3" ]
+    then echo -e "$t1:TRUE"
+    else echo -e "$t1:FALSE";
+fi # true
+
+
+#
+#   s:  c.compare -z
+#
+
+f_lib_menuS1 "compare.operator '-z'"
+
+#   assignment
+sSome='someBody'
+sNone=''            # zero string
+
+f_lib_puts "s1=: '$sSome'"    $v_LIB_color__blue
+f_lib_puts "s2=: '$sNone'"    $v_LIB_color__blue
+f_lib_puts "."
+
+f_lib_puts "? s1 isZero"    #   ?someSody
+if [ -z $sSome ]
+then f_lib_text "true!"; else f_lib_text "false"; fi    # false
+
+f_lib_puts "? s2 isZero"    #   ?noBody
+if [ -z $sNone ]
+then f_lib_text "true!"; else f_lib_text "false"; fi    # true
+
+
+#   ===========================================================================
+#   m:  S.concatenate
+#   ===========================================================================
+
+#   m:  F.menu
+f_lib_menu "S.concatenate"
+
+s1="LearnABC"
+s2="123"
+f_lib_puts "s1='$s1'"    $v_LIB_color__blue
+f_lib_puts "s2='$s2'"    $v_LIB_color__blue
+f_lib_puts "."
+
+#   s:  t.append s+=t
+f_lib_menuS1 "append s+=s1"
+s=$s1
+s+=$s2
+f_lib_text "s=\$s1;s+=\$s2 : <$s>"
+
+#   s:  t.sequence s=s1s2
+f_lib_menuS1 "sequence s=s1s2"
+s=$s1$s2
+f_lib_text "s=\$s1\$s2 : <$s>"
+
+#   s:  t.include s="s1s2"
+f_lib_menuS1 "include"
+s="$s1$s2"
+f_lib_text "s=\"\$s1\$s2\" : <$s>"
+
+
+
+#   ===========================================================================
+#   m:  S.split by IFS
+#   ===========================================================================
+
+#   IFS =: Internal Field Separator (IFS)
+#   https://en.wikipedia.org/wiki/Input_Field_Separators
+
+#   m:  F.menu
+f_lib_menu "string splitting using:IFS"
+
+#   define string
+s="Peter,Paul,Mary or Britney and Kevin"
+f_lib_puts "s := '$s'\n" $v_LIB_color__blue
+
+#   s:  s.split IFS := [SPACE]
+f_lib_menuS1 "split.IFS =: {' '}"
+
+IFS=' '                 # IFS delimiter is := space
+read -ra aVal <<< "$s"  # str 's' is read into an array as tokens separated by IFS
+
+#   show array
+declare -p aVal
+
+#   s:  s.split IFS := [COMMA]
+f_lib_menuS1 "split.IFS =: {','}"
+
+s="Peter,Paul,Mary,Britney and Kevin"
+
+IFS=','                 #   IFS delimiter is := comma
+read -ra aVal <<< "$s"
+
+#   show array
+declare -p aVal
+
+
+#   ===========================================================================
+#   m:  S.cut  (simple slice)
+#   ===========================================================================
+
+#   m:  F.menu
+f_lib_menu "cut strings"
+
+#   define string and show
+sSrc="ABCDEFGHIJ"
+f_lib_puts "s := '$sSrc'\n" $v_LIB_color__blue
+
+#   prepare command
+iPos=3
+sObj=${sSrc:$iPos}      # cut :sSrc at position :iPos
+
+#   show
+f_lib_puts "*{sSrc:$iPos} => '$sObj'"           #   =>  'DEFGHIJ'
+
+
+#   ===========================================================================
+#   m:  S.splice
+#   ===========================================================================
+
+
+f_lib_menu "splice strings" $LINENO
+
+#   define string and show
+sSrc="ABCDEFGHIJ"
+f_lib_puts "s := '$sSrc'\n" $v_LIB_color__blue
+
+
+#   prepare command
+iPos=3;iLen=2
+sObj=${sSrc:$iPos:$iLen}
+
+#   show
+f_lib_puts "*{sSrc:$iPos:$iLen} => '$sObj'"     #   =>  'DE'
+
+
+
+#   m:  f.footer
+f_lib_footer 7
+
+#   b:  B.last

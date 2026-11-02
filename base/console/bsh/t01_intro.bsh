@@ -1,0 +1,88 @@
+#!/bin/bash
+#   ***************************************************************************
+#   tutorial BASH 2026  :   "intro"                 ©[mATe64]::[2026-10-01]
+#   ***************************************************************************
+
+#   description:    tester for my new BashLibrary 2026
+
+#   usage       :   $   bash t01_intro.bsh
+
+#   !url        :   https://www.w3schools.com/bash/
+
+#   definitions:
+#       [functionName] ::  'f_tor_'_[name]
+
+#   encoding.UTF8:
+#   !@€ƒ„…†‡ˆ‰Š‹ŒŽ +‘“”•—™š›œžŸ+¡¢£¤¥¦§¨©«¬®°±²³µ¶·¹º»¼½¾¿ÄÖÜÑ×ØÞßäæçîðñôö÷üýþÿ
+
+#   Quotes
+#   In Bash, single quotes ('...') and double quotes ("...")
+#   both group characters into a single argument,
+#   but they handle variable expansion and special characters completely differently:
+#   Single quotes ('...') = Literal Strings:
+#       Preserves the exact literal value of every character inside.
+#   No expansion occurs whatsoever.
+#   Double quotes ("...") =
+#       Evaluated Strings: Allows variable expansion ($var),
+#       command substitution ($(...)), and arithmetic expansion ($((...))),
+#       while preventing word splitting and globbing (wildcards).
+
+
+<<hereDoc_content_tutor__intro
+    content:
+        b:  B.body
+            •   m:  include
+            •   m:  config
+            •   m:  header
+            •   m:  misc
+            •   m:  footer
+        b:  B.last
+hereDoc_content_tutor__intro
+
+#   b:  B.body
+
+#   m:  include
+source LIB.wsp.inc.bsh
+declare -i z_iReply_iEc=$1
+
+#   m:  configure
+#   f_lib_configuration
+if [ "$1" == "" ]; then
+    #   clear
+    f_lib_configuration '+' '-' '-' '-'     #   apply colorMode
+    p_sCaller='Dummy'
+else
+    p_sCaller=$1
+fi
+
+#   m:  header
+f_lib_header $z_iReply_iEc
+
+#   m:  misc
+
+#   show my caller
+f_lib_echo "+ callerScript:{'"$p_sCaller"'}"
+
+#   Ausgabe mit externer Funktion
+f_lib_puts "\trun :MyTest($1)..." $v_LIB_color__magenta
+
+#   libText mit auto tabe
+f_lib_text "Harvey & Peter" $v_LIB_color__red
+
+#   Ausgabe mit externer Funktion
+f_lib_puts "\tI have finished :MyScript." $v_LIB_color__magenta
+
+#   Quoting single vs double
+f_lib_puts "\nMouse and Cat" $v_LIB_color__green
+t='Tom'
+j='Jerry'
+s1='$t & $j'    # no evaluation
+s2="$t & $j"    # evaluated
+f_lib_puts "string.single quoted =: [$s1]"    # "$t & $j"
+f_lib_puts "string.double quoted =: [$s2]"    # "Tom & Jerry"
+
+
+#   m:  footer with alternative replyCode
+f_lib_footer 7
+
+#   b:  B.last

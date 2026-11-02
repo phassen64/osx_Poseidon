@@ -1,0 +1,65 @@
+--- how.hdd2
+
+Google Cloud Engine how i can use my second storage disc
+
+To use a second storage disk on a Google Compute Engine (GCE) Linux instance,
+    you must complete two main steps: attach the disk using the Google
+    Cloud Console or gcloud CLI,
+    and then format and mount the disk inside your operating system.
+
+Phase 1: Attach the Disk via Google Cloud ConsoleGo to the GCP Console
+    > Compute Engine > VM instances.
+    Click the name of your VM instance and select Edit at the top.
+    Scroll down to the
+        Storage / Additional disks section and click
+        Add new disk (or Attach existing disk if it already exists).
+    Set the disk configuration (Name, Disk type, Size) and click Done.
+    Scroll to the bottom of the page and click Save.
+
+Phase 2: Format and Mount the Disk in Linux
+    Connect to your VM using SSH and execute the following steps:
+    1.Identify the new disk:
+        Terminal.
+        List the attached disks to locate your new drive:
+        Bash    ls -l /dev/disk/by-id/google-*
+        Look for a disk that does not have partition suffixes (like -part1).
+
+        Typically,
+            it will point to /dev/sdb or an NVMe path
+            like /dev/nvme0n2.2.Format the disk (New Disks Only):
+            Warning:
+            Formats target drive.Format the unformatted
+            disk using ext4 (Replace /dev/sdb with your actual device name):
+            Bash
+            $   sudo mkfs.ext4 -m 0 -E lazy_itable_init=0,lazy_journal_init=0,discard
+                /dev/sdb
+
+    Verification:
+        Run sudo blkid /dev/sdb. It should display a TYPE="ext4"
+        and an assigned UUID.3.
+
+        Create a mount directory and mount the disk:
+        Terminal.Create a folder to access the disk, mount it, and
+        grant user permissions:Bashsudo mkdir -p /mnt/disks/data
+sudo mount -o discard,defaults /dev/sdb /mnt/disks/data
+sudo chmod a+w /mnt/disks/data
+Verification: Run df -h /mnt/disks/data to confirm
+the mounted path and storage capacity.
+
+4.Configure automatic mounting on reboot:Persistent config.
+
+To ensure the disk mounts automatically when the VM reboots,
+    add it to /etc/fstab using its
+    UUID:Get the UUID of the device:Bash
+
+$   sudo blkid /dev/sdb
+    Open
+    /etc/fstab:Bashsudo nano /etc/fstab
+    Add the following line at the bottom (replace YOUR-UUID-HERE
+
+    with the actual UUID string):Plaintext
+    UUID=YOUR-UUID-HERE /mnt/disks/data ext4 discard,
+    defaults,nofail 0 2
+
+Verification:
+Run sudo mount -a to verify there are no errors in your fstab file.

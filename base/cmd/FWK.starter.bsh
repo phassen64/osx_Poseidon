@@ -1,0 +1,797 @@
+#!/bin/bash
+
+#  	***************************************************************************
+#   Starter Debian13	dtm :[2026-10-19].vcs
+#  	***************************************************************************
+
+#   encoding.UTF8:
+#   !@€ƒ„…†‡ˆ‰Š‹ŒŽ +‘“”•—™š›œžŸ+¡¢£¤¥¦§¨©«¬®°±²³µ¶·¹º»¼½¾¿ÄÖÜÑ×ØÞßäæçîðñôö÷üýþÿ
+
+#	usage:
+#		first call:		* defined in .bashrc
+#		    bash$>  source $v_STARTER
+#		second call:
+#		    bash$> 	+go
+
+#   history:
+#       261019  *   update converter u2d && d2u && remove all BOMs
+#       261018  *   vcs move to fwk/base
+
+#   variables.input
+#       i:  v_STARTER       * .bashrc
+
+#   variables.output (+var)
+#       o:  v_FWK_pthStarter
+#       o:  v_FWK_dirCommand
+#       o:  v_FWK_iExit
+#       o:  v_FWK_dirTutorf
+#       o:  v_FWK_scratchDir
+#       o:  v_FWK_dirLogging
+#       o:  v_PWD
+#       o:  v_RND
+#       o:  v_USR_dirDocRoot
+#       o:  v_USR_dirWorkshop
+#       o:  v_USR_scratch_relPath
+#       o:  v_VCS
+
+#   content:
+#       b:  B.function
+#		    •   m:  F.initialize
+#		    •   m:  F.vcs
+#		    •   m:	F.env
+#		    •   m:	F.helper
+#		    •   m:	F.library
+#		    •   m:	F.tools
+#       b:  B.body
+
+
+#   === b:  B.function
+
+#   ===========================================================================
+#  	m:  F.initialize
+#   ===========================================================================
+
+function f_ini_helper() {
+ 	sudo apt-get update
+    sudo apt-get install alien      #   rpm2deb
+	sudo apt-get install bat		# 	:cat
+	sudo apt-get install bc         #   precision calculator language
+	sudo apt-get install curlie		#	:curl
+    sudo apt-get install dos2unix   #   handles d2u && u2d
+	sudo apt-get install duf		# 	:df
+    sudo apt-get install emacs
+    sudo apt-get install eza		#	:ls
+	sudo apt-get install git
+	sudo apt-get install gping		#	graphical :ping
+	sudo apt-get install htop btop	#	:top
+	sudo apt-get install jq			#	JSon Parser
+	sudo apt-get install micro		#	terminal text editor
+	sudo apt-get install ncdu 		# 	disk usage analyzer -parsing
+   	sudo apt-get install net-tools
+	sudo apt-get install ripgrep 	# 	:grep
+}
+
+function f_ini_webGet() {
+	sudo apt-get update
+	sudo apt-get install -y wget
+	sudo apt-get update
+}
+
+function f_ini_gui() {
+    sudo apt-get update && sudo apt install tasksel
+    sudo tasksel
+}
+#   anschliessend installieren...
+#   +   Linux Desktop Umgebung
+#   +   xfce installieren
+#   +   SSH WebServer
+
+function f_ini_display() {
+    sudo apt-get install lightdm -y
+    sudo dpkg-reconfigure lightdm
+}
+
+function f_ini_dpkg_restore() {
+    sudo apt-get update
+    sudo apt-get --fix-broken install
+    sudo dpkg --configure -a
+}
+
+function f_ini_upgrade() {
+    local sMode=$1
+    sudo apt-get update
+    sudo apt-get list --upgradable
+    if [-z $sMode ]
+    then
+        sudo apt-get upgrade
+    else
+        sudo apt-get upgrade && sudo apt-get full-upgdrade -y
+    fi
+}
+
+function f_ini_fireWall() {
+	sudo apt-get install ufw
+	sudo ufw allow 3389/tcp
+	#   Reload your firewall settings:
+	sudo ufw reload
+}
+
+function f_ini_xRdp() {
+	sudo apt-get update
+	sudo apt-get install xrdp -y
+}
+
+function f_ini_ruby() {
+    local p_sMod=$1
+    case $p_sMod in
+        'app')   
+            echo "< install:app"
+   	        sudo apt-get install ruby
+            sudo apt-get install ruby-dev
+            sudo apt-get install rubygems-integration
+        ;;
+        'tmp')   
+            #   sudo apt-get install ruby_gem fails
+            sudo apt-get install rubocop
+        ;;
+        'gem')
+            echo "< install:gem"
+            sudo gem install awesome_print
+            sudo gem install bundler
+            sudo gem install colorize
+            sudo gem install gnuplot
+            sudo gem install highline
+            sudo gem install json
+            sudo gem install method_source
+            sudo gem install multi_json
+            sudo gem install net-telnet
+            sudo gem install python
+            sudo gem install rdoc
+            sudo gem install rubygems
+            sudo gem install rubyzip
+            sudo gem install thor
+            sudo gem install zip
+        ;;    
+        'GET')   
+            #   sudo apt-get install ruby_gem fails
+            gem list --local
+        ;;
+        *)
+            echo "< install:not { 'app' | 'gem' | 'GET' | 'tmp' } "
+        ;;
+    esac
+    #   show current version
+   	ruby --version
+}
+
+
+function f_ini_python() {
+    local sMod=$1
+    if [ '+' == $sMod ]; then
+        #   pip3 install numpy
+        printf "install python.module :{'numpy'} \n"
+        sudo apt-get install python3-numpy
+        printf "install python.module :{'numba'} \n"
+        sudo apt-get install python3-numba
+    else 
+	    sudo apt-get update
+	    sudo apt-get install python3 python3-pip python3-venv -y
+	    python3 --version
+	    pip3 --version
+    fi    
+}
+
+
+function f_ini_pwsh() {
+
+    # download
+    #   wget https://github.com/PowerShell/PowerShell/releases/download/v7.6.6/powershell-lts_7.6.6-1.deb_amd64.deb
+
+    # Install the package
+    sudo dpkg -i powershell-lts_7.6.6-1.deb_amd64.deb
+
+    # Resolve any missing dependencies automatically
+    sudo apt-get install -f
+}
+
+function f_ini_VsCode() {
+    d='code_1.138.0-1789458813_amd64.deb'
+    sudo dpkg -i $d
+}
+
+
+f_ini_hdd_secondaryStorage() {
+
+    local p_iMode=$1
+
+    #   define my secondary storage
+
+    #   hddName
+    local d=/dev/disk/by-id/google-d-260922-eros
+
+    #   UUID
+    local i=117f965f-9dd8-418e-92a9-2c3f0a1aaf28
+
+    #   case
+    if [ $p_iMode == 1 ]; then
+        #   m:  show
+        ls -l /dev/disk/by-id/google-*
+    elif [ $p_iMode == 2 ]; then
+        #   m:  format
+        sudo mkfs.ext4 -m 0 -E lazy_itable_init=0,lazy_journal_init=0,discard $d
+    elif [ $p_iMode == 3 ]; then
+        #   m:  verify.format
+        sudo blkid $d
+    elif [ $p_iMode == 4 ]; then
+        #   mount
+        sudo mkdir -p /mnt/disks/data
+        sudo mount -o discard,defaults $d /mnt/disks/data
+        sudo chmod a+w /mnt/disks/data
+    elif [ $p_iMode == 5 ]; then
+        #   verify.mount
+        df -h /mnt/disks/data
+    else
+        echo "hello hdd2"
+    fi
+}
+
+#	sudo apt-get install g++
+#	sudo apt-get install qemu
+
+#   *   Wird in der GUI initialisiert
+#   function f_ini_webbrowser_Chrome() {
+#       #   download  is Done!
+#       #   sUrl="https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb"
+#       #   wget $sUrl
+#       #   install
+#       sudo apt-get install ./google-chrome-stable_current_amd64.deb -y
+#       sImg='google-chrome-stable_current_amd64.deb'
+#       sImg='./google-chrome-stable_current_amd64.deb'
+#       sudo apt-get install $sImg -y
+#   }
+
+function f_ini_nameServer() {
+    sudo apt update
+    sudo apt install bind9 bind9utils dnsutils
+    sudo systemctl start bind9
+    sudo systemctl enable bind9
+}
+
+#   *   Wird nicht verwendet
+#   function f_ini_gui_Chrome_Remote_Desktop() {
+#       wget https://dl.google.com/linux/direct/chrome-remote-desktop_current_amd64.deb
+#       sudo apt install -y ./chrome-remote-desktop_current_amd64.deb
+#   }
+
+
+#   desktop environments - muss nach Cinnamon aufgerufen werden
+function f_ini_gui_DE_configure() {
+    sudo update-alternatives --config x-session-manager
+}
+
+#   https://docs.cloud.google.com/architecture/chrome-desktop-remote-on-compute-engine#objectives
+function f_ini_gui_DE_xfce() {
+    sudo DEBIAN_FRONTEND=noninteractive \
+        apt install --assume-yes xfce4 desktop-base dbus-x11 xscreensaver
+    sudo bash -c 'echo "exec /etc/X11/Xsession /usr/bin/xfce4-session" > /etc/chrome-remote-desktop-session'
+    sudo systemctl disable lightdm.service
+    sudo apt install --assume-yes task-xfce-desktop
+}
+
+function f_ini_gui_DE_cinnamon() {
+    sudo apt-get install cinnamon-desktop-environment -y
+    sudo apt-get tasksel
+    sudo apt-get install lightdm -y
+    sudo dpkg-reconfigure lightdm
+    sudo apt update && sudo apt install task-cinnamon-desktop
+    sudo update-alternatives --config x-session-manager
+}
+
+#   ===========================================================================
+#  	m:  F.vcs
+#   ===========================================================================
+
+function f_vcs_init() {
+    sVCS='https://github.com/phassen64/osx_poseidon.git'
+    echo "* git cloning :['$sVCS']"
+    pushd $v_VCS
+    ls
+    git clone "$sVCS"
+    popd
+}
+
+function f_vcs_get() {
+    sVCS='https://github.com/phassen64/osx_poseidon.git'
+    echo "* git cloning :['$sVCS']"
+    pushd $v_VCS
+    ls
+    git clone "$sVCS"
+    popd
+}
+
+#   ===========================================================================
+#  	m:  F.env
+#   ===========================================================================
+
+function f_env_reboot() {
+    local -i i=3
+    echo "doReboot in [$i]" & sleep $i
+    sudo reboot
+}
+
+function f_env_set_root() {
+    sudo passwd root
+}
+
+function f_env_set_host() {
+    #   parameter
+    local p_sHostName=$1
+    #   set
+    sudo hostnamectl set-hostname $p_sHostName
+    #   Find the line pointing and set name
+    sudo nano /etc/hosts
+    #   Verify the Change
+    #   Run this command to verify that the hostname updated:
+    hostnamectl
+}
+
+function f_env_prompt() {
+    #   fetch parameter
+    local iPrompt=$1
+    #   init
+    export PS1="$ "
+
+    #   case
+    if [ $iPrompt == 1 ]; then
+        export PS1="\u@\h \$ "          # user & host
+    elif [ $iPrompt == 2 ]; then
+        export PS1="\u@\h:\w \$ "       # user & host &dirPath
+    elif [ $iPrompt == 3 ]; then
+        export PS1="\w \$ "             # dirPath
+    elif [ $iPrompt == 4 ]; then
+        export PS1="[\t] \w \$ "        # time & dirPath
+    elif [ $iPrompt == 5 ]; then        # time & short dirPath
+        export PS1="[\t]::[\W] \$ "
+    elif [ $iPrompt == 6 ]; then        # not working
+        if [ `pwd` == $HOME ]
+            then export PS1="[\t] ~ \$ "
+            else export PS1="[\t] ~/\W \$ "
+        fi
+    else
+        export PS1="\$ "
+    fi
+}
+
+#   ===========================================================================
+#  	m:  F.helper
+#   ===========================================================================
+
+#
+#  s:  F.clearSreen
+#
+
+function f_fwk_clearScreen() {
+    clear && echo -en "\e[3J"
+}
+
+#
+#  	s:	F.alias
+#
+
+function f_fwk_alias_get() {
+    local s='GET alias...'; echo "$s"; sleep 1
+	alias| grep +
+}
+
+function f_fwk_alias_set(){
+    #   echo "f:aliasSet:BEG"
+	#   =:= m:alias
+    alias +aliGet='f_fwk_alias_get'
+    alias +aliSet='f_fwk_alias_set; alias | grep +';
+	#   =:= m:go
+    alias +go='source $v_STARTER'
+    alias +start=+go
+	#   =:= m:cd
+    alias +cdfwk='cd $v_FWK && pwd'
+    alias +cdhome='cd $HOME && pwd'
+    alias +cdcmd='cd $v_FWK_dirCommand && pwd'
+    alias +cdlog='cd $v_FWK_dirLogging && pwd'
+    alias +cdtmp='cd $v_FWK_dirTemp && pwd'
+    alias +cdtemp=+cdtmp
+    alias +cdvcs='cd $v_VCS && pwd'
+    alias +cdvcs_TS='cd $v_VCS/testSuite && pwd'
+	#   =:= m:cd.user
+    alias +cdusr='cd $v_USR_dirDocRoot && pwd'
+    alias +cdimg='cd "$v_USR_dirDocRoot/img" && pwd'
+    alias +cdwrk='cd $v_USR_dirWorkshop && pwd'
+    alias +cdpub='cd "$v_FWK/public" && pwd'
+	#   =:= m:cd.tutor
+    alias +cdtutor='cd $v_FWK_dirTutor && pwd'
+    alias +cdb='cd $v_FWK_dirTutor/bsh && pwd'
+    alias +cdbl='cd $v_FWK_dirTutor/bsh_legacy && pwd'
+    alias +cdc='cd $v_FWK_dirTutor/c89 && pwd'
+    alias +cdc89='cd $v_FWK_dirTutor/c89 && pwd'
+    alias +cdp='cd $v_FWK_dirTutor/prl && pwd'
+    alias +cdr='cd $v_FWK_dirTutor/rby && pwd'
+    alias +cdy='cd $v_FWK_dirTutor/pyt && pwd'
+    alias +cdcpp='cd $v_FWK_dirTutor/cpp && pwd'
+    alias +cdz=+cdcpp
+    alias +cdw='cd $v_FWK_dirTutor/wps && pwd'
+    alias +cdwps=+cdw
+	#   =:= m:run.tutor
+    alias +runB='pushd "$v_FWK_dirTutor/bsh";./run_bsh.bsh;popd'
+    alias +runC='pushd "$v_FWK_dirTutor/c89";./run_c89.bsh;popd'
+	#   =:= m:interpreter
+    alias +p='perl'
+    alias +r='ruby'
+    alias +y='python3'
+    alias +w='pwsh'
+	#   =:= m:interpreter.python
+    alias python='python3'
+	#   =:= m:clr
+    alias +cls='clear'
+    alias +clr='+cls'
+	#   =:= m:env
+    alias +ali='f_fwk_alias_get'
+    alias +fct='f_fwk_function_show'
+    alias +env='f_fwk_environment_show'
+    alias +var='f_fwk_variable_show'
+	#   =:= m:ls
+    alias +ls='ls -l'
+    alias +ll='ls -al'
+	#   =:= m:gcc
+    alias +gcc='gcc -std=c89 -Wall -Werror'
+    alias +g++='g++ -Wall -Werror'
+	#   =:= m:remove
+    alias +rm='rm -rf'
+    #   s:  tools
+    alias   +dfree='df -h'       # disk free
+    alias   +mfree='free -h'     # memory free
+    alias   +hi='history'     # bsh>!4711 # calls hisEntry '4711'
+    alias   +ip='ifconfig'
+	#   =:= m:misc
+    alias +reboot='f_env_reboot'
+    #   echo "f:aliasSet:END"
+    return 1
+}
+
+function f_fwk_alias_Clear() {
+    s='CLEAR alias...'; echo "$s"; sleep 1
+    unalias -a
+    sleep 1
+    alias
+    alias +alias=f_fwk_alias_set; alias +alias
+}
+
+function f_fwk_alias_Reset() {
+    s='RESET alias...'; echo "$s"; sleep 1
+    unalias -a
+    sleep 1
+    f_fwk_alias_set
+}
+
+function f_fwk_interpreter_check() {
+    echo "f:interpreterCheck"
+    g++ --version
+    perl --version
+    python3 --version
+    ruby --version
+    pwsh --version
+}
+
+function f_fwk_variable_show() {
+    #   usage   $   f_fwk_variable_show x 
+    local bAll=$1
+    +cls
+    if [ ! -z $bAll ]; then
+        printenv | sort
+    else 
+        printenv | grep "^v_"  | sort
+    fi
+}
+
+
+function f_fwk_environment_show() {
+    env | sort
+}
+
+function f_fwk_vcs_getClone() {
+    f_vcs_get
+}
+
+
+#   ===========================================================================
+#  	m:  F.library
+#   ===========================================================================
+
+function f_fwk_info() {
+
+    #   s:  var.Global
+    v_SCP=`basename $BASH_SOURCE`
+
+    #   s:  scpId
+    if [ -z $1 ]; then
+        v_SCP__id=$OSTYPE   # gehtNICHT
+    else
+        v_SCP__id=$1
+    fi
+
+    #   date
+    v_DTM_long=`echo $(date '+%Y-%m-%d__%H:%M:%S')`
+    echo "+ date: {$v_DTM_long}"
+    echo "+ bashName: {$v_SCP}"
+    echo "+ scpId: {$v_SCP__id}"
+
+    #   Server & Sser
+    v_USR=$USER
+    echo "+ svr: {$HOSTNAME}"
+    echo "+ usr: {$v_USR}"
+}
+
+function f_fwk_function_show() {
+    declare -F | grep '^declare -f f_[[:lower:]]'
+}
+
+function f_fwk_variable_define () {
+
+    #   FWK starter
+    v_FWK_pthStarter=$v_STARTER && export v_FWK_pthStarter
+
+    #   dir.DocRoot
+    v_USR_dirDocRoot=$HOME/Documents && export v_USR_dirDocRoot
+
+    #   workshop
+    v_DIR=$v_USR_dirDocRoot/workshop
+    v_USR_dirWorkshop=$v_DIR && export v_USR_dirWorkshop
+
+    #   dir.VCS
+    v_VCS=$HOME/VCS  && export v_VCS
+
+    #   dir.repo.FWK
+    v_FWK=$v_VCS/fwk && export v_FWK
+    v_VCS_fwk=$v_VCS/fwk/base && export v_VCS_fwk
+
+    #   dir.fwk.cmd
+    v_DIR=$v_VCS_fwk/cmd
+    v_FWK_dirCommand=$v_DIR && export v_FWK_dirCommander
+
+    #   FWK library needed for libary
+    v_FWK_pthLibrary="$v_FWK_dirCommand/LIB.inc.bsh" && export v_FWK_pthLibrary
+
+    #   tutor
+    v_DIR=$v_VCS_fwk/console
+    v_FWK_dirTutor=$v_DIR && export v_FWK_dirTutor
+
+    #   scratch == tempDir
+    #   a:  via FWK
+    v_DIR=$v_VCS_fwk/tmp
+    v_DIR=$v_USR_dirDocRoot/temp    # better
+    v_FWK_dirTemp=$v_DIR && export v_FWK_dirTemp
+    v_TMP=$v_FWK_dirTemp && export v_TMP
+    #   a:  via USR
+    v_USR_scratch_relPath='/Documents/temp' && export v_USR_scratch_relPath
+    
+    #   loging Dir
+    v_DIR=$v_VCS_fwk/logging
+    v_FWK_dirLogging=$v_DIR && export v_FWK_dirLogging
+
+    #   PERL
+    PERL5LIB="${v_FWK_dirTutor}/prl" && export PERL5LIB
+}
+
+function f_fwk_isFile {
+    local bRc=$v_FWK_bFalse
+    if [ -f $1 ]; then bRc=$v_FWK_bTrue; fi
+    return $bRc
+}
+
+function f_fwk_isDirectory {
+    local bRc=$v_FWK_bFalse
+    if [ -d $1 ]; then bRc=$v_FWK_bTrue; fi
+    return $bRc
+}
+
+
+#   ===========================================================================
+#  	m:  F.tools
+#   ===========================================================================
+
+
+function f_fwk_converter_dos2unix__file {
+
+    #   get parameter
+    local p_sFile=$1        #   file at local dir
+    local p_sMod=$2         #   {u2d|d2u}    
+    local p_sTry=$3         #   {?,!} 
+
+    #   validate parameter
+    if [ -z $p_sFile ]; then
+        #   printf "? hint: p1.File==zero\n"
+        local s='$ FCT {p_sFile} {p_sMod} [p_sTry=:'!']'
+        printf "! usage :: %s \n" "$s"
+        return 91
+    elif [ ! -f "$p_sFile" ]; then
+        printf "? hint: p1.File!=file \n"
+        return 92
+    elif [ -z $p_sMod ]; then
+        printf "? hint: p2.Mod==zero \n"
+        return 93
+    elif [ 'd2u' != $p_sMod ] && [ 'u2d' != $p_sMod ]; then
+        printf "? hint: p2.Mod={'d2u'|'u2d'} \n"
+        return 94
+    elif [ -z $p_sTry ] || [ '!' != $p_sTry ] ; then
+        p_sTry='?'
+    else
+        p_sTry='!'
+    fi
+
+    #   dir/file.c -> file.c    
+    local sNam=`basename $p_sFile`
+    local sBdy="${p_sFile%.*}"
+    local sExt="${p_sFile##*.}"
+
+    #   temp file
+    local sObj="${sBdy}_${p_sMod}.$sExt"
+
+    #   show
+    if [ '?' == $p_sTry ]; then
+        printf "! F.cnvrtF(%s) src:'%s' tmp:'%s' \n" $p_sMod $p_sFile $sObj
+        return $v_FWK_bTrue
+    fi
+
+    #   doConvert()         !CRQ-261019:d2u&&u2d
+    if [ 'd2u' == $p_sMod ]; then
+        cat $p_sFile | dos2unix > $sObj  
+    elif [ 'u2d' == $p_sMod ]; then
+        cat $p_sFile | unix2dos > $sObj  
+    fi
+
+    #   doRemoveBom     #   !CRQ-261019:BOM
+    sed -i '1s/^\xEF\xBB\xBF//' $sObj
+
+    #   remove source 
+    rm -f $p_sFile 
+    
+    #   rename temp file to source file
+    mv $sObj $p_sFile
+    
+
+
+}
+
+
+function f_fwk_converter_dos2unix__directory {
+
+    #   get parameter
+    local -x p_sDir=`pwd` 
+    local p_sExt=$1         #   fileNameExtension
+    local p_sMod=$2         #   {u2d|d2u}    
+    local -i p_iTry=$3      #   {0,1,2,3} 
+
+    #   validate parameter
+    if [ -z $p_sExt ]; then
+        local s='$ FCT {p_sFileNameExt} {p_sMod}'
+        printf "! usage :: %s \n" "$s"
+        return 91
+    elif [ -z $p_sMod ]; then
+        printf "? hint: p2.Mod==zero \n"
+        return 93
+    elif [ 'd2u' != $p_sMod ] && [ 'u2d' != $p_sMod ]; then
+        printf "? hint: p2.Mod={'d2u'|'u2d'} \n"
+        return 94
+    elif [ -z $p_iTry ] || [ 0 -eq $p_iTry ] || [ 3 -lt $p_iTry ] ; then
+        p_iTry=0
+    else
+        p_iTry=$3   # take it
+    fi
+
+    #   show
+    if [ 0 == $p_iTry ]; then
+        printf "! F mod(%s) ext:'%s' try:'%d' \n" $p_sMod $p_sExt $p_iTry
+        return $v_FWK_bTrue
+    fi
+
+    #   prepare internal run parameter
+    local sRun='?'
+    if [ 1 == $p_iTry ]; then
+        sRun='-'
+    elif [ 2 == $p_iTry ]; then
+        sRun='+'
+    elif [ 3 == $p_iTry ]; then
+        sRun='!'
+    fi
+
+    #   converter for all files with fitting file extension
+    local -i i=0 
+    for xFile in $p_sDir/*; do
+        if [ -f $xFile ]; then
+            local sExt="${xFile##*.}"
+            #   printf "&&& [%2.2d]\t: '%s\n" $i $xFile
+            if [ $sExt == $p_sExt ]; then
+                i+=1
+                local sNam=`basename $xFile`
+                if [ 1 -le $p_iTry ]; then
+                    printf "&&& converter.(%s) [%2.2d]\t: '%s\n" \
+                        $p_sMod $i $sNam
+                fi
+                if [ 2 -le $p_iTry ]; then
+                    f_fwk_converter_dos2unix__file $sNam $p_sMod $sRun
+                fi
+            fi
+        fi
+    done
+
+}
+
+
+#   wrapper.1
+function f_fwk_converter_dos2unix() {
+    f_fwk_converter_dos2unix__directory "$1" "d2u" 3
+}
+
+#   wrapper.2
+function f_fwk_converter_unix2dos() {
+    f_fwk_converter_dos2unix__directory "$1" "u2d" 3
+}
+
+
+
+#   ===========================================================================
+#  	b:  B.body
+#   ===========================================================================
+
+#   s:  clear host
+clear
+
+#   s:  header
+s=`echo $(date '+%y%m%d|%H%M%S')`
+printf "=== fwk.beg :: {%s}:{%s} \n"   $s $HOSTNAME
+sleep 1
+
+#   show starter of bashRc
+printf "+ sta : {%s} \n" $v_STARTER
+
+#   s:  show.SCP
+v_SCP=`basename $BASH_SOURCE`;    echo "+ scp : {$v_SCP}"
+v_PWD=`pwd`;    echo "+ pwd : {$v_PWD}"
+v_FID='"Oops - I did it again!"';   echo "+ fid : $v_FID"
+
+#   s:  alias define
+f_fwk_alias_set
+
+#   s:  update FWK
+if [ -z $v_FWK_path_isUpdated ]
+then
+
+    declare -i v_FWK_bTrue=20     # no export
+    declare -i v_FWK_bFalse=99
+
+    v_FWK_path_isUpdated=$v_FWK_bTrue
+
+    #   s:  set prompt
+    f_env_prompt 5
+
+    #   init var
+    f_fwk_variable_define
+
+    #   update path
+    export PATH="$PATH:$v_FWK_dirCommand:."
+
+    #   show
+    echo "+ fwk : pathUpdate"
+
+else
+    echo "- fwk : pathIsNotUpdated !"  # !CRQ-261004:not.printf()
+fi
+
+#   path
+#   printf "+ path  : {%s} \n" $PATH
+
+#   s:  generate FWK.exit.code (new&&old)
+declare -i i=$((10 + (RANDOM % 200))) # 10...199
+v_FWK_exitStatus=$i
+export v_FWK_exitStatus
+
+#   s:  header
+s=`echo $(date '+%y%m%d|%H%M%S')`
+printf "=== fwk.end::{%s}:{%s} \n"   $s $v_FWK_exitStatus

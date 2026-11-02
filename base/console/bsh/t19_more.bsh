@@ -1,0 +1,346 @@
+#!/bin/bash
+#   ***************************************************************************
+#   Tutorial.bsh.2026   :   "more"                      ©[mATe64]::[2026-10-03]
+#   ***************************************************************************
+
+#   encoding.UTF8:
+#   !@€ƒ„…†‡ˆ‰Š‹ŒŽ +‘“”•—™š›œžŸ+¡¢£¤¥¦§¨©«¬®°±²³µ¶·¹º»¼½¾¿ÄÖÜÑ×ØÞßäæçîðñôö÷üýþÿ
+
+#   usage       :   $   bash t02_more.bsh
+
+#   !url        :   https://www.w3schools.com/bash/
+
+<<CONTENT_T9
+    content:
+        b:  B.body
+        •   m:  F.header
+        •   m:  F.helper
+        •   m:  F.time
+        •   m:  F.printing
+        •   m:  F.file
+        •   m:  F.logging
+        •   m:  F.dataType
+        •   m:  F.lib.test
+        •   m:  F.footer
+        b:  B.last
+CONTENT_T9
+
+#   b:  B.body
+
+#   ===========================================================================
+#   m:  F.header
+#   ===========================================================================
+
+#   clear
+
+#   s:  declare my variables
+declare -x s
+declare -i i
+declare -i c    #   color
+declare -i iRc
+declare -i z_iRc=$v_FWK_iEc     # localer Rc
+declare -x sRc
+
+#   s:  include
+source LIB.wsp.inc.bsh
+#   f_lib_configuration
+if [ "$1" == "" ]; then
+    f_lib_configuration '+' '+'
+    p_sCaller='Dummy'
+else
+    p_sCaller=$1
+fi
+declare -i z_iEc=$1
+
+#   s:  lib.header - take out replyCode
+f_lib_header $z_iEc
+
+#   s:  lib.configuration
+printf "\n$ call LIB.config \n"
+
+#   s:  info
+printf "\n$ call LIB.info \n"
+f_lib_info
+
+#   ===========================================================================
+#   m:  F.helper
+#   ===========================================================================
+
+f_lib_menu "Helper" $LINENO
+
+#   s:  who
+f_lib_menuS1 "who" $LINENO
+printf "\n$ call LIB.who \n"
+f_lib_who
+
+#   s:  where
+f_lib_menuS1 "where" $LINENO
+printf "\n$ call LIB.where \n"
+f_lib_where
+
+#   s:  caller
+f_lib_menuS1 "caller" $LINENO
+printf "\n$ call LIB.caller\n"
+f_lib_caller
+
+#   s:  isPath
+f_lib_menuS1 "isPath" $LINENO
+
+#   u:  isDir
+f_lib_menuS2 "isPath.Dir" $LINENO
+
+#   any
+p=/peter1/
+f_lib_isDirectory $p; bRc=$?
+f_lib_dataTypeConverter_b2s $bRc;   sRc=$v_LIB_reply_sRc
+printf "\n? isDir:'%s' \n" $p
+printf "< m.bRc =:[%d] == '%s' \n" "$bRc" "$sRc"
+
+#   home
+p=$HOME
+f_lib_isDirectory $p; bRc=$?
+f_lib_dataTypeConverter_b2s $bRc;   sRc=$v_LIB_reply_sRc
+printf "\n? isDir:'%s' \n" $p
+printf "< m.bRc =:[%d] == '%s' \n" "$bRc" "$sRc"
+
+#   pwd
+p=$PWD
+f_lib_isDirectory $p; bRc=$?
+f_lib_dataTypeConverter_b2s $bRc;   sRc=$v_LIB_reply_sRc
+printf "\n? isDir:'%s' \n" $p
+printf "< m.bRc =:[%d] == '%s' \n" "$bRc" "$sRc"
+
+#   get.some.Name
+pFile=$(f_lib_file_getsomeName 'rock' "$v_LIB_dirScratch" '.txt' '+')
+echo "&&& file:'$pFile'"
+
+#   ===========================================================================
+#   m:  F.time
+#   ===========================================================================
+
+#   s:  show.DateTime
+f_lib_menuS1 "DateTime" $LINENO
+echo "$ call LIB.DateTime"
+f_lib_dateTime
+iRc=$?
+sRc=$v_LIB_reply_sRc
+echo "< m.sRc =: [$sRc]"
+echo "< m.iRc =: [$iRc]"
+
+#   s:  sleep
+f_lib_menuS1 "Sleep" $LINENO
+echo "$ call LIB.sleep [1]"
+f_lib_sleep 1
+
+#   t:  eof.helper
+f_lib_trace "eof.helper"
+
+#   ===========================================================================
+#   m:  F.printing
+#   ===========================================================================
+
+#   menu
+f_lib_menu "printing" $LINENO
+
+#   s:  echo
+echo -e "\n$ call LIB.echo"
+f_lib_echo "Hello Peter !"
+
+#   u:  print.easy
+f_lib_menuS1 "printEasy" $LINENO
+echo "$ call LIB.print any"
+f_lib_print "A normal text printed" $v_LIB_bTrue
+
+#   u:  print.multiple in 1 line and colored
+f_lib_menuS1 "printColored noNewLine" $LINENO
+f_lib_print "1:red."        $v_LIB_bFalse   $v_LIB_color__red
+f_lib_print "2:yellow."     $v_LIB_bFalse   $v_LIB_color__yellow
+f_lib_print "3:green."      $v_LIB_bFalse   $v_LIB_color__green
+f_lib_print "4:blue."       $v_LIB_bFalse   $v_LIB_color__blue
+f_lib_print "5:magenta."    $v_LIB_bFalse   $v_LIB_color__magenta
+f_lib_print "6:cyan."       $v_LIB_bTrue    $v_LIB_color__cyan
+
+#   s:  puts (implicitely NL)
+f_lib_menuS1 "puts.Colored withNewLine" $LINENO
+f_lib_puts "1:red!"         $v_LIB_color__red
+f_lib_puts "2:yellow!"      $v_LIB_color__yellow
+f_lib_puts "3:green!"       $v_LIB_color__green
+
+#   s:  puts (NoColor)
+f_lib_menuS2 "puts.noColor" $LINENO
+f_lib_puts "9:noColor"
+
+#   t:  eof.print
+f_lib_trace "eof.print"
+
+#   ===========================================================================
+#   m:  F.file
+#   ===========================================================================
+
+f_lib_menu "File" $LINENO
+
+#   s:  L.filePath.get
+echo ""
+echo "$ call LIB.file.getPath"
+
+#   REGION verbose==false
+bVbs=f_lib_flag__verbose
+f_lib_flag__verbose 0
+
+if [ $v_LIB_bTrue == $v_LIB_mode_bVerbose ]; then
+    echo "+++ flag.Verbose==true"
+    f_lib_file_getPath; iRc_lib=$?
+else
+    echo "+++ flag.Verbose==false"
+    sRc=$(f_lib_file_getPath)   # runs echo
+    iRc_lib=$?
+    echo "< m.sRc =: [$sRc]"
+fi
+
+#   REGION verbose==old
+v_LIB_mode_bVerbose=$bVbs
+
+#   fetch data
+echo "< m.iRc_lib   =: [$iRc_lib]"
+sRc_lib=$v_LIB_reply_sRc
+echo "< m.sRc.lib   =: [$sRc_lib]"      # !CRQ-261008:?replies dateTime
+
+#   show main variables
+echo "< m.sRc   =: [$sRc]"
+
+#   s:  L.fileName
+echo ""
+echo "$ call LIB.file.name"
+f_lib_file_getName $BASH_SOURCE
+iRc=$?
+sRc=$v_LIB_reply_sRc
+echo "< m.sRc =: [$sRc]"
+echo "< m.iRc =: [$iRc]"
+
+#   s:  L.fileBody
+echo ""
+echo "$ call LIB.file.body"
+f_lib_file_getBody $BASH_SOURCE
+iRc=$?
+sRc=$v_LIB_reply_sRc
+echo "< m.sRc =: [$sRc]"
+echo "< m.iRc =: [$iRc]"
+
+#   s:  L.fileExtension
+echo ""
+echo "$ call LIB.file.extension"
+f_lib_file_getExtension $BASH_SOURCE
+iRc=$?
+sRc=$v_LIB_reply_sRc
+echo "< m.sRc =: [$sRc]"
+echo "< m.iRc =: [$iRc]"
+
+#   s:  L.fileModificationTime
+echo ""
+echo "$ call LIB.file.ModificationTime"
+f_lib_file_getModificationTime $BASH_SOURCE
+iRc=$?
+sRc=$v_LIB_reply_sRc
+echo "< m.sRc =: [$sRc]"
+echo "< m.iRc =: [$iRc]"
+
+#   t:  eof.fileInfo
+f_lib_trace "eof.fileInfo"
+
+#   ===========================================================================
+#   m:  F.logging
+#   ===========================================================================
+
+f_lib_menu "logging" $LINENO
+
+#   fetch random value[1,2]
+echo ""
+declare -i iMax=2
+declare -i iMin=1
+echo "$ call LIB.random ($iMax,$iMin)"
+f_lib_randomMore $iMax $iMin; iRnd=$?
+echo "< m.iRnd =: [$iRnd]"
+
+#   show logFilePath
+echo ""
+echo "$ call LIB.logging.GetPath"
+
+#   bMod : logging with dateTimeString?
+bMod=$v_LIB_bFalse
+i=$iRnd%2
+if [ $i == 0 ]; then
+    bMod=$v_LIB_bTrue
+fi
+
+#   run
+pSrc=$BASH_SOURCE
+dObj=$v_FWK_dirTemp
+bCrt=$v_LIB_bTrue
+f_lib_logging_getPath "$pSrc" "$dObj" "$bCrt" iRc=$?; sRc=$v_LIB_reply_sRc
+echo "< m.sRc =: [$sRc]"
+echo "< m.iRc =: [$iRc]"
+
+#   save
+declare -x pTestFilePath=$v_LIB_reply_sRc
+echo "< m.pTestFilePath =: [$pTestFilePath]"
+
+#   write/append file
+echo ""
+echo "$ call LIB.writeFile"
+sTxt="Peter sitzt zu Hause - Datum:[`date`]"
+bCrt=$v_LIB_bTrue
+f_lib_file_write $pTestFilePath "$sTxt" $bCrt; iRc=$?
+echo "< m.iRc =: [$iRc]"
+
+#   t:  eof.fileInfo
+f_lib_trace "eof.logging"
+
+#   ===========================================================================
+#   m:  F.plgs
+#   ===========================================================================
+
+f_lib_menu "plgs" $LINENO
+
+echo "$ call LIB.text"
+s="Peter & Harvey"
+
+#   t:  mof.puts
+f_lib_trace "mof.puts"
+
+#   f_lib_puts '123' $v_LIB_color__red
+f_lib_text "$s"  $v_LIB_color__red
+
+#   ===========================================================================
+#   m:  F.dataType
+#   ===========================================================================
+
+f_lib_menu "dataType" $LINENO
+
+#   numeric,alpha
+x=4711; f_lib_isNumeric $x; b=$?;   f__echoExpr "?isNumeric" $x $b
+
+#   ===========================================================================
+#   m:  F.lib.test
+#   ===========================================================================
+
+#   libTest
+f_lib_menu "Test" $LINENO
+f_lib__test
+
+#   functioNamen = null
+#   t:  eof.test
+f_lib_trace "eof.libTest"
+
+
+#   ===========================================================================
+#   m:  F.footer
+#   ===========================================================================
+
+declare -i bTrp=$v_LIB_bTrue        #   trc:enabled
+declare -i bTrp=123                 #   trc:disabled
+
+f_lib_trace "eop" $bTrp
+
+f_lib_footer 71
+
+#   b:  B.last

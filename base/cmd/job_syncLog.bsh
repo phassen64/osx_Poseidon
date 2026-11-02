@@ -1,0 +1,76 @@
+#!/bin/bash
+#  	***************************************************************************
+#   cron.job	    dtm:[2026-10-18].vcs
+#  	***************************************************************************
+
+#   description:
+#           Synchronize my logBook (dirDoc->dirVcs).
+
+#   usage:
+#       +   edit crontab
+#               bash$   crontab -e
+#               nano$   key:[PgnDwn]
+#       +   show crontab entry
+#               bash$   crontab -l | tail -1
+
+
+#   entry inside crontab
+#   */10 * * * * /home/peter/VCS/fwk/base/cmd/job_syncLog.bsh >>
+#                   /home/peter/Documents/log/cron.log 2>&1
+
+#  	***************************************************************************
+
+sFmt="+%Y-%m-%d__%H:%M:%S"
+sDtm=$(echo `date $sFmt`)
+sVer='athene-261018'
+
+#   m:  header
+printf "=== entry v.(%s):[%s]\n" $sVer $sDtm
+
+#
+#   m:  check.Dir
+#
+
+#   s:  dSrc
+dSrc="$HOME/Documents/organizer"
+if [ ! -d $dSrc ]
+then
+    printf "???\t:miss1.dSrc:['%s]'\n" $dSrc
+    exit $LINENO
+fi
+
+
+#   s:  dObj
+dObj="$HOME/VCS/fwk/base/doc"
+if [ ! -d $dObj ]
+then
+    printf "???\t:miss2.dObj:['%s']\n" $dObj
+    exit $LINENO
+fi
+
+#
+#   m:  check.FilePath
+#
+
+fNam='log-X.txt'
+
+#   s:  pSrc
+pSrc="$dSrc/$fNam"
+if [ ! -f $pSrc ]; then
+    printf "???\t:miss3.pSrc:['%s']\n" $pSrc
+    exit $LINENO
+fi
+
+#   s:  pObj
+pObj="$dObj/$fNam"
+if [ ! -f $pObj ]; then
+    printf "???\t:miss4.pObj:['%s']\n" $pObj
+    exit $LINENO
+fi
+
+printf "\t:pSrc=['%s']\n" "$pSrc"
+printf "\t:dObj=['%s']\n" "$dObj"
+printf "\t:copy:pSrc->dObj\n"
+
+#   perform job
+cp $pSrc $dObj

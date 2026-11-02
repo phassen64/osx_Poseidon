@@ -1,0 +1,305 @@
+#!/bin/bash
+
+#   ***************************************************************************
+#   tutorial BASH 2026  :   "operator"                 ©[mATe64]::[2026-10-03]
+#   ***************************************************************************
+
+#   !CRQ-261006:noBacktickComment - else the logging fails !
+
+<<hereDoc_content_tutor__operator
+    content:
+        b:  B.body
+        •   m:  include
+        •   m:  header
+            •   m:  F.arithmetic            { +,-,*,/: ** : /,%,%=: +=,-=,*=,/= }
+            •   m:  F.comparing.numbers     { eq,-ne,-gt,-lt,-ge,-le }
+            •   m:  F.logical.operators     { && , || }
+                    •   s:  normal.logic
+                    •   s:  internal.logic
+            •   m:  F.wildcard              {*}
+                    •   s:  wildcard.example
+                    •   s:  wildcard.pattern
+            •   m:  F.expr-with-backtick    {expr}  see:[CRQ-261006]
+                    •   s:  expr(a+b)
+                    •   s:  expr(a-b)
+        •   m:  footer
+        b:  B.lastLine
+hereDoc_content_tutor__operator
+
+#
+#   &&& b:  B.body
+#
+
+#   m:  include
+source LIB.wsp.inc.bsh
+if [ "$1" == "" ]; then f_lib_configuration '+' '-'; fi
+declare -i z_iEc=$1
+
+#   m:  header
+f_lib_header $z_iEc
+
+#   m:  operatorSpace
+
+declare -i i=0
+declare -i j=0
+declare -i k=0
+declare -i l=0
+declare -i n=10
+
+#   ===========================================================================
+#   m:  F.arithmetic
+#   ===========================================================================
+
+f_lib_menu 'arithmetic'
+
+#   s:  basic
+f_lib_menuS1 'basic'
+a=1;b=8;x=$(($a+$b));   f_lib_text "a:<$a> + b:<$b> =: <$x>"
+a=2;b=7;x=$(($a-$b));   f_lib_text "a:<$a> - b:<$b> =: <$x>"
+a=6;b=5;x=$(($a*$b));   f_lib_text "a:<$a> * b:<$b> =: <$x>"
+a=9;b=2;x=$(($a/$b));   f_lib_text "a:<$a> / b:<$b> =: <$x>"        #   4
+a=3;b=7;x=$(($a/$b));   f_lib_text "a:<$a> / b:<$b> =: <$x>"        #   0
+
+#   s:      power
+f_lib_menuS1 'power'
+a=2;b=4;x=$(($a**$b));  f_lib_text "a:<$a> ** b:<$b> =: <$x>"       #   16
+
+f_lib_menuS1 'divisor'
+a=13;b=5;x=$(($a/$b));   f_lib_text "a:<$a> / b:<$b> =: <$x>"        #   3
+a=13;b=5;x=$(($a%$b));   f_lib_text "a:<$a> % b:<$b> =: <$x>"        #   2
+
+#   special usage of let()
+a=13;b=5;x=$a;let "x %= $b";    f_lib_text "let a:<$a>=:x %= b:<$b> =: <$x>"    #   2
+
+f_lib_menuS1 'modulo vs reminder'
+i=18;b=-5;x=$(($a%$b));         f_lib_text "<$a>   %  <$b>  =: <$x>"
+i=18;b=-5;x=$a;let "x %= $b";   f_lib_text "<$a>  %=  <$b>  =: <$x>"
+
+#   x=$(($a%=$b))
+#   f_lib_puts "a:<$a> %= b:<$b> =: <?>"   #   ? notOK
+
+f_lib_menuS1 'inc,dec'
+f_lib_text 'using: let command'
+#   REM: NOT WORKING:    x=$a; x+=$b
+
+a=5;b=2;x=$a; let "x += $b" ;   f_lib_text "x=<$a> += <$b> => <$x>"
+a=5;b=2;x=$a; let "x -= $b" ;   f_lib_text "x=<$a> -= <$b> => <$x>"
+a=5;b=2;x=$a; let "x *= $b" ;   f_lib_text "x=<$a> *= <$b> => <$x>"
+a=5;b=2;x=$a; let "x /= $b" ;   f_lib_text "x=<$a> /= <$b> => <$x>"
+
+
+#   ===========================================================================
+#   m:  F.comparing.numbers
+#   ===========================================================================
+
+f_lib_menu 'compare operators'
+
+#   fetch my random number - 2 ways
+i=$(f_lib_random $n)
+j=$(f_lib_random $n)
+f_lib_randomMore $n; k=$?   #   not used
+f_lib_randomMore $n; l=$?   #   not used
+
+#   show
+f_lib_puts "--- i:$i;j:$j" $v_LIB_color__cyan
+
+#
+#   s:  standard.operator
+#
+
+f_lib_menuS1 'standard : -[op]'
+
+#   u:  operator: 'eq'
+s='?eq => '; if [ $i -eq $j ]; then s+='TRUE!'; else s+='false'; fi
+f_lib_text "$s"
+
+#   u:  operator: 'ne'
+s='?ne:'; if [ $i -ne $j ]; then s+='TRUE!'; else s+='false'; fi
+f_lib_text "$s"
+
+#   u:  operator: 'gt'
+s='?gt:'; if [ $i -gt $j ]; then s+='TRUE!'; else s+='false'; fi
+f_lib_text "$s"
+
+#   u:  operator: 'lt'
+s='?lt:'; if [ $i -lt $j ]; then s+='TRUE!'; else s+='false'; fi
+f_lib_text "$s"
+
+#   u:  operator: 'ge'
+s='ge:'; if [ $i -ge $j ]; then s+='TRUE!'; else s+='false'; fi
+f_lib_text "$s"
+
+#   u:  operator: 'le'
+s='le:'; if [ $i -le $j ]; then s+='TRUE!'; else s+='false'; fi
+f_lib_text "$s"
+
+#
+#   s:  special.operator
+#
+f_lib_menuS1 'special : {[==] [!=]}'
+
+#   u:  operator: '=='
+s='op:{==}:'; if [ $i == $j ]; then s+='TRUE!'; else s+='false'; fi
+f_lib_text "$s"
+
+#   u:  operator: '!='
+s='op:{!=}:'; if [ $i != $j ]; then s+='TRUE!'; else s+='false'; fi
+f_lib_text "$s"
+
+#   ===========================================================================
+#   m:  F.logical.operators
+#   ===========================================================================
+
+f_lib_menu 'logical operators' $LINENO
+
+#   fetch
+f_lib_randomMore $n; i=$?
+f_lib_randomMore $n; j=$?
+f_lib_randomMore $n; k=$?
+f_lib_randomMore $n; l=$?
+
+#   show
+f_lib_puts "--- i:$i;j:$j;k:$k;l:$l" $v_LIB_color__cyan
+
+#
+#   s:  normal.logic
+#
+
+f_lib_menuS1 'normal.logic'
+
+s='{ i<=j && k>=l } :'
+if [ $i -le $j ] && [ $k -ge $l ]
+    then s+='TRUE!'
+    else s+='false'
+fi
+f_lib_text "$s"
+
+s='{ i<=j || k>=l } :'
+if [ $i -le $j ] || [ $k -ge $l ]
+    then s+='TRUE!'
+    else s+='false'
+fi
+f_lib_text "$s"
+
+s='{ i<j && k>l } :'
+if [ $i -gt $j ] && [ $k -lt $l ]
+    then s+='TRUE!'
+    else s+='false'
+fi
+f_lib_text "$s"
+
+s='{ i<j || k>l } :'
+if [ $i -gt $j ] || [ $k -lt $l ]
+    then s+='TRUE!'
+    else s+='false'
+fi
+f_lib_text "$s"
+
+s='{ (i!=j && k!=l) || (k>8)) } :'
+if ( ( [ $i -ne $j ] && [ $k -ne $l ] ) || [ $k -gt 8 ] )
+    then s+='TRUE!'
+    else s+='false'
+fi
+f_lib_text "$s"
+
+s="{ (i=j || k==l)  && (k<8)) } :"
+if ( ( [ $i -eq $j ] || [ $k -eq $l ] ) && [ $k -lt 8 ] )
+    then s+='TRUE!'
+    else s+='false'
+fi
+f_lib_text "$s"
+
+s="{ ! i == j } :"
+if [ ! $i -eq $j ]
+    then s+='TRUE!'
+    else s+='false'
+fi
+f_lib_text "$s"
+
+#
+#   s:  internal.logic
+#
+
+f_lib_menuS1 'internal logic'
+
+declare -i b=$v_LIB_bTrue   # !CRQ-261005:notWorkingWith:'x'
+f_lib_puts "x == '$b'" $v_LIB_color__cyan
+
+#   u:  op:{'=='}
+t="{ x == TRUE } :"
+s=$([[ $b == $v_LIB_bTrue ]] && echo "True!" || echo "?false")
+printf -v x "%s => [%s]" "$t" "$s"; f_lib_text "$x"     # True!
+
+#   u:  op:{'!='}
+t="{ x != TRUE } :"
+s=$([[ $b != $v_LIB_bTrue ]] && echo "True!" || echo "?false")
+printf -v x "%s => [%s]" "$t" "$s"; f_lib_text "$x"     # ?false
+
+#   u:  op:{'-eq'}
+t="{ x -eq TRUE } :"
+s=$([[ $b -eq $v_LIB_bTrue ]] && echo "True!" || echo "?false")
+printf -v x "%s => [%s]" "$t" "$s"; f_lib_text "$x"     #   True!
+
+#   take x:=false
+b=$v_LIB_bFalse
+f_lib_puts "x == '$b'" $v_LIB_color__cyan
+
+t="{ x -eq FALSE } =:"
+s=$([[ $b -eq $v_LIB_bFalse ]] && echo "True!" || echo "?false")
+printf -v x "%s => [%s]" "$t" "$s"; f_lib_text "$x"     #   True!
+
+#   ===========================================================================
+#   m:  F.wildcard
+#   ===========================================================================
+
+#   URL:https://stackoverflow.com/questions/102049/how-do-i-escape-the-wildcard-asterisk-character-in-bash
+#   how i get "BAR * BAR" ?
+
+#
+#   s:  wildcard.example
+#
+
+f_lib_menuS1 'wildcard'
+
+f_lib_text 'area is:' $LINENO
+x='width'; y='length'
+s=
+s+="'$x'"
+s+=" * "    # add with "*"
+s+="'$y'"
+f_lib_text "Area:= < $s >"     # already an array
+
+#
+#   s:  wildcard.pattern
+#
+
+f_lib_menuS1 'using wildcard as pattern'
+x='b??'; y='bsh'; s="$x*.$y"
+
+#   avoid eval - use: "$x"
+f_lib_text  "pattern : <$s>"   # >echo $s    #   evaluates
+
+#   ===========================================================================
+#   m:  F.expr-with-backtick
+#   ===========================================================================
+
+f_lib_menu 'expr-with-backticks' $LINENO
+
+#   only view operations like {+} and {-} but not:{*}
+
+#   s:  expr(a+b)
+f_lib_menuS1 'expr(a+b)'
+a=5;b=2
+x=`expr $a + $b`
+f_lib_text "\`expr <$a> + <$b> \`  =: <$x>" # 7
+
+#   s:  expr(a-b)
+f_lib_menuS1 'expr(a-b)'
+a=8;b=3; x=`expr $a - $b`
+f_lib_text "\`expr <$a> - <$b> \`  =: <$x>" # 5
+
+#   m:  footer
+f_lib_footer 77
+
+
+#   &&& b:  B.lastLine

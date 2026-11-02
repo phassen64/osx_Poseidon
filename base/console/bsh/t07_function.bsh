@@ -1,0 +1,131 @@
+#!/bin/bash
+#   ***************************************************************************
+#   tutorial BASH 2026  :   "function"                 ©[mATe64]::[2026-10-07]
+#   ***************************************************************************
+#   encoding.UTF8:
+#   !@€ƒ„…†‡ˆ‰Š‹ŒŽ +‘“”•—™š›œžŸ+¡¢£¤¥¦§¨©«¬®°±²³µ¶·¹º»¼½¾¿ÄÖÜÑ×ØÞßäæçîðñôö÷üýþÿ
+
+: '
+        $@              :   array of all parameter
+        $#              :   parameter-counter
+        $1...$9..       :   current parameter
+        $?              :   return code
+        ${FUNCNAME[0]}  :   function name
+'
+
+<< hereDoc_content_tutor__function
+    content:
+        p:  p.function
+                •   m:  F.single
+                •   m:  F.multi
+                •   m:  F.twin
+        p:  p.body
+            b:  b.include
+            b:  b.header
+            b:  b.main
+                •   m:  F.single
+                •   m:  F.multi (variadisch)
+                •   m:  F.twin
+            b:  b.footer
+        p:  p.last
+hereDoc_content_tutor__function
+
+#   ===========================================================================
+#   p:  p.function
+#   ===========================================================================
+
+#   m:  F.single
+
+#   REM:    declare with :() only
+f_uni_single() {
+    #   parameter '$1','$2',...
+    local s=${FUNCNAME[0]}
+    f_lib_puts "I am in function '$s' \n\tand I got parameter: '$1'"
+    return 16   # only 0...255
+}
+
+#   m:  F.multi
+
+#   REM:    declare with :function but not :()
+function f_uni_multi {
+    local s
+    declare -i i=1
+    for x in "$@"
+    do
+        s=${FUNCNAME[0]}
+        f_lib_puts "{$s}:arg[$i/$#]=$x"
+        i+=1
+    done
+    return 22   # only 0...255
+}
+
+#   m:  F.twin
+
+#   s:  twin1   *   declared with :function &&  :()
+function f_uni_twin () {
+    local p=$1
+    local s=${FUNCNAME[0]}
+    f_lib_puts "twin.A :[$s] && parameter.A :[$p]'"
+    return 31
+}
+
+#   s:  twin2   *   identical name, but different return
+f_uni_twin () {
+    local p=$1
+    local s=${FUNCNAME[0]}
+    f_lib_puts "twin.B :[$s] && parameter.B :[$p]'"
+    return 32
+}
+
+#   ===========================================================================
+#   p:  p.body
+#   ===========================================================================
+
+#   b:  b.include
+source LIB.wsp.inc.bsh
+if [ "$1" == "" ]; then f_lib_configuration '+' '-'; fi
+declare -i z_iReply_iEc=$1
+
+#   b:  b.header
+f_lib_header $z_iReply_iEc
+
+#   b:  b.main
+declare -i i
+declare -i n
+declare c=$v_LIB_color__blue
+
+#
+#   m:  F.single
+#
+
+f_lib_menu "F.single"
+
+f_uni_single "Britney"
+
+#   fetch my return code
+iRc=$?
+f_lib_puts "<<< reply code received is : [$iRc]\n"
+
+
+#
+#   m:  F.multi
+#
+
+f_lib_menu "F.multi"
+
+f_uni_multi "Beckenbauer" "Pele" "Maradonna" "Messi" "Ronaldo" ; iRc=$?
+
+#   reply
+f_lib_puts "<<< iRc =: [$iRc]\n"
+
+#
+#   m:  F.twin
+#
+
+f_uni_twin "Twin A||B"; iRc=$?
+f_lib_puts "<<< reply.twin.iRc =: [$iRc]"   # replies: '32' = twin2
+
+#   b:  b.footer
+f_lib_footer 0
+
+#   p:  p.last
