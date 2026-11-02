@@ -10,10 +10,10 @@
 #       run one single script file, no logging 
 
 #   usage:
-#       $   bash run_<SCP>.wps <FILE.rb>
+#       $   bash run_<SCP>.wps <FILE.wps>
 
 #   example:
-#       $   bash "p01_WPS_uno.bsh" "w00_dummy.py"
+#       $   bash "r01_WPS_uno.bsh" "w00_dummy.wps"
 
 #   description:
 #       run interpreter input-file <FILE.wps>

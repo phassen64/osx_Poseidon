@@ -3,9 +3,9 @@
 #   run:[expert].tmp        tutorial.WPS 2026      ©[mATe64]       [2026-11-02]
 #   ***************************************************************************
 
-declare -r      v_scp_pLog="$v_FWK_dirTemp/p04_WPS_expert.log"
-v_FWK_reply_sRc="$v_FWK_dirTemp/p04_WPS_expert.log"
+v_FWK_reply_sRc="$v_FWK_dirTemp/r04_WPS_expert.log"
 
-bash p04_WPS_expert.bsh +
-echo "<<< show logfile at:'$v_scp_pLog'..."
-ls -ial $v_scp_pLog
+clear
+bash r04_WPS_expert.bsh + 1
+echo "<<< show logfile at:'$v_FWK_reply_sRc'..."
+ls -ial $v_FWK_reply_sRc
