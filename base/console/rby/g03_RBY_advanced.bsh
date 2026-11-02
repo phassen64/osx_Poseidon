@@ -3,11 +3,14 @@
 #   ***************************************************************************
 #   run:[advanced]      tutorial.Ruby 2026        ©[mATe64]     [2026-10-19]
 #   ***************************************************************************
+#   description:
+#       run all script files, logging enabled
+#       using BlackList to skip scripts
 #   usage:
 #       $   bash <THIS.bsh>
 #   content:
-#       m:  run.prepare
-#       m:  run.scripts
+#       b:  function
+#       b:  body
 #   ***************************************************************************
 
 #   ===========================================================================
@@ -77,14 +80,15 @@ function f_run_script {
             $C_INTERPRETER $xFile $iEc;   iBashReply=$?
 
             #   check reply
-            printf "\n<<< replyOf[%d]:'%s': #{%d} ==:" $n $xFile $iBashReply
+            printf "\n<<< replyOf[%d]:'%s' ==:" $n $xFile
             if [ $iEc == $iBashReply ]
             then
-                printf "{*OK} \n"
+                printf "{*true}"
             else
-                printf "{NOK}:[%d]<>[%d]}" $iEc $iBashReply
+                printf "{false}:[%d]<>[%d]}" $iEc $iBashReply
                 iRc+=1
             fi
+            printf ".\n"
 
         done
 
@@ -105,12 +109,15 @@ function f_run_script {
 #   s:  interpreter
 declare -r C_INTERPRETER='ruby'
 
+#   s:  srcId
+declare -r C_SRC_ID='RBY'
+
 #   s:  define blackList
 declare -a aBlackList=(\
     'r18_thread.rb' \
 )
 
-#   s:  fetch all bash in a ShellArray
+#   s:  fetch all sources
 aShellArray=$(echo `ls r*.rb`)
 
 #   s:  fetchDateTime
@@ -135,7 +142,7 @@ fLog="$v_FWK_dirTemp/$v_SCP_bdy.log"
 printf "&&& logFile:'%s'\n" "$fLog"
 
 #   s:  header
-printf -v SOut ">>> runPRL.BEG *[%d] at:[%s]." "$iCtr" "$sDtm"
+printf -v SOut ">>> run<%s>.BEG *[%d] at:[%s]." $C_SRC_ID "$iCtr" "$sDtm"
 printf "$SOut\n"
 echo "$SOut" > $fLog
 
@@ -164,7 +171,8 @@ sDtm=$(date "$sFmt");   tDtmStopp=$(date '+%s.%N')
 fSec=$(echo "($tDtmStopp-$tDtmStart) / 1" | bc)
 
 #   s:  footer
-printf -v SOut "<<< runPRL.END *[%d] at:[%s] elapsed:[%s]." "$iCtr" "$sDtm" "$fSec"
+printf -v SOut "<<< run<%s>.END *[%d] at:[%s] elapsed:[%s]." \
+     $C_SRC_ID "$iCtr" "$sDtm" "$fSec"
 echo "$SOut" >> $fLog
 printf "$SOut\n"
 

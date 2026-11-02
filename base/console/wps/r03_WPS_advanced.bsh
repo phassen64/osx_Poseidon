@@ -3,18 +3,14 @@
 #   ***************************************************************************
 #   run:[advanced]      tutorial.WPS 2026        ©[mATe64]   [2026-11-01]
 #   ***************************************************************************
-
 #   description:
 #       run all script files, logging enabled
 #       using BlackList to skip scripts
-
 #   usage:
 #       $   bash <THIS.bsh>
-
 #   content:
 #       b:  function
 #       b:  body
-
 #   ***************************************************************************
 
 #   ===========================================================================
@@ -89,7 +85,7 @@ function f_run_script {
             then
                 printf "{*true}"
             else
-                printf "{NOK}:[%d]<>[%d]}" $iEc $iBashReply
+                printf "{false}:[%d]<>[%d]}" $iEc $iBashReply
                 iRc+=1
             fi
             printf ".\n"
@@ -112,6 +108,9 @@ function f_run_script {
 #   s:  interpreter
 declare -r C_INTERPRETER='pwsh'
 
+#   s:  srcId
+declare -r C_SRC_ID='WPS'
+
 #   s:  define blackList
 declare -a aBlackList=(\
     'w00_dummy.ps1' \
@@ -122,7 +121,7 @@ declare -a aBlackList=(\
     'w21_invoke.ps1'
 )
 
-#   s:  fetch all powershell scripts in a ShellArray
+#   s:  fetch all sources
 aShellArray=$(echo `ls w*.ps1`)
 
 #   s:  fetchDateTime
@@ -147,7 +146,7 @@ fLog="$v_FWK_dirTemp/$v_SCP_bdy.log"
 printf "&&& logFile:'%s'\n" "$fLog"
 
 #   s:  header
-printf -v SOut ">>> runWPS.BEG *[%d] at:[%s]." "$iCtr" "$sDtm"
+printf -v SOut ">>> run<%s>.BEG *[%d] at:[%s]." $C_SRC_ID "$iCtr" "$sDtm"
 printf "$SOut\n"
 echo "$SOut" > $fLog
 
@@ -157,7 +156,6 @@ echo "$SOut" >>  $fLog
 
 #   s:  run
 f_run_script "$aShellArray" "$iCtr" "$RANDOM" >> $fLog
-#   f_run_script "$aShellArray" "$iCtr" "$RANDOM"
 iRc=$?
 
 #   build sLine
@@ -177,7 +175,8 @@ sDtm=$(date "$sFmt");   tDtmStopp=$(date '+%s.%N')
 fSec=$(echo "($tDtmStopp-$tDtmStart) / 1" | bc)
 
 #   s:  footer
-printf -v SOut "<<< runWPS.END *[%d] at:[%s] elapsed:[%s]." "$iCtr" "$sDtm" "$fSec"
+printf -v SOut "<<< run<%s>.END *[%d] at:[%s] elapsed:[%s]." \
+     $C_SRC_ID "$iCtr" "$sDtm" "$fSec"
 echo "$SOut" >> $fLog
 printf "$SOut\n"
 

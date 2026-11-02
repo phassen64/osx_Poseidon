@@ -70,7 +70,7 @@ declare v_INFO="TUTOR-RBY-2026" ; export v_INFO
 #   s:  header
 declare sFmt="+%Y-%m-%d %H:%M:%S"
 declare sDtm=$(date "$sFmt")
-s='run<uno>::interpreter+run'; printf "BEG %s [%s]\n\n" $s "$sDtm"
+s='run<uno>'; printf "BEG %s [%s]\n\n" $s "$sDtm"
 
 declare -i i=0
 declare dTmp=${v_FWK_dirTemp}
@@ -96,7 +96,7 @@ done
 #   s:  footer
 printf "\n"
 sDtm=$(date "$sFmt")
-s='run<uno>::interpreter+run'; printf "END %s [%s]\n\n" $s "$sDtm"
+s='run<uno>'; printf "END %s [%s]\n\n" $s "$sDtm"
 
 exit $iRc
 #   m:  lastLine

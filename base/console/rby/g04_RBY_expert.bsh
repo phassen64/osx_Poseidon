@@ -256,7 +256,7 @@ function f_run_main {
             $C_INTERPRETER $xFile $C_mod_iExpectedExitCode; iReplyEc=$?
 
             #   check reply
-            printf "<<< replyOf[%d]:'%s': # ec:{%d} ==:" $n $xFile $iReplyEc
+            printf "<<< reply [%d]:'%s' ==:" $iFile $xFile
 
             if [ $C_mod_iExpectedExitCode == $iReplyEc ]
             then
