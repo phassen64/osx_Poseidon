@@ -39,8 +39,13 @@
 #   m:  prepare
 #
 
-#   s:  compiler
+#   s:  C.compiler
 declare -r C_COMPILER='g++'
+
+#   s:  C.blackList
+declare -a C_aBlackList=( \
+                'z99_none.cpp' \
+)
 
 #   s:  const library source
 declare -r C_TUTOR_LIBRARY__SRC='z00_library.cpp'
@@ -55,16 +60,15 @@ clear
 declare -i iReply=$RANDOM
 echo "+ run.simple:[$iReply]"
 
-#   s:  fetch all C-sources
-declare -a aSrc=$(echo `ls z??_*.cpp`)
+#   s:  D.sourceList
+declare -a aShellArray=$(echo `ls z??_*.cpp`)
 
 #   s:  array size
 declare -i n
-n=${#aSrc[@]}; echo "n1==[$n]" # not works
-
+n=${#aShellArray[@]}; echo "n1==[$n]" # not works
 #   calc manually
 n=0
-for xFile in $aSrc; do
+for xFile in $aShellArray; do
     n+=1
 done
 echo "n==[$n] "
@@ -97,7 +101,7 @@ declare dTmp=${v_FWK_dirTemp}
 declare sOpt="-Wall -Werror"
 
 #   s:  loop about SHELL-array
-for sFile in $aSrc
+for sFile in $aShellArray
 do
 
     #   u:  declare.src
@@ -117,6 +121,21 @@ do
     export v_EXE=$xFile
 
     #   u:  make (compile+link)
+
+    #   u:  check blackList
+    sBlack='-'
+    for xBlack in "${C_aBlackList[@]}"
+    do
+        if [ "$xBlack" == "$sFile" ]; then
+            sBlack='!'
+            break
+        fi
+    done
+    if [ "$sBlack" == '!' ]; then
+        printf "&&& SKIP:[%s]\n" $xFile
+        continue
+    fi
+
     #   u:  check library
     if [ $sFile == "$C_TUTOR_LIBRARY__SRC" ]
     then
