@@ -33,7 +33,7 @@ function f_run_script {
         nFile+=1
     done
 
-    #   define my runner.eXitStatus [3,...199]
+    #   define my runner.eXitCode [3,...199]
     local -i iEc=$v_FWK_exitStatus
     local -i iBashReply=0
     local -x sHashLine
@@ -59,18 +59,33 @@ function f_run_script {
             printf "*** run:[%2.2d]/[%3.3d]:'%s'\n" $iFile $n  $xFile
             printf "%s\n\n" $sHashLine
 
+            #   isFileInBlackList?
+            sBlack='-'
+            for xBlack in "${C_aBlackList[@]}"
+            do
+                if [ "$xBlack" == "$xFile" ]; then
+                    sBlack='!'
+                    break
+                fi
+            done
+            if [ "$sBlack" == '!' ]; then
+                printf "&&& SKIP:[%s]\n" $xFile
+                continue
+            fi
+
             #   call script, save eXitCode
             $C_INTERPRETER $xFile $iEc;   iBashReply=$?
 
             #   check reply
-            printf "\n<<< replyOf[%d]:'%s': #{%d}" $n $xFile $iBashReply
+            printf "\n<<< reply [%d]:'%s' ==:" $iFile $xFile
             if [ $iEc == $iBashReply ]
             then
-                printf ":scpEc==:!OK\n"
+                printf "{*true}"
             else
-                printf ":scpEc==:?nok\n"
+                printf "{false}:[%d]<>[%d]}" $iEc $iBashReply
                 iRc+=1
             fi
+            printf ".\n"
 
         done
 
@@ -88,10 +103,18 @@ function f_run_script {
 #   m:  prepare
 #
 
-#   s:  interpreter
+#   s:  C.interpreter
 declare -r C_INTERPRETER='perl'
 
-#   s:  fetch all bash in a ShellArray
+#   s:  C.blackList
+declare -a C_aBlackList=( \
+                'p10_p2c.pl' \
+)
+
+#   s:  C.srcId
+declare -r C_SRC_ID='PRL'
+
+#   s:  D.sourceList
 aShellArray=$(echo `ls p*.pl`)
 
 #   s:  fetchDateTime
@@ -116,7 +139,7 @@ fLog="$v_FWK_dirTemp/$v_SCP_bdy.log"
 printf "&&& logFile:'%s'\n" "$fLog"
 
 #   s:  header
-printf -v SOut ">>> runPRL.BEG *[%d] at:[%s]." "$iCtr" "$sDtm"
+printf -v SOut ">>> run<%s>.BEG *[%d] at:[%s]." $C_SRC_ID "$iCtr" "$sDtm"
 printf "$SOut\n"
 echo "$SOut" > $fLog
 
@@ -145,7 +168,8 @@ sDtm=$(date "$sFmt");   tDtmStopp=$(date '+%s.%N')
 fSec=$(echo "($tDtmStopp-$tDtmStart) / 1" | bc)
 
 #   s:  footer
-printf -v SOut "<<< runPRL.END *[%d] at:[%s] elapsed:[%s]." "$iCtr" "$sDtm" "$fSec"
+printf -v SOut "<<< run<%s>.END *[%d] at:[%s] elapsed:[%s]." \
+     $C_SRC_ID "$iCtr" "$sDtm" "$fSec"
 echo "$SOut" >> $fLog
 printf "$SOut\n"
 

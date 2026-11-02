@@ -106,7 +106,7 @@ function f_run_script {
 #   s:  C.interpreter
 declare -r C_INTERPRETER='python3'
 
-#   s:  srcId
+#   s:  C.srcId
 declare -r C_SRC_ID='PYT'
 
 #   s:  D.sourceList
