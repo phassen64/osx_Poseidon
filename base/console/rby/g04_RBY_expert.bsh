@@ -140,7 +140,7 @@ function f_run_matchFiles() {
             i+=1
             if [[ $xFile =~ $sRex ]]; then
                 sBlack='-'
-                for xBlack in "${aBlackList[@]}"
+                for xBlack in "${C_aBlackList[@]}"
                 do
                     if [ "$xBlack" == "$xFile" ]; then
                         sBlack='!'
@@ -297,8 +297,8 @@ declare -r      p_pThis=$BASH_SOURCE
 #   s:  C.interpreter
 declare -r C_INTERPRETER='ruby'
 
-#   s:  define blackList
-declare -a aBlackList=(\
+#   s:  C.blackList
+declare -a C_aBlackList=(\
     'r18_thread.rb' \
 )
 

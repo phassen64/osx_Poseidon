@@ -64,7 +64,7 @@ function f_run_script {
 
             #   isFileInBlackList?
             sBlack='-'
-            for xBlack in "${aBlackList[@]}"
+            for xBlack in "${C_aBlackList[@]}"
             do
                 if [ "$xBlack" == "$xFile" ]; then
                     sBlack='!'
@@ -106,14 +106,14 @@ function f_run_script {
 #   m:  prepare
 #
 
-#   s:  interpreter
+#   s:  C.interpreter
 declare -r C_INTERPRETER='ruby'
 
 #   s:  srcId
 declare -r C_SRC_ID='RBY'
 
-#   s:  define blackList
-declare -a aBlackList=(\
+#   s:  C.blackList
+declare -a C_aBlackList=(\
     'r18_thread.rb' \
 )
 

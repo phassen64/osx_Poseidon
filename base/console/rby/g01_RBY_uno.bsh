@@ -53,13 +53,13 @@ function f_run_clean() {
 #   s:  paramer
 p_sFile=$1
 
-#   s:  compiler
+#   s:  C.compiler
 declare -r C_INTERPRETER='ruby'
 
 #   clean
 clear
 f_run_clean
-
+    
 #   s:  fetch sources - build a BASH-array
 declare -a aSrc
 aSrc+=( $p_sFile )

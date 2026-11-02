@@ -14,11 +14,11 @@
 #   m:  prepare
 #
 
-#   s:  interpreter
+#   s:  C.interpreter
 declare -r C_INTERPRETER='ruby'
 
-#   s:  define blackList
-declare -a aBlackList=(\
+#   s:  C.blackList
+declare -a C_aBlackList=(\
     'r18_thread.rb' \
 )
 
@@ -27,15 +27,15 @@ clear
 declare -i iReply=$RANDOM
 echo "+ run.simple:[$iReply]"
 
-#   s:  fetch all ruby scripts in a ShellArray
-a=$(echo `ls r*.rb`)
+#   s:  fetch all sources
+aShellArray=$(echo `ls r*.rb`)
 
 #   s:  array size
 declare -i n
-n=${#a[@]}; echo "n1==[$n]" # not works
+n=${#aShellArray[@]}; echo "n1==[$n]" # not works
 #   calc manually
 n=0
-for xFile in $a; do
+for xFile in $aShellArray; do
     n+=1
 done
 echo "n==[$n] "
@@ -54,14 +54,14 @@ printf "BEG simple.run:[%s]\n\n" "$sDtm"
 
 declare -i i=0
 
-for xFile in $a
+for xFile in $aShellArray
 do
     i+=1
     printf "*** run:[%2.2d]/[%2.2d]:'%s'\n" $i $n $xFile
 
     #   isFileInBlackList?
     sBlack='-'
-    for xBlack in "${aBlackList[@]}"
+    for xBlack in "${C_aBlackList[@]}"
     do
         if [ "$xBlack" == "$xFile" ]; then
             sBlack='!'

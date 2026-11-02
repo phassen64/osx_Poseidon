@@ -145,7 +145,7 @@ function f_run_matchFiles() {
             i+=1
             if [[ $xFile =~ $sRex ]]; then
                 sBlack='-'
-                for xBlack in "${aBlackList[@]}"
+                for xBlack in "${C_aBlackList[@]}"
                 do
                     if [ "$xBlack" == "$xFile" ]; then
                         sBlack='!'
@@ -299,11 +299,11 @@ function f_run_main {
 #   s:  C.this
 declare -r      p_pThis=$BASH_SOURCE
 
-#   s:  interpreter
+#   s:  C.interpreter
 declare -r C_INTERPRETER='pwsh'
 
-#   s:  define blackList
-declare -a aBlackList=(\
+#   s:  C.blackList
+declare -a C_aBlackList=(\
     'w00_dummy.ps1' \
 #   'w06_function.ps1' \
 #   'w11_regExpr.ps1' \
