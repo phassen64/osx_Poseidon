@@ -474,28 +474,31 @@ F_match ($s)($r)($true)(__LINE__)
 
 f_lib_menuS1("match.selectString")(__LINE__)
 
-#   get all environment variables via CMD
-$aCmd = (& $env:ComSpec /c 'set') | Sort-Object
+#   get all environment variables via CMD - only in Windows
+if ($windir -is [string ]) {  # !CRQ-261102:ComSpec only in Windows
 
-#   fetch this
-$C_sKey = 'UserName'
-$C_sKey = 'ComputerName'
+    $aCmd = (& $env:ComSpec /c 'set') | Sort-Object
 
-#   my rex
-$r = '^([^=]*)=(.*)$'   # complex
-$r = '^(.*)=(.*)$'      # try my
+    #   fetch this
+    $C_sKey = 'UserName'
+    $C_sKey = 'ComputerName'
 
-#   parse : (USERNAME=peter) => 'USERNAME'|'peter'
-$i = 0
-$aCmd | Select-String $r | ForEach-Object {
-    $k = $_.Matches[0].Groups[1].Value
-    $v = $_.Matches[0].Groups[2].Value
-    $x = $aCmd[$i]
-    if ($k -eq $c_sKey) {
-        show "[$i]:'$x' => '$k'|'$v'" 'Yellow'
+    #   my rex
+    $r = '^([^=]*)=(.*)$'   # complex
+    $r = '^(.*)=(.*)$'      # try my
+
+    #   parse : (USERNAME=peter) => 'USERNAME'|'peter'
+    $i = 0
+    $aCmd | Select-String $r | ForEach-Object {
+        $k = $_.Matches[0].Groups[1].Value
+        $v = $_.Matches[0].Groups[2].Value
+        $x = $aCmd[$i]
+        if ($k -eq $c_sKey) {
+            show "[$i]:'$x' => '$k'|'$v'" 'Yellow'
+        }
+        $i += 1
     }
-    $i += 1
-}
+}  
 
 #   ===========================================================================
 #   m:  replace

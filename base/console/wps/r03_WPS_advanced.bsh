@@ -84,15 +84,15 @@ function f_run_script {
             $C_INTERPRETER $xFile $iEc;   iBashReply=$?
 
             #   check reply
-            printf "\n<<< replyOf[%d]:'%s': #{%d}" $n $xFile $iBashReply
+            printf "\n<<< replyOf[%d]:'%s' ==:" $n $xFile
             if [ $iEc == $iBashReply ]
             then
-                printf ":reply==:[+OK] \n"
+                printf "{*true}"
             else
-                printf ":reply==:[NOK]::[%d]!=[%d] \n" $iEc $iBashReply 
+                printf "{NOK}:[%d]<>[%d]}" $iEc $iBashReply
                 iRc+=1
             fi
-
+            printf ".\n"
         done
 
     done

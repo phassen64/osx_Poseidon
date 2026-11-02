@@ -53,7 +53,7 @@
 
 param(
     [string]    $p__sScp,
-    [string]    $p__dScratch,   # !CRQ-261101
+    [string]    $p__dScratch,   # !CRQ-261101:use dScratch
     [int]       $p__iLogMode,   # 1:std, 2:autoNaming, else:noLogging
     [switch]    $o__bColor,
     [switch]    $o__bVerbose    # info && trace
