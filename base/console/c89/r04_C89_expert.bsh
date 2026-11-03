@@ -17,25 +17,19 @@
 #           Step3:  depending on run command executes
 #                   any 1, all, allRandom, someRandom objects
 #       Execute options:
-#       Execute options:
 #           '_' :   runAll in the order of their namings source[1]..[MAX]
 #           '.' :   run1 EXE    - choose randomly
 #           '!' :   runAll EXE  - choose randomly
 #           '+' :   runSome EXE - choose randomly
 #           '4' :   special index-mode, run specfic source[4]
 #
-#   usage:  $   bash <SCP.bsh> [option]
+#   usage:  $   bash <SCP.bsh>  [option]
 
 #   remark: The objects and executables are stored in the
 #           [FWK-TEMP-Directory].
 
-#   remark: The first C-source, named c00_*.c, is handled as the
-#           c89-TutorLibrary
+#   remark: The first source, named c00_*.c, is handled as the C89TutorLibrary.
 #
-#           [FWK-TEMP-Directory].
-
-
-#   rem:    don't execute c00*.c
 
 <<usage
     Tutorial 2026-10-14
@@ -268,12 +262,13 @@ function f_run_compile {
     fi
 
     #   compiler
-    local -i i=0
     local -x xFile
+    local -i iFile=0
+    local -i iLink=0
 
     for xFile in "${p_aSrc[@]}"
     do
-        i+=1
+        iFile+=1
 
         #   define PATH.objects and PATH.executable
         local sNam=$(basename ${xFile})
@@ -289,12 +284,13 @@ function f_run_compile {
         if [ $C_TUTOR_LIBRARY__SRC == $xFile ]
         then
             if [ $C_bTrue == $C_bug_flag__bVerbose ]; then
-                printf "### compile-Only:'%s'\n" $xFile
+                printf "### compile-Only[%d]:'%s'\n" 0 $xFile
             fi
             $sDoCompile     #   compiling
         else
+            iLink+=1
             if [ $C_bTrue == $C_bug_flag__bVerbose ]; then
-                printf "### compile+Link:'%s'\n" $xFile
+                printf "### compile+Link[%d]:'%s'\n" $iLink $xFile
             fi
             $sDoCompile     #   compiling
             $sDoLinking     #   linking
@@ -349,7 +345,7 @@ function f_run_execute {
     #   exit code [3,...199]
     local -i iRc=0      # sum of errors
     local -i iEc=$C_mod_iExpectedExitCode   # show
-    local -i iReplyEc=99
+    local -i iReply=99
 
     #   build sLine
     s=''; c='#'; for((i=0;i<80;i++)); do s+="$c"; done
@@ -359,8 +355,6 @@ function f_run_execute {
     printf "___ script ecDefault #:{%d}\n\n" $iEc
 
     for (( n=1; n<=$p_nStressMax; n++ )); do
-
-        #   printf "\n### stress :: [%3.3d]/[%3.3d]\n" $n $p_nStressMax
 
         iFile=0
         for xFile in "${p_aSrc[@]}"
@@ -377,28 +371,39 @@ function f_run_execute {
             printf "*** run:[%2.2d]/[%2.2d]:'%s'\n" $iFile $n  $xFile
             printf "%s\n" $sHashLine
 
+            #   isFileInBlackList?
+            sBlack='-'
+            for xBlack in "${C_aBlackList[@]}"
+            do
+                if [ "$xBlack" == "$xFile" ]; then
+                    sBlack='!'
+                    break
+                fi
+            done
+            if [ "$sBlack" == '!' ]; then
+                printf "&&& SKIP:[%s]\n" $xFile
+                continue
+            fi
+
             #   call script, save eXitCode
             sBdy="${xFile%.*}"
             pExe="$dTmp/$sBdy.${C_EXT_exe}"
 
-            #   printf "+++ doExecute:[$pExe]\n"
-
-            #   ---------------------------------------------------------------
+            #   call executable
             $pExe
-            #   ---------------------------------------------------------------
+
+            #   fetch reply
+            iReply=$?
 
             #   check reply
-            iReplyEc=$?
-            printf "<<< replyOf[%d]:'%s': # ec:{%d} " $n $xFile $iReplyEc
-
-            if [ $C_mod_iExpectedExitCode == $iReplyEc ]
+            printf "<<< reply [%d]:'%s' ==:" $iFile $xFile
+            if [ $C_mod_iExpectedExitCode == $iReply ]
             then
-                printf "== OK\n"
+                printf "{*true}"
             else
-                printf "!= [%d]\n" $C_mod_iExpectedExitCode
+                printf "{false}:[%d]<>[%d]}" $C_mod_iExpectedExitCode $iReply
                 iRc+=1
             fi
-
             printf ".\n"
 
         done
@@ -428,8 +433,11 @@ function f_run_execute {
 #   s:  C.this
 declare -r      p_pThis=$BASH_SOURCE
 
-#   s:  compiler
+#   s:  C.compiler
 declare -r C_COMPILER='gcc'
+
+#   s:  C.srcId
+declare -r C_SID='C89'
 
 #   s:  C.fwk
 declare -r      C_dirTemp=$v_FWK_dirTemp
@@ -448,14 +456,14 @@ s="${s%.*}" # body
 declare -r C_TUTOR_LIBRARY__OBJ="${s}.${C_EXT_obj}"
 
 #   s:  C.RexExpr
-declare -r -x   C_REX_head='c'  # c??...
-declare -r -x   C_REX_tail='c'  # fileExtension
+declare -r -x   C_REX_head='c'          #   c??...
+declare -r -x   C_REX_tail='c'          #   fileExtension
 
 #   s:  C.modifier
 declare -r -i   C_mod_iPlusDivisor=4    #   max/4
 declare -r -i   C_mod_iStressMax=10     #   stressFactorMax
 declare -r -i   C_mod_delay=1
-declare -r -i   C_mod_iExpectedExitCode=$v_FWK_exitStatus #   expected by caller
+declare -r -i   C_mod_iExpectedExitCode=$v_FWK_exitStatus
 
 #   s:  C.bool
 declare -r -i   C_bTrue=100

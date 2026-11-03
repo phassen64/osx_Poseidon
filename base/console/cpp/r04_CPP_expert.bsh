@@ -17,7 +17,6 @@
 #           Step3:  depending on run command executes
 #                   any 1, all, allRandom, someRandom objects
 #       Execute options:
-#       Execute options:
 #           '_' :   runAll in the order of their namings source[1]..[MAX]
 #           '.' :   run1 EXE    - choose randomly
 #           '!' :   runAll EXE  - choose randomly
@@ -29,13 +28,8 @@
 #   remark: The objects and executables are stored in the
 #           [FWK-TEMP-Directory].
 
-#   remark: The first C-source, named z00_*.cpp, is handled as the
-#           c89-TutorLibrary
+#   remark: The source, named z00_*.cpp, is handled as the C++TutorLibrary.
 #
-#           [FWK-TEMP-Directory].
-
-
-#   rem:    don't execute c00*.c
 
 <<usage
     Tutorial 2026-10-16
@@ -186,7 +180,6 @@ function f_run_matchFiles() {
     s+="$p_sRexEnd"
     s+='$'
     sRex=$s
-    #   echo "+ tryRex := '$sRex'"
 
     #   Get files with pattern
     for xFile in `ls`
@@ -269,13 +262,13 @@ function f_run_compile {
     fi
 
     #   compiler
-    local -i iLink=0
-    local -i iFile=0
     local -x xFile
+    local -i iFile=0
+    local -i iLink=0
 
     for xFile in "${p_aSrc[@]}"
     do
-        iFile+=1    
+        iFile+=1
 
         #   define PATH.objects and PATH.executable
         local sNam=$(basename ${xFile})
@@ -463,14 +456,14 @@ s="${s%.*}" # body
 declare -r C_TUTOR_LIBRARY__OBJ="${s}.${C_EXT_obj}"
 
 #   s:  C.RexExpr
-declare -r -x   C_REX_head='z'      # z??...
-declare -r -x   C_REX_tail='cpp'    # fileExtension
+declare -r -x   C_REX_head='z'          #   z??...
+declare -r -x   C_REX_tail='cpp'        #   fileExtension
 
 #   s:  C.modifier
 declare -r -i   C_mod_iPlusDivisor=4    #   max/4
 declare -r -i   C_mod_iStressMax=10     #   stressFactorMax
 declare -r -i   C_mod_delay=1
-declare -r -i   C_mod_iExpectedExitCode=$v_FWK_exitStatus # expected by caller
+declare -r -i   C_mod_iExpectedExitCode=$v_FWK_exitStatus
 
 #   s:  C.bool
 declare -r -i   C_bTrue=100
