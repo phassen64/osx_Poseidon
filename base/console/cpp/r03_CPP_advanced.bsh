@@ -89,7 +89,7 @@ function f_run_compile() {
     #   u:  make (compile+link)
     #   u:  check library
 
-    if [ $p_sFile == "$C_TUTOR_LIBRARY__SRC" ]
+    if [ "$C_TUTOR_LIBRARY__SRC" == "$p_sFile" ]
     then
         $C_COMPILER -c $p_sFile -o $pLiby
         printf "&&& return -- is library!:'%s'\n"  $C_TUTOR_LIBRARY__SRC
@@ -122,6 +122,7 @@ function f_run_script {
     local -i n=0
     local -i iFile=0
     local -i nFile=0
+    local -i iTest=0    #   only src[1..n]   
 
     #   calc.manually shell array
     nFile=0
@@ -148,6 +149,7 @@ function f_run_script {
 
         printf "\n### stress :: [%2.2d]/[%2.2d]\n" $n $p_nStressMax
         iFile=0
+        iTest=0
 
         for sFile in $p_aShellArray
         do
@@ -177,8 +179,15 @@ function f_run_script {
             f_run_compile $sFile $iFile $nFile $iEc;   iBashReply=$?
             #   ---------------------------------------------------------------
 
+            #   check library and Test
+            if [ "$C_TUTOR_LIBRARY__SRC" == "$sFile" ]
+            then
+                continue
+            fi 
+            iTest+=1
+
             #   check reply
-            printf "\n<<< reply.<%s> [%d]:'%s' ==:" $C_SID $iFile $sFile
+            printf "\n<<< reply.<%s> [%d]:'%s' ==:" $C_SID $iTest $sFile
             if [ $iEc == $iBashReply ]
             then
                 printf "{*true}"
@@ -211,15 +220,6 @@ if [ -z $p_iStress ]; then
 elif [ $p_iStress -lt 1 ]; then
     p_iStress=1
 fi
-#   echo "stress:[$p_iStress]"  exit
-
-#   s:  const library source
-declare -r C_TUTOR_LIBRARY__SRC='z00_library.cpp'
-
-#   s:  const library object
-s=$(basename ${C_TUTOR_LIBRARY__SRC})
-s="${s%.*}"             #   Body
-declare -r C_TUTOR_LIBRARY__OBJ="${s}.obj"
 
 #   s:  C.compiler
 declare -r C_COMPILER='g++'
@@ -234,6 +234,15 @@ aShellArray=$(echo `ls z*.cpp`)
 declare -a C_aBlackList=( \
                 'z99_none.cpp' \
 )
+
+#   s:  const library source
+declare -r C_TUTOR_LIBRARY__SRC='z00_library.cpp'
+
+#   s:  const library object
+s=$(basename ${C_TUTOR_LIBRARY__SRC})
+s="${s%.*}"             #   Body
+declare -r C_TUTOR_LIBRARY__OBJ="${s}.obj"
+
 
 #   s:  fetchDateTime
 declare sFmt="+%Y-%m-%d %H:%M:%S"
@@ -261,8 +270,7 @@ f_run_clean
 #
 
 #   s:  header
-printf -v SOut ">>> run<%s>.BEG *[%d] at:[%s]."\
-                    $C_SID "$p_iStress" "$sDtm"
+printf -v SOut ">>> run<%s>.BEG *[%d] at:[%s]." $C_SID "$p_iStress" "$sDtm"
 printf "$SOut\n"
 echo "$SOut" > $fLog
 

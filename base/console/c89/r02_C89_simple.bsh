@@ -60,16 +60,16 @@ clear
 declare -i iReply=$RANDOM
 echo "+ run.simple:[$iReply]"
 
-#   s:  fetch all C-sources
-declare -a aSrc=$(echo `ls c??_*.c`)
+#   s:  D.sourceList
+declare -a aShellArray=$(echo `ls c??_*.c`)
 
 #   s:  array size
 declare -i n
-n=${#aSrc[@]}; echo "n1==[$n]" # not works
+n=${#aShellArray[@]}; echo "n1==[$n]" # not works
 
 #   calc manually
 n=0
-for xFile in $aSrc; do
+for xFile in $aShellArray; do
     n+=1
 done
 echo "n==[$n] "
@@ -102,7 +102,7 @@ declare dTmp=${v_FWK_dirTemp}
 declare sOpt="-Wall -Werror"
 
 #   s:  loop about SHELL-array
-for sFile in $aSrc
+for sFile in $aShellArray
 do
 
     #   u:  declare.src
