@@ -124,13 +124,13 @@ function f_ini_xRdp() {
 function f_ini_ruby() {
     local p_sMod=$1
     case $p_sMod in
-        'app')   
+        'app')
             echo "< install:app"
    	        sudo apt-get install ruby
             sudo apt-get install ruby-dev
             sudo apt-get install rubygems-integration
         ;;
-        'tmp')   
+        'tmp')
             #   sudo apt-get install ruby_gem fails
             sudo apt-get install rubocop
         ;;
@@ -151,8 +151,8 @@ function f_ini_ruby() {
             sudo gem install rubyzip
             sudo gem install thor
             sudo gem install zip
-        ;;    
-        'GET')   
+        ;;
+        'GET')
             #   sudo apt-get install ruby_gem fails
             gem list --local
         ;;
@@ -173,12 +173,12 @@ function f_ini_python() {
         sudo apt-get install python3-numpy
         printf "install python.module :{'numba'} \n"
         sudo apt-get install python3-numba
-    else 
+    else
 	    sudo apt-get update
 	    sudo apt-get install python3 python3-pip python3-venv -y
 	    python3 --version
 	    pip3 --version
-    fi    
+    fi
 }
 
 
@@ -307,6 +307,18 @@ function f_vcs_get() {
     ls
     git clone "$sVCS"
     popd
+}
+
+function f_vcs_config() {
+    #   issue:
+    #       "Password authentication is not supported for Git operations."
+    #   Generate a new SSH key pair in your terminal
+    ssh-keygen -t ed25519 -C "pluto64@e-mail.de"
+    #   Start the SSH agent and add your key
+    ssh-add ~/.ssh/id_ed25519
+    #   Change your repository URL from HTTPS to SSH
+    #   Inside your project directory, run:
+    git remote set-url origin git@github.com:phassen64/osx_Poseidon.git
 }
 
 #   ===========================================================================
@@ -480,12 +492,12 @@ function f_fwk_interpreter_check() {
 }
 
 function f_fwk_variable_show() {
-    #   usage   $   f_fwk_variable_show x 
+    #   usage   $   f_fwk_variable_show x
     local bAll=$1
     +cls
     if [ ! -z $bAll ]; then
         printenv | sort
-    else 
+    else
         printenv | grep "^v_"  | sort
     fi
 }
@@ -570,7 +582,7 @@ function f_fwk_variable_define () {
     v_TMP=$v_FWK_dirTemp && export v_TMP
     #   a:  via USR
     v_USR_scratch_relPath='/Documents/temp' && export v_USR_scratch_relPath
-    
+
     #   loging Dir
     v_DIR=$v_VCS/fwk/public/logging
     v_FWK_dirLogging=$v_DIR && export v_FWK_dirLogging
@@ -601,8 +613,8 @@ function f_fwk_converter_dos2unix__file {
 
     #   get parameter
     local p_sFile=$1        #   file at local dir
-    local p_sMod=$2         #   {u2d|d2u}    
-    local p_sTry=$3         #   {?,!} 
+    local p_sMod=$2         #   {u2d|d2u}
+    local p_sTry=$3         #   {?,!}
 
     #   validate parameter
     if [ -z $p_sFile ]; then
@@ -625,7 +637,7 @@ function f_fwk_converter_dos2unix__file {
         p_sTry='!'
     fi
 
-    #   dir/file.c -> file.c    
+    #   dir/file.c -> file.c
     local sNam=`basename $p_sFile`
     local sBdy="${p_sFile%.*}"
     local sExt="${p_sFile##*.}"
@@ -641,20 +653,20 @@ function f_fwk_converter_dos2unix__file {
 
     #   doConvert()         !CRQ-261019:d2u&&u2d
     if [ 'd2u' == $p_sMod ]; then
-        cat $p_sFile | dos2unix > $sObj  
+        cat $p_sFile | dos2unix > $sObj
     elif [ 'u2d' == $p_sMod ]; then
-        cat $p_sFile | unix2dos > $sObj  
+        cat $p_sFile | unix2dos > $sObj
     fi
 
     #   doRemoveBom     #   !CRQ-261019:BOM
     sed -i '1s/^\xEF\xBB\xBF//' $sObj
 
-    #   remove source 
-    rm -f $p_sFile 
-    
+    #   remove source
+    rm -f $p_sFile
+
     #   rename temp file to source file
     mv $sObj $p_sFile
-    
+
 
 
 }
@@ -663,10 +675,10 @@ function f_fwk_converter_dos2unix__file {
 function f_fwk_converter_dos2unix__directory {
 
     #   get parameter
-    local -x p_sDir=`pwd` 
+    local -x p_sDir=`pwd`
     local p_sExt=$1         #   fileNameExtension
-    local p_sMod=$2         #   {u2d|d2u}    
-    local -i p_iTry=$3      #   {0,1,2,3} 
+    local p_sMod=$2         #   {u2d|d2u}
+    local -i p_iTry=$3      #   {0,1,2,3}
 
     #   validate parameter
     if [ -z $p_sExt ]; then
@@ -702,7 +714,7 @@ function f_fwk_converter_dos2unix__directory {
     fi
 
     #   converter for all files with fitting file extension
-    local -i i=0 
+    local -i i=0
     for xFile in $p_sDir/*; do
         if [ -f $xFile ]; then
             local sExt="${xFile##*.}"
