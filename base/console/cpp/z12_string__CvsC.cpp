@@ -181,6 +181,7 @@ int F__check_c89String(CTutor &m) {
 
     m.f_menu("perror",__LINE__);
     perror("AnyStuffError");
+    //  return 1;   * test
 
 //  &&& parser    &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
 
@@ -409,7 +410,7 @@ int F__check_cppString(CTutor &m) {
 
     //  this access omits an exception
     m.f_subMenu("by method at with exception",__LINE__);
-    n   = 99;
+    n   = 97;   // too large
 
 // !CRQ-240515:exc
     i = 0;

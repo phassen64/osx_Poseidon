@@ -42,14 +42,6 @@
 #   ***************************************************************************
 
 #
-#   m:  compose
-#
-
-#   s:  compiler
-declare -r C_COMPILER='g++'
-aShellArray=$(echo `ls z*.cpp`)
-
-#
 #   m:  function
 #
 
@@ -108,8 +100,8 @@ function f_run_compile() {
         $C_COMPILER $oFile $pLiby -o $xFile     #   linking
     fi
 
-    #   u:  show run
-    printf "&&& run![%2.2d]:'%s'...\n\n" $i $xFile
+    #   u:  show run.outside
+    #   printf "&&& run![%2.2d]:'%s'...\n\n" $i $xFile
 
     #   u:  execute executable stored in a variable
     "$xFile" $p_iEc
@@ -167,19 +159,34 @@ function f_run_script {
             printf "*** run:[%2.2d]/[%2.2d]:'%s'\n" $iFile $n $sFile
             printf "%s\n\n" $sHashLine
 
+            #   isFileInBlackList?
+            sBlack='-'
+            for xBlack in "${C_aBlackList[@]}"
+            do
+                if [ "$xBlack" == "$sFile" ]; then
+                    sBlack='!'
+                    break
+                fi
+            done
+            if [ "$sBlack" == '!' ]; then
+                printf "&&& SKIP:[%s]\n" $sFile
+                continue
+            fi
+
             #   ---------------------------------------------------------------
             f_run_compile $sFile $iFile $nFile $iEc;   iBashReply=$?
             #   ---------------------------------------------------------------
 
             #   check reply
-            printf "\n<<< replyOf[%d]:'%s': #{%d} vs #{%d}" $n $sFile $iEc $iBashReply
+            printf "\n<<< reply.<%s> [%d]:'%s' ==:" $C_SID $iFile $sFile
             if [ $iEc == $iBashReply ]
             then
-                printf ":iEc isOK\n"
+                printf "{*true}"
             else
-                printf ":iEc != isRc \n" $iEc $iBashReply
+                printf "{false}:[%d]<>[%d]}" $iEc $iBashReply
                 iRc+=1
             fi
+            printf ".\n"
 
         done
 
@@ -214,6 +221,20 @@ s=$(basename ${C_TUTOR_LIBRARY__SRC})
 s="${s%.*}"             #   Body
 declare -r C_TUTOR_LIBRARY__OBJ="${s}.obj"
 
+#   s:  C.compiler
+declare -r C_COMPILER='g++'
+
+#   s:  C.srcId
+declare -r C_SID='CPP'
+
+#   s:  D.srcList
+aShellArray=$(echo `ls z*.cpp`)
+
+#   s:  C.blackList
+declare -a C_aBlackList=( \
+                'z99_none.cpp' \
+)
+
 #   s:  fetchDateTime
 declare sFmt="+%Y-%m-%d %H:%M:%S"
 
@@ -240,7 +261,8 @@ f_run_clean
 #
 
 #   s:  header
-printf -v SOut ">>> runC89.BEG *[%d] at:[%s]." "$p_iStress" "$sDtm"
+printf -v SOut ">>> run<%s>.BEG *[%d] at:[%s]."\
+                    $C_SID "$p_iStress" "$sDtm"
 printf "$SOut\n"
 echo "$SOut" > $fLog
 
@@ -273,7 +295,8 @@ sDtm=$(date "$sFmt");   tDtmStopp=$(date '+%s.%N')
 fSec=$(echo "($tDtmStopp-$tDtmStart) / 1" | bc)
 
 #   s:  footer
-printf -v SOut "<<< runC89.END *[%d] at:[%s] elapsed:[%s]." "$iCtr" "$sDtm" "$fSec"
+printf -v SOut "<<< run<%s>.END *[%d] at:[%s] elapsed:[%s]." \
+     $C_SID "$p_iStress" "$sDtm" "$fSec"
 echo "$SOut" >> $fLog
 printf "$SOut\n"
 
