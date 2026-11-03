@@ -4,6 +4,9 @@
 #   run:[uno]   tutorial.C89 v2026          ©[mATe64]           [2026-10-12]
 #   ***************************************************************************
 
+#   encoding
+#   !$@€ƒ„…†‡‰¡“”•—Ÿ¢£¤¥¦§¨™©®×±«»♔♖♞♟°²³µ¶·¹º¼½¾¿ÄÖÜäöüßæŠŒŽšœžçîðñôö÷αβγδεΦ.Ω
+
 #   usage:
 #       $   bash run_<SCP>.bsh <FILE.c>
 
@@ -115,13 +118,13 @@ do
     #   -----------------------------------------------------------------------
 
     #   u:  show run
-    printf "&&& run![%2.2d]:'%s'\n" $i $xFile
+    printf "&&& run![%2.2d]:'%s'\n\n" $i $xFile
 
     #   u:  execute executable stored in a variable
     "$xFile"
 
     iRc=$?
-    printf "&&& bash.reply.iRc:'%d'\n" $iRc
+    printf "\n&&& bash.reply.iRc:'%d'\n" $iRc
 
 done
 

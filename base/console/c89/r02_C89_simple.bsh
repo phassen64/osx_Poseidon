@@ -45,6 +45,11 @@ declare -r C_COMPILER='gcc'
 #   s:  const library source
 declare -r C_TUTOR_LIBRARY__SRC='c00_library.c'
 
+#   s:  C.blackList
+declare -a C_aBlackList=( \
+                'c19_dummy.c' \
+)
+
 #   s:  const library object
 s=$(basename ${C_TUTOR_LIBRARY__SRC})
 s="${s%.*}"             #   Body
@@ -117,6 +122,22 @@ do
     export v_EXE=$xFile
 
     #   u:  make (compile+link)
+
+    #   u:  check blackList
+    sBlack='-'
+    for xBlack in "${C_aBlackList[@]}"
+    do
+        if [ "$xBlack" == "$sFile" ]; then
+            sBlack='!'
+            break
+        fi
+    done
+    if [ "$sBlack" == '!' ]; then
+        printf "&&& SKIP:[%s]\n" $xFile
+        continue
+    fi
+
+
     #   u:  check library
     if [ $sFile == "$C_TUTOR_LIBRARY__SRC" ]
     then
