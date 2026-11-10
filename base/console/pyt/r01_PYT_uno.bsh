@@ -13,7 +13,7 @@
 #       $   bash run_<SCP>.bsh <FILE.rb>
 
 #   example:
-#       $   bash "g01_PYT_uno.bsh" "y01_intro.py"
+#       $   bash "<THIS>_uno.bsh" "y01_intro.py"
 
 #   description:
 #       run interpreter input-file <FILE.py>
