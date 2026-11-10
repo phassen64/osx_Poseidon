@@ -75,6 +75,10 @@ s='run<uno>'; printf "BEG %s [%s]\n\n" $s "$sDtm"
 declare -i i=0
 declare dTmp=${v_FWK_dirTemp}
 
+#   s:  setenv
+v_mode_bClr='true'; export v_mode_bClr
+
+
 #   s:  loop about BASH array
 for sFile in "${aSrc[@]}"
 do

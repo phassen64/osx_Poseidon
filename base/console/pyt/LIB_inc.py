@@ -79,7 +79,9 @@ g_bMode_color   = 'v_mode_bClr'
 g_bMode_verbose = 'v_mode_bVbs'
 g_iMode_logging = 'v_mode_iLog'
 
-#   tmpDir exists?
+#   const by Windows/Linux environment
+C_ENV_sTrue     =   'true'
+C_ENV_sFalse    =   'false'
 
 #   ===========================================================================
 #   m:  define.exitCode
@@ -202,7 +204,7 @@ class CBase:
             if (s == '0'):
                 bRc = True
         else:
-            if (s == 'true'):
+            if (s == C_ENV_sTrue):
                 bRc = True
         return bRc
 
