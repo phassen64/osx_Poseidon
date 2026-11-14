@@ -5,37 +5,54 @@
 #   coding:UTF8
 #   !$@€ƒ„…†‡ˆ‰Š‹ŒŽ‘“”•—™š›œžŸ¡¢£¤¥¦§¨©«¬®°±²³µ¶·¹º»¼½¾¿ÑÖ×ØÜÞßäæçîðñôö÷üýþÿ--$
 
-import os 
+#   bsh$>   v_mod_bClr='true'; export v_mod_bClr
+
+#   input
+#   muss ausserhalb definiert worden sein
+x = 'v_mode_bClr'   
+
+print("=== farbentest")
 
 C_UNDEFINED = '?undefined'
 C_DEFAULT   = '?default'
 
 tVariable = (
-    'v_FWK_mode_bColor',
-    'v_mode_bClr',
+     x,
     'USER'
 )
+
+import LIB_inc as m; g = m.CLib()
+g.f_lib_prepare()
+
+#   muss importiert werden, 
+#   LIB reicht nichts zurück in die Bash
+import os       
 
 i=0
 for x in tVariable:
     i+=1
     try:    
-        s = os.getenv(x,C_DEFAULT)
+        s = os.environ[x]    #   s = os.getenv(x,C_DEFAULT)
     except Exception:
         s = C_UNDEFINED
     print("<<< envVar[%d] : '%s' -> '%s'" % (i,str(x),s))    
 
 
-import LIB_inc as m; g = m.CLib()
+#   Variable mit LIB auslesen
+#   !CRQ-261114: python erkennt dennoch nicht 'x'
+bRc,sRc = g.f_bsEnv(x)
+g.f_puts("< reply.bsEnv('%s') bRc|sRc==:['%r'|'%s'] " % (x,bRc,sRc))
 
-#   Set library depending on env variables
-g.f_lib_configuration(
-        (g.f_bsEnv('v_mode_bClr')),
-        (g.f_bsEnv('v_mode_bVbs')),
-        1   # v_mode_iLog
-)
+#   Status Ausgabe  > keine Farben
+print("+ status der lib")
+g.f_status()
 
-#   define
+#   Farben manuell aktivieren
+g.f_lib_configuration(True) 
+
+g.f_puts("+ Ausgabe der Farben",g.C_COLOR_GREEN)
+
+#   temp setarray
 eColor = {
     g.C_COLOR_RED,
     g.C_COLOR_GREEN,
