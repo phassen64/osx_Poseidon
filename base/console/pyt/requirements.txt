@@ -1,0 +1,18 @@
+-r requirements-dev.txt
+
+# Libraries
+colorama
+cython
+cython-lint
+loguru
+numba
+numpy
+snakeviz
+matplotlib
+pandas
+pip
+pyinstrument
+seaborn
+sklearn
+staticfg
+tox
