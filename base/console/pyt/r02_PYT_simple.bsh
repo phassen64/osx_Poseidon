@@ -56,6 +56,9 @@ echo "n==[$n] "
 declare sFmt="+%Y-%m-%d %H:%M:%S"
 declare sDtm=$(date "$sFmt")
 
+#   s:  setcolor & logging
+v_mode_bClr='false'; export v_mode_bClr
+
 #   ===========================================================================
 #   m:  run.scripts
 #   ===========================================================================
