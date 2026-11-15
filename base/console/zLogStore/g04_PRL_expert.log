@@ -1,0 +1,1041 @@
+>>> run.{g04_PRL_expert.bsh} dtm:[2026-11-15 18:32:28]
+
+*** TEST
+	Date          :   [Sun 15 Nov 18:32:29 CET 2026]
+	iRandom       :   [160]
+	nFiles        :   [9]
+	iStressMax    :   [1]
+### showArray {'testSet'} pos:[f_run_main();227]
+	a[01] == 'p08_specVarFct.pl'
+	a[02] == 'p04_function.pl'
+	a[03] == 'p05_system.pl'
+	a[04] == 'p06_file.pl'
+	a[05] == 'p02_intro.pl'
+	a[06] == 'p01_overview.pl'
+	a[07] == 'p09_class.pl'
+	a[08] == 'p07_rex.pl'
+	a[09] == 'p03_operator.pl'
+.
+___ script ecDefault #:{72}
+
+
+################################################################################
+*** run:[01]/[01]:'p08_specVarFct.pl'
+################################################################################
+
+*** [p08_specVarFct.pl;049;Sun Nov 15 18:32:29 2026]:l: "1) Sonder-Vars"
+
+a)   @INC=          /home/peter/VCS/fwk/base/console/prl/etc/perl/usr/local/lib/x86_64-linux-gnu/perl/5.40.1/usr/local/share/perl/5.40.1/usr/lib/x86_64-linux-gnu/perl5/5.40/usr/share/perl5/usr/lib/x86_64-linux-gnu/perl-base/usr/lib/x86_64-linux-gnu/perl/5.40/usr/share/perl/5.40/usr/local/lib/site_perl
+b)   @ISA=          Exporter
+LISTE = ([1]:'/home/peter/VCS/fwk/base/console/prl'; [2]:'/etc/perl'; [3]:'/usr/local/lib/x86_64-linux-gnu/perl/5.40.1'; [4]:'/usr/local/share/perl/5.40.1'; [5]:'/usr/lib/x86_64-linux-gnu/perl5/5.40'; [6]:'/usr/share/perl5'; [7]:'/usr/lib/x86_64-linux-gnu/perl-base'; [8]:'/usr/lib/x86_64-linux-gnu/perl/5.40'; [9]:'/usr/share/perl/5.40'; [10]:'/usr/local/lib/site_perl';
+)
+
+1)   %ENV=          HOME/home/peterGNOME_DESKTOP_SESSION_IDthis-is-deprecatedQT_ACCESSIBILITY1v_USR_scratch_relPath/Documents/tempC_SCPg04_PRL_expert.bshUID1000v_VCS_fwk/home/peter/VCS/fwk/baseXRDP_PULSE_SINK_SOCKETxrdp_chansrv_audio_out_socket_10TERMxterm-256colorPERL5LIB/home/peter/VCS/fwk/base/console/prlXDG_SESSION_TYPEx11v_FWK_pthLibrary/home/peter/VCS/fwk/base/cmd/LIB.inc.bshv_TMP/home/peter/Documents/tempv_FWK/home/peter/VCS/fwkv_USR_dirWorkshop/home/peter/Documents/workshops################################################################################GNOME_TERMINAL_SCREEN/org/gnome/Terminal/screen/ce0eb5fd_3e72_422c_8374_a77da428c5c5C_SCP_bdyg04_PRL_expertGPG_AGENT_INFO/run/user/1000/gnupg/S.gpg-agent:0:1v_FWK_pthStarter/home/peter/VCS/fwk/base/cmd/FWK.starter.bshCOLORTERMtruecolorXRDP_PULSE_SOURCE_SOCKETxrdp_chansrv_audio_in_socket_10LS_COLORSrs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=00:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.7z=01;31:*.ace=01;31:*.alz=01;31:*.apk=01;31:*.arc=01;31:*.arj=01;31:*.bz=01;31:*.bz2=01;31:*.cab=01;31:*.cpio=01;31:*.crate=01;31:*.deb=01;31:*.drpm=01;31:*.dwm=01;31:*.dz=01;31:*.ear=01;31:*.egg=01;31:*.esd=01;31:*.gz=01;31:*.jar=01;31:*.lha=01;31:*.lrz=01;31:*.lz=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.lzo=01;31:*.pyz=01;31:*.rar=01;31:*.rpm=01;31:*.rz=01;31:*.sar=01;31:*.swm=01;31:*.t7z=01;31:*.tar=01;31:*.taz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tgz=01;31:*.tlz=01;31:*.txz=01;31:*.tz=01;31:*.tzo=01;31:*.tzst=01;31:*.udeb=01;31:*.war=01;31:*.whl=01;31:*.wim=01;31:*.xz=01;31:*.z=01;31:*.zip=01;31:*.zoo=01;31:*.zst=01;31:*.avif=01;35:*.jpg=01;35:*.jpeg=01;35:*.jxl=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:*~=00;90:*#=00;90:*.bak=00;90:*.crdownload=00;90:*.dpkg-dist=00;90:*.dpkg-new=00;90:*.dpkg-old=00;90:*.dpkg-tmp=00;90:*.old=00;90:*.orig=00;90:*.part=00;90:*.rej=00;90:*.rpmnew=00;90:*.rpmorig=00;90:*.rpmsave=00;90:*.swp=00;90:*.tmp=00;90:*.ucf-dist=00;90:*.ucf-new=00;90:*.ucf-old=00;90:sHashLine################################################################################VTE_VERSION8001SHELL/bin/bashPATH/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games:/home/peter/VCS/fwk/base/cmd:.v_FWK_reply_sRcreadyXDG_DATA_DIRS/usr/share/gnome:/home/peter/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share:/usr/shareSSH_AUTH_SOCK/run/user/1000/keyring/sshXRDP_SESSION3854CINNAMON_VERSION6.4.10OLDPWD/home/peter/Documentsv_USR_dirDocRoot/home/peter/DocumentsLOGNAMEpeterXDG_RUNTIME_DIR/run/user/1000v_FWK_dirLogging/home/peter/VCS/fwk/public/loggingDISPLAY:10.0PULSE_SCRIPT/etc/xrdp/pulse/default.paGTK3_MODULESxapp-gtk3-modulev_FWK_dirTemp/home/peter/Documents/tempSOut>>> run.{g04_PRL_expert.bsh} dtm:[2026-11-15 18:32:28]
+SHLVL2USERpeterXDG_SESSION_CLASSuserC_REX_headpXRDP_SOCKET_PATH/run/xrdp/sockdir/1000MC_TMPDIR/tmp/mc-D6ENY3XDG_CURRENT_DESKTOPX-Cinnamon_/usr/bin/perlHISTCONTROLignorebothx-v_FWK_exitStatus10MC_SID19850GNOME_TERMINAL_SERVICE:1.130v_FWK_dirTutor/home/peter/VCS/fwk/base/consolePWD/home/peter/VCS/fwk/base/console/prlxSrcSelected?SESSION_MANAGERlocal/tron3-d13x-430W:@/tmp/.ICE-unix/3921,unix/tron3-d13x-430W:/tmp/.ICE-unix/3921LANGUAGEen_GB:env_VCS/home/peter/VCSC_SCP_extbshC_REX_tailplDBUS_SESSION_BUS_ADDRESSunix:path=/run/user/1000/busSSH_AGENT_PID3976LANGen_GB.UTF-8XDG_SESSION_IDc2
+2)   $PATH=         
+3)   $HOME=         
+4)   $LOGDIR=       
+5)   @EXPORT=       
+6)   @EXPORT_OK=    
+7)   $^O =          linux
+8)   $OSNAME =      
+
+*** [p08_specVarFct.pl;079;Sun Nov 15 18:32:29 2026]:l: "1a) Sonder-Vars usage"
+
+OS ist : " linux " 
+Not Windows Modul!
+a) ProcessId $$   =        20098
+b) StartTime $^T  = 1794763949 => <18:32:29; ,15.11.2026>
+
+*** [p08_specVarFct.pl;111;Sun Nov 15 18:32:29 2026]:l: "3) Slices"
+
+a) Slice
+Slice<[1]:'a';[2]:'d';[3]:'f';[4]:'p';>
+
+b) unechstes 2 dimensionales Array
+Matrix <a b c A B C>
+
+c) echtes 2 dimensionales Array mittels Listen
+Matrix <ARRAY(0x55e101b34380) ARRAY(0x55e101b3c370)>
+Matrix <[0][0]:a;[0][1]:b;[0][2]:c;[1][0]:A;[1][1]:B;[1][2]:C; >
+
+c1) Zugriff auf einzelne Komponenten
+Z1               : a b c
+Zeile1           : a b c
+Zeile2           : A B C
+matrix[1]->[1]   : B
+matrix[1][2]     : C
+
+d) 2 dimensionales Array aus einzelnen Arrays
+Matrix <ARRAY(0x55e101b33978) ARRAY(0x55e101b33ab0)>
+Matrix <[0][0]:a;[0][1]:b;[0][2]:c;[1][0]:A;[1][1]:B;[1][2]:C;>
+Matrix <a; b; c; A; B; C; >
+
+*** [p08_specVarFct.pl;175;Sun Nov 15 18:32:29 2026]:l: "3) Argument: Funktionen"
+
+
+a) printList(a b c d)
+LISTE0=<abcd>
+LISTE1=<[1]:'a'; [2]:'b'; [3]:'c'; [4]:'d'; >
+LISTE2=<[1]:'a'; [2]:'b'; [3]:'c'; [4]:'d'; >
+LISTE3=<[1]:'b'; [2]:'c'; [3]:'d'; [4]:''; >
+
+b) dbg_printList(a b c d)
+LISTE = ([1]:'a'; [2]:'b'; [3]:'c'; [4]:'d'; )
+ERROR: Arg ist keine Referenz!
+
+c) addLists(1 2 3 , 4 5 6) =: 5 7 9
+
+d')dbg_printList2(1 2 3)
+LISTE = ([1]:'a'; [2]:'b'; [3]:'c'; [4]:'d'; )
+
+
+*** [p08_specVarFct.pl;256;Sun Nov 15 18:32:29 2026]:l: "4) Argument: Hashes"
+
+a)  print(%h)
+    HASH=:[1]:k2=>PLZ;[2]:k3=>Ort;[3]:k1=>Name;
+
+
+*** [p08_specVarFct.pl;280;Sun Nov 15 18:32:29 2026]:l: "5) Netzwerk"
+
+
+getnetbyname : loopback::2:2130706432
+
+
+*** [p08_specVarFct.pl;311;Sun Nov 15 18:32:29 2026]:l: "6) Prozesse"
+
+Father!; ChildId: 20099
+
+*** [p08_specVarFct.pl;327;Sun Nov 15 18:32:29 2026]:l: "Ende"
+
+
+*** [p08_specVarFct.pl;338;Sun Nov 15 18:32:29 2026]:l: "7) find+diffFiles"
+
+<<< reply [1]:'p08_specVarFct.pl' ==:{false}:[72]<>[10]}.
+
+################################################################################
+*** run:[02]/[01]:'p04_function.pl'
+################################################################################
+2b ) package B1 [File:p04_function.pl;Zeile:67]: 'BEGIN'
+
+*** [p04_function.pl;029;Sun Nov 15 18:32:29 2026]:l: "1) package"
+
+1) Aktives Packages : main
+2) Aktives Packages : P1
+3) Aktives Packages : P2
+$P1::i=10;$P2::i=20
+$P1::v1=1;$P2::v2=
+$P1::v2=;$P2::v2=2
+4) Aktives Packages : main
+
+*** [p04_function.pl;055;Sun Nov 15 18:32:29 2026]:l: "2) BEGIN...END"
+
+2) package B1: Dieser Text steht im Script
+
+*** [p04_function.pl;079;Sun Nov 15 18:32:29 2026]:l: "3) Pragmas"
+
+Liste: 1 2 3
+mySIN(1,2) = 3
+
+*** [p04_function.pl;108;Sun Nov 15 18:32:29 2026]:l: "4) Aufrufparameter"
+
+Script  : p04_function.pl
+Args    : 1
+Arg[0]  : 72
+
+*** [p04_function.pl;131;Sun Nov 15 18:32:29 2026]:l: "Funktion:"
+
+Funktion: f1
+Args    : 3
+Arg[0]  : Peter
+Arg[1]  : Miami
+Arg[2]  : 1964
+
+*** [p04_function.pl;138;Sun Nov 15 18:32:29 2026]:l: "5) prototype args"
+
+1) fct_p1(55) !
+fct_p1() : arg1 = 55
+2) fct_p1(55,66) !
+fct_p1() : arg1 = 55
+
+*** [p04_function.pl;168;Sun Nov 15 18:32:29 2026]:l: "6) fct{return}"
+
+Returnwert der Funktion f2 :: &f2() = 3
+
+Returnwert der Funktion f2 :: &f2() = 9
+
+*** [p04_function.pl;188;Sun Nov 15 18:32:29 2026]:l: "7) caller"
+
+1) Call fct_C1() !
+function C1()
+function C11()
+[0]:Package:main;File:p04_function.pl;Line:203;Name:main::fct_C11
+[1]:Package:main;File:p04_function.pl;Line:218;Name:main::fct_C1
+function C11() - use 'dbg_CALL()'
+[0]:Package:main;File:p04_function.pl;Line:214;Name:main::dbg_CALL
+[1]:Package:main;File:p04_function.pl;Line:203;Name:main::fct_C11
+[2]:Package:main;File:p04_function.pl;Line:218;Name:main::fct_C1
+
+*** [p04_function.pl;224;Sun Nov 15 18:32:29 2026]:l: "8) my und local"
+
+1) Call fct_my() !
+fct_my(): i = 1; j = 2
+fct_print(): i = 1001; j = 2
+glob(): i = 1001; j = 2
+
+2) Call fct_local() !
+fct_local(): i = 10; j = 20
+fct_print(): i = 10; j = 20
+glob(): i = 1001; j = 20
+
+*** [p04_function.pl;277;Sun Nov 15 18:32:29 2026]:l: "9) defined"
+
+1) defined $i
+OK:$i defined
+2) defined $k
+KO:$k not defined
+
+*** [p04_function.pl;288;Sun Nov 15 18:32:29 2026]:l: "undef"
+
+1) undef $i
+KO:$i not defined
+
+*** [p04_function.pl;299;Sun Nov 15 18:32:29 2026]:l: "reset"
+
+Global Variable $i = 1001
+reset a-z 
+Global Variable $i = 
+KO:$i not defined
+
+*** [p04_function.pl;316;Sun Nov 15 18:32:29 2026]:l: "ref"
+
+0) ref $p["10"]=
+1) ref $p["10"]=SCALAR
+2) ref $p["ARRAY(0x563619dee4e8)"]=REF
+3) ref $p["123"]=ARRAY
+4) ref $p["2B1A3C"]=HASH
+5) ref $p["SCALAR(0x563619e23d60)"]=REF
+
+*** [p04_function.pl;340;Sun Nov 15 18:32:29 2026]:l: "10) Typeglobs"
+
+KO:$j not defined
+$i=77;$j=;
+1) *j = *i
+$i=77;$j=77;
+$i=77;$j1=;
+@i=123;@j1=;
+KO:$j1 not defined
+2) *j = \$i1
+$i=77;$j1=77;
+@i=123;@j1=;
+
+*** [p04_function.pl;370;Sun Nov 15 18:32:29 2026]:l: "[4]:Packages,Scripts,Funktionen,Variablen"
+
+2a) package B1 [File:p04_function.pl;Zeile:60]: 'END'
+<<< reply [2]:'p04_function.pl' ==:{false}:[72]<>[10]}.
+
+################################################################################
+*** run:[03]/[01]:'p05_system.pl'
+################################################################################
+??? mode:isBatch:=FALSE
+*** [p05_system.pl;046;Sun Nov 15 18:32:29 2026]:l: "1) Date & Time"
+
+1) time():: time since (1.1.1970) in secs: 1794763949
+2) gmtime()::
+Time (hhmmss)>17:32:29< 
+Year (YYMM)  >126:10:15:(0:318)< 
+DayLight  )  >0< 
+3) localtime()::
+Time (hhmmss)>18:32:29< 
+Year (YYMM)  >126:10:15:(0:318)< 
+DayLight  )  >0< 
+4) times(Process) = 0
+
+*** [p05_system.pl;084;Sun Nov 15 18:32:29 2026]:l: "2) Mathem.-Funktionen"
+
+sin()    = sin(1.5707963267949)   = 1
+cos()    = cos(1.5707963267949)   = 6.12323399573677e-17
+atan()   = atan2(1.5707963267949) = 0.785398163397448
+power()  = (10 ** 2)    = 100
+e^()     = exp(2)   = 7.38905609893065
+ln()     = log(2.718281828)  = 0.999999999831127
+sqrt()   = sqrt(2)  = 1.4142135623731
+ABS()    = abs(-4.56)   = 4.56
+INT()    = int(-4.56)   = -4
+srand()  = srand()       = 330938513
+RND()    = rand(20)      = 6.35169815885099
+
+*** [p05_system.pl;110;Sun Nov 15 18:32:29 2026]:l: "3) String-Fkt"
+
+1)  length(abcdefghijklmnopqrstuvwxyzabcd)     = 30
+2a) substr(abcdefghijklmnopqrstuvwxyzabcd,5)   = fghijklmnopqrstuvwxyzabcd
+2b) substr(abcdefghijklmnopqrstuvwxyzabcd,5,3) = fgh
+3a) index(abcdefghijklmnopqrstuvwxyzabcd,F)    = -1
+3b) index(abcdefghijklmnopqrstuvwxyzabcd,f)    = 5
+3c) index(abcdefghijklmnopqrstuvwxyzabcd,a)    = 0
+4)  rindex(abcdefghijklmnopqrstuvwxyzabcd,a)   = 26
+5)  lc(ABCDEFGHIJKLMNOPQRSTUVWXYZABCD)         = abcdefghijklmnopqrstuvwxyzabcd
+6)  lcfirst(ABCDEFGHIJKLMNOPQRSTUVWXYZABCD)    = aBCDEFGHIJKLMNOPQRSTUVWXYZABCD
+7)  uc(abcdefghijklmnopqrstuvwxyzabcd)         = ABCDEFGHIJKLMNOPQRSTUVWXYZABCD
+8)  ucfirst(abcdefghijklmnopqrstuvwxyzabcd)    = Abcdefghijklmnopqrstuvwxyzabcd
+9)  c = chop($str=abcdefghijklmnopqrstuvwxyzabcd) = d
+      => $str = abcdefghijklmnopqrstuvwxyzabc
+10) chomp($str=abcdefghijklmnopqrstuvwxyzabc) = 1
+      => $str = abcdefghijklmnopqrstuvwxyzab
+11a) abcdefghijklmnopqrstuvwxyzabcd =~ y/a/+/  = +bcdefghijklmnopqrstuvwxyz+bcd 
+11b) abcdefghijklmnopqrstuvwxyzabcd =~ tr/b/!/ = a!cdefghijklmnopqrstuvwxyza!cd 
+12)  quotemeta($s1) = \	\
+\
+
+
+13)  sprintf() = ??? = ???
+
+*** [p05_system.pl;192;Sun Nov 15 18:32:29 2026]:l: "4) Listen-Fkt"
+
+@L  = () = ()
+--- shift()
+1a) shift(1 2 3 4 5 6 7) = 1; @L=(2 3 4 5 6 7)
+1b) c = shift(2 3 4 5 6 7) = 2; @L=(3 4 5 6 7)
+--- unshift()
+2)  unshift(3 4 5 6 7,2) = 6; @L=(2 3 4 5 6 7)
+2b) unshift(2 3 4 5 6 7,x) = 7; @L=(x 2 3 4 5 6 7)
+--- pop()
+3)  pop(1 2 3 4 5 6 7) = 7; @L=(1 2 3 4 5 6)
+--- push()
+4)  push(1 2 3 4 5 6,7) = 7; @L=(1 2 3 4 5 6 7)
+--- splice()
+5a) LX = splice(1 2 3 4 5 6 7,1,1) = 2
+    @L=(1 3 4 5 6 7); @LX=(2) 
+5b) LX = splice(1 2 3 4 5 6 7;1;1;a b c) = 2
+    @L=(1 a b c 3 4 5 6 7); @LX=(2) 
+5c) LX = splice(1 2 3 4 5 6 7;1;0;a b c) = 
+    @L=(1 a b c 2 3 4 5 6 7); @LX=() 
+--- reverse()
+6)  LX = reverse(1 2 3 4 5 6 7) = 7654321
+    @L=(1 2 3 4 5 6 7); @LX=(7 6 5 4 3 2 1) 
+--- sort()
+7)  LX = sort(11 2 7 22 4 1 9) = 111222479
+    @LX=(1 11 2 22 4 7 9); @L=(11 2 7 22 4 1 9) 
+--- map()
+8a) LX = map(uc,a b c) = 
+    @L=(a b c); @LX=(A B C) 
+8b) LX = map(sqrt,1 2 3 4 5 6 7) = 
+    @L=(1 2 3 4 5 6 7);
+    @LX=(1 1.4142135623731 1.73205080756888 2 2.23606797749979 2.44948974278318 2.64575131106459); 
+8c) LX = map({add-Block},1 2 3 4 5 6 7) = 
+    @L=(1 2 3 4 5 6 7); @LX=(1 3 6 10 15 21 28) 
+8d) LX = map((&add()),1 2 3 4 5 6 7) = 
+    @L=(1 2 3 4 5 6 7); @LX=(1 3 6 10 15 21 28) 
+--- grep()
+9a) LX = grep(/g/,Gehen  singen  tanzen springen) = 
+    @L=(Gehen  singen  tanzen springen); @LX=(singen  springen) 
+9b) LX = grep(/g/,11 2 7 22 4 1 9) = 
+    @L=(11 2 7 22 4 1 9); @LX=(11 22) 
+
+*** [p05_system.pl;332;Sun Nov 15 18:32:29 2026]:l: "5) Str/List-Fkt"
+
+--- split()
+a)  split($_=Ernie und Bert)  = ErnieundBert
+b)  split(/ /,Ernie und Bert)      = ErnieundBert
+c)  split(/e/,Ernie und Bert)      = Erni und Brt
+d)  split(/en/,Gehen, singen, tanzen.)     = Geh, sing, tanz.
+e)  split(/en/,Gehen, singen, tanzen.,2)   = Ghen, singen, tanzen.
+f)  $s = split(/en/,Gehen, singen, tanzen.)  = 4
+g)  @l = split(/en/,Gehen, singen, tanzen.)  = Geh, sing, tanz.
+--- join()
+a)  join('en',@l=Geh , sing , tanz .)       = Gehen, singen, tanzen.
+b)  join(':',('A','B','C')  = A:B:C
+c)  join(XYZ,('A','B','C') = AXYZBXYZC
+
+*** [p05_system.pl;367;Sun Nov 15 18:32:29 2026]:l: "6) Hash"
+
+--- each()
+1)  each(%H)
+    HASH=:[1]:k1=>Name;[2]:k3=>Ort;[3]:k2=>PLZ;
+--- delete()
+2)  HX = delete(%H,k1) = Name
+    HASH=:[1]:k2=>PLZ;[2]:k3=>Ort;
+--- exists()
+    HASH=:[1]:k2=>PLZ;[2]:k3=>Ort;
+3)  exists(%H,k1) = 
+3b) exists(%H,k2) = 1
+    HASH=:[1]:k2=>PLZ;[2]:k3=>Ort;
+--- keys()
+    HASH=:[1]:k1=>Name;[2]:k2=>PLZ;[3]:k3=>Ort;
+4a)	 for keys %H =: k1;k2;k3;
+4b)	 scalar keys %H =: 3
+--- values()
+    HASH=:[1]:k1=>Name;[2]:k3=>Ort;[3]:k2=>PLZ;
+5a)	 for values %H =: Name;Ort;PLZ;
+5b)	 scalar values %H =: 3
+
+*** [p05_system.pl;429;Sun Nov 15 18:32:29 2026]:l: "7) Kontext-Fkt"
+
+--- scalar
+a)  scalar(1 2 3 4 5 6 7)  = 7
+b)  scalar(%h)  = 3
+c)  scalar(ARRAY(0x5604bc1e29c0))  = ARRAY(0x5604bc1e29c0)
+--- wantarray
+a)  &f1(@l)) = retValue=0
+b)  $r=&f1(@l)) = retValue=+
+c)  print scalar &f1(@l)) = +
+d)  print &f1(@l) = +Name#PLZ*ORT
+
+*** [p05_system.pl;488;Sun Nov 15 18:32:29 2026]:l: "8) Konv-Fkt"
+
+--- chr(),ord(),hex(),oct()
+a)  chr(65)   = A
+b)  ord(A)    = 65
+c)  hex(41)   = 65
+d)  oct(101)  = 65
+--- pack(),unpack()
+a)  pack(s)    = ABC
+b)  unpack(s)  = 656667
+--- vec()
+	z = 14
+	v = 1110
+
+*** [p05_system.pl;559;Sun Nov 15 18:32:29 2026]:l: "9) Sonder-Fkt"
+
+--- eval()
+--- warn()
+1) testDiv(10/2) = 5
+2) testDiv(10/0) = 
+ERROR:testDIV = 
+--- crypt()
+1) Crypt1 = 12etB1QGfr2hI; Crypt2 = 12etB1QGfr2hI; Crypt3 = abTfvduHSQQHs
+2) if ($pwd == ($pwdX = crypt('Text', $pwd))
+	12etB1QGfr2hI == 12etB1QGfr2hI
+	: eq!
+
+*** [p05_system.pl;640;Sun Nov 15 18:32:29 2026]:l: "10) Formate"
+
+1) format(ABC)
+ABC
+2) format(>>>>)
+           ABC
+3) format(<<<<<)
+ABC
+4) format(||||)
+     ABC
+5) Zahlen(###.###)
+Betrag:   0.00 DM (   0)
+Betrag:   0.00 DM (   0)
+6) $Num, @Datum
+Num:814 ; Datum:11. 2.2002
+7) mehrzeiliger Text
+abcdef
+ghijkl
+mnopqr
+stuvwx
+yzabcd
+ 123!
+**** ENDE!<<< reply [3]:'p05_system.pl' ==:{false}:[72]<>[10]}.
+
+################################################################################
+*** run:[04]/[01]:'p06_file.pl'
+################################################################################
+
+*** [p06_file.pl;046;Sun Nov 15 18:32:29 2026]:l: "1) FILE open+close"
+
+1,2)  open()-close() - create+open, close a file
+	sub(): new file name 'p06_file.dt.1' ***
+
+*** [p06_file.pl;076;Sun Nov 15 18:32:29 2026]:l: "2) FILE write"
+
+2a) printf() - write a Text into a file
+	File : p06_file.dt.1
+2b)  sprintf() = /*NOK*/ = ''
+
+*** [p06_file.pl;124;Sun Nov 15 18:32:29 2026]:l: "3) FILE read"
+
+3a) read a file 
+Buffer  = 
+<Datei: p06_file.dt.1 ***
+Zahl : -77.12
+> 
+3b) readline a file /*NOK*/
+Buffer = 
+<Datei: p06_file.dt.1 ***
+Zahl : -77.12
+>
+3c) getc 
+Buffer = 
+<Datei: p06_file.dt.1 ***+NL+Zahl : -77.12+NL+>
+
+
+*** [p06_file.pl;160;Sun Nov 15 18:32:29 2026]:l: "4) FILE handling functions"
+
+4a) eof 
+Datei: p06_file.dt.1 ***
+Zahl : -77.12
+#End!
+
+4b) fileno 
+FileNo(STDIN)  = 0
+FileNo(STDOUT) = 1
+FileNo(STDERR) = 2
+FileNo(f1)     = 3
+4c) binmode /*NOK-noBinMode in DOS*/
+	sub(): new file name 'p06_file.dt.2' ***
+Binmode ! ***
+
+4d1) warn()
+4d2) warn(Text)
+
+
+*** [p06_file.pl;211;Sun Nov 15 18:32:29 2026]:l: "5) FILE position functions"
+
+5a)-5b)  seek()+tell() 
+BytePos(Start) : 0
+Buffer  = 
+<Datei: p06_file.dt.1 ***
+Zahl : -77.12
+> 
+Byte[0]:D;Byte[2]:t;Byte[4]:i;Byte[6]: ;Byte[8]:0;
+BytePos(Ende)  : 9
+
+
+*** [p06_file.pl;246;Sun Nov 15 18:32:29 2026]:l: "6) SYSFILE functions"
+
+6a)-6c)  sysopen(), sysread(), syswrite() 
+Buffer1 = 
+<Datei: p06_file.dt.1 ***
+Zahl : -77.12
+> 
+6d)  sysseek()
+Byte[0]:;Byte[2]:;Byte[4]:;Byte[6]:;Byte[8]:;
+Buffer2 = 
+<Datei: p06_file.dt.1 ***
+Zahl : -77.12
+!SYSWRITE!> 
+
+*** [p06_file.pl;291;Sun Nov 15 18:32:29 2026]:l: "7) FILE access"
+
+	sub(): new file name 'p06_file.dt.1' ***
+7a) stat(p06_file.dt.1) = 204911825973320411000100001517947639491794763949179476394940968
+Device              : 2049
+Inode               : 1182597
+Mode                : 33204
+hard-Links          : 1
+uid                 : 1000
+gid                 : 1000
+rdev                : 0
+fileSize            : 15
+time lastAccess     : 1794763949
+	Time(hhmmss)<18:32:29>;Year(YYMM)<126:10:15:(0:318)>;DayLight:<0>;
+time lastChange     : 1794763949
+time lastInodeChange: 1794763949
+blocksize           : 4096
+blocks              : 8
+
+7b) lstat(p06_file.dt.1) = 204911825973320411000100001517947639491794763949179476394940968
+Device              : 2049
+Inode               : 1182597
+Mode                : 33204
+hard-Links          : 1
+uid                 : 1000
+gid                 : 1000
+rdev                : 0
+fileSize            : 15
+time lastAccess     : 1794763949
+	Time(hhmmss)<18:32:29>;Year(YYMM)<126:10:15:(0:318)>;DayLight:<0>;
+time lastChange     : 1794763949
+time lastInodeChange: 1794763949
+blocksize           : 4096
+blocks              : 8
+
+7c) Dateitest: 'p06_file.dt.1 -s' => FileSize:  15
+
+7d) rename(p06_file.dt.1,p06_file.dt.1.ren) : 
+rename: ok
+
+7e) truncate(p06_file.dt.1.ren,10)
+FileSize Old :  15
+FileSize New :  10
+
+*** [p06_file.pl;379;Sun Nov 15 18:32:29 2026]:l: "8) HASH Dbase"
+
+8a)-8b) dbmopen(), dbmclose()
+	OK: dbmopen(myDb)
+
+
+*** [p06_file.pl;404;Sun Nov 15 18:32:29 2026]:l: "9) DIR functions "
+
+9a)-9c) opendir, readdir, closedir
+
+	p06_file.dt.1.ren;p04_function.pl;run_prlTutor.ps1;g03_PRL_advanced.bsh;p02_intro.pl;
+	p06_file.pl;.;README.md;readme-PL.txt;p08_specVarFct.pl;
+	Dir2;p01_overview.pl;test.pl;p10_p2c.pl.c;p06_file.dt.2;
+	p05_system.pl;myDb.dir;p00.pm;run_prlTutor.bsh;p03_operator.pl;
+	FCT.pm;g04_PRL_expert.bsh;run_prlTutor.bat;.gitignore;g01_PRL_uno.bsh;
+	g02_PRL_simple.bsh;myDb.pag;..;p07_rex.pl;p09_class.pl;
+	p10_p2c.pl;searchStr.pl;Dir1;
+
+Files : '33' im Verzeichnis : '.'
+
+9d)-9f) seekdir, telldir, rewinddir
+
+DirPos[0]           : 0
+
+Ausgabe mit READDIR:
+p06_file.dt.1.ren(0,660693066778080866);p04_function.pl(1,785180172379053793);run_prlTutor.ps1(2,1407692999409644310);g03_PRL_advanced.bsh(3,1697291376656541385);p02_intro.pl(4,2086294108308300799);p06_file.pl(5,2165155663979837039);.(6,2187274015454134000);README.md(7,2535195629456470926);readme-PL.txt(8,2718921824844687146);p08_specVarFct.pl(9,3046013475690466230);Dir2(10,3238691643998534414);p01_overview.pl(11,3553113973815376647);test.pl(12,3853611068721138832);p10_p2c.pl.c(13,4055793013575079869);p06_file.dt.2(14,4755401543036021466);p05_system.pl(15,4860515280036769667);myDb.dir(16,4980309035322213850);p00.pm(17,5005819305968394878);run_prlTutor.bsh(18,5253999262719204854);p03_operator.pl(19,5839625395980524749);FCT.pm(20,5909756925219269954);g04_PRL_expert.bsh(21,6076993282088312111);run_prlTutor.bat(22,6594390151721336120);.gitignore(23,6665657328069110119);g01_PRL_uno.bsh(24,6839177585651022349);g02_PRL_simple.bsh(25,6925376364935950830);myDb.pag(26,7028092275297377037);..(27,7767200610816378421);p07_rex.pl(28,8302649077073263268);p09_class.pl(29,8350277842895575849);p10_p2c.pl(30,8531088714897951291);searchStr.pl(31,8848700729785350712);Dir1(32,9223372036854775807);
+Max Files          : 33
+Max File Pos       : 9223372036854775807
+Last File          : Dir1
+Ausgabe mit SEEKDIR:
+p04_function.pl(0,660693066778080866);run_prlTutor.ps1(1,785180172379053793);g03_PRL_advanced.bsh(2,1407692999409644310);p02_intro.pl(3,1697291376656541385);p06_file.pl(4,2086294108308300799);.(5,2165155663979837039);README.md(6,2187274015454134000);readme-PL.txt(7,2535195629456470926);p08_specVarFct.pl(8,2718921824844687146);Dir2(9,3046013475690466230);p01_overview.pl(10,3238691643998534414);test.pl(11,3553113973815376647);p10_p2c.pl.c(12,3853611068721138832);p06_file.dt.2(13,4055793013575079869);p05_system.pl(14,4755401543036021466);myDb.dir(15,4860515280036769667);p00.pm(16,4980309035322213850);run_prlTutor.bsh(17,5005819305968394878);p03_operator.pl(18,5253999262719204854);FCT.pm(19,5839625395980524749);g04_PRL_expert.bsh(20,5909756925219269954);run_prlTutor.bat(21,6076993282088312111);.gitignore(22,6594390151721336120);g01_PRL_uno.bsh(23,6665657328069110119);g02_PRL_simple.bsh(24,6839177585651022349);myDb.pag(25,6925376364935950830);..(26,7028092275297377037);p07_rex.pl(27,7767200610816378421);p09_class.pl(28,8302649077073263268);p10_p2c.pl(29,8350277842895575849);searchStr.pl(30,8531088714897951291);Dir1(31,8848700729785350712);(32,9223372036854775807);
+
+9g) mkdir :Dir1,Dir2,Dir3
+9h) rmdir :Dir3
+
+*** [p06_file.pl;478;Sun Nov 15 18:32:29 2026]:l: "10) dirGlob"
+
+10a) glob
+p01_overview.pl(1);p02_intro.pl(2);p03_operator.pl(3);p04_function.pl(4);p05_system.pl(5);
+p06_file.pl(6);p07_rex.pl(7);p08_specVarFct.pl(8);p09_class.pl(9);p10_p2c.pl(10);
+searchStr.pl(11);test.pl(12);
+
+10b) "<>"
+p01_overview.pl(1);p02_intro.pl(2);p03_operator.pl(3);p04_function.pl(4);p05_system.pl(5);
+p06_file.pl(6);p07_rex.pl(7);p08_specVarFct.pl(8);p09_class.pl(9);p10_p2c.pl(10);
+searchStr.pl(11);test.pl(12);p06_file.dt.2(13);readme-PL.txt(14);
+
+*** [p06_file.pl;507;Sun Nov 15 18:32:29 2026]:l: "[6]:Files,Verzeichnisse"
+
+
+<<< reply [4]:'p06_file.pl' ==:{false}:[72]<>[10]}.
+
+################################################################################
+*** run:[05]/[01]:'p02_intro.pl'
+################################################################################
+String  : [2]:Einfuehrung
+String  : [2]:Einfuehrung
+String  : [2]:Einfuehrung
+Zahl    : 77
+Ptr     : 77
+String: [2]:Einfuehrung; Zahl: ab = AB = 171 = 10101011
+File    : p02_intro.pl
+Zeile   : 54
+Package : main
+
+*** Line :60
+Zahlen und Strings
+Zahl 1: 4
+Zahl 2: 1000000
+Zahl 3: 3.14
+Zahl 4: 120
+Zahl 5: -1.2e-06
+Zahl 6: 171
+Str  1: abc\n
+Str  2: abc'
+Str  3: abc\
+KStr 1: abc
+!
+KStr 2: abc'
+KStr 3: abc\
+KStr 4: abc	d
+KStr 5: abcC
+KStr 6: ABCbC
+
+***  Line :87
+Arrays
+Array[0]    : Peter
+Array[1]    : 09.07.1964
+Array[2]    : Miami
+...NEGATIVES ARRAY ELEMENT
+Array[-1]   : Miami
+
+*** Line :102
+Listen
+Name        : Peter
+Geburtstag  : 09.07.1964
+Stadt       : Miami
+a) L[0]:1,L[1]:2,L[2]:3,L[3]:4
+b) L[0]:a,L[1]:b,L[2]:c,L[3]:d
+c) L[0]:a,L[1]:d,L[2]:f,L[3]:p
+
+*** Line :126
+Hash: Strings
+Name        : Peter
+Geburtstag  : 09.07.1964
+Ort         : Miami
+
+*** Line :136
+Hash: Zahlen
+Hash(1)     : Peter
+Hash(2)     : 09.07.1964
+Hash(3)     : Miami
+Hash2(1)    : Peter
+Hash2(2)    : 09.07.1964
+Hash2(3)    : Miami
+
+*** Line :153
+Hash: Systemvars
+Env      = C_SCP
+Env.PATH = /usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games:/home/peter/VCS/fwk/base/cmd:.
+Env.OS = 
+
+*** Line :166
+Systemfunktionen
+time()       : 1794763949
+localtime()  : Sun Nov 15 18:32:29 2026
+
+Funktionsaufruf mit Zeilenparametern
+
+FUNKTION: my_TRACE()
+*** FILE:p02_intro.pl; LINE:189; TIME:Sun Nov 15 18:32:29 2026
+
+Anonyme Funktion!
+Arg1: Peter
+Arg2: 1964
+Arg3: Miami
+Args: Peter-1964-Miami
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Script : [2]:Einfuehrung
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+*** [p02_intro.pl;233;Sun Nov 15 18:32:29 2026]:l: "9) IncludeTest"
+
++++ Ende:: Scripts = "p02_intro.pl" 
+
+*** [p02_intro.pl;241;Sun Nov 15 18:32:29 2026]:l: "[2]:Einfuehrung"
+
+<<< reply [5]:'p02_intro.pl' ==:{false}:[72]<>[10]}.
+
+################################################################################
+*** run:[06]/[01]:'p01_overview.pl'
+################################################################################
+..hello Perl !
+File    : p01_overview.pl
+Zeile   : 55
+iEc: 10 
+<<< reply [6]:'p01_overview.pl' ==:{false}:[72]<>[10]}.
+
+################################################################################
+*** run:[07]/[01]:'p09_class.pl'
+################################################################################
+Worker is named 'Fred Flintstone' 
+Worker has age '40' 
+
+*** [p09_class.pl;096;Sun Nov 15 18:32:29 2026]:l: "2) SubKlassen"
+
+
+*** [p09_class.pl;100;Sun Nov 15 18:32:29 2026]:l: "[09]:Klassen"
+
+<<< reply [7]:'p09_class.pl' ==:{false}:[72]<>[10]}.
+
+################################################################################
+*** run:[08]/[01]:'p07_rex.pl'
+################################################################################
+
+*** [p07_rex.pl;063;Sun Nov 15 18:32:29 2026]:l: "1) REGs Seek"
+
+1)  SEEK: Einfacher Satz. => @l="1"; $t=Einfacher Satz.:= ok
+2a) SEEK: Einfacher Satz. => @l="1"; $t=Einfacher Satz.:= ok
+2b) SEEK: Einfacher Satz. => @l="1"; $t=Einfacher Satz.:= ok
+2c) SEEK: Einfacher Satz. => @l="1"; $t=Einfacher Satz.:= ok
+3a)!SEEK: Einfacher Satz. => @l=""; $t=Einfacher Satz.:= nok
+3b) SEEK: Einfacher Satz. => @l=""; $t=Einfacher Satz.:= nok
+
+*** [p07_rex.pl;108;Sun Nov 15 18:32:29 2026]:l: "2) REGs Replace"
+
+01) Einfacher Satz. => Zweifacher Satz.
+02) Einfacher Satz. => Einfacher Saetze.
+
+*** [p07_rex.pl;137;Sun Nov 15 18:32:29 2026]:l: "3) Meta"
+
+1) Einfacher Satz. => t="xyzEinfacher Satz."
+2) Einfacher Satz. => t="Einfacher Satz.xyz"
+2b1) Einfacher Satz. => t="facher Satz.Ein"
+2b2) Einfacher Satz. => t="facher Satz.Ein"
+2b3) Einfacher Satz. => t="facher Satz.Ein"
+3) Einfacher Satz. => t="Einfacher Satz.xyz$"
+4) Einfacher Satz. => t="Einf#cher Satz."
+5) Einfacher Satz. => t="Ein#acher Satz."
+6) Zweizweifacher Satz. => t="Zw#zweifacher Satz."
+
+*** [p07_rex.pl;222;Sun Nov 15 18:32:29 2026]:l: "4) REGs Modifier"
+
+1) Einfacher Satz. => t="Ein#ach#r Satz."
+2) Einfacher Satz. => t="#in#ach#r Satz."
+3) Ein mehrzeiliger
+Satz ueber
+3 Zeilen. => t=
+"Ein m?hrz?ilig?r
+Satz u?b?r
+3 Z?il?n."
+
+*** [p07_rex.pl;263;Sun Nov 15 18:32:29 2026]:l: "5) Multiple"
+
+01) aA bbb 12.3 eeeff eeff gHgHh aA => t="aA ### 12.3 eeeff eeff gHgHh aA"
+02) aA bbb 12.3 eeeff eeff gHgHh aA => 
+	t="#a#A# ## #1#2#.#3# #e#e#e#f#f# #e#e#f#f# #g#H#g#H#h# #a#A#"
+03) aA bbb 12.3 eeeff eeff gHgHh aA => t="aA bbb 12.3 *ff *ff gHgHh aA"
+04) aA bbb 12.3 eeeff eeff gHgHh aA => t="aA ### 12.3 eeeff eeff gHgHh aA"
+05) aA bbb 12.3 eeeff eeff gHgHh aA => t="aA bbb 12.3 *eeff eeff gHgHh aA"
+06) aA bbb 12.3 eeeff eeff gHgHh aA => t="aA bbb 12.3 ***ff **ff gHgHh aA"
+07) aA bbb 12.3 eeeff eeff gHgHh aA => t="aA bbb 12.3 *eff *ff gHgHh aA"
+08) aA bbb 12.3 eeeff eeff gHgHh aA => t="aA bbb 12.3 eeeff eeff **h aA"
+09) aA bbb 12.3 eeeff eeff gHgHh aA => t="aA bbb 12.3 e*f *f gHgHh aA"
+10) aA bbb 12.3 eeeff eeff gHgHh aA => t="*A bbb 12.3 eeeff eeff gHgHh a*"
+11) aA bbb 12.3 eeeff eeff gHgHh aA => t="xyz bbb 12.3 eeeff eeff gHgHh aA"
+12) aA bbb 12.3 eeeff eeff gHgHh aA => t="aA bbb 12.3 eeeff eeff gHgHh xyz"
+
+*** [p07_rex.pl;360;Sun Nov 15 18:32:29 2026]:l: "6) Posix"
+
+x01) aA bbb 12.3 eeeff eeff gHgHh aA => t="*A *** 12.3 ***** **** *H*H* *A"
+x02) aA bbb 12.3 eeeff eeff gHgHh aA => t="a* bbb 12.3 eeeff eeff g*g*h a*"
+x03) aA bbb 12.3 eeeff eeff gHgHh aA => t="** *** 12.3 ***** **** ***** **"
+x04) aA bbb 12.3 eeeff eeff gHgHh aA => t="aA bbb **.* eeeff eeff gHgHh aA"
+x05) aA bbb 12.3 eeeff eeff gHgHh aA => t="** *** **.* ***** **** ***** **"
+x06) aA bbb 12.3 eeeff eeff gHgHh aA => t="aA bbb 12*3 eeeff eeff gHgHh aA"
+x07) aA bbb 12.3 eeeff eeff gHgHh aA => t="aA*bbb*12.3*eeeff*eeff*gHgHh*aA"
+x08) aA bbb 12.3 eeeff eeff gHgHh aA => t="*******************************"
+x09) aA bbb 12.3 eeeff eeff gHgHh aA => t="*A bbb 12*3 eeeff eeff g*g*h *A"
+x10) aA bbb 12.3 eeeff eeff gHgHh aA => t="a* bbb **.* eeeff eeff g*g*h a*"
+p01) aA bbb 12.3 eeeff eeff gHgHh aA => t="aA bbb **.* eeeff eeff gHgHh aA"
+p02) aA bbb 12.3 eeeff eeff gHgHh aA => t="** *** **.* ***** **** ***** **"
+p03) aA bbb 12.3 eeeff eeff gHgHh aA => t="aA*bbb*12.3*eeeff*eeff*gHgHh*aA"
+p04) aA bbb 12.3 eeeff eeff gHgHh aA => t="*A bbb **.* eeeff eeff gHgHh *A"
+p05) aA bbb 12.3 eeeff eeff gHgHh aA => t="a* bbb **.* eeeff eeff gHgHh a*"
+u01) aA bbb 12.3 eeeff eeff gHgHh aA => t="*A *** 12.3 ***** **** *H*H* *A"
+u02) aA bbb 12.3 eeeff eeff gHgHh aA => t="a* bbb 12.3 eeeff eeff g*g*h a*"
+u03) aA bbb 12.3 eeeff eeff gHgHh aA => t="** *** 12.3 ***** **** ***** **"
+u05) aA bbb 12.3 eeeff eeff gHgHh aA => t="*******************************"
+
+*** [p07_rex.pl;488;Sun Nov 15 18:32:29 2026]:l: "6b) !Posix"
+
+x01) aA bbb 12.3 eeeff eeff gHgHh aA => t="a**bbb******eeeff*eeff*g*g*h*a*"
+x02) aA bbb 12.3 eeeff eeff gHgHh aA => t="*A**********************H*H***A"
+x03) aA bbb 12.3 eeeff eeff gHgHh aA => t="aA*bbb******eeeff*eeff*gHgHh*aA"
+p01) aA bbb 12.3 eeeff eeff gHgHh aA => t="*******12*3********************"
+p02) aA bbb 12.3 eeeff eeff gHgHh aA => t="aA*bbb*12*3*eeeff*eeff*gHgHh*aA"
+p03) aA bbb 12.3 eeeff eeff gHgHh aA => t="** *** **** ***** **** ***** **"
+u01) aA bbb 12.3 eeeff eeff gHgHh aA => t="a**bbb******eeeff*eeff*g*g*h*a*"
+u02) aA bbb 12.3 eeeff eeff gHgHh aA => t="*A**********************H*H***A"
+u03) aA bbb 12.3 eeeff eeff gHgHh aA => t="aA*bbb******eeeff*eeff*gHgHh*aA"
+
+*** [p07_rex.pl;555;Sun Nov 15 18:32:29 2026]:l: "7) Teilmuster"
+
+m01) aA bbb 12.3 eeeff eeff gHgHh aA => X="2.3"
+m02) aA bbb 12.3 eeeff eeff gHgHh aA => X="3"
+m03) aA bbb 12.3 eeeff eeff gHgHh aA => X="aA bbb 1"
+m04) aA bbb 12.3 eeeff eeff gHgHh aA => X=" eeeff eeff gHgHh aA"
+m05) aA bbb 12.3 eeeff eeff gHgHh aA => X="2"
+m06) aA bbb 12.3 eeeff eeff gHgHh aA => X="3"
+m07) 12333456789 => X="334"
+8) ab,cd
+
+*** [p07_rex.pl;626;Sun Nov 15 18:32:29 2026]:l: "8) Anker"
+
+1a) aA bbb 12.3 eeeff eeff gHgHh aA => t="xyzaA bbb 12.3 eeeff eeff gHgHh aA"
+1b) aA bbb 12.3 eeeff eeff gHgHh aA => t="xyzaA bbb 12.3 eeeff eeff gHgHh aA"
+2a) t=
+"Ein mehrzeiliger
+Satz ueber
+3 Zeilen.xyz"
+2b) t=
+"Ein mehrzeiliger
+Satz ueber
+3 Zeilen.xyz"
+2c) t=
+"Ein mehrzeiliger
+Satz ueber
+3 Zeilen.xyz"
+
+*** [p07_rex.pl;677;Sun Nov 15 18:32:29 2026]:l: "9) ExtendedREGs"
+
+01) aA bbb 12.3 eeeff eeff gHgHh aA => t="aA bbb 12.3 *ff *ff gHgHh aA"
+02) aA bbb 12.3 eeeff eeff gHgHh aA => t="aA bbb 12.3    # OK: Kommentar im X-REG
+      *ff    # OK: Kommentar im X-REG
+      *ff gHgHh aA"
+03) aA bbb 12.3 eeeff eeff gHgHh aA => X="12"
+04) eins, zwei, drei. vier! => X="ein"
+05) eins, zwei, drei. vier! => X="ein"
+06a) nok!
+06b) nok!
+
+*** [p07_rex.pl;729;Sun Nov 15 18:32:29 2026]:l: "10) Beispiele"
+
+Text[1]:
+"#Kugel 1
+Pyramide 2
+Quader 3"
+Text[2]:
+#Kugel 1
+#Pyramide 2
+#Quader 3
+Text[3]:
+Kugel 1#
+Pyramide 2#
+Quader 3#
+Zahl: 12
+Word[1]:Kugel ;Word[2]:Pyramide ;Word[3]:Quader ;
+Pattern[1]:Kugel;Pattern[2]:Pyramide;Pattern[3]:Quader;
+
+*** [p07_rex.pl;814;Sun Nov 15 18:32:29 2026]:l: "11) Positionen"
+
+
+a)   pos('123a456a789','a')= 4
+b)   pos('123a456a789','a')= 8
+c)   pos('123a456a789','a')= 4
+
+*** [p07_rex.pl;836;Sun Nov 15 18:32:29 2026]:l: "[7]:Regulaere Ausdruecke"
+
+
+<<< reply [8]:'p07_rex.pl' ==:{false}:[72]<>[10]}.
+
+################################################################################
+*** run:[09]/[01]:'p03_operator.pl'
+################################################################################
+
+*** [p03_operator.pl;039;Sun Nov 15 18:32:29 2026]:l: "1) Zuweisungs-Operatoren"
+
+e1: a=10, b=?, z:=a=10
+e2: l = <A B C D E>
+e3: \l = ARRAY(0x557d42800d48)
+e4: l = {A,B,C}
+
+*** [p03_operator.pl;052;Sun Nov 15 18:32:29 2026]:l: "1a) Zahlen"
+
+z1: 10+2 = 12
+z2: 10-2 = 8
+z3: 10*2 = 20
+z4: 10**2 = 100
+z5: 10/2 = 5
+z6: 10/3 = 3
+z7: 10%3 = 1
+b1: 10111001(bin) = 185(dez)
+b1: 10111001 & 1  = 1
+b2: 10111001 & 0  = 0
+b3: 10111001 | 0  = 10111001
+b4: 10111001 ^ 1  = 10111000
+b5: 10111001 ^ 0  = 10111001
+b6:!10111001      = 0
+b7:~10111001      = 1111111111111111111111111111111111111111111111111111111101000110
+b8: 10111001 >>1  = 1011100
+b9: 10111001 <<1  = 101110010
+Z1: $a=10+=185 = 195 
+
+h1: ab = AB = 171 = 10101011
+
+*** [p03_operator.pl;091;Sun Nov 15 18:32:29 2026]:l: "1b) Strings"
+
+s1: 10.185 = 10185
+s2: 10,185 = 10185
+s3:"10"x3 = 101010
+q : str1=ab,str2=ab
+qq: str1=ABC,str2=ABC
+qw: str1=1234
+qw#: l[0]:ABC;l[1]:DEF
+qw<: l[0]:ABC;l[1]:DEF
+++A  = B
+++A1 = A2
+
+*** [p03_operator.pl;136;Sun Nov 15 18:32:29 2026]:l: "2) Vergleichs-Ops"
+
+01) (1 == 2) ? nein
+
+*** [p03_operator.pl;148;Sun Nov 15 18:32:29 2026]:l: "2a) vergleiche: Zahlen"
+
+01) 1  == 2 ? =: nein!
+02) 1  >  2 ? =: nein!
+03) 1  <  2 ? =: ja!
+04) 1 >=  1 ? =: ja!
+05) 1 <=  1 ? =: ja!
+06) !(1 == 2))=: ja!
+07) 1 <=> 2 ? =: (1 <  2) == -1
+
+*** [p03_operator.pl;182;Sun Nov 15 18:32:29 2026]:l: "2b) vergleiche: Strings"
+
+01) (Anton eq Anton)  =: ja!
+02) (Anton gt Berta)  =: nein!
+03) (Anton lt Berta)  =: ja!
+04) (Anton ge Berta)  =: nein!
+05) (Anton le Berta)  =: ja!
+06) (not (Anton gt Berta)) =: ja!
+07) (Anton cmp Berta) =: a lt b == -1
+
+*** [p03_operator.pl;222;Sun Nov 15 18:32:29 2026]:l: "3) Bool-Operatoren"
+
+01) ((1 < 2) && (1 == 1))  ? =: ja!
+02) ((1 > 2) || (1 == 1))  ? =: ja!
+03) ((1 > 2) || !(1 == 1)) ? =: nein!
+04) ((1 < 2) and (1 == 1))  ? =: ja!
+05) ((1 > 2) or (1 == 1))  ? =: ja!
+06) ((1 > 2) or not (1 == 1)) ? =: nein!
+07) ((1 < 2) xor (1 == 1))  ? =: nein!
+
+*** [p03_operator.pl;254;Sun Nov 15 18:32:29 2026]:l: "4) if"
+
+1) *** if (x) {...} 
+1) if (1 < 2) =: ja
+2) else (2 < 1) = : nein
+3) elseif (1 < 2) = : ja
+4) *** (x) if (x) 
+4) 1 < 2 =: ja
+5) *** unless(x) {...} ***
+5) unless else ! (1 < 2 ) = : nein
+
+6) switch 1 (>=,==,<=) 2 ? =: if 1  <= 2
+
+*** [p03_operator.pl;329;Sun Nov 15 18:32:29 2026]:l: "5) goto"
+
+1) GOTO - es geht weiter !
+
+*** [p03_operator.pl;353;Sun Nov 15 18:32:29 2026]:l: "6) while"
+
+1) while(x) {...}; i=1; i=2; i=3; i=4; i=5; 
+2) while(x) {...last..}; i=1; i=2; 
+3) while(x) {...{last Marke}..}; i=1; i=2; 
+4) while(x) {...goto..}; i=1; i=2; 
+5) while(x) {...continue..}; i=1; i=2; i=3; i=4; i=5; 
+6) while(x) {...redo...}; i=1; i=2; i=3; i=4; i=6; 
+
+*** [p03_operator.pl;428;Sun Nov 15 18:32:29 2026]:l: "7) until"
+
+1) until(x) {...}; i=1; i=2; i=3; i=4; i=5; 
+
+*** [p03_operator.pl;443;Sun Nov 15 18:32:29 2026]:l: "8) do...until"
+
+1) do {...} until(x); i=1; i=2; i=3; i=4; i=5; 
+
+*** [p03_operator.pl;456;Sun Nov 15 18:32:29 2026]:l: "9) for"
+
+1) for () {...};i=0; i=1; i=2; i=3; i=4; i=5; jetzt i=6; 
+2) for (my ...) {...} ;i=0; i=1; i=2; i=3; i=4; i=5; jetzt i=77; 
+3) for (my ...) {... goto...} ;i=0; i=1; i=2; jetzt i=2;
+
+*** [p03_operator.pl;488;Sun Nov 15 18:32:29 2026]:l: "10) foreach"
+
+1) for $i (...) {...} ;i=1; i=2; i=3; i=4; i=5; 
+2) foreach $i (...) {...}  ;i=1; i=2; i=3; i=4; i=5; 
+4) foreach my $i (...) {...}  ;i=1; i=2; i=3; i=4; i=5; 
+5) foreach my $i (...) {..++$i..}  ;
+Liste-START:12345
+i=1; i=2; i=3; i=4; i=5; 
+Liste-ENDE!:23456
+6) foreach my $i (...) {..$i++..}  ;
+Liste-START:12345
+i=1; i=2; i=3; i=4; i=5; 
+Liste-ENDE!:23456
+7) foreach (1..5) {...'$_'...}  :i= 1 i= 2 i= 3 i= 4 i= 5 
+8) foreach (%Hash):i=1 ;i=Anton ;i=3 ;i=Cesar ;i=4 ;i=Doris ;i=2 ;i=Bert ;i=5 ;i=Emil ;
+
+*** [p03_operator.pl;557;Sun Nov 15 18:32:29 2026]:l: "[3]:Operatoren und Statements"
+
+<<< reply [9]:'p03_operator.pl' ==:{false}:[72]<>[10]}.
+
+################################################################################
+*** ready:total.iRc:<9>
+################################################################################
+*** total_sum_of_eRRoRs := [9]
+<<< run.{g04_PRL_expert.bsh} dtm:[2026-11-15 18:32:29]:<1>
+Child!
+
+*** [p08_specVarFct.pl;327;Sun Nov 15 18:32:39 2026]:l: "Ende"
+
+
+*** [p08_specVarFct.pl;338;Sun Nov 15 18:32:39 2026]:l: "7) find+diffFiles"
+

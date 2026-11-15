@@ -1,0 +1,348 @@
+>>> run.{r04_C89_expert.bsh} dtm:[2026-11-03 19:39:20]
+
+
+*** TEST
+	Date          :   [Tue  3 Nov 19:39:22 CET 2026]
+	iRandom       :   [760]
+	nFiles        :   [2]
+	iStressMax    :   [1]
+### showArray {'testSet'} pos:[f_run_execute();342]
+	a[01] == 'c07_function.c'
+	a[02] == 'c10_system.c'
+.
+___ script ecDefault #:{37}
+
+
+################################################################################
+*** run:[01]/[01]:'c07_function.c'
+################################################################################
+======================================================================
+>>> HDR:{function} src:[c07_function.c,116] dtm:[Nov  3 2026;19:39:21]
+======================================================================
+... I use fBase=2.500000,iExp=9
+*** [c07_function.c;125]: TEST selfIncrementer 
+<<< self.inc.value[1] is:[101]
+<<< self.inc.value[2] is:[102]
+<<< self.inc.value[3] is:[103]
+<<< self.inc.value[4] is:[104]
+<<< self.inc.value[5] is:[105]
+*** [c07_function.c;137]: power::Input Values 
+cRetVal     : ?
+iBase       : 2.500000
+fExponent   : 9
+dResult     : -1.000000
+*** [c07_function.c;148]: power1::Output Values 
+<<< F_fct_simplePower1[304]: base=2.500000,exp=9
+<<< F_fct_simplePower1[318]: base=-3.000000,exp=-11;res=3814.697266
+cRetVal     : A
+iBase       : 2.500000 **
+fExponent   : 9
+dResult     : 3814.697266
+*** [c07_function.c;158]: power2::Output Values 
+<<< F_fct_simplePower2 [338]: base=2.500000,exp=9
+iBase       : 2.500000 **
+fExponent   : 9
+dResult     : 3814.697266
+*** [c07_function.c;166]: power3::Output Values 
+<<< F_fct_simplePower3[360]: base=2.500000,exp=9;res=3814.697266
+<<< F_fct_simplePower3[374]: base=-3.000000,exp=-11;res=3814.697266
+iBase       : 2.500000 **
+fExponent   : 9
+dResult     : 3814.697266
+*** [c07_function.c;184]: fak::Output Value (FAK) 
+cRetVal     : A
+iBase       : 9 !
+= dResult   : 362880
+*** [c07_function.c;197]: F_fct_varType 
+<<< vartype1(*int):ARG1='4711'
+<<< vartype2(*chr):ARG1='Zwei',ARG2='123456789'
+<<< vartype3(double):ARG1='1.111000',ARG2='2.222000',ARG3='3.333000'
+*** [c07_function.c;209]: F_fct_varAdd 
+Num=3
+arg:1.100000
+arg:2.200000
+arg:3.300000
+sum:6.600000
+*** [c07_function.c;219]: fctPointer 
+<<< F_fct_simplePower1[304]: base=2.100000,exp=8
+<<< F_fct_simplePower1[318]: base=-3.000000,exp=-11;res=378.228456
+fctPtr=simplePower::2.1 ** 8 = 378.228456
+fctPtr=printf::Hallo Funktions-Pointer
+*** [c07_function.c;241]: andere Fktn 
+1) DayOfYear(YEAR=2007;MONTH=7;DAY=9) =: 190
+2) MonthDay(YEAR=2007,JDAY=190) =: MONTH=7 DAY=9
+ZAHL[0]:1.34
+ZAHL[1]:-8.9
+<<< FTR:{function} src:[c07_function.c,271] dtm:[Nov  3 2026;19:39:21].
+<<< reply [1]:'c07_function.c' ==:{*true}.
+
+################################################################################
+*** run:[02]/[01]:'c10_system.c'
+################################################################################
+======================================================================
+>>> HDR:{system} src:[c10_system.c,964] dtm:[Nov  3 2026;19:39:21]
+======================================================================
+
+	s:call subfunction...
+
+&&& menu : DATE&TIME [c10_system.c;104]
+
+	F_TIME()     :{03.11.2026|19:39:22}
+	FileDateStr  :{Nov  3 2026}
+	FileTimeStr  :{19:39:22}
+	ctime(&time_t)	=: <Tue Nov  3 19:39:22 2026
+>
+	asctime() 	=: <Tue Nov  3 19:39:22 2026
+>
+	Year:2026
+	Month:11
+	Wday:3
+	Hour.Minute:(19:39)
+	sprintf.TIMESTR:<DATE=03.11.2026;TIME=19:39:22>
+	01: i=strftime(cStr); i=<29>,
+	cStr=<DATE=03.11.2026,TIME=19:39:22>
+	02: i=strftime(cStr); i=<39>,
+	cStr=<LDATE:{Tue.Nov.26},TYPE:{PM},ZONE:{CET}>
+	03: i=strftime(cStr); i=<68>,
+	cStr=<std={Tue Nov  3 19:39:22 2026};stdDATE:{11/03/26},stdTIME:{19:39:22}>
+	--- clock()  =<2293>
+	CLOCKS_PER_SEC  =<1000000>
+	clock()/CLOCKS_PER_SEC  =<2.293000e-03>
+	... p_tmCurTime :0x7f0c769fe3e0
+	... p_tmAnyTime :0x7f0c769fe3e0
+--- gmtime()
+	... p_tmAnyTime(gmtime) :0x7f0c769fe3e0
+	04: strftime(CURR) 
+	 cStr=<DATE=03.11.2026,TIME=18:39:22>
+	05: strftime(ANY) 
+	  cStr=<DATE=03.11.2026,TIME=18:39:22>
+	diffTime: -3600.000000
+
+	RC.dateTime         =: <218>
+
+&&& menu : RANDOM [c10_system.c;233] 
+
+	00:   srand(1793731162)
+	01:   rand()  :2012195051
+	02:   rand()  :510173487
+
+	RC.random           =: <242>
+
+&&& menu : charTest [c10_system.c;259] 
+
+	CHAR: 'a'   ::   PRN;GPH;ALP;LOW;HEX;
+	CHAR: '+'   ::   PRN;GPH;PCT;
+	CHAR: '0'   ::   PRN;GPH;DEC;HEX;
+	CHAR: ';'   ::   PRN;GPH;PCT;
+	CHAR: ' '   ::   PRN;
+	CHAR: 'A'   ::   PRN;GPH;ALP;UPP;HEX;
+	CHAR: 'z'   ::   PRN;GPH;ALP;LOW;
+	CHAR: '!'   ::   PRN;GPH;PCT;
+
+	RC.charTest         =: <275>
+
+&&& menu : charChange[ c10_system.c;287] 
+
+	1: tolower('a')=a; tolower('B')='b'
+	2: toupper('a')=A; toupper('B')='B'
+
+	RC.charChange       =: <297>
+
+&&& menu : mallocTest[ c10_system.c;313] 
+
+*** malloc
+	 malloc()     : <0x55c12172a530>
+	 BUFFER       : <ABCDEFGHIJ>
+*** realloc
+	 realloc()    : <0x55c12172a530>
+	 BUFFER       : <ABCDEFGHIJabcdefghij>
+*** calloc
+	 calloc() : <0x55c12172a560>
+... save calloc struct into file
+	pFile = '/home/peter/Documents/temp/TUTOR_FILE_SYS.001.txt'
+	 sizeof(struct) :24
+	 ... written file: /home/peter/Documents/temp/TUTOR_FILE_SYS.001.txt
+*** free
+
+	RC.malloc           =: <404>
+
+&&& menu : memoryTest [c10_system.c;432] 
+
+	BUF=<A	>
+	SRC=<abcdefghij>
+	memset(obj,'#',sizeof(obj))     : obj=<####################�U>
+	memcpy(obj,BUF,sizeof(BUF))     : obj=<A	>
+	memcpy(obj,src,sizeof(src))     : obj=<abcdefghij>
+	memmove(obj,&obj[5],sizeof(src)): obj=<fghij>
+	memSRC    = <abcdefghij>
+	memOBJ    = <fghij>
+	memcmp(src,obj,5): isEQU=<5>
+	p = memchr(buf,'9',sizeof(buf)): p=<0x7ffe21dfd9a8>
+
+	RC.memory           =: <475>
+
+&&& menu : stringMake [c10_system.c;507] 
+
+	SRC=<ABCDEFGHIJ>
+	strlen(src)         
+		: len=10
+	strcpy(obj,src)     
+		: obj=ABCDEFGHIJ
+	strncpy(obj,src,5)  
+		: obj=ABCDE
+	strcat(<abc>,src)    
+		: obj1=ABCDEabc
+	strncat(obj,src,5)  
+		: obj3=ABCDEabcABCDE
+	SRC=<ABCDEFGHIJ>
+	OBJ=<ABCDEabcABCDE>
+	TMP=<ABCDEabc>
+	strcmp('ABCDEabc','ABCDEFGHIJ') 
+		: isEQU=<27>
+	strcmp('ABCDEabcABCDE','ABCDEFGHIJ')   
+		: isEQU=<27>
+	strcmp'ABCDEFGHIJ','ABCDEabcABCDE')   
+		: isEQU=<-27>
+	strcmp('ABCDEFGHIJ','ABCDEFGHIJ')   
+		: isEQU=<0>
+	strncmp('ABCDEabcABCDE','ABCDEFGHIJ',3) 
+		: isEQU=<0>
+
+	&&& String mit Umlauten [c10_system.c;558]
+
+	sUmlaute=<!ÄÖÜäöüß>
+	SRC_LOCAL=<abcdäöüß>
+	OBJ_LOCAL=<abcß>
+	strcoll(obj,src)  : isEQU=<27>
+	strxfrm(tmp,src,4)    : i=<12>;tmp=<abcdäöüß>
+
+	RC.stringMake       =: <586>
+
+&&& menu : stringTest [c10_system.c;618] 
+
+
+	src=<ABCDEFGHIJabcdefghij>
+	strchr(src,'A') 
+		: pc=<0x7ffe21dfd990>
+	strrchr(src,'A') 
+		: pc=<0x7ffe21dfd990>
+	strstr(src,"abc") 
+		: pc=<0x7ffe21dfd99a>
+		: *pc=<a>
+	strspn(src,"XACB") 
+		: len=<3>
+	strcspn(src,"ab")
+		: len=<10>
+	strpbrk(src,"ab")
+		: pc=<0x7ffe21dfd99a>
+
+	RC.stringTest       =: <680>
+
+&&& menu : stringConvert [c10_system.c;708] 
+
+
+	&&& atoX functions [c10_system.c;724]
+	atof("-123.2345678")    	=:  -123.234568
+	atoi("-9876")    	=:  -9876
+	atol("-12345678")    	=:  -12345678
+
+	&&& strtoX functions [c10_system.c;736]
+	strtod("   -123.45678 float Zahl") 
+		=:  {-123.456780;' float Zahl'}
+	strtol("   -ACDC hexZahl"(16),16)      
+		=: {-44252;' hexZahl'}
+	strtoul(" 7654321LONG"(8),8)     
+		=:  {2054353,'LONG'}
+
+	&&& sprintf : zahl->STRING  [c10_system.c;763]
+	string1(-123.456780)  	=: "-123.456780"
+	string2(-9876)  	=: "-9876"
+	string2(-44252)  	=: "-44252"
+	string2(2054353)  	=: "2054353"
+
+	RC.stringConvert    =: <776>
+
+&&& menu : environmentTest [c10_system.c;806] 
+
+
+	&&& atexit(myExit())  :<0>
+
+	&&& setjmp() / longjmp()
+	--- i=setjmp(jmpBuffer)  =:<0>
+		::longjmp(jmpBuffer,1)
+	--- i=setjmp(jmpBuffer)  =:<1>
+		::longjmp(jmpBuffer,2)
+	--- i=setjmp(jmpBuffer)  =:<2>
+
+	&&& getenv
+	PATH=getenv("path")... 
+	<<< PATH == 0
+
+	RC.envTest          =: <844>
+
+&&& menu : errorHandling [c10_system.c;867] 
+
+	--- strerror()
+		strerror(0) =:<Success>
+		strerror(1) =:<Operation not permitted>
+		strerror(2) =:<No such file or directory>
+		strerror(3) =:<No such process>
+		strerror(4) =:<Interrupted system call>
+		strerror(5) =:<Input/output error>
+		strerror(6) =:<No such device or address>
+		strerror(7) =:<Argument list too long>
+		strerror(8) =:<Exec format error>
+		strerror(9) =:<Bad file descriptor>
+	--- perror()
+
+	RC.errorHandling    =: <894>
+
+&&& menu : limitTest [c10_system.c;906] 
+
+
+	*** Integer [c10_system.c;908]
+	CHAR_BIT    : 8
+	CHAR_MAX    : 127
+	CHAR_MIN    : -128
+	SCHAR_MAX   : 127
+	SCHAR_MIN   : -128
+	INT_MAX     : 2147483647
+	INT_MIN     : -2147483648
+	SHRT_MAX    : 32767
+	SHRT_MIN    : -32768
+	LONG_MAX    : 9223372036854775807
+	LONG_MIN    : -9223372036854775808
+	UCHAR_MAX   : 255
+	USHRT_MAX   : 65535
+	UINT_MAX    : 4294967295
+	ULONG_MAX   : -1
+
+	*** Float&Double [c10_system.c;927]
+	FLT_MAX     : 3.40282e+38
+	FLT_MIN     : 1.17549e-38
+	FLT_MANT_DIG: 24
+	FLT_MAX_EXP : 128
+	FLT_MIN_EXP : -125
+	FLT_DIG     : 6
+	FLT_EPSILON : 1.19209e-07
+	FLT_RADIX   : 2
+	FLT_ROUNDS  : 1
+	DBL_MAX     : 1.79769e+308
+	DBL_MIN     : 2.22507e-308
+	DBL_MANT_DIG: 53
+	DBL_MAX_EXP : 1024
+	DBL_MIN_EXP : -1021
+	DBL_DIG     : 15
+	DBL_EPSILON : 2.22045e-16
+
+	RC.limitTest        =: <947>
+<<< FTR:{system} src:[c10_system.c,984] dtm:[Nov  3 2026;19:39:21].
+&&& : Here is myExit() [c10_system.c;35] function.
+	TIME=[03.11.2026|19:39:22] 
+<<< reply [2]:'c10_system.c' ==:{*true}.
+
+################################################################################
+*** ready:total.iRc:<0>
+################################################################################
+*** total_sum_of_eRRoRs := [0]
+<<< run.{r04_C89_expert.bsh} dtm:[2026-11-03 19:39:22]:<2>

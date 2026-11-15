@@ -1,0 +1,990 @@
+>>> run.{r03_BSH_expert.bsh} dtm:[2026-11-15 18:35:28]
+
+*** TEST
+	Date          :   [Sun 15 Nov 18:35:29 CET 2026]
+	iRandom       :   [990]
+	nFiles        :   [16]
+	iStressMax    :   [1]
+### showArray {'testSet'} pos:[f_run_main();214]
+	a[01] == 't19_more.bsh'
+	a[02] == 't15_dummy.bsh'
+	a[03] == 't10_interpreter.bsh'
+	a[04] == 't04_control.bsh'
+	a[05] == 't06_array.bsh'
+	a[06] == 't01_intro.bsh'
+	a[07] == 't18_dummy.bsh'
+	a[08] == 't20_dummy.bsh'
+	a[09] == 't02_dataType.bsh'
+	a[10] == 't07_function.bsh'
+	a[11] == 't16_hash.bsh'
+	a[12] == 't17_dummy.bsh'
+	a[13] == 't08_file.bsh'
+	a[14] == 't09_regExpr.bsh'
+	a[15] == 't03_operator.bsh'
+	a[16] == 't05_string.bsh'
+.
+___ script ecDefault #:{72}
+
+
+################################################################################
+*** run:[01]/[01]:'t19_more.bsh'
+################################################################################
+=== hdr:[t19_more.bsh;56]:[261115183529] #ec:{72}.
+
+
+$ call LIB.config 
+
+$ call LIB.info 
+<  L.sLib.DTM :: [2026-11-02 10:27:39.823307421 +0100%]
+=== m:[01]:'Helper' at:[t19_more.bsh;69]
+
+=== s:[01.01]:'who' at:[72]
+
+$ call LIB.who 
+< L.who.srce    't19_more.bsh'
+< L.who.sDir    '/home/peter/VCS/fwk/base/console/bsh'
+< L.who.sPth    '/home/peter/VCS/fwk/base/console/bsh/t19_more.bsh'
+=== s:[01.02]:'where' at:[77]
+
+$ call LIB.where 
+< L.where.srce  't19_more.bsh'
+< L.where.line  '79'
+< L.where.fctn  'f_lib_where'
+=== s:[01.03]:'caller' at:[82]
+
+$ call LIB.caller
+< found '2' caller
+caller[0] : 'f_lib_caller' 
+caller[1] : 'main' 
+=== s:[01.04]:'isPath' at:[87]
+=== u:[01.04.01]:'isPath.Dir' at:[90]
+
+? isDir:'/peter1/' 
+< m.bRc =:[99] == 'F A L S E ?' 
+
+? isDir:'/home/peter' 
+< m.bRc =:[10] == 'T R U E !' 
+
+? isDir:'/home/peter/VCS/fwk/base/console/bsh' 
+< m.bRc =:[10] == 'T R U E !' 
+&&& file:'/home/peter/Documents/temp/t19_rock_879.txt'
+=== s:[01.05]:'DateTime' at:[122]
+$ call LIB.DateTime
+< m.sRc =: [261115183529]
+< m.iRc =: [12]
+=== s:[01.06]:'Sleep' at:[131]
+$ call LIB.sleep [1]
+--- T:[main;136]:'eof.helper'
+
+=== m:[02]:'printing' at:[t19_more.bsh;143]
+
+
+$ call LIB.echo
+Hello Peter !
+=== s:[02.01]:'printEasy' at:[150]
+$ call LIB.print any
+A normal text printed
+=== s:[02.02]:'printColored noNewLine' at:[155]
+1:red.2:yellow.3:green.4:blue.5:magenta.6:cyan.
+=== s:[02.03]:'puts.Colored withNewLine' at:[164]
+1:red!
+2:yellow!
+3:green!
+=== u:[02.03.01]:'puts.noColor' at:[170]
+9:noColor
+--- T:[main;174]:'eof.print'
+
+=== m:[03]:'File' at:[t19_more.bsh;180]
+
+
+$ call LIB.file.getPath
++++ flag.Verbose==false
+< m.sRc =: [/home/peter/VCS/fwk/base/console/bsh/t19_more.bsh]
+< m.iRc_lib   =: [49]
+< m.sRc.lib   =: [261115183529]
+< m.sRc   =: [/home/peter/VCS/fwk/base/console/bsh/t19_more.bsh]
+
+$ call LIB.file.name
+< m.sRc =: [t19_more.bsh]
+< m.iRc =: [12]
+
+$ call LIB.file.body
+< m.sRc =: [t19_more]
+< m.iRc =: [8]
+
+$ call LIB.file.extension
+< m.sRc =: [.bsh]
+< m.iRc =: [4]
+
+$ call LIB.file.ModificationTime
+< m.sRc =: [2026-11-02 10:27:39.827307466 +0100%]
+< m.iRc =: [36]
+--- T:[main;248]:'eof.fileInfo'
+
+=== m:[04]:'logging' at:[t19_more.bsh;254]
+
+
+$ call LIB.random (2,1)
+< m.iRnd =: [1]
+
+$ call LIB.logging.GetPath
+< L.sDtm :: [t19_more_261115183530]
+< m.sRc =: [/home/peter/Documents/temp/t19_more_261115183530.log]
+< m.iRc =: [42]
+< m.pTestFilePath =: [/home/peter/Documents/temp/t19_more_261115183530.log]
+
+$ call LIB.writeFile
+--- L.fileWrite:[f_lib_flag__verbose]
+< m.iRc =: [59]
+--- T:[main;296]:'eof.logging'
+
+=== m:[05]:'plgs' at:[t19_more.bsh;302]
+
+$ call LIB.text
+--- T:[main;308]:'mof.puts'
+    Peter & Harvey [311]
+
+=== m:[06]:'dataType' at:[t19_more.bsh;317]
+
+    ?isNumeric('4711') 	=:	[TRUE]
+
+=== m:[07]:'Test' at:[t19_more.bsh;327]
+
++++ libTest.begin
+	1:red.2:yellow.3:green.4:blue.5:magenta.6:cyan.
++++ libTest.ending
+
+>>> colorTest::begin 
+
++ colorTest.font
+1:black
+2:green
+3:yellow
+4:blue
+5:magenta
+6:cyan
+7:white
+8:gray
+
++ colorTest.foreground.FG
+1: <rBlack>     <bBlack>
+2: <rRed>         <bRed>
+3: <rGreen>     <bGreen>
+4: <rYellow>   <bYellow>
+5: <rBlue>       <bBlue>
+6: <rMagenta> <bMagenta>
+7: <rCyan>       <bCyan>
+8: <rGray>       <bGray>
+
+
++ colorTest.background.BG
+1: <dBlack> <lBlack>
+2: <dRed> <lRed>
+3: <dGreen> <lGreen>
+4: <dYellow>   <lYellow>
+5: <dBlue>       <lBlue>
+6: <dMagenta> <lMagenta>
+7: <dCyan>       <lCyan>
+8: <dGray>       <lGray>
+
++ colorTest.underline
+1: <zBlack>
+2: <zRed>
+3: <zGreen>
+4: <zYellow>
+5: <zMagenta>
+6: <zCyan>
+7: <zWhite>
+
+- colorTest::finished.
+--- T:[main;332]:'eof.libTest'
+
++++ logged into:'/home/peter/Documents/temp/t19_more.log'.
+
+=== ftr:[t19_more.bsh;344]:[72] elapsed:<1> seconds.
+<<< replyOf[1]:'t19_more.bsh': # ec:{72} == OK
+.
+
+################################################################################
+*** run:[02]/[01]:'t15_dummy.bsh'
+################################################################################
+=== hdr:[t15_dummy.bsh;31]:[261115183530] #ec:{72}.
+
+hello
+
++++ logged into:'/home/peter/Documents/temp/t15_dummy.log'.
+
+=== ftr:[t15_dummy.bsh;37]:[72] elapsed:<0> seconds.
+<<< replyOf[1]:'t15_dummy.bsh': # ec:{72} == OK
+.
+
+################################################################################
+*** run:[03]/[01]:'t10_interpreter.bsh'
+################################################################################
+=== hdr:[t10_interpreter.bsh;34]:[261115183530] #ec:{72}.
+
+=== m:[01]:'python' at:[t10_interpreter.bsh;39]
+
+This is perl 5, version 40, subversion 1 (v5.40.1) built for x86_64-linux-gnu-thread-multi (with 70 registered patches, see perl -V for more detail) Copyright 1987-2025, Larry Wall Perl may be copied only under the terms of either the Artistic License or the GNU General Public License, which may be found in the Perl 5 source kit. Complete documentation for Perl, including FAQ lists, should be found on this system using "man perl" or "perldoc perl". If you have access to the Internet, point your browser at https://www.perl.org/, the Perl Home Page.
+
+=== m:[02]:'ruby' at:[t10_interpreter.bsh;44]
+
+ruby 3.3.8 (2025-04-09 revision b200bad6cd) [x86_64-linux-gnu]
+
+=== m:[03]:'python' at:[t10_interpreter.bsh;49]
+
+Python 3.13.5
+
++++ logged into:'/home/peter/Documents/temp/t10_interpreter.log'.
+
+=== ftr:[t10_interpreter.bsh;54]:[72] elapsed:<0> seconds.
+<<< replyOf[1]:'t10_interpreter.bsh': # ec:{72} == OK
+.
+
+################################################################################
+*** run:[04]/[01]:'t04_control.bsh'
+################################################################################
+=== hdr:[t04_control.bsh;107]:[261115183531] #ec:{72}.
+
+=== m:[01]:'if' at:[t04_control.bsh;130]
+
+=== s:[01.01]:'if-then-else-fi' at:[133]
+? (x == 1)
+    <<< true: x==1 [138]
+=== s:[01.02]:'if-thenelse-fi' at:[144]
+random x := <1>
+? (x == 5 || x > 1)
+    <<< false: x is not found [154]
+=== s:[01.03]:'if-fi:short' at:[158]
+?(x == 5)
+<<< false: x != 5
+?(x == i)
+    <<< x==i :[false] [170]
+?(x != i)
+    <<< x!=i :[TRUE!] [177]
+
+=== m:[02]:'case' at:[t04_control.bsh;185]
+
+=== s:[02.01]:'test a number' at:[191]
++ using x[2] := <9>
+f_test_number :: number('9')default
++ using x[3] := <8>
+f_test_number :: number('8'): is between 4 and 8
++ using x[4] := <4>
+f_test_number :: number('4'): is between 4 and 8
+=== s:[02.02]:'test a name' at:[220]
+f_test_name :: name('Luke')'first name';
+f_test_name :: name('Skywalker')'second name';
+f_test_name :: name('Yoda')'?:unknown name';
+=== s:[02.03]:'test a char' at:[230]
+f_test_char :: char('aBC'):'lowcase letter:a-j'
+f_test_char :: char('AbC'):'upper letter:A-J'
+f_test_char :: char('123'):'digits'
+f_test_char :: char('+'):'arithmetics'
+f_test_char :: char('/'):'arithmetics'
+f_test_char :: char('!'):'any chars'
+
+=== m:[03]:'loop.while' at:[t04_control.bsh;245]
+
+=== s:[03.01]:'example 1:easy' at:[248]
+    while [ i < n ] ...  [251]
+<<<[0][1][2];
+=== s:[03.02]:'example 2:complex' at:[262]
+    while [ i < n && j < m ] ... [266]
+<<<[0/0][1/2][2/4][3/6];
+
+=== m:[04]:'loop.until' at:[t04_control.bsh;282]
+
+    until [ i < n ] ... [286]
+<<<[10/5][9/5][8/5][7/5][6/5][5/5];
+
+=== m:[05]:'loop.for' at:[t04_control.bsh;300]
+
+=== s:[05.01]:'forIndex C-style' at:[306]
+	Fruit[0]/[5] :One
+	Fruit[1]/[5] :Two
+	Fruit[2]/[5] :Three
+	Fruit[3]/[5] :Four
+	Fruit[4]/[5] :Five
+=== s:[05.02]:'forEach' at:[323]
+	Fruit[0]/[8] :Apple
+	Fruit[1]/[8] :Banana
+	Fruit[2]/[8] :Cherry
+	Fruit[3]/[8] :Duran
+	Fruit[4]/[8] :Eggfruit
+	Fruit[5]/[8] :Fig
+	Fruit[6]/[8] :Grapefruit
+	Fruit[7]/[8] :Huckleberry
+=== s:[05.03]:'forRange' at:[341]
+=== u:[05.03.01]:'forRange.default' at:[343]
+	Fruit[1]/[5] :Two
+	Fruit[2]/[5] :Three
+	Fruit[3]/[5] :Four
+=== u:[05.03.02]:'forRange.stepSize' at:[357]
+	Fruit[0]/[8] :Apple
+	Fruit[2]/[8] :Cherry
+	Fruit[4]/[8] :Eggfruit
+	Fruit[6]/[8] :Grapefruit
+
++++ logged into:'/home/peter/Documents/temp/t04_control.log'.
+
+=== ftr:[t04_control.bsh;371]:[72] elapsed:<0> seconds.
+<<< replyOf[1]:'t04_control.bsh': # ec:{72} == OK
+.
+
+################################################################################
+*** run:[05]/[01]:'t06_array.bsh'
+################################################################################
+=== hdr:[t06_array.bsh;40]:[261115183531] #ec:{72}.
+
+=== m:[01]:'A.define' at:[t06_array.bsh;54]
+
+define some arrays ...
+    declare -a aEmpty [63]
+    declare -a aEmpty2=() [69]
+    declare -a aOs=([0]="ubuntu" [1]="centos" [2]="redhat" [3]="windows" [4]="macOs" [5]="andoid") [75]
+    declare -a aDigit=([0]="1" [1]="5" [2]="6") [81]
+declare -a aNumber=([0]="One" [1]="Two" [2]="Three" [3]="Four" [4]="Five")
+declare -a aFruit=([0]="Apple" [1]="Banana" [2]="Cherry" [3]="Duran" [4]="Eggfruit" [5]="Fig" [6]="Grapefruit" [7]="Huckleberry")
+show array with printf ...
+aDigit =: [1]
+aDigit =: [5]
+aDigit =: [6]
+
+=== m:[02]:'A.size' at:[t06_array.bsh;102]
+
+    sizeof(aEmpty)=<0> [105]
+    sizeof(aOs)=<6> [106]
+    sizeof(aDigit)=<3> [107]
+    sizeof(aNumber)=<5> [108]
+    sizeof(aFruit)=<8> [109]
+
+=== m:[03]:'A.add' at:[t06_array.bsh;117]
+
+    declare -a aName=([0]="Donald" [1]="Peter" [2]="Britney" [3]="Mike" [4]="Ronaldo" [5]="Vicky" [6]="Harvey") [133]
+
+=== m:[04]:'A.access' at:[t06_array.bsh;140]
+
+access [4] fruits of [8] ...
+    iFruit[3] =: ['Duran'] [156]
+    iFruit[0] =: ['Apple'] [156]
+    iFruit[4] =: ['Eggfruit'] [156]
+    iFruit[6] =: ['Grapefruit'] [156]
+
+=== m:[05]:'A.slice' at:[t06_array.bsh;167]
+
+<<< nMax=[8]
+<<< iPos=[1]
+<<< iLen=[7]
+    declare -a aTmp=([0]="Banana" [1]="Cherry" [2]="Duran" [3]="Eggfruit" [4]="Fig" [5]="Grapefruit" [6]="Huckleberry") [190]
+
+=== m:[06]:'A.sort' at:[t06_array.bsh;198]
+
+=== s:[06.01]:'s.sorting.numbers' at:[201]
+declare -a aInteger=([0]="19" [1]="81" [2]="-1" [3]="6" [4]="3" [5]="66" [6]="43" [7]="2")
+do sorting numbers...
+-1 2 3 6 19 43 66 81
+    aInteger=-1 2 3 6 19 43 66 81 [214]
+=== s:[06.02]:'s.sorting.words' at:[217]
+declare -a aName=([0]="Bert" [1]="Ernie" [2]="Arnold")
+do sorting names...
+    aName=Arnold Bert Ernie [227]
+
+=== m:[07]:'A.shuffle' at:[t06_array.bsh;235]
+
+
+before shuffle...
+declare -a aFruit=([0]="Apple" [1]="Banana" [2]="Cherry" [3]="Duran" [4]="Eggfruit" [5]="Fig" [6]="Grapefruit" [7]="Huckleberry")
+
+after shuffle...
+declare -a aTmp=([0]="Duran" [1]="Fig" [2]="Banana" [3]="Grapefruit" [4]="Apple" [5]="Eggfruit" [6]="Huckleberry" [7]="Cherry")
+
+=== m:[08]:'A.shuffle' at:[t06_array.bsh;253]
+
+
+before copy...
+    declare -a aNumber=([0]="One" [1]="Two" [2]="Three" [3]="Four" [4]="Five") [257]
+
+do copy aBeta:=aNumber
+    declare -a aBeta=([0]="One" [1]="Two" [2]="Three" [3]="Four" [4]="Five") [262]
+
+add aBeta += Zero
+    declare -a aBeta=([0]="One" [1]="Two" [2]="Three" [3]="Four" [4]="Five" [5]="Zero") [267]
+
+show old aNumber
+    declare -a aNumber=([0]="One" [1]="Two" [2]="Three" [3]="Four" [4]="Five") [271]
+
+=== m:[09]:'A.mix' at:[t06_array.bsh;279]
+
+declare -a aCity=([0]="NewYork" [1]="Chicago" [2]="Berlin")
+declare -a aPets=([0]="Harvey" [1]="Putzi" [2]="Whisky")
+
+show results...
+
+    nCommon =: [6] [294]
+    aCommon =: [NewYork Chicago Berlin Harvey Putzi Whisky] [295]
+
+show each element ...
+
+	common:[01]:'NewYork'
+	common:[02]:'Chicago'
+	common:[03]:'Berlin'
+	common:[04]:'Harvey'
+	common:[05]:'Putzi'
+	common:[06]:'Whisky'
+
++++ logged into:'/home/peter/Documents/temp/t06_array.log'.
+
+=== ftr:[t06_array.bsh;308]:[72] elapsed:<0> seconds.
+<<< replyOf[1]:'t06_array.bsh': # ec:{72} == OK
+.
+
+################################################################################
+*** run:[06]/[01]:'t01_intro.bsh'
+################################################################################
+=== hdr:[t01_intro.bsh;59]:[261115183531] #ec:{72}.
+
++ callerScript:{'72'}
+	run :MyTest(72)...
+    Harvey & Peter [70]
+	I have finished :MyScript.
+
+Mouse and Cat
+string.single quoted =: [$t & $j]
+string.double quoted =: [Tom & Jerry]
+
++++ logged into:'/home/peter/Documents/temp/t01_intro.log'.
+
+=== ftr:[t01_intro.bsh;86]:[72] elapsed:<0> seconds.
+<<< replyOf[1]:'t01_intro.bsh': # ec:{72} == OK
+.
+
+################################################################################
+*** run:[07]/[01]:'t18_dummy.bsh'
+################################################################################
+=== hdr:[t18_dummy.bsh;31]:[261115183531] #ec:{72}.
+
+hello
+
++++ logged into:'/home/peter/Documents/temp/t18_dummy.log'.
+
+=== ftr:[t18_dummy.bsh;37]:[72] elapsed:<0> seconds.
+<<< replyOf[1]:'t18_dummy.bsh': # ec:{72} == OK
+.
+
+################################################################################
+*** run:[08]/[01]:'t20_dummy.bsh'
+################################################################################
+=== hdr:[t20_dummy.bsh;31]:[261115183531] #ec:{72}.
+
+hello
+
++++ logged into:'/home/peter/Documents/temp/t20_dummy.log'.
+
+=== ftr:[t20_dummy.bsh;37]:[72] elapsed:<0> seconds.
+<<< replyOf[1]:'t20_dummy.bsh': # ec:{72} == OK
+.
+
+################################################################################
+*** run:[09]/[01]:'t02_dataType.bsh'
+################################################################################
+=== hdr:[t02_dataType.bsh;73]:[261115183531] #ec:{72}.
+
+main.hello dataType
+--- T:[f_mod_main;58]:'eof'
+--- T:[main;80]:'eop'
+=== m:[01]:'constants' at:[t02_dataType.bsh;86]
+
+    C_CONSTANT_TEST:<123> [90]
+
+=== m:[02]:'variables' at:[t02_dataType.bsh;96]
+
+=== s:[02.01]:'string' at:[102]
+    s[105]:<ABC> [105]
+    s[108]:<theodor> [108]
+    s[112]:<3> [112]
+    s[116]:<31> [116]
+    s[121]:<theodor1> [121]
+=== s:[02.02]:'integer' at:[127]
+    i[131]:<45> [131]
+    i[135]:<48> [135]
+    i[139]:<49> [139]
+    i[143]:<0> [143]
+    i[149]:<-9> [149]
+=== s:[02.03]:'float' at:[158]
+    f[161]:<3/5> [161]
+    f[165]:<3/5*2> [165]
+=== s:[02.04]:'array' at:[171]
+=== u:[02.04.01]:'array.print.ALL' at:[184]
+declare -a aVal=([0]="peter" [1]="4711" [2]="!" [3]="-4.5")
+=== u:[02.04.02]:'array.print.Single' at:[191]
+    aVal[0]:<peter> [194]
+    aVal[3]:<-4.5> [195]
+=== u:[02.04.03]:'array.length' at:[198]
+    aVal.length:<4>
+ [205]
+=== u:[02.04.04]:'append' at:[208]
+    show array [210]
+declare -a aVal=([0]="Merkur" [1]="Venus" [2]="Erde" [3]="Mars")
+    append:'Jupiter' [218]
+declare -a aVal=([0]="Merkur" [1]="Venus" [2]="Erde" [3]="Mars" [4]="Jupiter")
+=== u:[02.04.05]:'slice' at:[230]
+    slice(FROM:1;TO:2) [239]
+declare -a aVal1=([0]="peter" [1]="mike" [2]="Donald" [3]="britney")
+declare -a aVal2=([0]="mike" [1]="Donald")
+=== s:[02.05]:'assocArray' at:[247]
+--- T:[main;252]:'add.hColor'
+--- T:[main;257]:'declare.hColor'
+declare -A hColor=([grape]="purple" [apple]="red" [banana]="yellow" )
+--- T:[main;260]:'unset.hColor'
+--- T:[main;263]:'echo.hColor'
+red
+purple
+
+=== m:[03]:'predefined variable' at:[t02_dataType.bsh;271]
+
+    BASH_VERSION:<5.2.37(1)-release> [273]
+    HOME:</home/peter> [274]
+    HOSTNAME:<tron3-d13x-430W> [275]
+    LANG:<en_GB.UTF-8> [276]
+    PATH:</usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games:/home/peter/VCS/fwk/base/cmd:.> [277]
+    LD_LIBRARY_PATH:<> [278]
+    PS1:<> [279]
+    USER:<peter> [280]
+    LOGNAME:<peter> [281]
+
+=== m:[04]:'check.DataType' at:[t02_dataType.bsh;287]
+
+
+    ?isNumeric('1') 	=:	[TRUE]
+    ?isNumeric('a') 	=:	[FALSE]
+declare -a aVal=([0]="Apple" [1]="Orange" [2]="Strawberry")
+    ?isNumeric('Apple') 	=:	[FALSE]
+=== s:[04.01]:'?isAlpha' at:[297]
+    ?isAlnum('pa1Ab') 	=:	[FALSE]
+    ?isAlnum('paAbc') 	=:	[TRUE]
+=== s:[04.02]:'?isAlnum' at:[301]
+    ?isAlnum('1a3') 	=:	[TRUE]
+    ?isAlnum('-1a3') 	=:	[FALSE]
+    ?isAlnum('1a3+') 	=:	[FALSE]
+    ?isAlnum('1a356a') 	=:	[TRUE]
+=== s:[04.03]:'?isUpper|isLower' at:[307]
+    ?isUpper('ZUA') 	=:	[TRUE]
+    ?isUpper('ab.') 	=:	[FALSE]
+    ?isLower('aBc') 	=:	[FALSE]
+    ?isLower('abc') 	=:	[TRUE]
+=== s:[04.04]:'?isNumeric' at:[314]
+    ?isNumeric('4711') 	=:	[TRUE]
+    ?isNumeric('x') 	=:	[FALSE]
+    ?isNumeric('123') 	=:	[TRUE]
+=== s:[04.05]:'?isHexnum' at:[319]
+    ?isHexnum('abc2') 	=:	[TRUE]
+    ?isHexnum('ab,c2') 	=:	[FALSE]
+    ?isHexnum('3abc2') 	=:	[TRUE]
+    ?isHexnum('ab(c2') 	=:	[FALSE]
+    ?isHexnum('A0cF') 	=:	[TRUE]
+=== s:[04.06]:'?isPunct' at:[326]
+    ?isPunct('.') 	=:	[TRUE]
+    ?isPunct(',') 	=:	[TRUE]
+    ?isPunct(';') 	=:	[TRUE]
+    ?isPunct('=') 	=:	[FALSE]
+=== s:[04.07]:'?isSpace' at:[332]
+    ?isSpace('peter') 	=:	[FALSE]
+    ?isSpace('pe er') 	=:	[TRUE]
+=== s:[04.08]:'?isCntrl' at:[339]
+    ?isCntrl('peter') 	=:	[FALSE]
+    ?isCntrl('p\ta') 	=:	[FALSE]
+
++++ logged into:'/home/peter/Documents/temp/t02_dataType.log'.
+
+=== ftr:[t02_dataType.bsh;346]:[72] elapsed:<0> seconds.
+<<< replyOf[1]:'t02_dataType.bsh': # ec:{72} == OK
+.
+
+################################################################################
+*** run:[10]/[01]:'t07_function.bsh'
+################################################################################
+=== hdr:[t07_function.bsh;90]:[261115183531] #ec:{72}.
+
+=== m:[01]:'F.single' at:[t07_function.bsh;101]
+
+I am in function 'f_uni_single' 
+	and I got parameter: 'Britney'
+<<< reply code received is : [16]
+
+
+=== m:[02]:'F.multi' at:[t07_function.bsh;114]
+
+{f_uni_multi}:arg[1/5]=Beckenbauer
+{f_uni_multi}:arg[2/5]=Pele
+{f_uni_multi}:arg[3/5]=Maradonna
+{f_uni_multi}:arg[4/5]=Messi
+{f_uni_multi}:arg[5/5]=Ronaldo
+<<< iRc =: [22]
+
+twin.B :[f_uni_twin] && parameter.B :[Twin A||B]'
+<<< reply.twin.iRc =: [32]
+
++++ logged into:'/home/peter/Documents/temp/t07_function.log'.
+
+=== ftr:[t07_function.bsh;129]:[72] elapsed:<0> seconds.
+<<< replyOf[1]:'t07_function.bsh': # ec:{72} == OK
+.
+
+################################################################################
+*** run:[11]/[01]:'t16_hash.bsh'
+################################################################################
+=== hdr:[t16_hash.bsh;30]:[261115183532] #ec:{72}.
+
+=== m:[01]:'H.define' at:[t16_hash.bsh;42]
+
+define hash Champ
+declare -A hChamp=([Bobby]="Fischer" [Michael]="Jackson" [Britney]="Spears" [mike]="tyson" )
+
+retrieve elements
+'Bobby' => 'Fischer'
+'Britney' => 'Spears'
+'mike' => 'tyson'
+'Michael' => 'Jackson'
+
++++ logged into:'/home/peter/Documents/temp/t16_hash.log'.
+
+=== ftr:[t16_hash.bsh;65]:[72] elapsed:<0> seconds.
+<<< replyOf[1]:'t16_hash.bsh': # ec:{72} == OK
+.
+
+################################################################################
+*** run:[12]/[01]:'t17_dummy.bsh'
+################################################################################
+=== hdr:[t17_dummy.bsh;31]:[261115183532] #ec:{72}.
+
+hello
+
++++ logged into:'/home/peter/Documents/temp/t17_dummy.log'.
+
+=== ftr:[t17_dummy.bsh;37]:[72] elapsed:<0> seconds.
+<<< replyOf[1]:'t17_dummy.bsh': # ec:{72} == OK
+.
+
+################################################################################
+*** run:[13]/[01]:'t08_file.bsh'
+################################################################################
+=== hdr:[t08_file.bsh;147]:[261115183532] #ec:{72}.
+
+    pFile:[/home/peter/Documents/temp/t08_samba_228.txt] [151]
+
+=== m:[01]:'FILE.create' at:[t08_file.bsh;158]
+
+... create file:[/home/peter/Documents/temp/t08_samba_228.txt]
+    < file:[/home/peter/Documents/temp/t08_samba_228.txt] was created. [168]
+    reply.iFileSize=:[0] [172]
+
+=== m:[02]:'FILE.write' at:[t08_file.bsh;179]
+
+    reply.iFileSize=:[43] [188]
+
+=== m:[03]:'FILE.read' at:[t08_file.bsh;196]
+
+    reply.iRc:[42] [200]
+    reply.sRc:['SambaEnLaCasa
+Sun 15 Nov 18:35:32 CET 2026'] [201]
+
+=== m:[04]:'FILE.delete' at:[t08_file.bsh;209]
+
+    reply.delete.iRc:[0] [213]
+    < file:[/home/peter/Documents/temp/t08_samba_228.txt] was deleted. [220]
+
++++ logged into:'/home/peter/Documents/temp/t08_file.log'.
+
+=== ftr:[t08_file.bsh;226]:[72] elapsed:<0> seconds.
+<<< replyOf[1]:'t08_file.bsh': # ec:{72} == OK
+.
+
+################################################################################
+*** run:[14]/[01]:'t09_regExpr.bsh'
+################################################################################
+=== hdr:[t09_regExpr.bsh;197]:[261115183532] #ec:{72}.
+
+get fileName:'/home/peter/Documents/temp/t09_grep_001.log'
+get fileName:'/home/peter/Documents/temp/t09_sed_001.log'
+iRc = [31]
+
+=== m:[01]:'R.grep' at:[t09_regExpr.bsh;219]
+
+=== s:[01.01]:'grep.file' at:[225]
+
+using file '/home/peter/Documents/temp/t09_grep_001.log'
+
+=== u:[01.01.01]:'option :{//} NONE' at:[229]
+grep('Ju') => '1, Justin Timberlake, Title 545, Price $6.30'
+grep('TA') => ''
+=== u:[01.01.02]:'option :{-i}' at:[242]
+grep -i ('TA') => 'Star Database 2, Taylor Swift, Title 723, Price $7.90'
+grep -i ('OH') => '5, Johnny Cash, Title 482, Price $6.50 7, John Lennon, Title 271, Price $7.90'
+=== u:[01.01.03]:'option :{-w}' at:[253]
+grep -w 'Mick' => '3, Mick Jagger, Title 610, Price $7.90'
+grep -w 'Presley' => '6, Elvis Presley, Title 335, Price $6.30'
+=== u:[01.01.04]:'option :{-c}' at:[262]
+grep -c 'Title' => '8'
+grep -c '$7.90' => '3'
+=== u:[01.01.05]:'option :{-n}' at:[271]
+grep -n 'Br' => '10:8, Britney Spears, Title 852, Price $5.85'
+
+=== s:[01.02]:'grep.piping' at:[283]
+
+=== u:[01.02.01]:'simple' at:[301]
+grep('[a-z]','abc') :[305] =>: true
+grep -E('^[a-z]+$','abcde') :[311] =>: true
+egrep('^[a-z]+$','abcdef') :[314] =>: true
+egrep ('^[a-z]+$','abcDef') :[319] =>: false
+egrep -i ('^[a-z]+$','abcDef') :[322] =>: true
+egrep -w ('abc','abcx def ghi abcP') :[327] =>: false
+egrep -w ('abc','abcx def ghi abc') :[330] =>: true
+egrep -w ('a','abcx def ghi abc') :[335] =>: true
+n.Rc:=<1>
+
+=== m:[02]:'R.tr' at:[t09_regExpr.bsh;345]
+
+=== s:[02.01]:'[:lower:][:upper:]' at:[356]
+
+    ABCDEFGH [360]
+    abcdefgh [363]
+=== s:[02.02]:'[:space:]' at:[369]
+Welcome
+To
+Malboro.
+=== s:[02.03]:'[-s]' at:[376]
+BASH	Programming
+xBCDEFGHxBCDEFGHxBCDEFGH
+
+=== s:[02.04]:'option:-c' at:[395]
+xbxxxx
+
+=== s:[02.05]:'[-d]' at:[415]
+BCDEFGHBCDEFGHBCDEFGH
+=== s:[02.06]:'option:-cd' at:[423]
+985634854
+
+PN
+
+
+=== m:[03]:'sed' at:[t09_regExpr.bsh;448]
+
+text replace
+
+sed 's/e/x/'
+    Wxlcome to Like Geeks page [456]
+sed 's/e/x/g'
+    Wxlcomx to Likx Gxxks pagx [462]
+handle a file
++++ created file:'/home/peter/Documents/temp/t09_sed_001.log'
+
+=== m:[04]:'awk' at:[t09_regExpr.bsh;477]
+
+show file
+Star Database
++++ created [Sun 15 Nov 18
+1, Justin Timberlake, Title 545, Price $6.30
+2, Taylor Swift, Title 723, Price $7.90
+3, Mick Jagger, Title 610, Price $7.90
+4, Lady Gaga, Title 118, Price $6.30
+5, Johnny Cash, Title 482, Price $6.50
+6, Elvis Presley, Title 335, Price $6.30
+7, John Lennon, Title 271, Price $7.90
+8, Britney Spears, Title 852, Price $5.85
+    show systemdate [482]
+Sun 15 Nov 18:35:32 CET 2026
+
+=== m:[05]:'REX' at:[t09_regExpr.bsh;493]
+
+[506] 'Abc' : 'A' =: true
+[507] '12a' : '1' =: true
+[508] '12a' : '...' =: true
+[509] '123' : '[0-9]+' =: true
+[510] '12a' : '[0-9]+' =: true
+[511] 'a23' : '[0-9]+' =: true
+[512] 'a23' : '[0-9]{3}' =: false
+[513] 'a23' : '^[0-9]+' =: false
+[514] '1a3' : '^[0-9]+' =: true
+[515] '1a3' : '^[0-9]+$' =: false
+[516] '123' : '^[0-9]+$' =: true
+[520] 'abcdef' : 'abc?[a-z]+' =: true
+[523] '56789' : '[0-9]{5}' =: true
+[527] 'a12_name.bin' : '^a[0-9]{2}_[a-z]+\.bin$' =: true
+[530] 'runMe_12345678.bin' : '^runMe_[0-9]{8}\.bin$' =: true
+
++++ logged into:'/home/peter/Documents/temp/t09_regExpr.log'.
+
+=== ftr:[t09_regExpr.bsh;535]:[72] elapsed:<0> seconds.
+<<< replyOf[1]:'t09_regExpr.bsh': # ec:{72} == OK
+.
+
+################################################################################
+*** run:[15]/[01]:'t03_operator.bsh'
+################################################################################
+=== hdr:[t03_operator.bsh;39]:[261115183532] #ec:{72}.
+
+=== m:[01]:'arithmetic' at:[t03_operator.bsh;53]
+
+=== s:[01.01]:'basic' at:[56]
+    a:<1> + b:<8> =: <9> [57]
+    a:<2> - b:<7> =: <-5> [58]
+    a:<6> * b:<5> =: <30> [59]
+    a:<9> / b:<2> =: <4> [60]
+    a:<3> / b:<7> =: <0> [61]
+=== s:[01.02]:'power' at:[64]
+    a:<2> ** b:<4> =: <16> [65]
+=== s:[01.03]:'divisor' at:[67]
+    a:<13> / b:<5> =: <2> [68]
+    a:<13> % b:<5> =: <3> [69]
+    let a:<13>=:x %= b:<5> =: <3> [72]
+=== s:[01.04]:'modulo vs reminder' at:[74]
+    <13>   %  <-5>  =: <3> [75]
+    <13>  %=  <-5>  =: <3> [76]
+=== s:[01.05]:'inc,dec' at:[81]
+    using: let command [82]
+    x=<5> += <2> => <7> [85]
+    x=<5> -= <2> => <3> [86]
+    x=<5> *= <2> => <10> [87]
+    x=<5> /= <2> => <2> [88]
+
+=== m:[02]:'compare operators' at:[t03_operator.bsh;95]
+
+--- i:1;j:9
+=== s:[02.01]:'standard : -[op]' at:[110]
+    ?eq => false [114]
+    ?ne:TRUE! [118]
+    ?gt:false [122]
+    ?lt:TRUE! [126]
+    ge:false [130]
+    le:TRUE! [134]
+=== s:[02.02]:'special : {[==] [!=]}' at:[139]
+    op:{==}:false [143]
+    op:{!=}:TRUE! [147]
+
+=== m:[03]:'logical operators' at:[t03_operator.bsh;153]
+
+--- i:1;j:10;k:5;l:5
+=== s:[03.01]:'normal.logic' at:[168]
+    { i<=j && k>=l } :TRUE! [175]
+    { i<=j || k>=l } :TRUE! [182]
+    { i<j && k>l } :false [189]
+    { i<j || k>l } :false [196]
+    { (i!=j && k!=l) || (k>8)) } :false [203]
+    { (i=j || k==l)  && (k<8)) } :TRUE! [210]
+    { ! i == j } :TRUE! [217]
+=== s:[03.02]:'internal logic' at:[223]
+x == '10'
+    { x == TRUE } : => [True!] [231]
+    { x != TRUE } : => [?false] [236]
+    { x -eq TRUE } : => [True!] [241]
+x == '99'
+    { x -eq FALSE } =: => [True!] [249]
+=== s:[03.03]:'wildcard' at:[262]
+    area is: [264]
+    Area:= < 'width' * 'length' > [270]
+=== s:[03.04]:'using wildcard as pattern' at:[276]
+    pattern : <b??*.bsh> [280]
+
+=== m:[04]:'expr-with-backticks' at:[t03_operator.bsh;286]
+
+=== s:[04.01]:'expr(a+b)' at:[291]
+    `expr <5> + <2> `  =: <7> [294]
+=== s:[04.02]:'expr(a-b)' at:[297]
+    `expr <8> - <3> `  =: <5> [299]
+
++++ logged into:'/home/peter/Documents/temp/t03_operator.log'.
+
+=== ftr:[t03_operator.bsh;302]:[72] elapsed:<0> seconds.
+<<< replyOf[1]:'t03_operator.bsh': # ec:{72} == OK
+.
+
+################################################################################
+*** run:[16]/[01]:'t05_string.bsh'
+################################################################################
+=== hdr:[t05_string.bsh;51]:[261115183532] #ec:{72}.
+
+=== m:[01]:'S.definition' at:[t05_string.bsh;60]
+
+=== s:[01.01]:'simple '...' strings' at:[63]
+STRING1:$x:$y
+=== s:[01.02]:'evaluated-strings:"..." ' at:[70]
+STRING2:ABCDEFGHIJ:peter
+
+=== m:[02]:'S.length' at:[t05_string.bsh;78]
+
+using string: s='ABCDEFGHIJ'
+    length(s) =: [10] [89]
+try expr
+    s =: [ABCDEFGHIJ] [94]
+using:`expr $str`
+    length(s) =: [10] [99]
+using string: s='LaSamba'
+    length(s) =: [7] [107]
+
+=== m:[03]:'S.compare' at:[t05_string.bsh;116]
+
+s1:'Zeus'
+s2:'Zeus'
+s3:'Zeus and Hera'
+s4:'ZEUS'
+.
+=== s:[03.01]:'compare.operator '=='' at:[135]
+    compare: s1==s2:TRUE [141]
+    compare: s1==s3:FALSE [148]
+    compare: s1==s3:FALSE [154]
+=== s:[03.02]:'compare.operator '!='' at:[162]
+compare: s1!=s3:TRUE
+=== s:[03.03]:'compare.operator '-z'' at:[176]
+s1=: 'someBody'
+s2=: ''
+.
+? s1 isZero
+    false [188]
+? s2 isZero
+    true! [192]
+
+=== m:[04]:'S.concatenate' at:[t05_string.bsh;200]
+
+s1='LearnABC'
+s2='123'
+.
+=== s:[04.01]:'append s+=s1' at:[209]
+    s=$s1;s+=$s2 : <LearnABC123> [212]
+=== s:[04.02]:'sequence s=s1s2' at:[215]
+    s=$s1$s2 : <LearnABC123> [217]
+=== s:[04.03]:'include' at:[220]
+    s="$s1$s2" : <LearnABC123> [222]
+
+=== m:[05]:'string splitting using:IFS' at:[t05_string.bsh;234]
+
+s := 'Peter,Paul,Mary or Britney and Kevin'
+
+=== s:[05.01]:'split.IFS =: {' '}' at:[241]
+declare -a aVal=([0]="Peter,Paul,Mary" [1]="or" [2]="Britney" [3]="and" [4]="Kevin")
+=== s:[05.02]:'split.IFS =: {','}' at:[250]
+declare -a aVal=([0]="Peter" [1]="Paul" [2]="Mary" [3]="Britney and Kevin")
+
+=== m:[06]:'cut strings' at:[t05_string.bsh;266]
+
+s := 'ABCDEFGHIJ'
+
+*{sSrc:3} => 'DEFGHIJ'
+
+=== m:[07]:'splice strings' at:[t05_string.bsh;285]
+
+s := 'ABCDEFGHIJ'
+
+*{sSrc:3:2} => 'DE'
+
++++ logged into:'/home/peter/Documents/temp/t05_string.log'.
+
+=== ftr:[t05_string.bsh;302]:[72] elapsed:<0> seconds.
+<<< replyOf[1]:'t05_string.bsh': # ec:{72} == OK
+.
+
+################################################################################
+*** ready:total.iRc:<0>
+################################################################################
+*** total_sum_of_eRRoRs := [0]
+<<< run.{r03_BSH_expert.bsh} dtm:[2026-11-15 18:35:33]:<4>

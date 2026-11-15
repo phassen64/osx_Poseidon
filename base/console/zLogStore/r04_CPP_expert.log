@@ -1,0 +1,284 @@
+>>> run.{r04_CPP_expert.bsh} dtm:[2026-11-03 19:58:54]
+
+
+*** TEST
+	Date          :   [Tue  3 Nov 19:58:58 CET 2026]
+	iRandom       :   [678]
+	nFiles        :   [6]
+	iStressMax    :   [1]
+### showArray {'testSet'} pos:[f_run_execute();342]
+	a[01] == 'z02_variable.cpp'
+	a[02] == 'z01_hello.cpp'
+	a[03] == 'z05_controlFlow.cpp'
+	a[04] == 'z13_regularExpression.cpp'
+	a[05] == 'z03_const.cpp'
+	a[06] == 'z27_casting.cpp'
+.
+___ script ecDefault #:{37}
+
+
+################################################################################
+*** run:[01]/[01]:'z02_variable.cpp'
+################################################################################
+=== H:HDR:<Variables>[z02_variable.cpp;416]{261103195858}::[37]
+... DTm     : [Nov  3 2026;19:58:55]
+... isC++           :'YES
+... isC11 x         :'STDANSI
+... isSTANDARD_C     :'YES'
+... isCompiler     :'__GNUC__'
+... __cplusplus     :201703
+... isWIN32/64     :'__UNIX___'
+    StatusEc =: <f__header.iEc:37>
+--- C:  variable at:[z02_variable.cpp;84] <1>
+--- M:  definition at:[87] <1>
+    m:  simple at:[90] <1>
+    t:  iRc => 37     <1>
+    m:  multiple at:[95] <2>
+    t:  i:5, j:3, k:6     <1>
+--- M:  initialization at:[104] <2>
+    m:  C-like~ at:[107] <1>
+    t:  i1=x :1     <1>
+    t:  s1=x :'This is a string1'     <2>
+    m:  Constructor~ at:[112] <2>
+    t:  i2(x) :2     <1>
+    t:  s2(x) :'This is a string2'     <2>
+--- M:  typeDeduction at:[125] <3>
+    m:  using:auto at:[128] <1>
+    t:  iApple:7416     <1>
+    m:  using:decltype at:[137] <2>
+    t:  iOrange :6732     <1>
+--- C:  dataTypes at:[z02_variable.cpp;156] <2>
+--- M:  charTypes at:[159] <1>
+    m:  char8 at:[162] <1>
+    t:  char  c     =: '$'     <1>
+--- M:  bool at:[178] <2>
+    t:  bool  b =: '1'     <1>
+--- M:  void at:[182] <3>
+    t:  void  vPtr =: '(nil)'     <1>
+--- M:  NULL at:[186] <4>
+    m:  nullVal at:[195] <1>
+    t:  *p := NULL  =: '(nil)'     <1>
+--- M:  integer at:[200] <5>
+    m:  short at:[203] <1>
+    t:  int   <i>.max <%d>  =: '2147483647'     <1>
+    t:  int   <i>.max <%i>  =: '2147483647'     <2>
+    t:  int   <i>.max <%u>  =: '2147483647'     <3>
+    t:  short <si>.max     =: '32767'     <4>
+    t:  long int <li>.max  =: '9223372036854775807'     <5>
+    m:  long long at:[211] <2>
+    t:  long long int <lli>.max =: '9223372036854775807'     <1>
+    t:  long long int <lli>.min =: '-9223372036854775808'     <2>
+    m:  unsigned at:[217] <3>
+    t:  unsigned int <ui>.MAX            =: '4294967295'     <1>
+    t:  unsigned long int  <uli>.MAX     =: '18446744073709551615'     <2>
+    t:  unsigned long long int <ulli>  =:'18446744073709551615'     <3>
+--- M:  float && double at:[227] <6>
+    m:  float at:[230] <1>
+    t:  float f.max   =: '340282346638528859811704183484516925440.000000'     <1>
+    t:  float f.min   =: '0.000000'     <2>
+    m:  double at:[236] <2>
+    t:  double d.max  =: '340282346638528859811704183484516925440.000000'     <1>
+    t:  double d.min  =: '0.000000'     <2>
+    t:  double d.max<%e>   =: '2.225074e-308'     <3>
+    t:  double d.max<%E>   =: '2.225074E-308'     <4>
+    t:  double d.max<%g>   =: '2.22507e-308'     <5>
+    t:  double d.max<%G>   =: '2.22507E-308'     <6>
+    m:  long double at:[252] <3>
+    t:  long double D.PI <%f>   =: '0.000000'     <1>
+--- M:  string at:[262] <7>
+    m:  define at:[265] <1>
+	<<< string1:'Hello - I'am a c++ string'
+    m:  add at:[270] <2>
+	<<< string2:'I make you...crazy'
+    m:  c++=>cString at:[281] <3>
+    t:  tString =: 'ABCDEFGH'     <1>
+    m:  S.length at:[285] <4>
+    t:  tString.length =: '8'     <1>
+    m:  access S[i] at:[291] <5>
+    t:  tString[2] =: 'C'     <1>
+--- C:  varSize at:[z02_variable.cpp;315] <3>
+--- M:  sizeof.integer at:[318] <1>
+    m:  int8 at:[321] <1>
+    t:  sizeof(i8)=[41] =: '1'     <1>
+    m:  uint16 at:[328] <2>
+    t:  sizeof(i32)=[b1b2] =: '2'     <1>
+    m:  int32 at:[335] <3>
+    t:  sizeof(i32)=[21414243] =: '8'     <1>
+    m:  uint64 at:[342] <4>
+    t:  sizeof(u64)=[a1a2a3a4a5a6a7a8] =: '8'     <1>
+--- M:  using bitmap at:[349] <2>
+    m:  sizeof bitmap.dw at:[353] <1>
+    t:  DW.wL* =: 'E1E2'     <1>
+    t:  sizeof(tDW)=: '8'     <2>
+    m:  sizeof bitmap.qw at:[362] <2>
+    t:  sizeof(tQW)=: '16'     <1>
+    m:  bit at:[368] <3>
+    t:  tBmp.v =: '41000101'     <1>
+    m:  byte at:[377] <4>
+    t:  DL.y* =: 'D4C3B2A1'     <1>
+    m:  word at:[386] <5>
+    t:  WL =: 'B2B3A1A2'     <1>
+    m:  dword at:[395] <6>
+    t:  dw =: 'D1D2D3D4'     <1>
+    m:  qword at:[401] <7>
+    t:  qw =: 'D1D2D3D4E5E6E7E8'     <1>
+=== F:FTR:<Variables>[z02_variable.cpp;421]{261103195859}::[37]
+<<< reply [1]:'z02_variable.cpp' ==:{*true}.
+
+################################################################################
+*** run:[02]/[01]:'z01_hello.cpp'
+################################################################################
+======================================================================
+>>> HDR:{+} src:[z01_hello.cpp,66] dtm:[Nov  3 2026;19:58:55]
+======================================================================
+hello C++ World!
+### lib.Info by:[z01_hello.cpp;70]...
+		:?atDate	:'Nov  3 2026'
+		:?atTime	:'19:58:56'
+		:?isC++		:'YES'
+		:?isSTANDARD_	:'YES'
+		:?whichCompiler	:'__GNUC__'
+### Ec:'37'
+### MyScratchDirIs:'/home/peter/Documents/temp'
+<<< FTR:{-} src:[?,74] dtm:[Nov  3 2026;19:58:55].
+<<< reply [2]:'z01_hello.cpp' ==:{*true}.
+
+################################################################################
+*** run:[03]/[01]:'z05_controlFlow.cpp'
+################################################################################
+=== H:HDR:<control>[z05_controlFlow.cpp;47]{261103195859}::[37]
+--- M:  conditions at:[55] <1>
+    t:  i:(5) > j:3     <1>
+    t:  i:(5) >= j:3     <2>
+--- M:  if at:[66] <2>
+    t:  iRnd.hour =: '0'     <1>
+    t:  GoodText(0) =: 'Good morning.'     <2>
+--- M:  if-ternary at:[83] <3>
+    t:  GoodText2(9) =: 'Good day.'     <1>
+--- M:  switch at:[91] <4>
+    t:  Weekday of (6) =: 'Saturday'     <1>
+--- M:  while at:[111] <5>
+    m:  while1 at:[113] <1>
+	while(0<4):[0][1][2][3];
+    m:  while2:break at:[123] <2>
+	while(0<3):break(3)::[0][1][2];
+    m:  while3:continue at:[136] <3>
+	while(0<5):continue(3)::[0][1][2][4];
+--- M:  do while at:[151] <6>
+    m:  do1 at:[153] <1>
+	doWhile(0<3):[0][1][2];
+--- M:  for at:[166] <7>
+    m:  for0 at:[168] <1>
+	for(0<7):[0][1][2][3][4][5][6];
+    m:  for1:break at:[178] <2>
+	for(0<6):break(3)::[0][1][2][3];
+    m:  for2:continue at:[191] <3>
+	for(0<3):continue(3)::[0][1][2];
+    m:  for3:goto at:[204] <4>
+	for(0<10):goto(8)::[0][1][2][3][4][5][6][7][8];
+--- M:  end at:[220] <8>
+=== F:FTR:<control>[z05_controlFlow.cpp;221]{261103195900}::[37]
+<<< reply [3]:'z05_controlFlow.cpp' ==:{*true}.
+
+################################################################################
+*** run:[04]/[01]:'z13_regularExpression.cpp'
+################################################################################
+=== H:HDR:<RegularExpression>[z13_regularExpression.cpp;78]{261103195900}::[37]
+    C:  regex:match at:[F__regex;34] <1>
+--- M:  regex:match at:[37] <1>
+    m:  regex at:[40] <1>
+    m:  create aS at:[46] <2>
+    t:  regex S:'(\+|-)?[[:digit:]]+'     <1>
+    m:  regMatch... at:[57] <3>
+    t:  REX[0]<123456> 	match:<0>     <1>
+    t:  REX[1]<1g3456> 	match:<0>     <2>
+    t:  REX[2]<e67> 	match:<0>     <3>
+    t:  REX[3]<8232933> 	match:<0>     <4>
+    t:  REX[4]<6666.234> 	match:<0>     <5>
+    m:  finish at:[69] <4>
+    t:  iEc =: 37     <1>
+=== F:FTR:<RegularExpression>[z13_regularExpression.cpp;80]{261103195901}::[37]
+<<< reply [4]:'z13_regularExpression.cpp' ==:{*true}.
+
+################################################################################
+*** run:[05]/[01]:'z03_const.cpp'
+################################################################################
+=== H:HDR:<const>[z03_const.cpp;25]{261103195901}::[37]
+--- M:  literal at:[36] <1>
+    m:  char at:[38] <1>
+    t:  <c> =: '$'     <1>
+    m:  char.prefix{u,U,L} at:[41] <2>
+    t:  char  cwc<L>    =: 'A'     <1>
+    m:  int.prefixBase{0,x} at:[54] <3>
+    t:  <i>(dec) = :878<DEC> :1556<OCT> :36e<HEX>     <1>
+    t:  <i>(oct) = :3658<DEC> :7112<OCT> :e4a<HEX>     <2>
+    t:  <i>(hex) = :41394<DEC> :120662<OCT> :a1b2<HEX>     <3>
+    m:  int.suffixIntType{u|U,l|L} at:[59] <4>
+    t:  <i>    =:  '-1582119980'     <1>
+    t:  <li>   =:  '2712847316'     <2>
+    t:  <lli>  =:  'a1a2a3a4a5a6a7a8 => '-6799692559826901080     <3>
+    t:  <u>    =:  '2712847316'     <4>
+    t:  <ui>   =:  '2712847316'     <5>
+    t:  <ul>   =:  '2711790500'     <6>
+    t:  <uli>  =:  '2711790500'     <7>
+    t:  <ulli> =:  'a1a2a3a4a5a6a7a8 => '11647051513882650536''     <8>
+    m:  float.Number{e|E} at:[77] <5>
+    t:  <float>        =:  '3.141590'     <1>
+    t:  <float><e23>   =:  '602000017271895229464576.000000'     <2>
+    t:  <float><E-5>   =:  '0.000016'     <3>
+    m:  float.suffixType{f|U,l|L} at:[87] <6>
+    t:  <float><f>         =:  '2.781000'     <1>
+    t:  <double><L>        =:  '2.781000'     <2>
+    t:  <longDouble><L>    =:  '0.000000'     <3>
+    t:  <longDouble><f>    =:  '0.000000'     <4>
+    t:  <double><F>        =:  '1.123000'     <5>
+    m:  other at:[96] <7>
+    t:  <bTrue>    =: '1'     <1>
+    t:  <bFalse>   =: '0'     <2>
+    t:  <p>        =: '(nil)'     <3>
+--- M:  typed const at:[109] <2>
+    t:  <const float C_fPi>        =: '3.141500'     <1>
+    t:  <const char  C_cAsterisk> =: '*'     <2>
+--- M:  preProcessor at:[116] <3>
+    t:  <C_PI>         =: '3.141500'     <1>
+    t:  <C_ASTERISK>   =: '*'     <2>
+=== F:FTR:<const>[z03_const.cpp;122]{261103195902}::[37]
+<<< reply [5]:'z03_const.cpp' ==:{*true}.
+
+################################################################################
+*** run:[06]/[01]:'z27_casting.cpp'
+################################################################################
+=== H:HDR:<castingTypes>[z27_casting.cpp;146]{261103195902}::[37]
+--- M:  static at:[149] <1>
+	A =: 3
+	B =: 3
+--- M:  const at:[157] <2>
+    m:  non-constant class member at:[160] <1>
+    t:  Old roll number: 3     <1>
+    t:  New roll number: 5     <2>
+    m:  non-const function at:[167] <2>
+	20
+    t:  p1    : 0x7ffe7c625a80     <1>
+    t:  p2    : 0x7ffe7c625a80     <2>
+    t:  Fun   : 20     <3>
+--- M:  dynamic at:[178] <3>
+    t:  pBase       : 0x7ffe7c625a7f     <1>
+    t:  pDerived    : 0x7ffe7c625a7e     <2>
+    m:  upCasting at:[186] <1>
+    t:  pB := <BASE*>pD  : 0x7ffe7c625a7e     <1>
+    m:  downCasting at:[191] <2>
+    t:  pD := pD  : 0     <1>
+    t:  pD := <DERIVED*>pB : &&& error     <2>
+--- M:  reInterpret at:[205] <4>
+    t:  pIntArray   : 0x55abec896530     <1>
+    t:  *pIntArray  : 65     <2>
+    t:  pChar       : 0x55abec896530     <3>
+    t:  *pChar      : A     <4>
+=== F:FTR:<castingTypes>[z27_casting.cpp;216]{261103195903}::[37]
+<<< reply [6]:'z27_casting.cpp' ==:{*true}.
+
+################################################################################
+*** ready:total.iRc:<0>
+################################################################################
+*** total_sum_of_eRRoRs := [0]
+<<< run.{r04_CPP_expert.bsh} dtm:[2026-11-03 19:59:03]:<10>
