@@ -189,14 +189,9 @@ class CBase:
         except Exception:
             return False
         s = s.lower()
-        #   Posix vs Windows
         bRc = False
-        if self.f__bIsPosix():
-            if (s == '0'):
-                bRc = True
-        else:
-            if (s == C_LIB_sTrue):
-                bRc = True
+        if (s == C_LIB_sTrue):  # !CRQ-261115:Posix==Windows
+            bRc = True
         return bRc
 
     def f__iOsVariable(self,p_sOsVariable:str) -> tuple[bool,int]:
