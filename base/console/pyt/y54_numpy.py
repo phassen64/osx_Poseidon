@@ -1,5 +1,5 @@
 #   ***************************************************************************
-#   My Python Tutorial  ::  numpy
+#   My Python Tutorial  ::  numpy       update:[2026-10-27]
 #   ***************************************************************************
 #   coding:UTF8
 #   !$@€ƒ„…†‡ˆ‰Š‹ŒŽ‘“”•—™š›œžŸ¡¢£¤¥¦§¨©«¬®°±²³µ¶·¹º»¼½¾¿ÑÖ×ØÜÞßäæçîðñôö÷üýþÿ--$
@@ -29,25 +29,60 @@ except ImportError as e:
 #   m:  numpy
 g.f_menu("numpy")
 
-a = np.arange(15).reshape(3, 5); g.f_text(a)
 
-#   error
-#   s = a.shape(3,5); g.f_text(s)
+g.f_menuS1("numpy.intro")
 
-i = a.ndim; g.f_text("Dim := %d" % i)
-assert (i == 2)
 
-i = a.size; g.f_text("size := %d" % i)
-assert (i == 15)
+# Imports NumPy library for numerical operations
+import numpy as np 
 
-i = a.itemsize; g.f_text("Itemsize := %d" % i)
+# Creates a NumPy array
+a = np.array([10, 20, 30, 40, 50]) 
+g.f_text("np.array =: [%s]" % a)
+
+# Calculates and prints the average (mean)
+x = a.mean()
+g.f_text("calculated a.mean() =: '%s'" % x)
+
+
+g.f_menuS1("numpy.arrange")
+
+#   s:  np.arrange
+n = 10
+a = np.arange(n); 
+g.f_text("np.arrange(%d) =: [%s]" % (n,a) )
+
+#   s:  np.size
+i = a.size; g.f_text("a.size := %d" % i)
+assert (i == 10)
+
+#   s:  np.itemsize
+i = a.itemsize; g.f_text("a.ItemSize := %d" % i)
 assert (( i == 4 ) or ( i == 8 ))
 
-s = a.dtype.name; g.f_text("type.name := %s" % s)
+#   s:  np.dtype
+s = a.dtype.name; g.f_text("a.dType.Name := %s" % s)
 assert ((s == 'int32') or (s == 'int64'))
 
-s = type(a); g.f_text("type := '%s'" % s)   # "<class 'numpy.ndarray'>
+#   s:  np.nDim
+x = a.ndim
+g.f_text("a.ndim := %d" % x)
+assert (x == 1)
+
+#   s:  type(a)
+s = type(a)
+g.f_text("type := '%s'" % s)   # "<class 'numpy.ndarray'>
 #   assert (s == "<class 'numpy.ndarray'>")
+
+
+#   s:  np.arange(n).reshape(i,j);
+n = 10
+i = 2   #   number of dimensions 
+j = 5   #   elements for each one = 10/2
+x = np.arange(n).reshape(i,j); 
+g.f_text("np.arrange(%d).reshape(%d,%d):= %s" % (n,i,j,x))
+
+
 
 #   === :footer
 g.f_footer(sTc)
