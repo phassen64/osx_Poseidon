@@ -73,20 +73,11 @@ g_bLogging  = True
 #   m:  doc
 g_sVcsReadmeFile   =   "README.md"    # !CRQ-261025:use STD
 
-#   environment variables
-g_bMode_batch   = 'v_mode_bBat'
-g_bMode_color   = 'v_mode_bClr'
-g_bMode_verbose = 'v_mode_bVbs'
-g_iMode_logging = 'v_mode_iLog'
+#   m:  env     !CRQ-261115
+C_LIB_sTrue     =   'true'
+C_LIB_sFalse    =   'false'
 
-#   const by Windows/Linux environment
-C_ENV_sTrue     =   'true'
-C_ENV_sFalse    =   'false'
-
-#   ===========================================================================
 #   m:  define.exitCode
-#   ===========================================================================
-
 C_EC_OK = int(0)            # standard reply by Tc - OK
 C_EC_WARNING = int(3)       # warning
 C_EC_ERROR = int(1)         # standard error - PSH script
@@ -204,7 +195,7 @@ class CBase:
             if (s == '0'):
                 bRc = True
         else:
-            if (s == C_ENV_sTrue):
+            if (s == C_LIB_sTrue):
                 bRc = True
         return bRc
 
@@ -1180,6 +1171,31 @@ class CMode(CBase):
     __m_bVerboseTrace   = False
 
     #
+    #   f:  constructor
+    #
+
+    def __init__(self) :    # !CRQ-261115
+
+        s = os.getenv('v_mode_bBat',C_LIB_sFalse)  
+        if s == C_LIB_sTrue:
+            self.__m_bModeBatch = True
+
+        s = os.getenv('v_mode_bClr',C_LIB_sFalse)  
+        if s == C_LIB_sTrue:
+            self.__m_bModeColor = True
+
+        s = os.getenv('v_mode_bVbs',C_LIB_sFalse)  
+        if s == C_LIB_sTrue:
+            self.__m_bModeVerbose = True
+
+        s = os.getenv('v_mode_iLog','0')  
+        try:
+            i = int(s)
+        except:
+            i = -1
+        self.__m_iModeLogging    = i
+
+    #
     #   f:  mode.batch
     #
 
@@ -1192,7 +1208,7 @@ class CMode(CBase):
     #
 
     def f__modeColor_get(self) -> bool:
-        bRc = self.__m_bModeColor
+        bRc = self.__m_bModeColor   # !CRQ-261115
         return bRc
 
     def f__modeColor_set(self,p_bColor:bool = False) -> bool:
@@ -1240,13 +1256,17 @@ class CMode(CBase):
     #   f: base.environment
     #
 
-    def f_lib_prepare(self) -> None:
-        self.__m_bModeBatch     =   self.f__bOsVariable(g_bMode_batch)
-        self.__m_bModeColor     =   self.f__bOsVariable(g_bMode_color)
-        self.__m_bModeVerbose   =   self.f__bOsVariable(g_bMode_verbose)
-        bLog,iLog = self.f__iOsVariable(g_iMode_logging)
+    def f_lib_prepare(self) -> None:    # !CRQ-261115
+        self.__m_bModeBatch     =   self.f__bOsVariable('v_mode_bBat')
+        self.__m_bModeColor     =   self.f__bOsVariable('v_mode_bClr')
+        self.__m_bModeVerbose   =   self.f__bOsVariable('v_mode_bVbs')
+        self.__m_bModeBatch     =   g_bMode_batch
+        self.__m_bModeColor     =   g_bMode_color
+        self.__m_bModeVerbose   =   g_bMode_verbose
+        bLog,iLog = self.f__iOsVariable('v_mode_iLog')
         if ( bLog ) :
             self.__m_iModeLogging  = iLog
+        self.__m_iModeLogging  = g_iMode_logging
         return None
 
     #       p_bInfo:bool = False,           #   beides verbose

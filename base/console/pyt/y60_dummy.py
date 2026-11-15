@@ -9,6 +9,9 @@
 
 #   input
 #   muss ausserhalb definiert worden sein
+
+print("&&& dummy.header")
+
 x = 'v_mode_bClr'   
 
 print("=== farbentest")
@@ -21,8 +24,12 @@ tVariable = (
     'USER'
 )
 
-import LIB_inc as m; g = m.CLib()
-g.f_lib_prepare()
+import LIB_inc as m
+
+
+print("libid := '%s'" % (m.g_sId))
+
+g = m.CLib()
 
 #   muss importiert werden, 
 #   LIB reicht nichts zurück in die Bash
@@ -35,7 +42,15 @@ for x in tVariable:
         s = os.environ[x]    #   s = os.getenv(x,C_DEFAULT)
     except Exception:
         s = C_UNDEFINED
-    print("<<< envVar[%d] : '%s' -> '%s'" % (i,str(x),s))    
+    print("<<< os.environ[%d] : '%s' -> '%s'" % (i,str(x),s))    
+
+x = 'v_mode_bClr'   
+s = os.getenv(x,'?getenv')  
+print("<<< os.getenv('%s') -> '%s'" % (str(x),s))    
+
+
+#   exit()
+print("... weiter1")
 
 
 #   Variable mit LIB auslesen
@@ -48,7 +63,8 @@ print("+ status der lib")
 g.f_status()
 
 #   Farben manuell aktivieren
-g.f_lib_configuration(True) 
+#   g.f_lib_configuration(True) 
+#   g.f_lib_prepare()
 
 g.f_puts("+ Ausgabe der Farben",g.C_COLOR_GREEN)
 
@@ -67,3 +83,5 @@ i = 0
 for xColor in eColor:
     i += 1
     g.f_text("color[%2.2d] : '%s'" % (i,xColor),xColor)
+
+print("&&& dummy.footer")
