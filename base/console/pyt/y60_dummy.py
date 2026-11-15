@@ -55,6 +55,7 @@ print("... weiter1")
 
 #   Variable mit LIB auslesen
 #   !CRQ-261114: python erkennt dennoch nicht 'x'
+x = 'v_mode_bClr'   
 bRc,sRc = g.f_bsEnv(x)
 g.f_puts("< reply.bsEnv('%s') bRc|sRc==:['%r'|'%s'] " % (x,bRc,sRc))
 

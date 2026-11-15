@@ -1256,17 +1256,8 @@ class CMode(CBase):
     #   f: base.environment
     #
 
-    def f_lib_prepare(self) -> None:    # !CRQ-261115
-        self.__m_bModeBatch     =   self.f__bOsVariable('v_mode_bBat')
-        self.__m_bModeColor     =   self.f__bOsVariable('v_mode_bClr')
-        self.__m_bModeVerbose   =   self.f__bOsVariable('v_mode_bVbs')
-        self.__m_bModeBatch     =   g_bMode_batch
-        self.__m_bModeColor     =   g_bMode_color
-        self.__m_bModeVerbose   =   g_bMode_verbose
-        bLog,iLog = self.f__iOsVariable('v_mode_iLog')
-        if ( bLog ) :
-            self.__m_iModeLogging  = iLog
-        self.__m_iModeLogging  = g_iMode_logging
+    def f_lib_prepare(self) -> None:    # !CRQ-261115.clear
+        #   removed - already inside constructor
         return None
 
     #       p_bInfo:bool = False,           #   beides verbose
